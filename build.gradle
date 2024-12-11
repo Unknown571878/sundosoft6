@@ -33,6 +33,9 @@ dependencies {
     // Lombok
     implementation 'org.projectlombok:lombok'
 
+    // dotenv
+//    implementation 'io.github.cdimascio:dotenv-java:3.0.2'
+
     // DevTools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
