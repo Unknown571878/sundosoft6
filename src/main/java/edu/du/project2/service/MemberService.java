@@ -4,10 +4,11 @@ package edu.du.project2.service;
 import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.Member;
 import edu.du.project2.repository.MemberRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor

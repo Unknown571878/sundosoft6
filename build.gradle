@@ -51,9 +51,13 @@ dependencies {
     // PostgreSQL JDBC 드라이버 (데이터베이스 연결용)
     implementation 'org.postgresql:postgresql:42.5.0' // 최신 버전으로 업데이트 가능
 
-    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
 
+    // 서블릿 API 관련 의존성: 웹 애플리케이션에서 HTTP 요청 및 응답을 처리하는 서블릿 기능을 제공
+    // Jakarta Servlet API 6.0.0 버전 사용 (Servlet 6.0 이상에서 사용)
     implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
 
 
