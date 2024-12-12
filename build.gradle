@@ -1,15 +1,16 @@
 plugins {
+    id 'org.springframework.boot' version '2.7.16'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id 'org.springframework.boot' version '3.4.0'
-    id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'edu.du.project2'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
     }
 }
 
@@ -18,44 +19,44 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot 기본 스타터: 핵심 Spring 기능 제공
-    implementation 'org.springframework.boot:spring-boot-starter'
-
-    // 테스트를 위한 Spring Boot 스타터
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    // JUnit 플랫폼 런처: 테스트 런타임에만 사용
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    // JPA(데이터 영속성) 지원을 위한 Spring Boot 스타터
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-    // Thymeleaf(템플릿 엔진) 지원을 위한 Spring Boot 스타터
+    // Spring Boot 관련 의존성
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-    // 웹 애플리케이션 개발을 위한 Spring Boot 스타터
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // Spring Security 암호화 모듈 (5.8.0 버전)
-    implementation 'org.springframework.security:spring-security-crypto:5.8.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-    // 컴파일 시만 Lombok 사용 (코드 간소화 도구)
-    compileOnly 'org.projectlombok:lombok'
+    // Database 관련 의존성
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
 
-    // 개발용 도구: 애플리케이션 자동 재시작 기능 제공
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    // (옵션) MySQL JDBC 드라이버 (주석 처리됨)
-    // implementation 'mysql:mysql-connector-java:8.0.33'
+    // Lombok
+    implementation 'org.projectlombok:lombok'
 
     // Lombok 어노테이션 프로세서 (컴파일 시 자동으로 코드를 생성)
     annotationProcessor 'org.projectlombok:lombok'
 
-    // Google Maps API 클라이언트 라이브러리
-    implementation 'com.google.maps:google-maps-services:2.1.2'
+    // dotenv
+//    implementation 'io.github.cdimascio:dotenv-java:3.0.2'
+
+    // DevTools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // 테스트 관련 의존성
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Spring Security 암호화 모듈 (5.8.0 버전)
+    implementation 'org.springframework.security:spring-security-crypto:5.8.0'
 
     // PostgreSQL JDBC 드라이버 (데이터베이스 연결용)
     implementation 'org.postgresql:postgresql:42.5.0' // 최신 버전으로 업데이트 가능
+
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+
+
 }
 
 tasks.named('test') {
