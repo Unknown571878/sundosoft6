@@ -3,6 +3,11 @@
 * [블로그 글 참고1](https://velog.io/@ygy0102/GIT-%EA%B9%83%ED%97%88%EB%B8%8C%EB%A1%9C-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0-Repository-%EA%B3%B5%EC%9C%A0-PR-merge)
 * [블로그 글 참고2](https://12716.tistory.com/entry/Git-GitHub-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0)
 
+
+## 🚨주의할 점🚨
+### 작업물 올리기 전에 최신화 필수
+본인의 작업물을 add, commit, push하기 전에 필수적으로 pull을 해야함
+
 ## 1. 다른 사람 리포지토리를 본인 계정으로 fork하기
 
 ### 1.1 이 리포지토리에 접속해서 fork 드롭다운 클릭 후 본인 계정의 리포지토리를 새로 생성
@@ -47,6 +52,3 @@ git branch
 ![image](https://github.com/user-attachments/assets/3419296e-7dc0-4cbe-ac4c-ae3c2bfec429)
 설명을 작성한 뒤 아래 Create pull request 버튼 클릭
 
-## 🚨주의할 점🚨
-### 작업물 올리기 전에 최신화 필수
-본인의 작업물을 add, commit, push하기 전에 필수적으로 pull을 해야함
