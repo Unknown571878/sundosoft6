@@ -7,6 +7,7 @@
 ## 🚨주의할 점🚨
 ### 작업물 올리기 전에 최신화 필수
 본인의 작업물을 add, commit, push하기 전에 필수로 pull을 해야함
+* git pull origin main
 
 ## 1. 다른 사람 리포지토리를 본인 계정으로 fork하기
 
@@ -18,24 +19,26 @@
 ## 2. 포크한 저장소 clone하기
 
 ### 2.1 작업할 폴더에서 git bash 또는 cmd창에서 작업할 위치로 cd 후 아래 명령어 입력(' '는 생략)
-git clone '복사한url'
+* git clone '복사한url'
 
 
 ### 2.2 clone된 폴더로 이동
 clone하면 리포지토리 이름으로 폴더가 생김
 
 그 폴더 안에 원래 리포지토리의 파일이 들어있기 때문에 clone한 뒤 리포지토리 이름으로 생성된 폴더로 이동
-
+* cd '리포지토리 이름'
 ## 3. 브랜치 생성 후 생성한 브랜치에서 작업하기
 
 ### 3.1 현재 브랜치 확인
-git branch
+* git branch
 
 현재 branch의 개수와 이름 확인 가능
 
 ### 3.2 브랜치 생성 및 변경
 두 가지 방법으로 branch생성 및 변경(' '는 생략)
 * git branch '새로운 branch 이름' ➡️ git checkout '새로운 branch 이름'
+
+또는
 * git checkout -b '새로운 branch 이름'
 
 ## 4. 작업한 브랜치 push하기
