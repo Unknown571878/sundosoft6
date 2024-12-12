@@ -1,28 +1,42 @@
 package edu.du.project2.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Data
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String password;
+    @Column(nullable = false, unique= true)
     private String email;
-    private String address;
-    private String detailAdd;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String tel;
-    private String role;
+
+    private String address;
+    @Column(name = "detail_address")
+    private String detailAddress;
+
+    private String role = "USER";
+
+    public boolean isAdmin() {
+        return "ADMIN".equals(this.role); // role이 "ADMIN"이면 관리자
+    }
+
 }
