@@ -25,8 +25,8 @@
     <div class="container">
       <div></div>
       <div>
-        <a th:href="@{/login}" id="loginLink" title="로그인">로그인</a>
-        <a th:href="@{/loginform}" title="회원가입">회원가입</a>
+        <a href="/login" id="loginLink" title="로그인">로그인</a>
+        <<a href="/register" title="회원가입">회원가입</a>
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@
           <a href="/" class="text-decoration-none">Urban Nexus</a>
         </h1>
         <div class="nav-links">
-          <a th:href="@{/board/List}" class="nav-link">공지사항</a>
+          <a th:href="@{/board/List}" class="nav-link">공지사항</a> //수정해야함
           <a href="/inquiry" class="nav-link">입지분석</a>
           <a href="/inquiry" class="nav-link">데이터관리</a>
           <a href="/inquiry" class="nav-link">문의사항</a>

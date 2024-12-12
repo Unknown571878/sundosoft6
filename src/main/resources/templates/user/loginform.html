@@ -12,7 +12,7 @@
 <body>
 <div class="login-container">
   <h2 class="text-center">회원가입</h2>
-  <form action="/loginform" method="post">
+  <form th:action="@{/register}" method="post">
     <!-- 이름 입력 필드 -->
     <div class="mb-3">
       <input type="text" name="name" class="form-control" placeholder="이름을 입력하세요" required>
@@ -20,7 +20,7 @@
 
     <!-- 전화번호 입력 필드 -->
     <div class="mb-3">
-      <input type="tel" name="tel" class="form-control" placeholder="전화번호를 입력하세요" required>
+      <input type="text" name="tel" class="form-control" placeholder="전화번호를 입력하세요" required>
     </div>
 
     <!-- 이메일 입력 필드 -->
@@ -31,24 +31,24 @@
 
     <!-- 비밀번호 입력 필드 -->
     <div class="mb-3">
-      <input type="password" id="userPassword" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required>
+      <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required>
     </div>
 
-    <!-- 비밀번호 확인 입력 필드 -->
-    <div class="mb-3">
-      <input type="password" id="userPasswordCheck" class="form-control" placeholder="비밀번호를 다시 입력하세요" required>
-      <div id="passwordError"></div>
-    </div>
+<!--    &lt;!&ndash; 비밀번호 확인 입력 필드 &ndash;&gt;-->
+<!--    <div class="mb-3">-->
+<!--      <input type="password" id="userPasswordCheck" class="form-control" placeholder="비밀번호를 다시 입력하세요" required>-->
+<!--      <div id="passwordError"></div>-->
+<!--    </div>-->
 
     <!-- 주소 입력 필드 -->
     <div class="mb-3">
       <input type="text" name="address" class="form-control" placeholder="주소" required>
-      <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="sample6_execDaumPostcode()">주소 찾기</button>
+      <button type="button" class="btna" onclick="execPostCode();">주소 찾기</button>
     </div>
 
     <!-- 상세주소 입력 필드 -->
     <div class="mb-3">
-      <input type="text" name="detailAdd" class="form-control" placeholder="상세주소" required>
+      <input type="text" name="detailAddress" class="form-control" placeholder="상세주소" required>
     </div>
 
     <!-- 회원가입 버튼 -->

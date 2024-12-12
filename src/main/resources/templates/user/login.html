@@ -41,11 +41,11 @@
     </div>
 
     <!-- 로그인 버튼을 submit 버튼으로 변경 -->
-    <button th:href="@{/}" class="btn btn-secondary w-100 border border-secondary rounded-pill mt-3 mb-2">로그인</button>
+    <button type="submit" class="btn btn-secondary w-100 border border-secondary rounded-pill mt-3 mb-2">로그인</button>
   </form>
 
   <!-- 회원가입 버튼 -->
-  <a th:href="@{/loginform}" class="btn btn-outline-secondary border border-secondary rounded-pill w-100 mb-2">회원가입</a>
+  <a th:href="@{/register}" class="btn btn-outline-secondary border border-secondary rounded-pill w-100 mb-2">회원가입</a>
 
   <p class="muted text-center mt-3" style="font-size: 10px;">
     <a th:href="@{/idfor}">Find ID</a> &nbsp; | &nbsp; <a th:href="@{/passwordfor}">Find Password</a>
