@@ -47,3 +47,6 @@ git branch
 ![image](https://github.com/user-attachments/assets/3419296e-7dc0-4cbe-ac4c-ae3c2bfec429)
 설명을 작성한 뒤 아래 Create pull request 버튼 클릭
 
+## 🚨주의할 점🚨
+### 작업물 올리기 전에 최신화 필수
+본인의 작업물을 add, commit, push하기 전에 필수적으로 pull을 해야함
