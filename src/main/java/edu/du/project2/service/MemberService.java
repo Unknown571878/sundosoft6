@@ -1,6 +1,7 @@
 package edu.du.project2.service;
 
 
+import edu.du.project2.config.SecurityConfig;
 import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.Member;
 import edu.du.project2.repository.MemberRepository;
