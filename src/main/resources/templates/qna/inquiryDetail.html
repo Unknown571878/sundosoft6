@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>문의하기</title>
   <link rel="stylesheet" href="/css/inquiryDetail.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
+<th:block th:replace="/layout/header :: headerLayout"></th:block>
   <div class="post-detail-main">
-    <div class="container">
+    <div class="detail-container">
       <!-- 게시글 내용 표시 -->
       <div class="post-detail">
         <h2 th:text="${qna.title}">제목</h2>
@@ -41,5 +44,6 @@
     </div>
   </div>
 </div>
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
 </html>

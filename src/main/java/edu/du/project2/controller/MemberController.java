@@ -1,11 +1,11 @@
 package edu.du.project2.controller;
 
 
+import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.Member;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.repository.MemberRepository;
-import edu.du.project2.service.AuthInfo;
 import edu.du.project2.service.MemberService;
 import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +79,16 @@ public class MemberController {
     public String logout(HttpSession session) {
         session.invalidate();  // 세션 무효화 (로그아웃 처리)
         return "redirect:/login";  // 로그인 페이지로 리디렉션
+    }
+
+    @GetMapping("/idfor")
+    public String idforPage() {
+        return "user/idfor";  // idfor.html로 이동
+    }
+
+    @GetMapping("/passwordfor")
+    public String passwordforPage() {
+        return "user/passwordfor";  // passwordfor.html로 이동
     }
 
 }

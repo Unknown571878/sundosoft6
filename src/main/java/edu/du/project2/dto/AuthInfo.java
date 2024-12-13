@@ -1,4 +1,4 @@
-package edu.du.project2.service;
+package edu.du.project2.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

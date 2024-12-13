@@ -19,6 +19,10 @@ repositories {
 }
 
 dependencies {
+
+    //이메일인증
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
     // Spring Boot 관련 의존성
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
