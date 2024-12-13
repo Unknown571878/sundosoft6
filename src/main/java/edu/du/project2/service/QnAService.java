@@ -32,7 +32,7 @@ public class QnAService {
 
     public Page<QnAList> getInquiries(AuthInfo authInfo, Pageable pageable) {
         List<QnAList> list;
-        if (authInfo.getRole().equals("admin")) {
+        if (authInfo.getRole().equals("ADMIN")) {
             list = qnAListRepository.findAllByOrderByIdDesc();
         } else {
             list = qnAListRepository.findAllByUidOrderByIdDesc(authInfo.getId());
@@ -77,12 +77,12 @@ public class QnAService {
         QnA qna = QnA.builder()
                 .qnaId(qnalist)
                 .content(content)
-                .state(role.equals("admin") ? 'A' : 'Q')
+                .state(role.equals("ADMIN") ? 'A' : 'Q')
                 .build();
         qnARepository.save(qna);
 
         if (qnalist != null) {
-            qnalist.setState(role.equals("admin") ? 'A' : 'Q');
+            qnalist.setState(role.equals("ADMIN") ? 'A' : 'Q');
             qnAListRepository.save(qnalist);
         }
     }

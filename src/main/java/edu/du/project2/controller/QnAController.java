@@ -1,8 +1,10 @@
 package edu.du.project2.controller;
 
 import edu.du.project2.dto.MessageDto;
+import edu.du.project2.entity.Member;
 import edu.du.project2.entity.QnA;
 import edu.du.project2.entity.QnAList;
+import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.repository.QnARepository;
 import edu.du.project2.repository.QnA_ListRepository;
 import edu.du.project2.dto.AuthInfo;
@@ -29,6 +31,7 @@ public class QnAController {
 
     private final QnAService qnAService;
     private final QnA_ListRepository qnAListRepository;
+    private final MemberRepository memberRepository;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
@@ -53,6 +56,8 @@ public class QnAController {
     public String qnaDetail(@RequestParam("id") Long id, Model model) {
         model.addAttribute("qna", qnAService.getInquiryDetail(id));
         model.addAttribute("lists", qnAService.getInquiryReplies(id));
+        Member member = memberRepository.findById(id).get();
+        model.addAttribute("member", member);
         return "/qna/inquiryDetail";
     }
 
@@ -74,5 +79,14 @@ public class QnAController {
                                @RequestParam Long id) {
         qnAService.insertAnswer(content, role, id);
         return "redirect:/qna/inquiryDetail?id=" + id;
+    }
+
+    @PostMapping("end/{id}")
+    public String end(@PathVariable Long id, Model model) {
+        QnAList qnAList = qnAListRepository.findById(id).get();
+        qnAList.setEndYn('Y');
+        qnAListRepository.save(qnAList);
+        MessageDto message = new MessageDto("문의를 종료하였습니다.", "/qna/inquiry", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
     }
 }
