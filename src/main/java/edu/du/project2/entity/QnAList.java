@@ -2,6 +2,7 @@ package edu.du.project2.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,11 +17,14 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class QnAList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String deletedYn;
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
+    private char delete_yn;
+    private char state;
+    private Long uid;
 }

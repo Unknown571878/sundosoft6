@@ -1,0 +1,93 @@
+/* 기본 설정 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* 메인 컨테이너 */
+.container {
+    max-width: 800px; /* 폼의 최대 넓이 */
+    margin: 50px auto; /* 화면 중앙 정렬 */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
+}
+
+/* 제목 스타일 */
+h1 {
+    text-align: left;
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 구분선 */
+.split--div-post {
+    height: 2px;
+    background-color: gray;
+    margin: 20px 0;
+}
+
+/* 입력 필드 그룹 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical; /* 수직 방향 크기 조정 가능 */
+}
+
+/* 버튼 스타일 */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* 작성 완료 버튼 */
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* 취소 버튼 */
+button[type="button"] {
+    background-color: #ccc;
+    color: black;
+}
+
+button[type="button"]:hover {
+    background-color: #999;
+}
+
+/* 버튼 그룹 */
+.form-actions {
+    text-align: center; /* 버튼을 중앙에 정렬 */
+}
