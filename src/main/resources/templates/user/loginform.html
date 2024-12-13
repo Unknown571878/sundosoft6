@@ -8,10 +8,13 @@
   <link rel="stylesheet" href="/css/login.css"> <!-- CSS 파일 링크 -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet"> <!-- Bad Script 글꼴 -->
+
 </head>
 <body>
 <div class="login-container">
-  <h2 class="text-center">회원가입</h2>
+  <h2><a href="/" style="text-decoration: none; color: black">Urban Nexus</a></h2>
+  <hr/>
+  <h4 class="text-center">회원가입</h4>
   <form th:action="@{/register}" method="post">
     <!-- 이름 입력 필드 -->
     <div class="mb-3">

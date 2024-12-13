@@ -5,7 +5,7 @@ import edu.du.project2.entity.QnA;
 import edu.du.project2.entity.QnAList;
 import edu.du.project2.repository.QnARepository;
 import edu.du.project2.repository.QnA_ListRepository;
-import edu.du.project2.service.AuthInfo;
+import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.service.MessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

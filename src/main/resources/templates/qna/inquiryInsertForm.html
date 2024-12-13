@@ -5,34 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>문의하기</title>
   <link rel="stylesheet" href="/css/inquiryInsertForm.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
-  <div class="insertForm">
-<div class="container">
-  <div class="main-title">
-  <h1>문의하기</h1>
-  <div class="split--div-post"></div>
-  </div>
-  <div>
-    <!-- 타임리프 폼 사용 -->
-    <form th:action="@{/qna/inquiryInsert}" method="POST" id="Post">
-      <input type="hidden" id="uid" name="uid" th:value="${session.authInfo.id}">
-      <div class="form-group">
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
-      </div>
+<th:block th:replace="/layout/header :: headerLayout"></th:block>
+<div class="insert-form">
+  <div class="main-container">
+    <div class="main-title">
+      <h1>문의하기</h1>
+    <div class="split--div-post"></div>
+    </div>
+    <div>
+      <!-- 타임리프 폼 사용 -->
+      <form th:action="@{/qna/inquiryInsert}" method="POST" id="Post">
+        <input type="hidden" id="uid" name="uid" th:value="${session.authInfo.id}">
+        <div class="form-group">
+          <label for="title">제목</label>
+          <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
+        </div>
 
-      <div class="form-group">
-        <label for="content">내용</label>
-        <textarea id="content" name="content" placeholder="내용을 입력하세요" rows="10" required></textarea>
-      </div>
-      <div class="form-actions">
-        <button type="submit">작성 완료</button>
-        <button type="button" onclick="window.location.href='qna';">취소</button>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="content">내용</label>
+          <textarea id="content" name="content" placeholder="내용을 입력하세요" rows="10" required></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit">작성 완료</button>
+          <button type="button" onclick="window.location.href='';">취소</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </div>
 </body>
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </html>

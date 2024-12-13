@@ -7,7 +7,7 @@ body {
 }
 
 /* 전체 컨테이너 */
-.container {
+.detail-container {
     max-width: 1200px; /* 컨테이너의 최대 폭 설정 */
     margin: 20px auto; /* 페이지 중앙 정렬 */
     padding: 20px;
