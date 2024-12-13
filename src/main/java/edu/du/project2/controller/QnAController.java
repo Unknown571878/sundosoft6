@@ -47,8 +47,8 @@ public class QnAController {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         Page<QnAList> inquiries = qnAService.getInquiries(authInfo, pageable);
         model.addAttribute("inquirys", inquiries);
-        List<QnAList> posts = qnAListRepository.findAllByUidOrderByIdDesc(authInfo.getId());
-        model.addAttribute("posts", posts);
+        List<QnAList> lists = qnAService.getInquiryNum(authInfo);
+        model.addAttribute("posts", lists);
         return "/qna/inquiry";
     }
 
