@@ -1,12 +1,16 @@
 package edu.du.project2.controller;
 
 import edu.du.project2.dto.MessageDto;
+import edu.du.project2.entity.QnA;
 import edu.du.project2.entity.QnAList;
+import edu.du.project2.repository.QnARepository;
+import edu.du.project2.repository.QnA_ListRepository;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.service.QnAService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,22 +28,11 @@ import javax.servlet.http.HttpSession;
 public class QnAController {
 
     private final QnAService qnAService;
+    private final QnA_ListRepository qnAListRepository;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
         return "/common/messageRedirect";
-    }
-
-    @GetMapping("/1")
-    public String index1(HttpSession session) {
-        qnAService.initializeSession(session, 1L, "admin@test.com", "관리자", "admin");
-        return "/qna/1";
-    }
-
-    @GetMapping("/2")
-    public String index2(HttpSession session) {
-        qnAService.initializeSession(session, 2L, "test@test.com", "테스터", "user");
-        return "/qna/2";
     }
 
     @GetMapping("/inquiry")
@@ -49,6 +44,8 @@ public class QnAController {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         Page<QnAList> inquiries = qnAService.getInquiries(authInfo, pageable);
         model.addAttribute("inquirys", inquiries);
+        List<QnAList> posts = qnAListRepository.findAllByUidOrderByIdDesc(authInfo.getId());
+        model.addAttribute("posts", posts);
         return "/qna/inquiry";
     }
 
@@ -66,7 +63,7 @@ public class QnAController {
 
     @PostMapping("/inquiryInsert")
     public String qnaInsert(@ModelAttribute QnAList list,
-                            @RequestParam String content, HttpSession session) {
+                            @RequestParam String content, Model model, HttpSession session) {
         qnAService.insertInquiry(list, content, session);
         return "redirect:/qna/inquiry";
     }

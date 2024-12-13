@@ -57,7 +57,7 @@ public class QnAService {
         QnAList qnalist = QnAList.builder()
                 .title(list.getTitle())
                 .created_at(LocalDateTime.now())
-                .delete_yn('n')
+                .endYn('N')
                 .state('Q')
                 .uid(authInfo.getId())
                 .build();
