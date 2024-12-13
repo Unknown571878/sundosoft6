@@ -37,8 +37,8 @@
       <!-- 게시글 수정, 삭제, 목록으로 돌아가기 버튼 -->
       <div class="form-actions">
         <button onclick="window.location.href='/qna/inquiry';">목록으로 돌아가기</button>
-        <form th:action="@{/qna/end/{pid}(pid=${main.id})}" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');">
-          <button type="submit">삭제</button>
+        <form th:action="@{/qna/end/{pid}(pid=${qna.id})}" method="POST" onsubmit="return confirm('문의를 마치시겠습니까?');">
+          <button type="submit">문의 종료</button>
         </form>
       </div>
     </div>
