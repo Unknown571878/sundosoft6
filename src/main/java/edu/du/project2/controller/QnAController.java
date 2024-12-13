@@ -55,7 +55,7 @@ public class QnAController {
     }
 
     @GetMapping("/inquiry")
-    public String qna(Model model, @PageableDefault(page=0,size=20) Pageable pageable, HttpSession session) {
+    public String qna(Model model, @PageableDefault(page=0,size=10) Pageable pageable, HttpSession session) {
         // 로그인을 확인하고 로그인이 되어있지 않을 경우 메인으로 보냄
         if (session.getAttribute("authInfo") == null) {
             MessageDto message = new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null);
