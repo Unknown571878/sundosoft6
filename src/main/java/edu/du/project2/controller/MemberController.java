@@ -68,7 +68,6 @@ public class MemberController {
             session.setAttribute("loggedInUser", request.getEmail()); // 세션에 사용자 이메일 저장
             return "redirect:/admin"; // 관리자는 관리자 페이지로 리디렉션
         }
-
         session.setAttribute("loggedInUser", request.getEmail()); // 세션에 사용자 이메일 저장
         return "redirect:/"; // 일반 사용자는 홈 페이지로 리디렉션
     }
