@@ -22,7 +22,7 @@
       </thead>
       <tbody class="post-tbody-tr">
       <tr class="post-tbody-tr" th:if="${#lists.size(inquirys)} > 0" th:each="inquiry, stat : ${inquirys}">
-        <td th:text="${inquiry.id}"></td>
+        <td th:text="${#lists.size(posts)} - ${stat.index}"></td>
         <td class="title"><a href="/qna/inquiryDetail?id=" th:attrappend="href=${inquiry.id}" th:text="${inquiry.title}"></a></td>
         <td th:text="${#temporals.format(inquiry.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td th:text="${#strings.equals(inquiry.state, 'Q')} ? '대기중' : '완료'"></td>

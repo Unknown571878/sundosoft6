@@ -5,6 +5,7 @@ import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.Member;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.repository.MemberRepository;
+import edu.du.project2.service.AuthInfo;
 import edu.du.project2.service.MemberService;
 import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -65,11 +66,12 @@ public class MemberController {
         }
         Member member = memberRepository.findByEmail(request.getEmail()).orElse(null); // 이메일로 회원 조회
         if (member != null && member.isAdmin()) { // 관리자인지 확인
-            session.setAttribute("loggedInUser", request.getEmail()); // 세션에 사용자 이메일 저장
+            AuthInfo authInfo = new AuthInfo(member.getId(), member.getEmail(), member.getName(), member.getRole()); // 관리자 정보를 AuthInfo에 입력
+            session.setAttribute("authInfo", authInfo); // 세션에 AuthInfo 저장
             return "redirect:/admin"; // 관리자는 관리자 페이지로 리디렉션
         }
-
-        session.setAttribute("loggedInUser", request.getEmail()); // 세션에 사용자 이메일 저장
+        AuthInfo authInfo = new AuthInfo(member.getId(), member.getEmail(), member.getName(), member.getRole()); // 회원 정보를 AuthInfo에 입력
+        session.setAttribute("authInfo", authInfo); // 세션에 AuthInfo 저장
         return "redirect:/"; // 일반 사용자는 홈 페이지로 리디렉션
     }
 

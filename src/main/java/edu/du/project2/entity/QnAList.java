@@ -24,7 +24,7 @@ public class QnAList {
     private Long id;
     private String title;
     private LocalDateTime created_at;
-    private char delete_yn;
+    private char endYn;
     private char state;
     private Long uid;
 }

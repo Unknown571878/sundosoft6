@@ -35,25 +35,6 @@ public class QnAController {
         return "/common/messageRedirect";
     }
 
-    @GetMapping("/1")
-    public String index1(HttpSession session) {
-        if (session.getAttribute("authInfo") != null) {
-            session.invalidate();
-        }
-        AuthInfo authInfo = new AuthInfo(1L, "admin@test.com", "관리자", "admin");
-        session.setAttribute("authInfo", authInfo);
-        return "/qna/1";
-    }
-    @GetMapping("/2")
-    public String index2(HttpSession session) {
-        if (session.getAttribute("authInfo") != null) {
-            session.invalidate();
-        }
-        AuthInfo authInfo = new AuthInfo(2L, "test@test.com", "테스터", "user");
-        session.setAttribute("authInfo", authInfo);
-        return "/qna/2";
-    }
-
     @GetMapping("/inquiry")
     public String qna(Model model, @PageableDefault(page=0,size=10) Pageable pageable, HttpSession session) {
         // 로그인을 확인하고 로그인이 되어있지 않을 경우 메인으로 보냄
@@ -63,7 +44,7 @@ public class QnAController {
         }
         // 현재 사용자의 세션 정보 받아서 불러옴
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        if (authInfo.getRole().equals("admin")) {
+        if (authInfo.getRole().equals("ADMIN")) {
             List<QnAList> list = qnAListRepository.findAllByOrderByIdDesc();
 
             final int start = (int) pageable.getOffset();
@@ -85,6 +66,7 @@ public class QnAController {
         final Page<QnAList> page = new PageImpl<>(posts.subList(start, end), pageable, posts.size());
         // 페이지 객체를 모델에 추가하여 뷰에서 접근 가능하도록 함
         model.addAttribute("inquirys", page);
+        model.addAttribute("posts", posts);
         return "/qna/inquiry";
     }
 
@@ -110,7 +92,7 @@ public class QnAController {
         QnAList qnalist = QnAList.builder()
                 .title(list.getTitle())
                 .created_at(LocalDateTime.now())
-                .delete_yn('n')
+                .endYn('N')
                 .state('Q')
                 .uid(list.getUid())
                 .build();
