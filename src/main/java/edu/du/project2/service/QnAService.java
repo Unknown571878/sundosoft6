@@ -42,6 +42,16 @@ public class QnAService {
         return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 
+    public List<QnAList> getInquiryNum(AuthInfo authInfo) {
+        List<QnAList> lists;
+        if (authInfo.getRole().equals("ADMIN")) {
+            lists = qnAListRepository.findAllByOrderByIdDesc();
+        } else {
+            lists = qnAListRepository.findAllByUidOrderByIdDesc(authInfo.getId());
+        }
+        return lists;
+    }
+
     public QnAList getInquiryDetail(Long id) {
         return qnAListRepository.findById(id).orElse(null);
     }
