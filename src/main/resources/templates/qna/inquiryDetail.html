@@ -16,7 +16,7 @@
       <div class="post-detail">
         <h2 th:text="${qna.title}">제목</h2>
         <p class="post-meta">
-          <span th:text="${session.authInfo.name}">작성자</span>|
+          <span th:text="${member.name}">작성자</span>|
           <span th:text="'작성일: ' + ${#temporals.format(qna.created_at, 'yyyy-MM-dd HH:mm:ss')}">작성일</span>
         </p>
         <div th:each="list : ${lists}" th:if="${lists != null}">
@@ -27,7 +27,7 @@
             <p th:text="${list.content}" class="message-box admin-message"></p>
           </div>
         </div>
-          <form class="comments-section-form" action="/qna/answerInsert" method="POST" th:if="${#strings.equals(lists[lists.size() - 1].state, 'A') or session.authInfo.role.equals('admin')}">
+          <form class="comments-section-form" action="/qna/answerInsert" method="POST" th:if="${(#strings.equals(lists[lists.size() - 1].state, 'A') or session.authInfo.role.equals('ADMIN')) and #strings.equals(qna.endYn, 'N')}">
             <input type="hidden" id="id" name="id" th:value="${qna.id}">
             <input type="hidden" id="role" name="role" th:value="${session.authInfo.role}">
             <label for="content">답글 작성</label>
@@ -37,7 +37,7 @@
       <!-- 게시글 수정, 삭제, 목록으로 돌아가기 버튼 -->
       <div class="form-actions">
         <button onclick="window.location.href='/qna/inquiry';">목록으로 돌아가기</button>
-        <form th:action="@{/qna/end/{pid}(pid=${qna.id})}" method="POST" onsubmit="return confirm('문의를 마치시겠습니까?');">
+        <form th:action="@{/qna/end/{id}(id=${qna.id})}" method="POST" onsubmit="return confirm('문의를 마치시겠습니까?');" th:if="${#strings.equals(qna.endYn, 'N') and #strings.equals(lists[lists.size() - 1].state, 'A')}">
           <button type="submit">문의 종료</button>
         </form>
       </div>
