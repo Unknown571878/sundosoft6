@@ -8,6 +8,7 @@ import edu.du.project2.repository.QnA_ListRepository;
 import edu.du.project2.service.AuthInfo;
 import edu.du.project2.service.MessageDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/qna")
+@Slf4j
 public class QnAController {
 
     private final QnA_ListRepository qnAListRepository;
@@ -54,11 +56,11 @@ public class QnAController {
 
     @GetMapping("/inquiry")
     public String qna(Model model, @PageableDefault(page=0,size=20) Pageable pageable, HttpSession session) {
-//        // 로그인을 확인하고 로그인이 되어있지 않을 경우 메인으로 보냄
-//        if (session.getAttribute("authInfo") == null) {
-//            MessageDto message = new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null);
-//            return showMessageAndRedirect(message, model);
-//        }
+        // 로그인을 확인하고 로그인이 되어있지 않을 경우 메인으로 보냄
+        if (session.getAttribute("authInfo") == null) {
+            MessageDto message = new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
         // 현재 사용자의 세션 정보 받아서 불러옴
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         if (authInfo.getRole().equals("admin")) {
