@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>문의하기</title>
+  <link rel="stylesheet" href="/css/inquiryDetail.css">
+</head>
+<body>
+  <div class="post-detail-main">
+    <div class="container">
+      <!-- 게시글 내용 표시 -->
+      <div class="post-detail">
+        <h2 th:text="${qna.title}">제목</h2>
+        <p class="post-meta">
+          <span th:text="${session.authInfo.name}">작성자</span>|
+          <span th:text="'작성일: ' + ${#temporals.format(qna.created_at, 'yyyy-MM-dd HH:mm:ss')}">작성일</span>
+        </p>
+        <div th:each="list : ${lists}" th:if="${lists != null}">
+          <div th:if="${#strings.equals(list.state, 'Q')}">
+            <p th:text="${list.content}" class="message-box user-message"></p>
+          </div>
+          <div th:if="${#strings.equals(list.state, 'A')}">
+            <p th:text="${list.content}" class="message-box admin-message"></p>
+          </div>
+        </div>
+          <form class="comments-section-form" action="/qna/answerInsert" method="POST" th:if="${#strings.equals(lists[lists.size() - 1].state, 'A') or session.authInfo.role.equals('admin')}">
+            <input type="hidden" id="id" name="id" th:value="${qna.id}">
+            <input type="hidden" id="role" name="role" th:value="${session.authInfo.role}">
+            <label for="content">답글 작성</label>
+            <textarea name="content" id="content" rows="3" required></textarea>
+            <button type="submit">답글 작성</button>
+          </form>
+      <!-- 게시글 수정, 삭제, 목록으로 돌아가기 버튼 -->
+      <div class="form-actions">
+        <button onclick="window.location.href='/qna/inquiry';">목록으로 돌아가기</button>
+<!--        <form th:action="@{/post/postDelete/{pid}(pid=${main.id})}" method="POST" onsubmit="return confirm('정말 삭제하시겠습니까?');">-->
+<!--          <button type="submit">삭제</button>-->
+<!--        </form>-->
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
