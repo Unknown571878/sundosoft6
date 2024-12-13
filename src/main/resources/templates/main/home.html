@@ -20,49 +20,10 @@
 
 <!-- ----------------------------------------------- -->
 <!-- 최상단 헤더: 로그인 및 회원가입 링크를 포함하는 섹션 -->
-<header>
-  <!-- top-header.html -->
-  <div class="top-header">
-    <div class="container">
-      <div></div>
-      <th:block th:unless="${isLoggedIn}">
-        <a href="/login" id="loginLink" title="로그인">로그인</a>
-        <a th:href="@{/register}" title="회원가입">회원가입</a>
-      </th:block>
-      <th:block th:if="${isLoggedIn}">
-        <a href="/logout">로그아웃</a>
-      </th:block>
-    </div>
-  </div>
-
-  <div class="main-header">
-    <div class="container">
-      <div class="container-fluid">
-        <h1 class="brand-title">
-          <a href="/" class="text-decoration-none">Urban Nexus</a>
-        </h1>
-        <div class="nav-links">
-          <a th:href="@{/board/List}" class="nav-link">공지사항</a>
-<!--          수정해야함-->
-          <a href="/inquiry" class="nav-link">입지분석</a>
-          <a href="/inquiry" class="nav-link">데이터관리</a>
-          <a href="/qna/inquiry" class="nav-link">문의사항</a>
-          <a href="/inquiry" class="nav-link">이용안내</a>
-        </div>
-        <form class="search-form">
-          <input type="text" placeholder="검색어를 입력해주세요">
-          <button type="submit">
-            <img src="/images/icons8-search-30.png" alt="Search" width="20" height="20">
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-  </div>
-</header>
+<th:block th:replace="/layout/header :: headerLayout"></th:block>
 
 <!-- 메인 시작 -->
-<main>
+<main class="ft">
   <div class="footer-container">
 
     <!-- 상단: 캐러셀 섹션 (슬라이드 이미지) -->
@@ -155,6 +116,7 @@
     </div>
   </div>
 </main>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
 
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
