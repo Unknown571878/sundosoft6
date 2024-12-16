@@ -5,6 +5,10 @@ import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +26,19 @@ public class AdminController {
 
 
     @GetMapping("/noticeList")
-    public String noticeList(Model model) {
+    public String noticeList(Model model,
+                             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
-        model.addAttribute("notices", notices);
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min(start + pageable.getPageSize(), notices.size());
+        final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
+        model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
         return "notice/list";
+    }
+
+    @GetMapping("/noticeWrite")
+    public String noticeWrite() {
+        return "notice/write";
     }
 
     @PostMapping("/createNotice")
@@ -35,7 +48,7 @@ public class AdminController {
         noticeService.createNotice(title, content);
 
         // 공지사항 작성 후 관리자 페이지로 리디렉션
-        return "redirect:/admin";
+        return "redirect:/noticeList";
     }
 
     @GetMapping("/noticeDetail")
