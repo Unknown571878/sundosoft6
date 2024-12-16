@@ -1,5 +1,6 @@
 package edu.du.project2.controller;
 
+import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,10 +19,20 @@ public class AdminController {
     private final NoticeService noticeService;
 
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String admin() {
+        return "admin/adminPage";
+    }
+
+    @GetMapping("/noticeList")
+    public String noticeList(Model model,HttpSession session) {
+
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        if (authInfo == null) {
+            return "redirect:/login";
+        }
         List<Notice> notices = noticeService.getAllNotices();
         model.addAttribute("notices", notices);
-        return "admin/adminPage";
+        return "notice/list";
     }
 
     @PostMapping("/createNotice")
@@ -31,5 +43,28 @@ public class AdminController {
 
         // 공지사항 작성 후 관리자 페이지로 리디렉션
         return "redirect:/admin";
+    }
+
+    @GetMapping("/noticeDetail")
+    public String noticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
+        Notice notice = noticeService.selectNoticeDetail(id);
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        if (authInfo != null) {
+            model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
+        }
+        model.addAttribute("notice", notice);
+        return "notice/detail";
+    }
+
+    @PostMapping("/updateNotice")
+    public String updateNotice(Notice notice) {
+        noticeService.updateNotice(notice);
+        return "redirect:/noticeList";
+    }
+
+    @PostMapping("/deleteNotice")
+    public String deleteNotice(@RequestParam Long id) {
+        noticeService.deleteNotice(id);
+        return "redirect:/noticeList";
     }
 }

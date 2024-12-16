@@ -30,6 +30,19 @@ public class MemberService {
                 memberRepository.save(admin);
     }
 
+    @PostConstruct
+    public void createUserAccount() {
+        Member user = new Member();
+        user.setEmail("user@user.com");
+        user.setPassword(passwordEncoder.encode("1234"));
+        user.setName("유저");
+        user.setTel("000-0000-0000");
+        user.setRole("USER");
+
+        // 관리자 정보를 저장
+        memberRepository.save(user);
+    }
+
 
     public String registerMember(MemberRequest request) {
         if (memberRepository.findByEmail(request.getEmail()).isPresent()) {

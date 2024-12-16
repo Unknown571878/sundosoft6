@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  .board_list {
+    width: 100%;
+    border-collapse: collapse; /* 테이블 경계선 합치기 */
+    margin: 20px 0;
+  }
+
+  .board_list th, .board_list td {
+    border: 1px solid #ddd; /* 테이블 셀 경계선 */
+    padding: 10px; /* 셀 내부 여백 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    vertical-align: middle; /* 세로 가운데 정렬 */
+  }
+
+  .board_list th {
+    background-color: #f4f4f4; /* 헤더 배경색 */
+    font-weight: bold;
+  }
+
+  .board_list td a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #333; /* 링크 색상 */
+  }
+
+  .board_list td a:hover {
+    color: #007bff; /* 링크 호버 시 색상 변경 */
+  }
+</style>
+<body>
+<h2>공지사항 목록</h2>
+
+<!-- 공지사항 목록 출력 -->
+<table class="board_list">
+  <colgroup>
+    <col width="15%"/>
+    <col width="*"/>
+    <col width="15%"/>
+    <col width="20%"/>
+  </colgroup>
+  <thead>
+  <tr>
+    <th scope="col">번호</th>
+    <th scope="col">제목</th>
+    <th scope="col">조회수</th>
+    <th scope="col">작성일</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="notice : ${notices}">
+    <td th:text="${notice.id}"></td>
+    <td>
+      <a th:href="@{/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
+    </td>
+    <td th:text="${notice.hits}"></td>
+    <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+  </tr>
+  </tbody>
+</table>
+<a th:if="${session.authInfo.role == 'ADMIN'}" th:href="@{/admin}">목록으로</a>
+<a th:if="${session.authInfo.role != 'ADMIN'}" th:href="@{/}">목록으로</a>
+</body>
+</html>
