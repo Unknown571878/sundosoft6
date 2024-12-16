@@ -56,7 +56,8 @@ public class QnAController {
     public String qnaDetail(@RequestParam("id") Long id, Model model) {
         model.addAttribute("qna", qnAService.getInquiryDetail(id));
         model.addAttribute("lists", qnAService.getInquiryReplies(id));
-        Member member = memberRepository.findById(id).get();
+        QnAList qnAList = qnAService.getInquiryDetail(id);
+        Member member = memberRepository.findById(qnAList.getUid()).get();
         model.addAttribute("member", member);
         return "/qna/inquiryDetail";
     }
