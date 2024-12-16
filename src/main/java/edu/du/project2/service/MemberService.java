@@ -53,6 +53,7 @@ public class MemberService {
         member.setPassword(passwordEncoder.encode(request.getPassword())); // 비밀번호 암호화
         member.setName(request.getName());
         member.setTel(request.getTel());
+        member.setZipcode(request.getZipcode());
         member.setAddress(request.getAddress());
         member.setDetailAddress(request.getDetailAddress());
         member.setRole("USER");
