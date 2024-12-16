@@ -43,12 +43,15 @@ thead th {
     border-bottom: 2px solid #ddd;
 }
 
-.post-tbody-tr {
+.post-tbody-tr1 {
+    border-bottom: 1px solid #ddd;
+}
+.post-tbody-tr2 {
     border-bottom: 1px solid #ddd;
 }
 
 /* 완료된 작업에 대한 스타일 */
-.post-tbody-tr.completed {
+.post-tbody-tr2.completed {
     opacity: 0.5; /* 불투명 처리 */
     /*text-decoration: line-through; !* 선택적 취소선 *!*/
 }
