@@ -10,13 +10,11 @@
 <body>
 <div class="loginform-container">
   <h2 class="text-center mb-4">회원가입</h2>
-<<<<<<< HEAD
   <!-- 에러 메시지 출력 -->
   <div th:if="${error}" class="alert alert-danger" role="alert">
     <span th:text="${error}"></span>
   </div>
   <form th:action="@{/register}" method="post">
-=======
     <form id="checkEmail">
         <div class="mt-3 d-flex align-items-center">
             <!--        <label for="email">이메일</label>-->
@@ -50,7 +48,6 @@
     </form>
 
   <form action="/register" method="post">
->>>>>>> e3160569b9f5da75e7ee953e5ba9406924c5f844
     <!-- 이름 입력 필드 -->
     <div class="mb-3">
       <input type="text" name="name" class="form-input" placeholder="이름을 입력하세요" required oninput="validateName(this)">
@@ -102,6 +99,7 @@
     <button type="submit" class="btn btn-outline-secondary w-100">회원가입</button>
 
     <a th:href="@{/login}" class="btn btn-outline-secondary border border-secondary rounded-pill w-100 mb-2">로그인</a>
+  </form>
   </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
