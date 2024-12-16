@@ -4,10 +4,11 @@ import lombok.Data;
 
 @Data
 public class MemberRequest {
-    String email;
-    String password;
-    String name;
-    String tel;
-    String address;
-    String detailAddress;
+    private String email;
+    private String password;
+    private String name;
+    private String tel;
+    private String zipcode;
+    private String address;
+    private String detailAddress;
 }

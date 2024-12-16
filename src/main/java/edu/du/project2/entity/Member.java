@@ -31,6 +31,7 @@ public class Member {
     @Column(nullable = false)
     private String tel;
 
+    private String zipcode;
     private String address;
     @Column(name = "detail_address")
     private String detailAddress;
@@ -41,4 +42,10 @@ public class Member {
         return "ADMIN".equals(this.role); // role이 "ADMIN"이면 관리자
     }
 
+    @Builder
+    public void Address(String zipcode, String address, String detailAddress) {
+        this.zipcode = zipcode;
+        this.address = address;
+        this.detailAddress = detailAddress;
+    }
 }
