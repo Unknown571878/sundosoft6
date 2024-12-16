@@ -26,6 +26,7 @@ public class Project2Application {
     public void init() {
         MemberRequest memberRequest = new MemberRequest();
         memberRequest.setTel("");
+        memberRequest.setLoginId("123");
         memberRequest.setEmail("123@123");
         memberRequest.setPassword("123");
         memberRequest.setName("test1");

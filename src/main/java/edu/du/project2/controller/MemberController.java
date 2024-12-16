@@ -2,23 +2,28 @@ package edu.du.project2.controller;
 
 
 import edu.du.project2.dto.AuthInfo;
+import edu.du.project2.dto.LoginDto;
 import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.Member;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
@@ -56,13 +61,14 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(MemberRequest request, Model model, HttpSession session) {
-        boolean isLogin = memberService.loginMember(request);
+    public String login(@ModelAttribute LoginDto dto, Model model, HttpSession session) {
+        boolean isLogin = memberService.loginMember(dto);
+        log.info("로그인 isLogin: {}", isLogin);
         if (!isLogin) {
-            model.addAttribute("error", "이메일 또는 비밀번호가 틀립니다.");
+            model.addAttribute("error", "ID 또는 비밀번호가 틀립니다.");
             return "user/login";
         }
-        Member member = memberRepository.findByEmail(request.getEmail()).orElse(null); // 이메일로 회원 조회
+        Member member = memberRepository.findByLoginId(dto.getLoginId()).orElse(null); // 이메일로 회원 조회
         if (member != null && member.isAdmin()) { // 관리자인지 확인
             AuthInfo authInfo = new AuthInfo(member.getId(), member.getEmail(), member.getName(), member.getRole()); // 관리자 정보를 AuthInfo에 입력
             session.setAttribute("authInfo", authInfo); // 세션에 AuthInfo 저장
