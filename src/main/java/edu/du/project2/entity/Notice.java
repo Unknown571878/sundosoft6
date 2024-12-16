@@ -27,9 +27,6 @@ public class Notice {
     private Integer hits;
 
     @Column(nullable = false)
-    private boolean deletedYn;
-
-    @Column(nullable = false)
     private LocalDateTime createdAt;  // 생성일시
 
     // 생성일시 자동 설정

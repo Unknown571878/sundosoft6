@@ -4,15 +4,15 @@ package edu.du.project2.controller;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.Member;
-import edu.du.project2.entity.Notice;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.service.MemberService;
-import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -21,14 +21,11 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
-    private final NoticeService noticeService;
 
     @GetMapping("/")
     public String index(HttpSession session, Model model) {
-        String loggedInUser = (String) session.getAttribute("loggedInUser");
-        if (loggedInUser != null) {
-            List<Notice> notices = noticeService.getAllNotices();
-            model.addAttribute("notices", notices);
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        if (authInfo != null) {
             model.addAttribute("isLoggedIn", true);  // 로그인된 상태
         } else {
             model.addAttribute("isLoggedIn", false); // 로그인되지 않은 상태
@@ -76,8 +73,11 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletResponse response) {
         session.invalidate();  // 세션 무효화 (로그아웃 처리)
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
         return "redirect:/login";  // 로그인 페이지로 리디렉션
     }
 

@@ -13,12 +13,12 @@
   <!-- top-header.html -->
   <div class="top-header">
     <div class="container">
-      <th:block th:unless="${isLoggedIn}">
-        <a href="/login" id="loginLink" title="로그인">로그인</a>
-        <a th:href="@{/register}" title="회원가입">회원가입</a>
-      </th:block>
       <th:block th:if="${isLoggedIn}">
         <a href="/logout">로그아웃</a>
+      </th:block>
+      <th:block th:unless="${isLoggedIn}">
+        <a href="/login">로그인</a>
+        <a th:href="@{/register}" title="회원가입">회원가입</a>
       </th:block>
     </div>
   </div>
@@ -31,7 +31,7 @@
           <a href="/" class="text-decoration-none">Urban Nexus</a>
         </h1>
         <div class="nav-links">
-          <a th:href="@{/board/List}" class="nav-link">공지사항</a>
+          <a  th:href="@{/noticeList}" class="nav-link">공지사항</a>
           <!--          수정해야함-->
           <a href="/inquiry" class="nav-link">입지분석</a>
           <a href="/inquiry" class="nav-link">데이터관리</a>
