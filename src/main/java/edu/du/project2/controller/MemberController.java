@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,7 +47,7 @@ public class MemberController {
             return "user/loginform";
         }
         model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다!");
-        return "redirect:user/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -73,8 +74,9 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
         session.invalidate();  // 세션 무효화 (로그아웃 처리)
+        redirectAttributes.addFlashAttribute("message", "로그아웃 하였습니다.");
         return "redirect:/login";  // 로그인 페이지로 리디렉션
     }
 
