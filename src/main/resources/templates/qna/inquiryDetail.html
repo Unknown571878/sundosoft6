@@ -20,11 +20,11 @@
           <span th:text="'작성일: ' + ${#temporals.format(qna.created_at, 'yyyy-MM-dd HH:mm:ss')}">작성일</span>
         </p>
         <div th:each="list : ${lists}" th:if="${lists != null}">
-          <div th:if="${#strings.equals(list.state, 'Q')}">
-            <p th:text="${list.content}" class="message-box user-message"></p>
+          <div th:if="${#strings.equals(list.state, 'Q')}"  class="message-box">
+            <p th:text="${list.content}" class="user-message"></p>
           </div>
-          <div th:if="${#strings.equals(list.state, 'A')}">
-            <p th:text="${list.content}" class="message-box admin-message"></p>
+          <div th:if="${#strings.equals(list.state, 'A')}" class="message-box">
+            <p th:text="${list.content}" class="admin-message"></p>
           </div>
         </div>
           <form class="comments-section-form" action="/qna/answerInsert" method="POST" th:if="${(#strings.equals(lists[lists.size() - 1].state, 'A') or session.authInfo.role.equals('ADMIN')) and #strings.equals(qna.endYn, 'N')}">
