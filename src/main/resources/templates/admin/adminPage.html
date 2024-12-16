@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
   <title>관리자 페이지</title>
+  <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
-<th:block th:replace="/layout/header :: headerLayout"></th:block>
-<div>
+<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+
 <h1>관리자 페이지</h1>
-</div>
 </body>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>

@@ -25,12 +25,6 @@ public class AdminController {
     private final NoticeService noticeService;
 
 
-    @GetMapping("/admin")
-    public String admin() {
-        return "admin/adminPage";
-    }
-
-
     @GetMapping("/noticeList")
     public String noticeList(Model model,
                              @PageableDefault(page = 0, size = 10) Pageable pageable) {
