@@ -14,7 +14,8 @@
   <div th:if="${error}" class="alert alert-danger" role="alert">
     <span th:text="${error}"></span>
   </div>
-  <form th:action="@{/register}" method="post">
+
+    <!--  이메일 인증 폼  -->
     <form id="checkEmail">
         <div class="mt-3 d-flex align-items-center">
             <!--        <label for="email">이메일</label>-->
@@ -28,10 +29,10 @@
             <button type="submit" id="email-btn" class="btn btn-outline-primary btn-sm">이메일 인증</button>
         </div>
     </form>
-<!--  인증번호 입력  -->
+    <!--  인증번호 입력 폼  -->
     <form id="checkCode" class="d-none">
         <div class="mt-3 d-flex align-items-center">
-<!--            <label for="code">인증번호</label>-->
+    <!--            <label for="code">인증번호</label>-->
             <input class="form-input me-2"
                    type="text"
                    id="code"
@@ -43,8 +44,9 @@
         </div>
     </form>
 
-  <form action="/register" method="post">
-<!--   인증한 이메일   -->
+  <!-- 회원 데이터 입력 폼 -->
+  <form th:action="@{/register}" method="post">
+    <!--   인증한 이메일   -->
     <input type="hidden" id="hiddenEmail" name="email" />
       <!-- 이름 입력 필드 -->
     <div class="mb-3">

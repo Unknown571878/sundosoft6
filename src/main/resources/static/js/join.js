@@ -18,6 +18,7 @@ $(document).ready(function (){
             data: JSON.stringify({ email: emailInput.val() }),
             success: function (response) {
                 alert('이메일 인증 번호 전송 완료');
+                emailBtn.prop('disabled', true).text('인증 성공');
                 emailInput.prop('readonly', true); // 이메일 입력란 비활성화
                 $('#checkCode').removeClass('d-none'); // 인증번호 확인 폼 표시
             },
@@ -26,10 +27,6 @@ $(document).ready(function (){
                 console.error(xhr.responseText);
                 emailInput.prop('readonly', false);
                 emailBtn.prop("disabled", false).text("이메일 인증");
-                emailBtn.removeClass('btn-outline-primary').addClass('btn-outline-success');
-                emailBtn.text("인증 완료");
-                codeBtn.removeClass('btn-outline-primary').addClass('btn-outline-success');
-                codeBtn.text("인증 완료");
             }
         });
     });
@@ -49,7 +46,10 @@ $(document).ready(function (){
                 codeInput.prop('readonly', true);
                 hiddenEmailField.val(email);
                 console.log('Hidden email field value:', hiddenEmailField.val());
-                emailBtn.prop('disabled', true).text('인증 성공');
+                emailBtn.removeClass('btn-outline-primary').addClass('btn-outline-success');
+                emailBtn.text("인증 완료");
+                codeBtn.removeClass('btn-outline-primary').addClass('btn-outline-success');
+                codeBtn.text("인증 완료");
             },
             error: function (error) {
                 alert('인증 실패. 잘못된 인증번호입니다.');
