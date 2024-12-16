@@ -2,13 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>게시물 상세</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/noticeDetail.css">
+  <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
-
 </head>
 <body>
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
-
-<h1>게시물 상세</h1>
+<div class="ft">
+  <div class="container">
+    <div class="main-title">
+<h1>공지사항 상세</h1>
+  <div class="split--div"></div>
+  <div class="container">
+    <div class="split--div-post"></div>
+  </div>
 <form id="frm" method="post">
   <input type="hidden" name="id" th:value="${notice.id}" />
 <table class="board_detail">
@@ -37,10 +46,14 @@
   </tbody>
 </table>
 </form>
-<div>
-<a href="#this" id="list" class="btn" >목록으로</a>
-<a href="#this" id="edit" class="btn" th:if="${session.authInfo.role == 'ADMIN'}">수정하기</a>
-<a href="#this" id="delete" class="btn" th:if="${session.authInfo.role == 'ADMIN'}">삭제하기</a>
+  <div class="button-group">
+  <a href="#this" id="list" class="mbtn" >목록으로</a>
+  <a href="#this" id="edit" class="rbtn" th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}">수정하기</a>
+  <a href="#this" id="delete" class="dbtn" th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}">삭제하기</a>
+  </div>
+  </div>
+  </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){

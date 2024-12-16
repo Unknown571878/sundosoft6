@@ -73,11 +73,8 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, HttpServletResponse response) {
+    public String logout(HttpSession session) {
         session.invalidate();  // 세션 무효화 (로그아웃 처리)
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.setHeader("Pragma", "no-cache");
-        response.setDateHeader("Expires", 0);
         return "redirect:/login";  // 로그인 페이지로 리디렉션
     }
 
