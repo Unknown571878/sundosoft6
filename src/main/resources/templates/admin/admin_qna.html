@@ -28,18 +28,18 @@
     </tr>
     </thead>
     <tbody>
-    <th:block th:each="list : ${qnAListList}">
+    <th:block th:each="list : ${qnaList}">
       <tr th:class="tr-click" th:id="${list.id}">
         <td th:text="${list.id}"></td>
         <td th:text="${list.title}"></td>
         <td th:text="${list.created_at}"></td>
-        <th:block th:each="member : ${memberList}">
+        <th:block th:each="member : ${member}">
           <th:block th:if="${list.uid.equals(member.id)}">
             <td th:text="${member.name}"></td>
           </th:block>
         </th:block>
         <td th:text="${#strings.equals(list.endYn, 'Y') ? '문의 종료' : (#strings.equals(list.state, 'Q') ? '대기중' : '답변 완료')}"></td>
-        <td th:each="qna : ${qnAList}">
+        <td th:each="qna : ${qna}">
           <div style="display: none">
             <span th:text="${qna.id}"></span>
             <span th:text="${qna.content}"></span>

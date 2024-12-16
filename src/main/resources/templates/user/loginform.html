@@ -10,6 +10,12 @@
 <body>
 <div class="loginform-container">
   <h2 class="text-center mb-4">회원가입</h2>
+  <!-- 에러 메시지 출력 -->
+  <div th:if="${error}" class="alert alert-danger" role="alert">
+    <span th:text="${error}"></span>
+  </div>
+
+    <!--  이메일 인증 폼  -->
     <form id="checkEmail">
         <div class="mt-3 d-flex align-items-center">
             <!--        <label for="email">이메일</label>-->
@@ -20,17 +26,13 @@
                    placeholder="이메일을 입력하세요"
                    required
             >
-            <button type="submit" class="btn btn-outline-primary btn-sm">이메일 인증</button>
+            <button type="submit" id="email-btn" class="btn btn-outline-primary btn-sm">이메일 인증</button>
         </div>
     </form>
-
-<!--    <div class="mt-3 d-flex align-items-center">-->
-<!--        <input type="text" name="emailck" id="emailck" class="form-input me-2" placeholder="인증번호를 작성해주세요" required>-->
-<!--        <button type="button" class="btn btn-outline-primary btn-sm" id="emailck-btn" onclick="EmailCheck()">인증번호 확인</button>-->
-<!--    </div>-->
+    <!--  인증번호 입력 폼  -->
     <form id="checkCode" class="d-none">
         <div class="mt-3 d-flex align-items-center">
-<!--            <label for="code">인증번호</label>-->
+    <!--            <label for="code">인증번호</label>-->
             <input class="form-input me-2"
                    type="text"
                    id="code"
@@ -38,12 +40,15 @@
                    placeholder="인증번호를 작성해주세요"
                    required
             >
-            <button type="submit" class="btn btn-outline-primary btn-sm">인증번호 확인</button>
+            <button type="submit" id="code-btn" class="btn btn-outline-primary btn-sm">인증번호 확인</button>
         </div>
     </form>
 
-  <form action="/register" method="post">
-    <!-- 이름 입력 필드 -->
+  <!-- 회원 데이터 입력 폼 -->
+  <form th:action="@{/register}" method="post">
+    <!--   인증한 이메일   -->
+    <input type="hidden" id="hiddenEmail" name="email" />
+      <!-- 이름 입력 필드 -->
     <div class="mb-3">
       <input type="text" name="name" class="form-input" placeholder="이름을 입력하세요" required oninput="validateName(this)">
     </div>
@@ -61,22 +66,9 @@
 
     <!-- 비밀번호 확인 입력 필드 -->
     <div class="mb-3">
-      <input type="password" id="userPasswordCheck" class="form-input" placeholder="비밀번호를 다시 입력하세요" required>
+      <input type="password" id="userPasswordCheck" class="form-input" placeholder="비밀번호를 다시 입력하세요" required oninput="validatePasswordCheck(this)">
       <div id="passwordError"></div>
     </div>
-
-    <input type="hidden" id="hiddenEmail" name="email" />
-    <!-- 이메일 입력 필드 -->
-<!--    <div class="mt-3 d-flex align-items-center">-->
-<!--      <input type="email" name="email" id="email" class="form-input me-2"  placeholder="이메일을 입력해주세요" required>-->
-<!--      <button type="button" class="btn btn-outline-primary btn-sm " id="check" onclick="checkEmail()">인증번호</button>-->
-<!--    </div>-->
-
-    <!-- 인증번호 확인 입력 필드 -->
-<!--    <div class="mt-3 d-flex align-items-center">-->
-<!--      <input type="text" name="emailck" id="emailck" class="form-input me-2" placeholder="인증번호를 작성해주세요" required>-->
-<!--      <button type="button" class="btn btn-outline-primary btn-sm" id="emailck-btn" onclick="EmailCheck()">인증번호 확인</button>-->
-<!--    </div>-->
 
     <!-- 주소 입력 필드 -->
     <div class="mt-3 d-flex align-items-center">
@@ -92,6 +84,9 @@
 
     <!-- 회원가입 버튼 -->
     <button type="submit" class="btn btn-outline-secondary w-100">회원가입</button>
+
+    <a th:href="@{/login}" class="btn btn-outline-secondary border border-secondary rounded-pill w-100 mb-2">로그인</a>
+  </form>
   </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

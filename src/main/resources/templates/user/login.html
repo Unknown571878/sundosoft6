@@ -29,6 +29,13 @@
       <label for="flexCheckDefault" style="font-size: 14px;">이메일 기억하기</label>  <!-- 글씨 크기 지정 -->
     </div>
 
+      <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
+          <span th:text="${error}"></span>
+      </div>
+      <div th:if="${message}" class="alert alert-success mt-3" role="alert">
+          <span th:text="${message}"></span>
+      </div>
+
     <!-- 로그인 버튼을 submit 버튼으로 변경 -->
     <button type="submit" class="btn btn-secondary w-100 border border-secondary rounded-pill mt-3 mb-1">로그인</button>
   </form>

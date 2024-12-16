@@ -61,13 +61,13 @@
 
     $("#edit").on("click", function(){
       var frm = $("#frm")[0];
-      frm.action = "/updateNotice";
+      frm.action = "/admin/updateNotice";
       frm.submit();
     });
 
     $("#delete").on("click", function(){
       var frm = $("#frm")[0];
-      frm.action = "/deleteNotice";
+      frm.action = "/admin/deleteNotice";
       frm.submit();
     });
   });
