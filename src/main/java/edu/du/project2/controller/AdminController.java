@@ -33,7 +33,7 @@ public class AdminController {
 
     @GetMapping("/noticeList")
     public String noticeList(Model model,
-                             @PageableDefault(page = 0, size = 5) Pageable pageable) {
+                             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
         final int start = (int) pageable.getOffset();
         final int end = Math.min(start + pageable.getPageSize(), notices.size());

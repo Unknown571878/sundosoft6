@@ -32,8 +32,8 @@
     <td>
       <a th:href="@{/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
     </td>
-    <td th:text="${notice.hits}"></td>
     <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+      <td th:text="${notice.hits}"></td>
   </tr>
   </tbody>
 
