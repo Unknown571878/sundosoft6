@@ -5,9 +5,7 @@
     document.head.appendChild(script);
 })();
 
-
-// Daum 우편번호 API 연동
-window.sample6_execDaumPostcode = function() {
+window.execPostCode = function() {
     new daum.Postcode({
         oncomplete: function(data) {
             document.querySelector("input[name='address.zipcode']").value = data.zonecode;
