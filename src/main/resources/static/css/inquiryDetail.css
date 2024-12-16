@@ -39,41 +39,34 @@ body {
     font-weight: 600;
 }
 
-/* 메시지 박스 스타일 */
 .message-box {
-    padding: 15px;
-    border-radius: 8px;
+    display: flex; /* 메시지 컨테이너를 플렉스 박스로 설정 */
+    justify-content: flex-start; /* 기본 정렬은 왼쪽 */
     margin: 15px 0;
-    width: calc(100% - 30px); /* 좌우 간격 조정 */
-    word-wrap: break-word;
+    width: 100%; /* 컨테이너 전체 너비 사용 */
     box-sizing: border-box;
 }
 
-/* 사용자 메시지 */
 .user-message {
     background-color: #6ab3ff;
     color: #fff;
-    text-align: left;
-    margin-left: 0 !important;
-    margin-right: auto !important;
+    margin-right: auto; /* 오른쪽으로 밀어냄 */
     max-width: 500px;
-    display: inline-block;
     word-wrap: break-word;
-    width: auto;
+    padding: 10px;
+    border-radius: 8px;
 }
 
-/* 관리자 메시지 */
 .admin-message {
     background-color: #ffe97d;
     color: #000;
-    text-align: right;
-    margin-left: auto !important;
-    margin-right: 0 !important;
+    margin-left: auto; /* 왼쪽으로 밀어냄 */
     max-width: 500px;
-    display: inline-block;
     word-wrap: break-word;
-    width: auto;
+    padding: 10px;
+    border-radius: 8px;
 }
+
 
 .comments-section-form {
     margin-top: 30px;
