@@ -1,6 +1,7 @@
 package edu.du.project2.controller;
 
 import edu.du.project2.dto.AuthInfo;
+import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -18,18 +20,15 @@ import java.util.List;
 public class AdminController {
     private final NoticeService noticeService;
 
+
     @GetMapping("/admin")
     public String admin() {
         return "admin/adminPage";
     }
 
-    @GetMapping("/noticeList")
-    public String noticeList(Model model,HttpSession session) {
 
-        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        if (authInfo == null) {
-            return "redirect:/login";
-        }
+    @GetMapping("/noticeList")
+    public String noticeList(Model model) {
         List<Notice> notices = noticeService.getAllNotices();
         model.addAttribute("notices", notices);
         return "notice/list";
