@@ -64,3 +64,23 @@ function validateDate(input) {
         input.setCustomValidity('');
     }
 }
+
+function validatePasswordCheck(input) {
+    const password = document.getElementById('password').value; // 비밀번호 필드 값
+    const errorDiv = document.getElementById('passwordError'); // 에러 메시지 표시 영역
+
+    if (input.value === '') {
+        // 입력 필드가 비어 있으면 에러 메시지 제거
+        input.setCustomValidity('');
+        errorDiv.textContent = '';
+    } else if (input.value !== password) {
+        // 비밀번호가 일치하지 않으면 에러 메시지 표시
+        input.setCustomValidity('비밀번호가 일치하지 않습니다.');
+        errorDiv.textContent = '비밀번호가 일치하지 않습니다.';
+    } else {
+        // 비밀번호가 일치하면 에러 메시지 제거
+        input.setCustomValidity('');
+        errorDiv.textContent = '';
+    }
+}
+

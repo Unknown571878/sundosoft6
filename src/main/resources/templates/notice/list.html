@@ -13,7 +13,7 @@
 <div class="ft">
   <div class="container">
     <div class="main-title">
-  <h1>공지사항 목록</h1>
+  <h1>공지사항</h1>
 
       <div class="split--div-post"></div>
     </div>
@@ -27,7 +27,7 @@
       </tr>
       </thead>
   <tbody>
-  <tr th:each="notice : ${notices}">
+  <tr th:each="notice : ${list.content}">
     <td th:text="${notice.id}"></td>
     <td>
       <a th:href="@{/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
@@ -36,12 +36,62 @@
     <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
   </tr>
   </tbody>
+
 </table>
+      <a th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}" th:href="@{/noticeWrite}"
+         class="write-button">작성</a>
     <a th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}" th:href="@{/admin}"
        class="write-button">뒤로가기</a>
     <a th:if="${session.authInfo == null or session.authInfo.role != 'ADMIN'}" th:href="@{/}"
        class="write-button">뒤로가기</a>
   </div>
+    <!-- 페이징 -->
+    <div th:if="${!list.isEmpty()}" class="text-center">
+        <!-- 전역 변수 선언 -->
+        <nav
+                th:with="pageNumber = ${list.pageable.pageNumber}, pageSize = ${list.pageable.pageSize}, totalPages = ${list.totalPages}, startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1}, tempEndPage = ${startPage + pageSize - 1}, endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+                aria-label="Page navigation"
+        >
+            <ul class="pagination justify-content-center">
+                <!-- 처음으로 이동 -->
+                <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="@{/noticeList(page=0)}">
+                        <span>&laquo;</span>
+                        <span class="sr-only">First</span>
+                    </a>
+                </li>
+
+                <!-- 이전으로 이동 -->
+                <li th:classappend="${list.first} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${list.first} ? '#' : @{/noticeList(page=${pageNumber - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+
+                <!-- 특정 페이지로 이동 -->
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+                    <a th:text="${page}" class="page-link" th:href="@{/noticeList(page=${page - 1})}"></a>
+                </li>
+
+                <!-- 다음으로 이동 -->
+                <li th:classappend="${list.last} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="${list.last} ? '#' : @{/noticeList(page=${pageNumber + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+
+                <!-- 마지막으로 이동 -->
+                <li th:classappend="${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
+                    <a class="page-link" th:href="@{/noticeList(page=${totalPages - 1})}">
+                        <span>&raquo;</span>
+                        <span class="sr-only">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
