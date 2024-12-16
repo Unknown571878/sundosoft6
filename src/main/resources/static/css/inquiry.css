@@ -47,6 +47,12 @@ thead th {
     border-bottom: 1px solid #ddd;
 }
 
+/* 완료된 작업에 대한 스타일 */
+.post-tbody-tr.completed {
+    opacity: 0.5; /* 불투명 처리 */
+    /*text-decoration: line-through; !* 선택적 취소선 *!*/
+}
+
 tbody tr:hover {
     background-color: #f1f1f1;
 }
