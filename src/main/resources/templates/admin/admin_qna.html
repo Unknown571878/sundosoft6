@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>관리자 페이지</title>
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/inquiry.css">
+
+</head>
+<body>
+<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+<div id="qnaForm">
+  <label for="select_answer">답변 상태 : </label>
+  <select id="select_answer">
+    <option value="0">전부</option>
+    <option value="1">대기중</option>
+    <option value="2">답면 완료</option>
+    <option value="3">문의 종료</option>
+  </select>
+  <table>
+    <thead>
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성일</th>
+      <th>질문자 이름</th>
+      <th>답변</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="list : ${qnAListList}">
+      <tr th:class="tr-click" th:id="${list.id}">
+        <td th:text="${list.id}"></td>
+        <td th:text="${list.title}"></td>
+        <td th:text="${list.created_at}"></td>
+        <th:block th:each="member : ${memberList}">
+          <th:block th:if="${list.uid.equals(member.id)}">
+            <td th:text="${member.name}"></td>
+          </th:block>
+        </th:block>
+        <td th:text="${#strings.equals(list.endYn, 'Y') ? '문의 종료' : (#strings.equals(list.state, 'Q') ? '대기중' : '답변 완료')}"></td>
+        <td th:each="qna : ${qnAList}">
+          <div style="display: none">
+            <span th:text="${qna.id}"></span>
+            <span th:text="${qna.content}"></span>
+            <span th:text="${qna.state}"></span>
+          </div>
+        </td>
+      </tr>
+    </th:block>
+    </tbody>
+  </table>
+</div>
+<script>
+  document.getElementById('select_answer').addEventListener('change', function() {
+    var selectedValue = this.value;  // 선택된 답변 상태 값
+    var rows = document.querySelectorAll('.tr-click');  // 모든 tr 요소 선택
+
+    rows.forEach(function(row) {
+      var statusCell = row.cells[4];  // '답변' 열이 5번째 (index 4)
+      var statusText = statusCell.textContent || statusCell.innerText;  // 상태 텍스트 추출
+
+      // 선택된 값에 맞는 행만 표시하고 나머지는 숨김
+      if (selectedValue === "0" || statusText === getStatusText(selectedValue)) {
+        row.style.display = "";  // 행 보이기
+      } else {
+        row.style.display = "none";  // 행 숨기기
+      }
+    });
+  });
+  // 선택된 답변 상태에 해당하는 텍스트 반환
+  function getStatusText(value) {
+    switch(value) {
+      case "1": return "대기중";
+      case "2": return "답변 완료";
+      case "3": return "문의 종료";
+      default: return "";  // 전부 (0)
+    }
+  }
+
+  document.querySelectorAll('.tr-click').forEach(function(tr){
+    tr.addEventListener('click', function () {
+      let index = tr.id.trim();
+      window.location.href = '/admin/admin_qnaDetail?id=' + index;
+    })
+  })
+</script>
+</body>
+</html>

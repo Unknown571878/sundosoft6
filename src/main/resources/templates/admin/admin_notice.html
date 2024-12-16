@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>관리자 페이지</title>
+  <link rel="stylesheet" href="/css/notice.css">
+  <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+<div class="ft">
+  <div class="container">
+    <div class="main-title">
+      <h1>공지사항 목록</h1>
+
+      <div class="split--div-post"></div>
+    </div>
+    <table class="post-table">
+      <thead>
+      <tr class="post-tbody-tr">
+        <th>번호</th>
+        <th>제목</th>
+        <th>조회수</th>
+        <th>작성일</th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="notice : ${notices}">
+      <tr class="tr-click" th:id="${notice.id}" >
+        <td th:text="${notice.id}"></td>
+        <td>
+          <a th:href="@{/admin/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
+        </td>
+        <td th:text="${notice.hits}"></td>
+        <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+      </tr>
+      </th:block>
+      </tbody>
+    </table>
+    <a th:href="@{/admin/admin_noticeWrite}" class="write-button">글쓰기</a>
+
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.tr-click').forEach(function(tr){
+    tr.addEventListener('click', function () {
+      let index = tr.id.trim();
+      window.location.href = '/admin/noticeDetail?id=' + index;
+    })
+  })
+</script>
+</body>
+</html>

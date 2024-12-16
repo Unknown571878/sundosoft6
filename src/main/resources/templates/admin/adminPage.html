@@ -1,42 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-
   <meta charset="UTF-8">
   <title>관리자 페이지</title>
-  <script>
-    // 공지사항 작성 폼을 토글하는 함수
-    function toggleNoticeForm() {
-      var form = document.getElementById("noticeForm");
-      if (form.style.display === "none" || form.style.display === "") {
-        form.style.display = "block";  // 폼을 보이게 함
-      } else {
-        form.style.display = "none";  // 폼을 숨김
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
+<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
 
 <h1>관리자 페이지</h1>
-
-<!-- 공지사항 작성 버튼 -->
-<button onclick="toggleNoticeForm()">공지사항 작성</button>
-
-<!-- 공지사항 작성 폼 (초기에는 숨겨짐) -->
-<div id="noticeForm" style="display:none;">
-  <form th:action="@{/createNotice}" method="post">
-    <label for="title">제목:</label>
-    <input type="text" id="title" name="title" required><br><br>
-
-    <label for="content">내용:</label>
-    <textarea id="content" name="content" required></textarea><br><br>
-
-    <button type="submit">작성</button>
-  </form>
-</div>
-<a href="/noticeList">공지사항</a>
-<a href="/logout">로그아웃</a>
 
 </body>
 </html>
