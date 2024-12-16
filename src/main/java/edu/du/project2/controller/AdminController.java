@@ -1,7 +1,5 @@
 package edu.du.project2.controller;
 
-
-
 import edu.du.project2.entity.Notice;
 import edu.du.project2.service.NoticeService;
 import lombok.RequiredArgsConstructor;
