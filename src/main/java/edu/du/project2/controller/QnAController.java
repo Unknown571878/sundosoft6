@@ -46,7 +46,7 @@ public class QnAController {
         }
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         Page<QnAList> inquiries = qnAService.getInquiries(authInfo, pageable);
-        model.addAttribute("inquirys", inquiries);
+        model.addAttribute("inquiries", inquiries);
         List<QnAList> lists = qnAService.getInquiryNum(authInfo);
         model.addAttribute("posts", lists);
         return "/qna/inquiry";
@@ -68,7 +68,8 @@ public class QnAController {
 
     @PostMapping("/inquiryInsert")
     public String qnaInsert(@ModelAttribute QnAList list,
-                            @RequestParam String content, Model model, HttpSession session) {
+                            @RequestParam String content,
+                            HttpSession session) {
         qnAService.insertInquiry(list, content, session);
         return "redirect:/qna/inquiry";
     }
