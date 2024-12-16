@@ -5,8 +5,8 @@ import edu.du.project2.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import javax.annotation.PostConstruct;
+
 @RequiredArgsConstructor
 @SpringBootApplication
 public class Project2Application {

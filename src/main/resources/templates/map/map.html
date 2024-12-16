@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>문의하기</title>
+  <link rel="stylesheet" href="/css/ol.css">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <script type="text/javascript" th:src="@{/js/ol.js}"></script>
+</head>
+<body>
+<th:block th:replace="/layout/header :: headerLayout"></th:block>
+<div class="ft">
+  <div id="map" style="width: 100%; height: 600px;"></div>
+  <div id="map_text"></div>
+  <div id="subway"></div>
+  <div id="map_position"></div>
+  <div id="population_text"></div>
+
+  <div>
+    <label for="wmsLayerCheckbox">WMS Layer 표시:</label>
+    <input type="checkbox" id="wmsLayerCheckbox">
+  </div>
+  <div>
+    <label for="populationCheckbox">인구 표시:</label>
+    <input type="checkbox" id="populationCheckbox">
+  </div>
+  <div>
+    <label for="subwayCheckbox">지하철</label>
+    <input type="checkbox" id="subwayCheckbox">
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // OpenLayers Map 객체 생성
+    var map = new ol.Map({
+      target: 'map', // map div에 지도 표시
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()  // OpenStreetMap 배경 지도
+        }), // 0번
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL, 자기 설정으로 수정  http://localhost:포트번호/geoserver/저장소/wms
+            params: {
+              'LAYERS': 'ne:test',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false  // 기본적으로 WMS 레이어가 보이지 않도록 설정
+        }),  //1번
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:population',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+          opacity: 0.8,  // 80% 투명도
+          zIndex: 90
+        }), // 2번 인구 데이터
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:subway',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+          opacity: 1,
+          zIndex: 100
+        })
+      ],
+      view: new ol.View({
+        projection: 'EPSG:4326',  // 지도 좌표계 설정
+        center: [126.978, 37.566],  // 서울의 경도, 위도 좌표
+        zoom: 11,  // 기본 줌 레벨
+        minZoom: 1, // 최소 줌 레벨 설정
+        maxZoom: 15, // 최대 줌 레벨 설정
+      })
+    });
+
+    // 체크박스를 클릭할 때 레이어의 가시성 토글
+    var wmsLayerCheckbox = document.getElementById('wmsLayerCheckbox');
+    wmsLayerCheckbox.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(1); // WMS 레이어
+      wmsLayer.setVisible(wmsLayerCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var populationCheckbox = document.getElementById('populationCheckbox');
+    populationCheckbox.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(2); // WMS 레이어
+      wmsLayer.setVisible(populationCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var subwayCheckbox = document.getElementById('subwayCheckbox');
+    subwayCheckbox.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(3); // WMS 레이어
+      wmsLayer.setVisible(subwayCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+
+    // 지도 클릭시
+    map.on('click', function (event) {
+      var coordinate = event.coordinate;
+      var view = map.getView();
+      var resolution = view.getResolution();
+      var projection = view.getProjection();
+
+      // 클릭한 위치 좌표
+      var lonLatText = '클릭한 위치의 위도 : ' +  coordinate[1].toFixed(6) + ', 경도 : ' + coordinate[0].toFixed(6); // 위도, 경도
+      let coordinateText = document.getElementById("map_position");
+      coordinateText.textContent = lonLatText;
+
+
+      // 클릭한 위치 이름
+      var url1 = map.getLayers().item(1).getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, {
+        'INFO_FORMAT': 'application/json'
+      });
+      if (url1) {
+        fetch(url1)
+                .then(response => response.json())
+                .then(data => {
+                  const name = data.features[0].properties.name;
+                  let text = document.getElementById("map_text");
+                  text.textContent = '현재 클릭한 곳은 ' + name + ' 입니다.';
+                })
+                .catch(error => console.error('Error fetching feature info:', error));
+      }
+
+      // 클릭한 위치 거주 인원
+      var url2 = map.getLayers().item(2).getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, {
+        'INFO_FORMAT': 'application/json'
+      });
+      if (url2) {
+        fetch(url2)
+                .then(response => response.json())
+                .then(data => {
+                  if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.val) {
+                    const val = data.features[0].properties.val;
+                    let text = document.getElementById("population_text");
+                    text.textContent = '현재 클릭한 곳의 거주 인원는 약 ' + val + '명 입니다.';
+                  } else {
+                    let text = document.getElementById("population_text");
+                    text.textContent = '이곳의 거주 인원은 없는 것 같습니다.';
+                  }
+                })
+                .catch(error => {
+                  console.error('Error fetching feature info:', error);
+                  let text = document.getElementById("population_text");
+                  text.textContent = '이곳의 거주 인원은 없는 것 같습니다.';
+                });
+      }
+    });
+  });
+</script>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
+</body>
+</html>
