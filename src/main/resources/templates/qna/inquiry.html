@@ -25,8 +25,8 @@
       </tr>
       </thead>
       <tbody class="post-tbody-tr">
-      <tr class="post-tbody-tr" th:if="${#lists.size(inquirys)} > 0" th:each="inquiry, stat : ${inquirys}">
-        <td th:text="${#lists.size(posts) - (inquirys.pageable.pageNumber * 10) - stat.index}"></td>
+      <tr class="post-tbody-tr" th:if="${#lists.size(inquiries)} > 0" th:each="inquiry, stat : ${inquiries}">
+        <td th:text="${#lists.size(posts) - (inquiries.pageable.pageNumber * 10) - stat.index}"></td>
         <td class="title"><a href="/qna/inquiryDetail?id=" th:attrappend="href=${inquiry.id}" th:text="${inquiry.title}"></a></td>
         <td th:text="${#temporals.format(inquiry.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td th:text="${#strings.equals(inquiry.state, 'Q')} ? '대기중' : '완료'"></td>
@@ -36,10 +36,10 @@
     <a href="/qna/inquiryInsertForm" class="write-button">문의하기</a>
 </div>
     <!-- 페이징 -->
-    <div th:if="${inquirys != null and !inquirys.isEmpty()}">
+    <div th:if="${inquiries != null and !inquiries.isEmpty()}">
       <!-- 전역 변수 선언 -->
       <nav
-              th:with="pageNumber = ${inquirys.pageable.pageNumber}, pageSize = ${inquirys.pageable.pageSize},totalPages = ${inquirys.totalPages},startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},tempEndPage = ${startPage + pageSize - 1},endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+              th:with="pageNumber = ${inquiries.pageable.pageNumber}, pageSize = ${inquiries.pageable.pageSize},totalPages = ${inquiries.totalPages},startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},tempEndPage = ${startPage + pageSize - 1},endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
               aria-label="Page navigation"
       >
         <ul class="pagination">
@@ -52,8 +52,8 @@
           </li>
 
           <!-- 이전으로 이동 -->
-          <li th:classappend="${inquirys.first} ? 'disabled'" class="page-item">
-            <a class="page-link" th:href="${inquirys.first} ? '#' : @{/qna/inquiry(page=${pageNumber - 1})}" aria-label="Previous">
+          <li th:classappend="${inquiries.first} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="${inquiries.first} ? '#' : @{/qna/inquiry(page=${pageNumber - 1})}" aria-label="Previous">
               <span aria-hidden="true">&lt;</span>
               <span class="sr-only">Previous</span>
             </a>
@@ -65,8 +65,8 @@
           </li>
 
           <!-- 다음으로 이동 -->
-          <li th:classappend="${inquirys.last} ? 'disabled'" class="page-item">
-            <a class="page-link" th:href="${inquirys.last} ? '#' : @{/qna/inquiry(page=${pageNumber + 1})}" aria-label="Next">
+          <li th:classappend="${inquiries.last} ? 'disabled'" class="page-item">
+            <a class="page-link" th:href="${inquiries.last} ? '#' : @{/qna/inquiry(page=${pageNumber + 1})}" aria-label="Next">
               <span aria-hidden="true">&gt;</span>
               <span class="sr-only">Next</span>
             </a>
