@@ -2,8 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>게시물 상세</title>
+  <link rel="stylesheet" href="/css/footer.css">
+
 </head>
 <body>
+<th:block th:replace="/layout/header :: headerLayout"></th:block>
+
 <h1>게시물 상세</h1>
 <form id="frm" method="post">
   <input type="hidden" name="id" th:value="${notice.id}" />
@@ -58,5 +62,7 @@
   });
 </script>
 </div>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
 </html>

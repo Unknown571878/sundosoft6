@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <style>
   .board_list {
@@ -33,6 +34,8 @@
   }
 </style>
 <body>
+<th:block th:replace="/layout/header :: headerLayout"></th:block>
+<div class="tf">
 <h2>공지사항 목록</h2>
 
 <!-- 공지사항 목록 출력 -->
@@ -64,5 +67,8 @@
 </table>
 <a th:if="${session.authInfo.role == 'ADMIN'}" th:href="@{/admin}">목록으로</a>
 <a th:if="${session.authInfo.role != 'ADMIN'}" th:href="@{/}">목록으로</a>
+</div>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
 </html>
