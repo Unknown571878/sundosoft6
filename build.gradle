@@ -63,6 +63,9 @@ dependencies {
 
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
+    // Valid 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 
 
 }

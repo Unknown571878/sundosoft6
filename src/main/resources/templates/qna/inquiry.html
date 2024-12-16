@@ -24,13 +24,15 @@
         <th>답변</th>
       </tr>
       </thead>
-      <tbody class="post-tbody-tr">
-      <tr class="post-tbody-tr" th:if="${#lists.size(inquiries)} > 0" th:each="inquiry, stat : ${inquiries}">
-        <td th:text="${#lists.size(posts) - (inquiries.pageable.pageNumber * 10) - stat.index}"></td>
-        <td class="title"><a href="/qna/inquiryDetail?id=" th:attrappend="href=${inquiry.id}" th:text="${inquiry.title}"></a></td>
-        <td th:text="${#temporals.format(inquiry.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td th:text="${#strings.equals(inquiry.state, 'Q')} ? '대기중' : '완료'"></td>
-      </tr>
+      <tbody class="post-tbody-tr1">
+        <th:block  th:if="${#lists.size(inquiries)} > 0" th:each="inquiry, stat : ${inquiries}">
+          <tr class="post-tbody-tr2" th:id="${inquiry.id}">
+            <td th:text="${#lists.size(posts) - (inquiries.pageable.pageNumber * 10) - stat.index}"></td>
+            <td class="title"><a href="/qna/inquiryDetail?id=" th:attrappend="href=${inquiry.id}" th:text="${inquiry.title}"></a></td>
+            <td th:text="${#temporals.format(inquiry.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${#strings.equals(inquiry.state, 'Q')} ? '대기중' : '완료'"></td>
+          </tr>
+        </th:block>
       </tbody>
     </table>
     <a href="/qna/inquiryInsertForm" class="write-button">문의하기</a>
@@ -83,6 +85,8 @@
       </nav>
     </div> <!-- /container -->
 </div>
+<script th:src="@{/js/inquiry.js}"></script>
+
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
   </body>
