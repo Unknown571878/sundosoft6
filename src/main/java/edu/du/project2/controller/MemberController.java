@@ -46,7 +46,7 @@ public class MemberController {
             return "user/loginform";
         }
         model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다!");
-        return "redirect:user/login";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
