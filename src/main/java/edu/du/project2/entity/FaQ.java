@@ -2,6 +2,7 @@ package edu.du.project2.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,12 +17,14 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class FaQ {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String content;
+    private String Question;
+    private String Answer;
     private String deletedYn;
     private LocalDateTime createdAt;
 }
