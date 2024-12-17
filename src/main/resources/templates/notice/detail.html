@@ -45,29 +45,31 @@
   <tr>
     <th>첨부 파일</th>
     <td colspan="3">
-      <div th:if="${#strings.endsWith(notice.filePath, '.jpg') or
-               #strings.endsWith(notice.filePath, '.jpeg') or
-               #strings.endsWith(notice.filePath, '.png') or
-               #strings.endsWith(notice.filePath, '.gif')}">
-        <img th:src="@{/uploads/{fileName}(fileName=${notice.filePath})}" alt="Uploaded Image" style="max-width: 300px;" />
-        <br />
-        <a th:href="@{/uploads/{fileName}(fileName=${notice.filePath})}" download>사진 다운로드</a>
+      <div th:each="fileName : ${notice.filePaths}">
+        <div th:if="${#strings.endsWith(fileName, '.jpg') or
+                         #strings.endsWith(fileName, '.jpeg') or
+                         #strings.endsWith(fileName, '.png') or
+                         #strings.endsWith(fileName, '.gif')}">
+          <img th:src="@{/uploads/{fileName}(fileName=${fileName})}" alt="Uploaded Image" style="max-width: 300px;" />
+          <br />
+          <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" download>사진 다운로드</a>
+        </div>
+
+        <div th:if="${fileName != null and fileName != '' and !(#strings.endsWith(fileName, '.jpg') or
+                                                                  #strings.endsWith(fileName, '.jpeg') or
+                                                                  #strings.endsWith(fileName, '.png') or
+                                                                  #strings.endsWith(fileName, '.gif'))}">
+          <p th:text="${fileName}"></p>
+          <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" download>파일 다운로드</a>
+        </div>
       </div>
-      <div th:if="${notice.filePath != null and notice.filePath != '' and !(#strings.endsWith(notice.filePath, '.jpg') or
-                   #strings.endsWith(notice.filePath, '.jpeg') or
-                   #strings.endsWith(notice.filePath, '.png') or
-                   #strings.endsWith(notice.filePath, '.gif'))}">
-        <p th:text="${notice.filePath}"></p>
-        <a th:href="@{/uploads/{fileName}(fileName=${notice.filePath})}" download>파일 다운로드</a>
-      </div>
+    </td>
   </tr>
   </tbody>
 </table>
 </form>
   <div class="button-group">
   <a href="#this" id="list" class="mbtn" >목록으로</a>
-  <a href="#this" id="edit" class="rbtn" th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}">수정하기</a>
-  <a href="#this" id="delete" class="dbtn" th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}">삭제하기</a>
   </div>
   </div>
   </div>

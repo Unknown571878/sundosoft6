@@ -41,10 +41,6 @@ public class Project2Application {
         memberRequest.setDetailAddress("");
         memberService.registerMember(memberRequest);
 
-//        Notice notice = new Notice();
-//        notice.setContent("오늘 하루가 길다.");
-//        notice.setTitle("오늘 하루가 길다");
-//        noticeService.createNotice(notice.getTitle(), notice.getContent(),notice.getFilePath());
     }
 
     @PostConstruct
