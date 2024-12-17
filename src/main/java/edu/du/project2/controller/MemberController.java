@@ -39,7 +39,7 @@ public class MemberController {
 
     @GetMapping("/register")
     public String register() {
-        return "user/loginform";
+        return "user/register";
     }
 
     @PostMapping("/register")
@@ -47,7 +47,7 @@ public class MemberController {
         String result = memberService.registerMember(request);
         if ("이미 존재하는 이메일입니다.".equals(result)) {
             model.addAttribute("error", "이미 존재하는 이메일입니다.");
-            return "user/loginform";
+            return "user/register";
         }
         model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다!");
         return "redirect:/login";

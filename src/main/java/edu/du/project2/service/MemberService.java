@@ -10,11 +10,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Slf4j
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -48,11 +50,13 @@ public class MemberService {
         memberRepository.save(user);
     }
 
+    public boolean registerCheckId(String loginId){
+        log.info("admin을 넣음 {}", loginId);
+        log.info("admin을 넣으면 false가 나와야 함 {}", memberRepository.findByLoginId(loginId));
+        return memberRepository.findByLoginId(loginId).isEmpty();
+    }
 
     public String registerMember(MemberRequest request) {
-        if (memberRepository.findByLoginId(request.getLoginId()).isPresent()) {
-            return "이미 존재하는 id 입니다.";
-        }
         Member member = new Member();
         member.setLoginId(request.getLoginId());
         member.setEmail(request.getEmail());
@@ -77,4 +81,7 @@ public class MemberService {
         return false;
     }
 
+    public String findLoginIdByNameAndEmail(String name, String email) {
+        return memberRepository.findLoginIdByNameAndEmail(name, email).orElse(null);
+    }
 }

@@ -5,6 +5,8 @@ $(document).ready(function (){
     const emailBtn = $('#email-btn');
     const codeBtn = $('#code-btn');
 
+    const registerDataForm = $('#register-data-form');
+
     // 이메일 인증번호 발송
     $('#checkEmail').on('submit', function (event) {
         event.preventDefault();
@@ -58,4 +60,56 @@ $(document).ready(function (){
             }
         });
     });
+
+    // ID 중복확인
+    const hiddenLoginIdField = $('#hiddenLoginId');
+    const loginIdInput = $('#loginId');
+    const loginIdBtn = $('#loginId-btn');
+
+    $("#checkId").on("submit", function (event) {
+        event.preventDefault(); // 기본 폼 제출 동작 방지
+
+        const id = loginIdInput.val();
+
+        if (!id || id.trim().length === 0) {
+            loginIdBtn.removeClass('btn-outline-primary')
+                .addClass('btn-outline-danger').text("입력되지 않음");
+            return false;
+        }
+
+        if (id.length < 5) {
+            loginIdBtn.removeClass('btn-outline-primary')
+                .addClass('btn-outline-danger').text("ID는 최소 5자 이상");
+            return false;
+        }
+
+        // Ajax로 전송
+        $.ajax({
+            url: '/api/member/confirmId', // 절대 경로로 변경
+            type: 'POST',
+            contentType: 'application/json',
+            data: id, // 문자열로 전송
+            success: function (result) {
+                if (result) {
+                    loginIdBtn.removeClass('btn-outline-primary btn-outline-danger')
+                        .addClass('btn-outline-success')
+                        .prop("disabled", true)
+                        .text("사용 가능한 ID");
+                    hiddenLoginIdField.val(id); // 숨겨진 필드에 ID 저장
+                    console.log('Hidden id field value:', hiddenLoginIdField.val());
+                    loginIdInput.prop('readonly', true); // 입력 필드 비활성화
+                    registerDataForm.removeClass('d-none')
+                } else {
+                    loginIdBtn.removeClass('btn-outline-primary')
+                        .addClass('btn-outline-danger').text("사용중인 ID");
+                    loginIdInput.val(''); // 입력 필드 초기화
+                }
+            },
+            error: function () {
+                loginIdBtn.removeClass('btn-outline-primary')
+                    .addClass('btn-outline-danger').text("ID 확인 중 오류 발생");
+            }
+        });
+    });
+
 });
