@@ -38,8 +38,6 @@
   </tbody>
 
 </table>
-      <a th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}" th:href="@{/noticeWrite}"
-         class="write-button">작성</a>
     <a th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}" th:href="@{/admin}"
        class="write-button">뒤로가기</a>
     <a th:if="${session.authInfo == null or session.authInfo.role != 'ADMIN'}" th:href="@{/}"

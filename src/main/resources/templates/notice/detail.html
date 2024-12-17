@@ -66,8 +66,6 @@
 </form>
   <div class="button-group">
   <a href="#this" id="list" class="mbtn" >목록으로</a>
-  <a href="#this" id="edit" class="rbtn" th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}">수정하기</a>
-  <a href="#this" id="delete" class="dbtn" th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}">삭제하기</a>
   </div>
   </div>
   </div>
