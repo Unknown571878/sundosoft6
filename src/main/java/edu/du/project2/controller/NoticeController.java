@@ -33,16 +33,18 @@ public class NoticeController {
         return "notice/list";
     }
 
+    // 컨트롤러 계층
     @GetMapping("/noticeDetail")
     public String noticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
-        Notice notice = noticeService.selectNoticeDetail(id);
+        Notice notice = noticeService.selectNoticeDetail(id,true);  // 조회수 증가 처리가 서비스에서만 발생
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         if (authInfo != null) {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
         model.addAttribute("notice", notice);
         model.addAttribute("filePath", notice.getFilePaths());
-        return "notice/detail";
+        return "notice/detail";  // 일반 사용자 페이지
     }
+
 
 }
