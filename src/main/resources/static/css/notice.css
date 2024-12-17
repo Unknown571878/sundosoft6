@@ -31,6 +31,11 @@ h1 {
     margin: 0 auto 25px; /* 상단 마진을 없애고 하단 마진 추가 */
 }
 
+.count{
+    text-align: right; /* 텍스트 중앙 정렬 */
+    font-size: 14px; /* 글자 크기 */
+}
+
 /* 메인 헤더 스타일 */
 .main-tihome {
     display: flex; /* Flexbox 사용 */

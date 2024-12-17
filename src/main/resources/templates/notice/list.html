@@ -21,11 +21,14 @@
         <div class="main-tihome">
             <h1 class="main-title">공지사항</h1>
             <div class="main-home">
-                <a href="/" title="메인 페이지로 이동"></a>
-                <i class="fas fa-home"></i> <!-- 홈 아이콘 -->
+                <a href="/"  title="메인 페이지로 이동">
+                    <i class="fas fa-home"></i> <!-- 홈 아이콘 -->
+                </a>
             </div>
         </div>
         <div class="split--div-post"></div> <!-- 구분선 -->
+
+        <h1 class="count"> 총 0건</h1>
 
         <!-- 공지사항 목록을 표시하는 테이블 -->
         <table class="post-table">
@@ -65,8 +68,11 @@
 
     <!-- 페이징 -->
     <div th:if="${!list.isEmpty()}" class="text-center">
-        <!-- 페이지 관련 변수 설정 -->
-        <nav th:with="pageNumber = ${list.pageable.pageNumber}, pageSize = ${list.pageable.pageSize}, totalPages = ${list.totalPages}, startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1}, tempEndPage = ${startPage + pageSize - 1}, endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})" aria-label="Page navigation">
+        <!-- 전역 변수 선언 -->
+        <nav
+                th:with="pageNumber = ${list.pageable.pageNumber}, pageSize = ${list.pageable.pageSize}, totalPages = ${list.totalPages}, startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1}, tempEndPage = ${startPage + pageSize - 1}, endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+                aria-label="Page navigation"
+        >
             <ul class="pagination justify-content-center">
                 <!-- 처음으로 이동 버튼 -->
                 <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
