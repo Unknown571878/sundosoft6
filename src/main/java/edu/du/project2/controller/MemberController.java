@@ -89,12 +89,12 @@ public class MemberController {
     }
 
     @GetMapping("/findId")
-    public String idforPage() {
+    public String findIdPage() {
         return "user/findId";  // idfor.html로 이동
     }
 
     @GetMapping("/findPw")
-    public String passwordforPage() {
+    public String findPwPage() {
         return "user/findPw";  // passwordfor.html로 이동
     }
 
