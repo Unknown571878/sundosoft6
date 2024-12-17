@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +46,7 @@ public class AdminController {
     public String admin() {
         return "admin/adminPage";
     }
+
 
     @GetMapping("/admin_notice")
     public String noticeList(Model model,
@@ -124,16 +124,15 @@ public class AdminController {
     }
 
     @GetMapping("/admin/noticeDetail")
-    public String noticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
-        Notice notice = noticeService.selectNoticeDetail(id);
+    public String adminNoticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
+        Notice notice = noticeService.selectNoticeDetail(id,false);  // 조회수 증가 처리가 서비스에서만 발생
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         if (authInfo != null) {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
         model.addAttribute("notice", notice);
         model.addAttribute("filePath", notice.getFilePaths());
-        System.out.println(notice.getFilePaths());
-        return "admin/admin_noticeDetail";
+        return "admin/admin_noticeDetail";  // 관리자 페이지
     }
 
     @PostMapping("/admin/updateNotice")
@@ -147,12 +146,6 @@ public class AdminController {
         noticeService.deleteNotice(id);
         return "redirect:/admin_notice";
     }
-
-
-
-
-
-
 
     @GetMapping("/admin_management")
     public String management(Model model) {
@@ -169,4 +162,5 @@ public class AdminController {
 
         return ResponseEntity.ok("삭제 성공");
     }
+
 }
