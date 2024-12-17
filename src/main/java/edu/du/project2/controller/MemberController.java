@@ -4,6 +4,7 @@ package edu.du.project2.controller;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.LoginDto;
 import edu.du.project2.dto.MemberRequest;
+import edu.du.project2.dto.ProfileDto;
 import edu.du.project2.entity.Member;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.service.MemberService;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -76,6 +74,10 @@ public class MemberController {
         }
         AuthInfo authInfo = new AuthInfo(member.getId(), member.getEmail(), member.getName(), member.getRole()); // 회원 정보를 AuthInfo에 입력
         session.setAttribute("authInfo", authInfo); // 세션에 AuthInfo 저장
+        ProfileDto my= new ProfileDto(member.getId(),member.getLoginId(),member.getEmail(),member.getName(),
+                member.getTel(),member.getZipcode(),member.getAddress(),member.getDetailAddress());
+        session.setAttribute("my",my);
+
         return "redirect:/"; // 일반 사용자는 홈 페이지로 리디렉션
     }
 
