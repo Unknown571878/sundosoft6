@@ -2,13 +2,11 @@ package edu.du.project2.controller;
 
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MessageDto;
-import edu.du.project2.entity.Member;
-import edu.du.project2.entity.Notice;
-import edu.du.project2.entity.QnA;
-import edu.du.project2.entity.QnAList;
+import edu.du.project2.entity.*;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.repository.QnARepository;
 import edu.du.project2.repository.QnA_ListRepository;
+import edu.du.project2.service.FAQService;
 import edu.du.project2.service.NoticeService;
 import edu.du.project2.service.QnAService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +32,7 @@ public class AdminController {
     private final MemberRepository memberRepository;
     private final QnARepository qnARepository;
     private final QnAService qnAService;
+    private final FAQService faqService;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
@@ -139,6 +138,48 @@ public class AdminController {
     public String deleteNotice(@RequestParam Long id) {
         noticeService.deleteNotice(id);
         return "redirect:/admin_notice";
+    }
+
+    @GetMapping("/admin_faq")
+    public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        Page<FaQ> lists = faqService.getFAQs(pageable);
+        model.addAttribute("faqs", lists);
+        return "/admin/admin_faq";
+    }
+
+    @GetMapping("/admin/admin_faqDetail")
+    public String faqDetail(@RequestParam Long id, Model model) {
+        FaQ faQ = faqService.faqDetail(id);
+        model.addAttribute("faq", faQ);
+        return "/admin/admin_faqDetail";
+    }
+
+    @PostMapping("/admin/admin_faqDelete")
+    public String faqDelete(@RequestParam Long id, Model model) {
+        faqService.faqDelete(id);
+        MessageDto message = new MessageDto("삭제하였습니다", "/admin_faq", RequestMethod.GET, null);
+        return showMessageAndRedirect(message, model);
+    }
+    @GetMapping("/admin/admin_faqWrite")
+    public String faqWrite() {
+        return "admin/admin_faqWrite";
+    }
+
+    @PostMapping("/admin/createFAQ")
+    public String createFAQ(@RequestParam String title,
+                            @RequestParam String question,
+                            @RequestParam String answer) {
+        faqService.faqCreate(title, question, answer);
+        return "redirect:/admin_faq";
+    }
+
+    @PostMapping("/admin/admin_faqUpdate")
+    public String updateFAQ(@RequestParam Long id,
+                            @RequestParam String title,
+                            @RequestParam String question,
+                            @RequestParam String answer) {
+        faqService.faqUpdate(id, title, question, answer);
+        return "redirect:/admin_faq";
     }
 
 }
