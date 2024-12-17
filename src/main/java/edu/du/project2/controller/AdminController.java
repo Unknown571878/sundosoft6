@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,9 +48,13 @@ public class AdminController {
 
 
     @GetMapping("/admin_notice")
-    public String noticeList(Model model) {
+    public String noticeList(Model model,
+                             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
-        model.addAttribute("notices", notices);
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min(start + pageable.getPageSize(), notices.size());
+        final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
+        model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
         return "admin/admin_notice";
     }
 
@@ -107,25 +113,25 @@ public class AdminController {
     @PostMapping("/admin/createNotice")
     public String createNotice(@RequestParam String title,
                                @RequestParam String content,
-                               @RequestParam("file") MultipartFile file) throws IOException {
+                               @RequestParam("files") MultipartFile[] files) throws IOException {
 
         // 서비스 호출하여 공지사항 생성
-        noticeService.createNotice(title, content,file);
+        noticeService.createNotice(title, content,files);
 
         // 공지사항 작성 후 관리자 페이지로 리디렉션
         return "redirect:/admin_notice";
     }
 
     @GetMapping("/admin/noticeDetail")
-    public String noticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
-        Notice notice = noticeService.selectNoticeDetail(id);
+    public String adminNoticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
+        Notice notice = noticeService.selectNoticeDetail(id,false);  // 조회수 증가 처리가 서비스에서만 발생
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         if (authInfo != null) {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
         model.addAttribute("notice", notice);
-        model.addAttribute("filePath", notice.getFilePath());
-        return "admin/admin_noticeDetail";
+        model.addAttribute("filePath", notice.getFilePaths());
+        return "admin/admin_noticeDetail";  // 관리자 페이지
     }
 
     @PostMapping("/admin/updateNotice")
@@ -138,6 +144,22 @@ public class AdminController {
     public String deleteNotice(@RequestParam Long id) {
         noticeService.deleteNotice(id);
         return "redirect:/admin_notice";
+    }
+
+    @GetMapping("/admin_management")
+    public String management(Model model) {
+        List<Member> members = memberRepository.findAll();
+        model.addAttribute("members", members);
+        return "admin/admin_management";
+    }
+
+    @PostMapping("/admin/deleteMember")
+    public ResponseEntity<String> deleteMember(@RequestBody Map<String, Object> request) {
+        Long memberId = Long.valueOf(request.get("id").toString());
+        memberRepository.deleteById(memberId);
+
+
+        return ResponseEntity.ok("삭제 성공");
     }
 
     @GetMapping("/admin_faq")

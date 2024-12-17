@@ -5,6 +5,7 @@
   <title>관리자 페이지</title>
   <link rel="stylesheet" href="/css/notice.css">
   <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
 <th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
@@ -26,18 +27,19 @@
       </thead>
       <tbody>
       <th:block th:each="notice : ${notices}">
-      <tr class="tr-click" th:id="${notice.id}" >
-        <td th:text="${notice.id}"></td>
-        <td>
-          <a th:href="@{/admin/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
-        </td>
-        <td th:text="${notice.hits}"></td>
-        <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
-      </tr>
+        <tr class="tr-click" th:id="${notice.id}" >
+          <td th:text="${notice.id}"></td>
+          <td>
+            <a th:href="@{/admin/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
+          </td>
+          <td th:text="${notice.hits}"></td>
+          <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+        </tr>
       </th:block>
       </tbody>
     </table>
     <a th:href="@{/admin/admin_noticeWrite}" class="write-button">글쓰기</a>
+
 
   </div>
 </div>
@@ -49,5 +51,7 @@
     })
   })
 </script>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
 </html>

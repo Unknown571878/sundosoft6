@@ -42,25 +42,32 @@
     <td colspan="3"><textarea title="내용" id="content" name="content" th:text="${notice.content }"
                               th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}"></textarea>
     </td>
+  </tr>
+  <th:block th:if="${notice.filePaths != null and !notice.filePaths.isEmpty()}">
   <tr>
     <th>첨부 파일</th>
     <td colspan="3">
-      <div th:if="${#strings.endsWith(notice.filePath, '.jpg') or
-               #strings.endsWith(notice.filePath, '.jpeg') or
-               #strings.endsWith(notice.filePath, '.png') or
-               #strings.endsWith(notice.filePath, '.gif')}">
-        <img th:src="@{/uploads/{fileName}(fileName=${notice.filePath})}" alt="Uploaded Image" style="max-width: 300px;" />
-        <br />
-        <a th:href="@{/uploads/{fileName}(fileName=${notice.filePath})}" download>사진 다운로드</a>
+      <div th:each="fileName : ${notice.filePaths}">
+        <div th:if="${#strings.endsWith(fileName, '.jpg') or
+                         #strings.endsWith(fileName, '.jpeg') or
+                         #strings.endsWith(fileName, '.png') or
+                         #strings.endsWith(fileName, '.gif')}">
+          <img th:src="@{/uploads/{fileName}(fileName=${fileName})}" alt="Uploaded Image" style="max-width: 300px;" />
+          <br />
+          <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" download>사진 다운로드</a>
+        </div>
+
+        <div th:if="${fileName != null and fileName != '' and !(#strings.endsWith(fileName, '.jpg') or
+                                                                  #strings.endsWith(fileName, '.jpeg') or
+                                                                  #strings.endsWith(fileName, '.png') or
+                                                                  #strings.endsWith(fileName, '.gif'))}">
+          <p th:text="${fileName}"></p>
+          <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" download>파일 다운로드</a>
+        </div>
       </div>
-      <div th:if="${notice.filePath != null and notice.filePath != '' and !(#strings.endsWith(notice.filePath, '.jpg') or
-                   #strings.endsWith(notice.filePath, '.jpeg') or
-                   #strings.endsWith(notice.filePath, '.png') or
-                   #strings.endsWith(notice.filePath, '.gif'))}">
-        <p th:text="${notice.filePath}"></p>
-        <a th:href="@{/uploads/{fileName}(fileName=${notice.filePath})}" download>파일 다운로드</a>
-      </div>
+    </td>
   </tr>
+  </th:block>
   </tbody>
 </table>
 </form>
@@ -75,18 +82,6 @@
   $(document).ready(function(){
     $("#list").on("click", function(){
       location.href = "/noticeList";
-    });
-
-    $("#edit").on("click", function(){
-      var frm = $("#frm")[0];
-      frm.action = "/updateNotice";
-      frm.submit();
-    });
-
-    $("#delete").on("click", function(){
-      var frm = $("#frm")[0];
-      frm.action = "/deleteNotice";
-      frm.submit();
     });
   });
 </script>
