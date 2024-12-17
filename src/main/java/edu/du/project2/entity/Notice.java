@@ -30,7 +30,7 @@ public class Notice {
     private LocalDateTime createdAt;  // 생성일시
 
     private String filePath;
-    private String fileName;
+
 
     // 생성일시 자동 설정
     @PrePersist

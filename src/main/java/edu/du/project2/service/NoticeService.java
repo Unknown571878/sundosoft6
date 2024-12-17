@@ -29,7 +29,7 @@ public class NoticeService {
     }
 
     // 파일 업로드 경로 설정
-    private final String UPLOAD_DIR ="C:/teamproject/sundosoft6/uploads";
+    private final String UPLOAD_DIR = "C:/teamproject/sundosoft6/uploads";
 
     public void createNotice(String title, String content, MultipartFile file) throws IOException {
         Notice notice = new Notice();
@@ -43,8 +43,16 @@ public class NoticeService {
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);   // 디렉토리가 없으면 생성
             }
-            // 파일 이름을 고유하게 설정
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+
+            // 원본 파일 이름에서 확장자 추출
+            String originalFilename = file.getOriginalFilename();
+            String extension = "";
+            if (originalFilename != null && originalFilename.contains(".")) {
+                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
+
+            // UUID를 사용하되, 앞 8자리만 사용하여 짧게 만듬
+            String fileName = UUID.randomUUID().toString().substring(0, 8) + extension;
             Path filePath = Paths.get(UPLOAD_DIR, fileName);
 
             // 파일을 지정된 경로에 저장

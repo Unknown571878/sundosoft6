@@ -53,6 +53,7 @@ public class AdminController {
     public String createNotice(@RequestParam String title,
                                @RequestParam String content,
                                @RequestParam("file") MultipartFile file) throws IOException {
+
         // 서비스 호출하여 공지사항 생성
         noticeService.createNotice(title, content,file);
 
