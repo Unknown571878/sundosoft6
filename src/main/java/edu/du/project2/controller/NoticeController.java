@@ -41,7 +41,7 @@ public class NoticeController {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
         model.addAttribute("notice", notice);
-        model.addAttribute("filePath", notice.getFilePath());
+        model.addAttribute("filePath", notice.getFilePaths());
         return "notice/detail";
     }
 
