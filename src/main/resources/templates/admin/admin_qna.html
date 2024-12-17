@@ -4,52 +4,73 @@
   <meta charset="UTF-8">
   <title>관리자 페이지</title>
   <link rel="stylesheet" href="/css/header.css">
-  <link rel="stylesheet" href="/css/inquiry.css">
+  <link rel="stylesheet" href="/css/footer.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/notice.css">
 
 </head>
 <body>
 <th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
-<div id="qnaForm">
-  <label for="select_answer">답변 상태 : </label>
-  <select id="select_answer">
-    <option value="0">전부</option>
-    <option value="1">대기중</option>
-    <option value="2">답면 완료</option>
-    <option value="3">문의 종료</option>
-  </select>
-  <table>
-    <thead>
-    <tr>
-      <th>번호</th>
-      <th>제목</th>
-      <th>작성일</th>
-      <th>질문자 이름</th>
-      <th>답변</th>
-    </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="list : ${qnaList}">
-      <tr th:class="tr-click" th:id="${list.id}">
-        <td th:text="${list.id}"></td>
-        <td th:text="${list.title}"></td>
-        <td th:text="${list.created_at}"></td>
-        <th:block th:each="member : ${member}">
-          <th:block th:if="${list.uid.equals(member.id)}">
-            <td th:text="${member.name}"></td>
-          </th:block>
+<!-- 본문 내용 시작 -->
+<div class="ft">
+  <div class="container">
+    <!-- 페이지 제목 -->
+    <div class="main-tihome">
+      <h1 class="main-title">문의사항 목록</h1>
+      <div class="main-home">
+        <a href="/"  title="메인 페이지로 이동">
+          <i class="fas fa-home"></i> <!-- 홈 아이콘 -->
+        </a>
+      </div>
+    </div>
+    <div class="split--div-post"></div> <!-- 구분선 -->
+
+    <h1 class="count"> 총 0건</h1>
+
+    <div id="qnaForm">
+      <label for="select_answer">답변 상태 : </label>
+      <select id="select_answer">
+        <option value="0">전부</option>
+        <option value="1">대기중</option>
+        <option value="2">답면 완료</option>
+        <option value="3">문의 종료</option>
+      </select>
+      <!-- 공지사항 목록을 표시하는 테이블 -->
+      <table class="post-table">
+        <thead>
+        <tr class="post-tbody-tr">
+          <!-- 테이블 헤더: 번호, 제목, 작성일, 조회수 -->
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성일</th>
+          <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="list : ${qnaList}">
+          <tr th:class="tr-click" th:id="${list.id}">
+            <td th:text="${list.id}"></td>
+            <td th:text="${list.title}"></td>
+            <td th:text="${list.created_at}"></td>
+            <th:block th:each="member : ${member}">
+              <th:block th:if="${list.uid.equals(member.id)}">
+                <td th:text="${member.name}"></td>
+              </th:block>
+            </th:block>
+            <td th:text="${#strings.equals(list.endYn, 'Y') ? '문의 종료' : (#strings.equals(list.state, 'Q') ? '대기중' : '답변 완료')}"></td>
+            <td th:each="qna : ${qna}">
+              <div style="display: none">
+                <span th:text="${qna.id}"></span>
+                <span th:text="${qna.content}"></span>
+                <span th:text="${qna.state}"></span>
+              </div>
+            </td>
+          </tr>
         </th:block>
-        <td th:text="${#strings.equals(list.endYn, 'Y') ? '문의 종료' : (#strings.equals(list.state, 'Q') ? '대기중' : '답변 완료')}"></td>
-        <td th:each="qna : ${qna}">
-          <div style="display: none">
-            <span th:text="${qna.id}"></span>
-            <span th:text="${qna.content}"></span>
-            <span th:text="${qna.state}"></span>
-          </div>
-        </td>
-      </tr>
-    </th:block>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <script>
   document.getElementById('select_answer').addEventListener('change', function() {
@@ -85,5 +106,7 @@
     })
   })
 </script>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
 </html>
