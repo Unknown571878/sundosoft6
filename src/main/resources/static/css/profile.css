@@ -1,0 +1,51 @@
+/* 공통 스타일 */
+@charset "UTF-8"; /* 문자 인코딩 설정 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap'); /* Google Fonts에서 Noto Sans KR 불러오기 */
+
+/* HTML, body 기본 스타일 */
+html {
+    height: 100%; /* 전체 높이를 100%로 설정 */
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif; /* 글꼴 설정 */
+    background-color: #f4f4f9; /* 배경색 설정 */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* 프로필 테이블 */
+table {
+    width: 80%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+}
+
+th {
+    background-color: #f0f0f0;
+    color: #555;
+    font-weight: 600;
+}
+
+td {
+    color: #777;
+}
+
+/* 주소 및 상세 주소 구분 스타일 */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
