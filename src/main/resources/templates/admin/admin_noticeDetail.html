@@ -40,6 +40,8 @@
             <td colspan="3"><textarea title="내용" id="content" name="content" th:text="${notice.content }"
                                       th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}"></textarea>
             </td>
+          </tr>
+          <th:block th:if="${notice.filePaths != null and !notice.filePaths.isEmpty()}">
           <tr>
             <th>첨부 파일</th>
             <td colspan="3">
@@ -63,6 +65,7 @@
               </div>
             </td>
           </tr>
+          </th:block>
           </tbody>
         </table>
       </form>
