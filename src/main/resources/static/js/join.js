@@ -51,6 +51,7 @@ $(document).ready(function (){
                 emailBtn.text("인증 완료");
                 codeBtn.removeClass('btn-outline-primary').addClass('btn-outline-success');
                 codeBtn.prop("disabled", true).text("인증 완료");
+                $("#checkId").removeClass('d-none');
             },
             error: function (error) {
                 alert('인증 실패. 잘못된 인증번호입니다.');
