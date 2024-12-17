@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -29,7 +31,8 @@ public class Notice {
     @Column(nullable = false)
     private LocalDateTime createdAt;  // 생성일시
 
-    private String filePath;
+    @ElementCollection
+    private List<String> filePaths = new ArrayList<>();  // 여러 파일 경로를 저장
 
 
     // 생성일시 자동 설정

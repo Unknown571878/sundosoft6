@@ -111,10 +111,10 @@ public class AdminController {
     @PostMapping("/admin/createNotice")
     public String createNotice(@RequestParam String title,
                                @RequestParam String content,
-                               @RequestParam("file") MultipartFile file) throws IOException {
+                               @RequestParam("files") MultipartFile[] files) throws IOException {
 
         // 서비스 호출하여 공지사항 생성
-        noticeService.createNotice(title, content,file);
+        noticeService.createNotice(title, content,files);
 
         // 공지사항 작성 후 관리자 페이지로 리디렉션
         return "redirect:/admin_notice";
@@ -128,7 +128,7 @@ public class AdminController {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
         model.addAttribute("notice", notice);
-        model.addAttribute("filePath", notice.getFilePath());
+        model.addAttribute("filePath", notice.getFilePaths());
         return "admin/admin_noticeDetail";
     }
 
