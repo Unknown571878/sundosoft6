@@ -76,18 +76,6 @@
     $("#list").on("click", function(){
       location.href = "/noticeList";
     });
-
-    $("#edit").on("click", function(){
-      var frm = $("#frm")[0];
-      frm.action = "/updateNotice";
-      frm.submit();
-    });
-
-    $("#delete").on("click", function(){
-      var frm = $("#frm")[0];
-      frm.action = "/deleteNotice";
-      frm.submit();
-    });
   });
 </script>
 </div>
