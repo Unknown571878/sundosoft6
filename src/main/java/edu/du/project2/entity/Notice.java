@@ -29,6 +29,9 @@ public class Notice {
     @Column(nullable = false)
     private LocalDateTime createdAt;  // 생성일시
 
+    private String filePath;
+
+
     // 생성일시 자동 설정
     @PrePersist
     public void prePersist() {
