@@ -157,8 +157,6 @@ public class AdminController {
     public ResponseEntity<String> deleteMember(@RequestBody Map<String, Object> request) {
         Long memberId = Long.valueOf(request.get("id").toString());
         memberRepository.deleteById(memberId);
-
-
         return ResponseEntity.ok("삭제 성공");
     }
 
@@ -203,5 +201,4 @@ public class AdminController {
         faqService.faqUpdate(id, title, question, answer);
         return "redirect:/admin_faq";
     }
-
 }
