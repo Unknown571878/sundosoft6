@@ -47,9 +47,13 @@ public class AdminController {
 
 
     @GetMapping("/admin_notice")
-    public String noticeList(Model model) {
+    public String noticeList(Model model,
+                             @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
-        model.addAttribute("notices", notices);
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min(start + pageable.getPageSize(), notices.size());
+        final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
+        model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
         return "admin/admin_notice";
     }
 
