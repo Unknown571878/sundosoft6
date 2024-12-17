@@ -5,6 +5,7 @@
   <title>FAQ 작성</title>
   <link rel="stylesheet" href="/css/inquiryInsertForm.css">
   <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
 <th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
@@ -36,5 +37,7 @@
     </div>
   </div>
 </div>
+<div class="footers"></div> <!-- 이거 지우면 안됨 -->
+<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
 </html>
