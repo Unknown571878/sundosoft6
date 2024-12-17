@@ -142,3 +142,9 @@ td.title a:hover {
     font-size: 25px;
     text-align: left;
 }
+
+/*삭제처리*/
+.post-tbody-tr2.completed {
+    opacity: 0.5; /* 불투명 처리 */
+    text-decoration: line-through; /* 선택적 취소선 */
+}

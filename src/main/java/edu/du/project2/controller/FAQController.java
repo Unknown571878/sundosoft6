@@ -24,7 +24,7 @@ public class FAQController {
 
     @GetMapping("")
     public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<FaQ> lists = faqService.getFAQs(pageable);
+        Page<FaQ> lists = faqService.getUserFAQs(pageable);
         model.addAttribute("faqs", lists);
         return "/faq/faqList";
     }
@@ -35,4 +35,5 @@ public class FAQController {
         model.addAttribute("faq", faQ);
         return "/faq/faqDetail";
     }
+
 }
