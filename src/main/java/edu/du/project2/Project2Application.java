@@ -14,6 +14,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @SpringBootApplication
@@ -39,10 +41,6 @@ public class Project2Application {
         memberRequest.setDetailAddress("");
         memberService.registerMember(memberRequest);
 
-        Notice notice = new Notice();
-        notice.setContent("오늘 하루가 길다.");
-        notice.setTitle("오늘 하루가 길다");
-        noticeService.createNotice(notice.getTitle(), notice.getContent());
     }
 
     @PostConstruct
