@@ -15,8 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -101,9 +103,10 @@ public class HHHHController {
 
     @PostMapping("/admin/createNotice")
     public String createNotice(@RequestParam String title,
-                               @RequestParam String content) {
+                               @RequestParam String content,
+                               @RequestParam("file") MultipartFile file) throws IOException {
         // 서비스 호출하여 공지사항 생성
-        noticeService.createNotice(title, content);
+        noticeService.createNotice(title, content,file);
 
         // 공지사항 작성 후 관리자 페이지로 리디렉션
         return "redirect:/admin_notice";
