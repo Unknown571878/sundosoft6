@@ -22,7 +22,6 @@
       </tr>
       </thead>
       <tbody>
-<<<<<<< HEAD
         <th:block th:each="member : ${members}">
           <tr>
             <td th:text="${member.id}"></td>
@@ -31,16 +30,6 @@
             <td th:if="${!member.id.equals(session.authInfo.id)}"><button class="delete-btn" th:data-id="${member.id}">삭제</button></td>
           </tr>
         </th:block>
-=======
-      <th:block th:each="member : ${members}">
-        <tr>
-          <td th:text="${member.id}"></td>
-          <td th:text="${member.loginId}"></td>
-          <td th:text="${member.name}"></td>
-          <td><button class="delete-btn" th:data-id="${member.id}">삭제</button></td>
-        </tr>
-      </th:block>
->>>>>>> 4221a37a0095b23eb2c3527913a27c8ad278cb4d
       </tbody>
     </table>
   </div>
