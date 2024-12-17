@@ -29,7 +29,7 @@ public class NoticeService {
     }
 
     // 파일 업로드 경로 설정
-    private final String UPLOAD_DIR = "C:/teamproject/sundosoft6/uploads";
+    private final String UPLOAD_DIR = "C:/Users/DU/sundosoft/sundosoft6/uploads/";
 
     public void createNotice(String title, String content, MultipartFile file) throws IOException {
         Notice notice = new Notice();
