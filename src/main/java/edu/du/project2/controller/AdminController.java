@@ -129,6 +129,7 @@ public class AdminController {
         }
         model.addAttribute("notice", notice);
         model.addAttribute("filePath", notice.getFilePaths());
+        System.out.println(notice.getFilePaths());
         return "admin/admin_noticeDetail";
     }
 
