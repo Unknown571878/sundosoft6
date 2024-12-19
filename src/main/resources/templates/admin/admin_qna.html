@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="/css/footer.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/notice.css">
-
 </head>
 <body>
 <th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+
 <!-- 본문 내용 시작 -->
 <div class="ft">
   <div class="container">
@@ -18,23 +18,24 @@
     <div class="main-tihome">
       <h1 class="main-title">문의사항 목록</h1>
       <div class="main-home">
-        <a href="/"  title="메인 페이지로 이동">
+        <a href="/" title="메인 페이지로 이동">
           <i class="fas fa-home"></i> <!-- 홈 아이콘 -->
         </a>
       </div>
     </div>
     <div class="split--div-post"></div> <!-- 구분선 -->
 
-    <h1 class="count"> 총 0건</h1>
+    <h1 class="count" id="count"> 총 0건</h1>
 
     <div id="qnaForm">
       <label for="select_answer">답변 상태 : </label>
       <select id="select_answer">
         <option value="0">전부</option>
         <option value="1">대기중</option>
-        <option value="2">답면 완료</option>
+        <option value="2">답변 완료</option>
         <option value="3">문의 종료</option>
       </select>
+
       <!-- 공지사항 목록을 표시하는 테이블 -->
       <table class="post-table">
         <thead>
@@ -73,7 +74,17 @@
     </div>
   </div>
 </div>
+
+<!-- QnA 리스트를 JSON 형태로 변환하여 JavaScript에서 사용할 수 있도록 하기 -->
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var qnaList = /*[[${qnaList}]]*/ [];
+  console.log(qnaList);  // 콘솔에서 qnaList 확인
+  /*]]>*/
+</script>
+
 <script>
+  // 선택된 답변 상태에 따라 목록을 필터링
   document.getElementById('select_answer').addEventListener('change', function() {
     var selectedValue = this.value;  // 선택된 답변 상태 값
     var rows = document.querySelectorAll('.tr-click');  // 모든 tr 요소 선택
@@ -90,23 +101,55 @@
       }
     });
   });
+
   // 선택된 답변 상태에 해당하는 텍스트 반환
   function getStatusText(value) {
     switch(value) {
       case "1": return "대기중";
       case "2": return "답변 완료";
       case "3": return "문의 종료";
-      default: return "";  // 전부 (0)
+      default: return "";
     }
   }
 
+  // 클릭 시 상세 페이지로 이동
   document.querySelectorAll('.tr-click').forEach(function(tr){
     tr.addEventListener('click', function () {
       let index = tr.id.trim();
       window.location.href = '/admin/admin_qnaDetail?id=' + index;
-    })
-  })
+    });
+  });
+
+  // QnA 카운트 업데이트
+  function updateCounts() {
+    // qnaList가 빈 배열이 아니라면 카운트 업데이트
+    if (qnaList.length === 0) {
+      document.getElementById('count').textContent = "총 0건";
+    } else {
+      let completed = 0;
+      let pending = 0;
+      let answered = 0;
+
+      qnaList.forEach(function(item) {
+        if (item.endYn === 'Y') {
+          completed++;
+        }
+        if (item.state === 'Q') {
+          pending++;
+        }
+        if (item.state === 'A') {
+          answered++;
+        }
+      });
+      answered = answered - completed;
+      document.getElementById('count').textContent = `총 ${qnaList.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
+    }
+  }
+
+  // 페이지 로드 시 카운트 업데이트
+  updateCounts();
 </script>
+
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
