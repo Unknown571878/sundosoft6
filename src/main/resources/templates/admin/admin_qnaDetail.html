@@ -34,12 +34,9 @@
             <textarea name="content" id="content" rows="3" required></textarea>
             <button type="submit">답글 작성</button>
           </form>
-      <!-- 게시글 수정, 삭제, 목록으로 돌아가기 버튼 -->
+      <!-- 목록으로 돌아가기 버튼 -->
       <div class="form-actions">
         <button onclick="window.location.href='/admin_qna';">목록으로 돌아가기</button>
-        <form th:action="@{/admin/end/{id}(id=${qna.id})}" method="POST" onsubmit="return confirm('문의를 마치시겠습니까?');" th:if="${#strings.equals(qna.endYn, 'N') and #strings.equals(lists[lists.size() - 1].state, 'A')}">
-          <button type="submit">문의 종료</button>
-        </form>
       </div>
     </div>
   </div>
