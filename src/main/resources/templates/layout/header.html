@@ -19,6 +19,9 @@
       </th:block>
       <th:block th:if="${session.authInfo}">
         <a style="color: white" th:text="${session.authInfo.name}"></a>
+        <th:block th:if="${session.authInfo.role.equals('ADMIN')}">
+          <a href="/admin">관리자 페이지</a>
+        </th:block>
         <a href="/logout">로그아웃</a>
       </th:block>
     </div>
