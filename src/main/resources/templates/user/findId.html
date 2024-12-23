@@ -13,7 +13,7 @@
 <div class="idfor-container "> <!-- 로그인 폼을 담고 있는 컨테이너 -->
   <h2 class="text-center mb-4">아이디 찾기</h2> <!-- 중앙 정렬된 로그인 제목 -->
 
-  <form method="post" id="findLoginId" action="/api/member/findLoginId">
+  <form id="findLoginId">
   <!-- name 입력 필드 -->
     <div class="mb-3">
       <input type="text" id="name" name="name" class="idfor-input" placeholder="이름을 입력하세요" aria-describedby="idHelpInline">
@@ -21,15 +21,19 @@
 
     <div class="mb-3 d-flex align-items-center">
       <input type="email" id="email" name="email" class="idfor-input me-2"  placeholder="이메일을 입력하세요" required>
-      <button type="button" class="btn btn-outline-primary btn-sm " id="check" onclick="checkEmail()">인증번호 발급</button>
+      <button type="submit" class="btn btn-outline-primary btn-sm">아이디 찾기</button>
     </div>
-    <!-- 아이디찾기  버튼 -->
-    <button type="submit" class="btn btn-outline-secondary border border-secondary rounded-pill w-100" >아이디 찾기</button>
 </form>
 
+  <!-- 아이디찾기  버튼 -->
+  <button type="button" onclick="location.href='/findPw'" class="btn btn-outline-secondary border border-secondary rounded-pill w-100">
+    비밀번호 찾기
+  </button>
   <!-- 로그인 버튼을 submit 버튼으로 변경 -->
   <button type="submit" class="btn btn-secondary w-100 border border-secondary rounded-pill mt-2 mb-2">로그인</button>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <script>
   // ID 찾기 폼 제출 처리 (AJAX 요청)
   $("#findLoginId").submit(function (event) {

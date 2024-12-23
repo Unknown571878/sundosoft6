@@ -43,13 +43,13 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(MemberRequest request, Model model) {
+    public String register(MemberRequest request, Model model, RedirectAttributes redirectAttributes) {
         String result = memberService.registerMember(request);
         if ("이미 존재하는 이메일입니다.".equals(result)) {
             model.addAttribute("error", "이미 존재하는 이메일입니다.");
             return "user/register";
         }
-        model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다!");
+        redirectAttributes.addFlashAttribute("message", "회원가입이 성공적으로 완료되었습니다!");
         return "redirect:/login";
     }
 
@@ -89,12 +89,12 @@ public class MemberController {
     }
 
     @GetMapping("/findId")
-    public String idforPage() {
+    public String findIdPage() {
         return "user/findId";  // idfor.html로 이동
     }
 
     @GetMapping("/findPw")
-    public String passwordforPage() {
+    public String findPwPage() {
         return "user/findPw";  // passwordfor.html로 이동
     }
 

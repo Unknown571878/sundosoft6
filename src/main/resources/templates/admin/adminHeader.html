@@ -18,6 +18,7 @@
         </th:block>
         <th:block th:if="${session.authInfo}">
           <a style="color: white" th:text="${session.authInfo.name}"></a>
+          <a href="/">홈페이지</a>
           <a href="/logout">로그아웃</a>
         </th:block>
       </div>
