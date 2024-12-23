@@ -116,7 +116,11 @@
               <a href="/qna/inquiry" class="nav-link">문의사항</a>
               <ul class="submenu">
                 <li><a href="/faq" class="nav-link">FAQ</a></li>
-                <li><a href="/qna/inquiry" class="nav-link">QNA</a></li>
+                <th:block th:if="${session.authInfo != null}">
+                  <th:block th:if="${!session.authInfo.role.equals('ADMIN')}">
+                    <li><a href="/qna/inquiry" class="nav-link">QNA</a></li>
+                  </th:block>
+                </th:block>
               </ul>
             </li>
           </ul>
