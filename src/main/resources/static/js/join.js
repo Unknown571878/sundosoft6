@@ -86,7 +86,7 @@ $(document).ready(function (){
 
         // Ajax로 전송
         $.ajax({
-            url: '/api/member/confirmId', // 절대 경로로 변경
+            url: '/api/member/confirmId',
             type: 'POST',
             contentType: 'application/json',
             data: id, // 문자열로 전송

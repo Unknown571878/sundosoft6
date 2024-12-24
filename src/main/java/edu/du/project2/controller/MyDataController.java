@@ -23,6 +23,7 @@ public class MyDataController {
         model.addAttribute("params", params);
         return "/common/messageRedirect";
     }
+
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
         if (session.getAttribute("my") == null) {
@@ -30,7 +31,6 @@ public class MyDataController {
             return showMessageAndRedirect(message, model);
         }
         ProfileDto my = (ProfileDto) session.getAttribute("my");
-
 
         // 모델에 'my' 객체 추가
         model.addAttribute("my", my);
