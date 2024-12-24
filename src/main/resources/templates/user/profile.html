@@ -12,6 +12,7 @@
 <body>
 <!-- 헤더 레이아웃을 호출하는 Thymeleaf 템플릿 -->
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
+<div class="ft">
 
 <h1>내 정보</h1>
 <div th:if="${message}" class="alert alert-success " role="alert">
@@ -58,7 +59,7 @@
     <a href="#this" id="edit" class="btn" >변경하기</a>
   </div>
 </form>
-
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="/js/loginform.js"></script>
 <script th:src="@{/js/validate.js}"></script>

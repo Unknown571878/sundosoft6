@@ -7,7 +7,7 @@
     display: flex; /* 좌우로 배치하기 위해 플렉스 박스 사용 */
     text-align: right; /* 왼쪽 끝으로 배치 */ /* 콘텐츠를 양쪽 끝으로 배치 */
     padding: 10px 20px; /* 내부 여백 추가 */
-    background-color:  #0f1a07; /* 어두운 배경색 */
+    background-color:  #070719; /* 어두운 배경색 */
     border-bottom: 1px solid #ddd; /* 하단 경계선 */
 }
 

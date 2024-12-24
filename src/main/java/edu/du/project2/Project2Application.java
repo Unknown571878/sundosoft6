@@ -40,7 +40,6 @@ public class Project2Application {
         memberRequest.setAddress("");
         memberRequest.setDetailAddress("");
         memberService.registerMember(memberRequest);
-
     }
 
     @PostConstruct
