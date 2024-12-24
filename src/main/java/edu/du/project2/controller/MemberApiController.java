@@ -1,5 +1,7 @@
 package edu.du.project2.controller;
 
+import edu.du.project2.dto.ChangePwRequest;
+import edu.du.project2.dto.FindPwRequest;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -36,25 +38,24 @@ public class MemberApiController {
         }
     }
 
-//    @PostMapping("/findPassword")
-//    public ResponseEntity<String> findPassword(@RequestBody FindPwRequest request) {
-//        String status;
-//        try{
-//            status = memberService.findPw(request);
-//        } catch (Exception e) {
-//            status = e.getMessage();
-//        }
-//        return ResponseEntity.ok().body(status);
-//    }
-//
-//    @PostMapping("/changePw")
-//    public ResponseEntity<String> changePw(@RequestBody ChangePwRequest request, HttpSession session) {
-//        try{
-//            String response = memberService.changePassword(request);
-//            session.invalidate();
-//            return ResponseEntity.ok().body(response);
-//        }catch (Exception e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
+    @PostMapping("/findPassword")
+    public ResponseEntity<String> findPassword(@RequestBody FindPwRequest request) {
+        try {
+            String status = memberService.findPw(request);
+            return ResponseEntity.ok(status);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/changePw")
+    public ResponseEntity<String> changePw(@RequestBody ChangePwRequest request, HttpSession session) {
+        try{
+            String response = memberService.changePw(request);
+            session.invalidate();
+            return ResponseEntity.ok().body(response);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

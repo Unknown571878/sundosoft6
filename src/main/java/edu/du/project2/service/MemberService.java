@@ -2,12 +2,15 @@ package edu.du.project2.service;
 
 
 import edu.du.project2.config.SecurityConfig;
-import edu.du.project2.dto.LoginDto;
-import edu.du.project2.dto.MemberRequest;
+import edu.du.project2.dto.*;
 import edu.du.project2.entity.Member;
+import edu.du.project2.exception.BadCredentialsException;
+import edu.du.project2.mail.MailProperties;
 import edu.du.project2.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,5 +86,69 @@ public class MemberService {
 
     public String findLoginIdByNameAndEmail(String name, String email) {
         return memberRepository.findLoginIdByNameAndEmail(name, email).orElse(null);
+    }
+
+    public Member findByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId).orElseThrow(() ->
+                new BadCredentialsException("잘못된 계정 정보입니다."));
+    }
+
+    private final MailProperties mailProperties;
+    private final MailSender mailSender;
+
+    // 임시 비밀번호 발급
+    public String findPw(FindPwRequest request) {
+        Member member = findByLoginId(request.getLoginId());
+
+        if(!member.getEmail().equals(request.getEmail())){
+            throw new BadCredentialsException("이메일이 맞지 않습니다");
+        }
+        char[] charSet = new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+        StringBuilder tempPw = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            int idx = (int) (charSet.length * Math.random());
+            tempPw.append(charSet[idx]);
+        }
+
+        String newPw = tempPw.toString();
+        log.info(newPw);
+        String body = "안녕하세요. "+member.getName()+"님. 임시 비밀번호를 발급해드립니다.\n"+
+                "회원님의 임시 비밀번호는 "+newPw+" 입니다.\n" +
+                "임시 비밀번호로 로그인 후 비밀번호를 변경해주세요.";
+
+        FindPwResponse response = FindPwResponse.builder()
+                .receiveAddress(request.getEmail())
+                .mailTitle("Urban Nexus 임시 비밀번호 발급")
+                .mailContent(body)
+                .build();
+
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom(mailProperties.getSender());
+        message.setTo(response.getReceiveAddress());
+        message.setSubject(response.getMailTitle());
+        message.setText(response.getMailContent());
+
+        mailSender.send(message);
+        member.updatePassword(passwordEncoder.encode(newPw));
+        memberRepository.save(member);
+
+        return "임시 비밀번호 발급.";
+    }
+
+    public String changePw(ChangePwRequest request) {
+        Member member = findByLoginId(request.getLoginId());
+        log.info("아이디: {}", member.getLoginId());
+        if(!passwordEncoder.matches(request.getOldPw(), member.getPassword())){
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+
+        member.updatePassword(passwordEncoder.encode(request.getNewPw()));
+        memberRepository.save(member);
+
+        return "비밀번호가 성공적으로 변경되었습니다.";
     }
 }
