@@ -27,7 +27,7 @@
     <table>
       <tr>
         <th>아이디</th>
-        <td><input type="text" th:value="${my.loginId}" name="loginId" required/>
+        <td><input type="text" th:value="${my.loginId}" name="loginId" id="loginId" required/>
         </td>
       </tr>
       <tr>
@@ -59,10 +59,30 @@
     <a href="#this" id="edit" class="btn" >변경하기</a>
   </div>
 </form>
+  <form id="ch-pw">
+    <input type="hidden" id="hidden-login-id">
+    <div class="form-group mb-3 d-flex justify-content-between align-items-center">
+      <label for="oldPw">현재<br>비밀번호</label>
+      <input class="form-control" type="password" id="oldPw" name="oldPw" placeholder="현재 비밀번호를 입력하세요" required>
+    </div>
+
+    <div class="form-group mb-3 d-flex justify-content-between align-items-center">
+      <label for="newPw">새<br>비밀번호</label>
+      <input class="form-control" type="password" id="newPw" name="newPw" placeholder="새 비밀번호를 입력하세요" required>
+    </div>
+
+    <div class="form-group mb-3 d-flex justify-content-between align-items-center">
+      <label for="confirmPw">비밀번호<br>확인</label>
+      <input class="form-control" type="password" id="confirmPw" name="confirmPw" placeholder="새 비밀번호를 다시 입력하세요" required>
+    </div>
+
+    <button type="submit" class="btna mt-3">비밀번호 변경</button>
+  </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="/js/loginform.js"></script>
 <script th:src="@{/js/validate.js}"></script>
+<script src="/js/changePw.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
 
@@ -73,7 +93,6 @@
     });
   });
 </script>
-
 <!-- 푸터 레이아웃을 호출하는 Thymeleaf 템플릿 -->
 <div class="footers"></div> <!-- 이 부분은 지우지 말아야 합니다. -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
