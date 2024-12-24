@@ -27,14 +27,23 @@ function validateName(input) {
 
 // 전화번호 설정
 function validateTel(input) {
-    // 정규 표현식: 한국 전화번호 형식 (예: 010-1234-5678 또는 02-123-4567)
-    const phonePattern = /^(010)-([0-9]{4})-([0-9]{4})$/;
+    // 입력값에서 숫자만 추출
+    const cleaned = input.value.replace(/[^0-9]/g, '');
 
-    if (!phonePattern.test(input.value)) {
-        input.setCustomValidity('전화번호 형식이 올바르지 않습니다. 예: 010-1234-5678 ');
+    let formatted = '';
+
+    if (cleaned.length <= 3) {
+        // 3자리 이하인 경우 그대로 표시
+        formatted = cleaned;
+    } else if (cleaned.length <= 7) {
+        // 4~7자리일 경우 중간에 하이픈 추가
+        formatted = cleaned.slice(0, 3) + '-' + cleaned.slice(3);
     } else {
-        input.setCustomValidity('');
+        // 8자리 이상일 경우 두 개의 하이픈 추가
+        formatted = cleaned.slice(0, 3) + '-' + cleaned.slice(3, 7) + '-' + cleaned.slice(7, 11);
     }
+    // 자동 포맷팅된 값을 입력 필드에 설정
+    input.value = formatted;
 }
 
 // 제목 설정
