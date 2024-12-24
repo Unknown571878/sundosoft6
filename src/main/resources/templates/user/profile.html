@@ -14,9 +14,10 @@
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
 
 <h1>내 정보</h1>
-<div th:if="${message}" th:class="${messageType == 'success' ? 'alert alert-success' : 'alert alert-danger'}" role="alert">
-  <p th:text="${message}"></p>
+<div th:if="${message}" class="alert alert-success " role="alert">
+  <span th:text="${message}"></span>
 </div>
+
 
 <!-- 프로필 수정 폼 -->
 <form id="frm" method="post">
@@ -25,7 +26,8 @@
     <table>
       <tr>
         <th>아이디</th>
-        <td><input type="text" th:value="${my.loginId}" name="loginId" required/></td>
+        <td><input type="text" th:value="${my.loginId}" name="loginId" required/>
+        </td>
       </tr>
       <tr>
         <th>이메일</th>
@@ -37,7 +39,7 @@
       </tr>
       <tr>
         <th>전화번호</th>
-        <td><input type="text" th:value="${my.tel}" name="tel" required /></td>
+        <td><input type="text" th:value="${my.tel}" name="tel" required oninput="validateTel(this)"/></td>
       </tr>
       <tr>
         <th>우편번호</th>
@@ -59,6 +61,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="/js/loginform.js"></script>
+<script th:src="@{/js/validate.js}"></script>
 <script type="text/javascript">
   $(document).ready(function() {
 

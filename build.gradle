@@ -16,9 +16,13 @@ configurations {
 
 repositories {
     mavenCentral()
+
+
 }
 
 dependencies {
+
+
 
     //이메일인증
     implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -66,8 +70,7 @@ dependencies {
     // Valid 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // Mail
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 
 
 }
