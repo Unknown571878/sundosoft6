@@ -83,7 +83,7 @@ public class NoticeService {
     // 특정 게시글을 조회하고, 조회수 증가 여부를 설정하여 게시글 반환
     @Transactional
     public Notice selectNoticeDetail(Long id, boolean increaseHitCount) throws Exception{
-        Notice notice= noticeRepository.selectNoticeDetail(id); // 게시글 조회
+        noticeRepository.selectNoticeDetail(id); // 게시글 조회
         if (increaseHitCount) {
             noticeRepository.updateHitCount(id);
         }

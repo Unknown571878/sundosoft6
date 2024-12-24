@@ -22,11 +22,12 @@ public class QnAService {
     private final QnA_ListRepository qnAListRepository;
     private final QnARepository qnARepository;
 
-    public void initializeSession(HttpSession session, Long id, String email, String name, String role) {
+    public void initializeSession(HttpSession session, Long id, String loginId,String email, String name,
+                                 String tel, String zipCode, String address, String detailAddress,String role) {
         if (session.getAttribute("authInfo") != null) {
             session.invalidate();
         }
-        AuthInfo authInfo = new AuthInfo(id, email, name, role);
+        AuthInfo authInfo = new AuthInfo(id,loginId, email, name,tel,zipCode,address,detailAddress,role);
         session.setAttribute("authInfo", authInfo);
     }
 
