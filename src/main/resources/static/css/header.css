@@ -52,11 +52,6 @@
     text-decoration: none; /* 밑줄 제거 */
 }
 
-.submenu a:hover, .nav-link:hover {
-    font-weight: bold; /* 글씨 두껍게 */
-    text-decoration: underline; /* 밑줄 추가 */
-}
-
 .nav-links {
     display: flex; /* 네비게이션 링크를 가로로 배치 */
     gap: 30px; /* 링크 간 간격 설정 */
@@ -64,34 +59,10 @@
     justify-content: center; /* 중앙 정렬 */
 }
 
-.dropdown {
-    display: flex; /* 네비게이션 링크를 가로로 배치 */
-    gap: 30px; /* 링크 간 간격 설정 */
-    margin: 0; /* 외부 여백 제거 */
-    justify-content: center; /* 중앙 정렬 */
-}
-
-.submenu {
-
-    gap: 30px; /* 링크 간 간격 설정 */
-    margin: 0; /* 외부 여백 제거 */
-    justify-content: center; /* 중앙 정렬 */
-}
-
-.submenu a {
-    margin-top: 10px;
-    display: flex; /* 네비게이션 링크를 가로로 배치 */
-    color: #333; /* 다소 진한 회색 텍스트 */
-    text-decoration: none; /* 밑줄 제거 */
-    font-weight: 500; /* 글자 두께를 조금 더 강조 */
-    transition: all 0.3s ease; /* 효과를 부드럽게 전환 */
-}
-
 .nav-link {
     color: #333; /* 다소 진한 회색 텍스트 */
     text-decoration: none; /* 밑줄 제거 */
     font-weight: 500; /* 글자 두께를 조금 더 강조 */
-    transition: all 0.3s ease; /* 효과를 부드럽게 전환 */
 }
 
 .search-form {
