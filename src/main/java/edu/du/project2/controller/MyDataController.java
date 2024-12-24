@@ -2,6 +2,7 @@ package edu.du.project2.controller;
 
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MessageDto;
+import edu.du.project2.service.MemberService;
 import edu.du.project2.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class MyDataController {
     private final ProfileService profileService;
+    private final MemberService memberService;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
@@ -45,7 +47,7 @@ public class MyDataController {
     @GetMapping("/checkLoginId")
     @ResponseBody
     public String checkLoginId(String loginId) {
-        boolean isAvailable = profileService.isLoginIdAvailable(loginId);
+        boolean isAvailable = memberService.registerCheckId(loginId);
         if (isAvailable) {
             return "사용 가능한 아이디입니다.";
         } else {
