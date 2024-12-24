@@ -60,7 +60,7 @@
               </th:block>
             </th:block>
             <td th:text="${#strings.equals(list.endYn, 'Y') ? '문의 종료' : (#strings.equals(list.state, 'Q') ? '대기중' : '답변 완료')}"></td>
-            <td th:each="qna : ${qna}">
+            <td th:each="qna : ${qna}" style="display: none">
               <div style="display: none">
                 <span th:text="${qna.id}"></span>
                 <span th:text="${qna.content}"></span>
