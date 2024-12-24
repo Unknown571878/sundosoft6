@@ -53,10 +53,9 @@ public class MemberService {
         memberRepository.save(user);
     }
 
-    public boolean registerCheckId(String loginId){
-        log.info("admin을 넣음 {}", loginId);
-        log.info("admin을 넣으면 false가 나와야 함 {}", memberRepository.findByLoginId(loginId));
+    public boolean checkLoginId(String loginId){
         return memberRepository.findByLoginId(loginId).isEmpty();
+//      비어있으면 true, 아니면 false
     }
 
     public String registerMember(MemberRequest request) {

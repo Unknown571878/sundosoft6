@@ -23,7 +23,7 @@ public class MemberApiController {
     @PostMapping("/confirmId")
     public ResponseEntity<Boolean> confirmId(@RequestBody String loginId) {
         log.info("Confirm Id: {}", loginId);
-        boolean result = memberService.registerCheckId(loginId);
+        boolean result = memberService.checkLoginId(loginId);
         log.info("성공여부: {}", result);
         return ResponseEntity.ok(result);
     }

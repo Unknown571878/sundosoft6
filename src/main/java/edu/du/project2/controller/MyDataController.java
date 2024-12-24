@@ -47,7 +47,7 @@ public class MyDataController {
     @GetMapping("/checkLoginId")
     @ResponseBody
     public String checkLoginId(String loginId) {
-        boolean isAvailable = memberService.registerCheckId(loginId);
+        boolean isAvailable = memberService.checkLoginId(loginId);
         if (isAvailable) {
             return "사용 가능한 아이디입니다.";
         } else {
