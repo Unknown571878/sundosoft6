@@ -3,6 +3,31 @@
 /* 상단 가장 위에 위치하며 로그인 및 회원가입 링크를 포함합니다.
    간결한 레이아웃과 어두운 배경색으로 페이지 상단을 구성합니다. */
 
+ul li {list-style:none;}
+.nav-links:after{content:'';display:block; clear:both;}
+
+body {
+    overflow-y:scroll;padding-top:140px;
+}
+
+header {
+    height:140px;
+    overflow:hidden;
+    position:absolute;
+    left:0; right:0;
+    top:0;
+    z-index: 1000;
+    background:linear-gradient(white 50px, rgba(255,255,255,0.8) 50px, rgba(255,255,255,0.8) );
+}
+nav > ul {
+    position: relative; /* 하위 메뉴 위치를 설정하기 위한 상대 위치 지정 */
+}
+nav {width:960px; margin:0 auto;}
+nav > ul > li {float:left; line-height:50px; margin-right:40px;}
+nav > ul > li ul{
+    width:100%;
+    position: absolute; /* 부모 메뉴 기준으로 위치 고정 */}
+
 .top-header {
     display: flex; /* 좌우로 배치하기 위해 플렉스 박스 사용 */
     text-align: right; /* 왼쪽 끝으로 배치 */ /* 콘텐츠를 양쪽 끝으로 배치 */
@@ -52,6 +77,11 @@
     text-decoration: none; /* 밑줄 제거 */
 }
 
+.submenu a:hover, .nav-link:hover {
+    font-weight: bold; /* 글씨 두껍게 */
+    text-decoration: underline; /* 밑줄 추가 */
+}
+
 .nav-links {
     display: flex; /* 네비게이션 링크를 가로로 배치 */
     gap: 30px; /* 링크 간 간격 설정 */
@@ -59,10 +89,27 @@
     justify-content: center; /* 중앙 정렬 */
 }
 
+.submenu {
+
+    gap: 30px; /* 링크 간 간격 설정 */
+    margin: 0; /* 외부 여백 제거 */
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.submenu a {
+    margin-top: 10px;
+    display: flex; /* 네비게이션 링크를 가로로 배치 */
+    color: #333; /* 다소 진한 회색 텍스트 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: 500; /* 글자 두께를 조금 더 강조 */
+    transition: all 0.3s ease; /* 효과를 부드럽게 전환 */
+}
+
 .nav-link {
     color: #333; /* 다소 진한 회색 텍스트 */
     text-decoration: none; /* 밑줄 제거 */
     font-weight: 500; /* 글자 두께를 조금 더 강조 */
+    transition: all 0.3s ease; /* 효과를 부드럽게 전환 */
 }
 
 .search-form {
