@@ -8,6 +8,7 @@
 ### 작업물 올리기 전에 최신화 필수
 본인의 작업물을 add, commit, push하기 전에 필수로 pull을 해야함
 * git pull upstream main
+* git pull origin main (본인 계정으로 만든 리포지토리에서 작업하면)
 
 ## 1. 다른 사람 리포지토리를 본인 계정으로 fork하기
 
