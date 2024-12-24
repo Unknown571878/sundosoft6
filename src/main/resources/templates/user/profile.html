@@ -27,7 +27,8 @@
     <table>
       <tr>
         <th>아이디</th>
-        <td><input type="text" th:value="${my.loginId}" name="loginId" id="loginId" required/>
+        <td><input type="text" th:value="${my.loginId}" id="loginId" name="loginId" required/>
+          <button type="submit" id="loginId-btn" class="btn btn-outline-primary btn-sm">ID 중복 확인</button>
         </td>
       </tr>
       <tr>
@@ -44,7 +45,7 @@
       </tr>
       <tr>
         <th>우편번호</th>
-        <td><input type="text" th:value="${my.zipCode}" name="zipcode" required readonly/>
+        <td><input type="text" th:value="${my.zipcode}" name="zipcode" required readonly/>
         <button type="button" class="btn btn-outline-primary btn-sm" onclick="execPostCode();">주소 찾기</button></td>
       </tr>
       <tr>
@@ -85,7 +86,27 @@
 <script src="/js/changePw.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    $("#loginId-btn").on("click", function (e) {
+      e.preventDefault(); // Prevent form submission
 
+      var loginId = $("#loginId").val();
+      if (!loginId) {
+        alert("아이디를 입력해주세요.");
+        return;
+      }
+
+      $.ajax({
+        url: "/checkLoginId",
+        type: "GET",
+        data: { loginId: loginId },
+        success: function(response) {
+          alert(response); // Display the response from the server
+        },
+        error: function() {
+          alert("아이디 중복 확인 실패");
+        }
+      });
+    });
     $("#edit").on("click", function () {
       var frm = $("#frm")[0];
       frm.action = "/updateProfile";

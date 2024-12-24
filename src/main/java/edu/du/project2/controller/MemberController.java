@@ -4,7 +4,6 @@ package edu.du.project2.controller;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.LoginDto;
 import edu.du.project2.dto.MemberRequest;
-import edu.du.project2.dto.ProfileDto;
 import edu.du.project2.entity.Member;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.service.MemberService;
