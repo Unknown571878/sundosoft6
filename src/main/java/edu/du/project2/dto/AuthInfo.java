@@ -16,7 +16,7 @@ public class AuthInfo {
 	private String email;
 	private String name;
 	private String tel;
-	private String zipCode;
+	private String zipcode;
 	private String address;
 	private String detailAddress;
 	private String role;

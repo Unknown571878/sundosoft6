@@ -21,12 +21,13 @@ public class ProfileService {
         member.setEmail(authInfo.getEmail());
         member.setName(authInfo.getName());
         member.setTel(authInfo.getTel());
-        member.setZipcode(authInfo.getZipCode());
+        member.setZipcode(authInfo.getZipcode());
         member.setAddress(authInfo.getAddress());
         member.setDetailAddress(authInfo.getDetailAddress());
-        authInfo.setRole("USER");
+
 
         // 변경된 정보를 데이터베이스에 저장
         memberRepository.save(member);
     }
+
 }
