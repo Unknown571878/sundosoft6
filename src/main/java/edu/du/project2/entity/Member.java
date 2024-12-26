@@ -34,7 +34,9 @@ public class Member {
     @Column(nullable = false)
     private String tel;
 
+    @Column(nullable = false)
     private String zipcode;
+    @Column(nullable = false)
     private String address;
     @Column(name = "detail_address")
     private String detailAddress;

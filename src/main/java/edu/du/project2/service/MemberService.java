@@ -33,6 +33,9 @@ public class MemberService {
                 admin.setPassword(passwordEncoder.encode("admin123"));  // 관리자 비밀번호 (암호화)
                 admin.setName("관리자");  // 관리자 이름
                 admin.setTel("000-0000-0000");
+                admin.setZipcode("123");
+                admin.setAddress("123");
+                admin.setDetailAddress("123");
                 admin.setRole("ADMIN");  // 관리자 역할
 
                 // 관리자 정보를 저장
@@ -47,6 +50,9 @@ public class MemberService {
         user.setPassword(passwordEncoder.encode("1234"));
         user.setName("유저");
         user.setTel("000-0000-0000");
+        user.setZipcode("123");
+        user.setAddress("123");
+        user.setDetailAddress("123");
         user.setRole("USER");
 
         // 관리자 정보를 저장

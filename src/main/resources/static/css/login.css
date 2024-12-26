@@ -110,3 +110,23 @@ body {
         padding: 10px;
     }
 }
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1; /* 완전히 보임 */
+        height: auto; /* 높이 유지 */
+    }
+    100% {
+        opacity: 0; /* 완전히 사라짐 */
+        height: 0; /* 높이 축소 */
+        padding: 0; /* 내부 여백 제거 */
+        margin: 0; /* 외부 여백 제거 */
+        overflow: hidden; /* 내용 숨기기 */
+    }
+}
+
+/* 애니메이션 적용 */
+.fade-out {
+    animation: fadeOut 0.5s ease-out 4s; /* 4초 대기 후 0.5초 동안 사라짐 */
+    animation-fill-mode: forwards; /* 애니메이션 종료 후 상태 유지 */
+}
