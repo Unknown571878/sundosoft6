@@ -32,33 +32,33 @@
           <h1 class="brand-title">
             <a href="/" class="text-decoration-none">Urban Nexus</a>
           </h1>
-          <nav>
+          <nav class="header-nav">
             <ul class="nav-links">
-              <li><a th:href="@{/noticeList}" class="nav-link">공지사항</a>
+              <li class="header-li"><a th:href="@{/noticeList}" class="nav-link">공지사항</a>
               </li>
-              <li><a href="/map" class="nav-link">입지분석</a>
+              <li class="header-li"><a href="/map" class="nav-link">입지분석</a>
                 <ul class="submenu">
-                  <li><a href="/map">기본 입지 분석</a></li>
-                  <li><a href="#">상세 입지 분석</a></li>
+                  <li class="header-li"><a href="/map">기본 입지 분석</a></li>
+                  <li class="header-li"><a href="#">상세 입지 분석</a></li>
                 </ul>
               </li>
-              <li><a href="/profile" class="nav-link">데이터관리</a>
+              <li class="header-li"><a href="/profile" class="nav-link">데이터관리</a>
                 <ul class="submenu">
-                  <li><a href="/profile">나의 데이터</a></li>
-                  <li><a href="#">분석 결과 조회</a></li>
+                  <li class="header-li"><a href="/profile">나의 데이터</a></li>
+                  <li class="header-li"><a href="#">분석 결과 조회</a></li>
                 </ul>
               </li>
-              <li><a href="/faq" class="nav-link">문의사항</a>
+              <li class="header-li"><a href="/faq" class="nav-link">문의사항</a>
                 <ul class="submenu">
-                  <li><a href="/faq">FAQ</a></li>
-                  <li><a href="/qna/inquiry">Q&A</a></li>
+                  <li class="header-li"><a href="/faq">FAQ</a></li>
+                  <li class="header-li"><a href="/qna/inquiry">Q&A</a></li>
                 </ul>
               </li>
-              <li><a href="#" class="nav-link">이용안내</a>
+              <li class="header-li"><a href="#" class="nav-link">이용안내</a>
                 <ul class="submenu">
-                  <li><a href="#">플랫폼 소개</a></li>
-                  <li><a href="#">이용 가이드</a></li>
-                  <li><a href="#">분석 사례</a></li>
+                  <li class="header-li"><a href="#">플랫폼 소개</a></li>
+                  <li class="header-li"><a href="#">이용 가이드</a></li>
+                  <li class="header-li"><a href="#">분석 사례</a></li>
                 </ul>
               </li>
             </ul>
@@ -70,7 +70,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(function() {
-      var $firstMenu = $('nav > ul > li'),
+      var $firstMenu = $('.header-nav > ul > .header-li'),
               $header = $('header');
 
       $firstMenu.hover(
