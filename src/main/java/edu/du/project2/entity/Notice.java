@@ -2,6 +2,7 @@ package edu.du.project2.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

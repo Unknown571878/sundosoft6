@@ -6,6 +6,7 @@ import edu.du.project2.entity.QnA;
 import edu.du.project2.entity.QnAList;
 import edu.du.project2.entity.FaQ;
 import edu.du.project2.repository.FAQRepository;
+import edu.du.project2.repository.NoticeRepository;
 import edu.du.project2.service.MemberService;
 import edu.du.project2.service.NoticeService;
 import edu.du.project2.service.QnAService;
@@ -24,6 +25,7 @@ public class Project2Application {
     private final MemberService memberService;
     private final NoticeService noticeService;
     private final QnAService qnAService;
+    private final NoticeRepository noticeRepository;
     private final FAQRepository faqRepository;
     public static void main(String[] args) {
         SpringApplication.run(Project2Application.class, args);
@@ -41,7 +43,6 @@ public class Project2Application {
         memberRequest.setDetailAddress("");
         memberService.registerMember(memberRequest);
     }
-
     @PostConstruct
     public void init2() {
         List<FaQ> faqList = new ArrayList<>();

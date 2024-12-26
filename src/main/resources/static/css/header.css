@@ -90,7 +90,7 @@ nav > ul > li ul{
 }
 
 .submenu {
-
+    text-align: center;
     gap: 30px; /* 링크 간 간격 설정 */
     margin: 0; /* 외부 여백 제거 */
     justify-content: center; /* 중앙 정렬 */

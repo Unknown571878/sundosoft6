@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -32,7 +33,9 @@ public class FAQController {
     @GetMapping("/faqDetail")
     public String faqDetail(@RequestParam("id") Long id, Model model) {
         FaQ faQ = faqService.faqDetail(id);
+        LocalDateTime now = LocalDateTime.now();
         model.addAttribute("faq", faQ);
+        model.addAttribute("now", now);
         return "/faq/faqDetail";
     }
 
