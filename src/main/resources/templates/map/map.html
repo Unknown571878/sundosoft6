@@ -18,16 +18,12 @@
   <div id="population_text"></div>
 
   <div>
-    <label for="wmsLayerCheckbox">WMS Layer 표시:</label>
+    <label for="wmsLayerCheckbox">대전 동별 표시:</label>
     <input type="checkbox" id="wmsLayerCheckbox">
   </div>
   <div>
-    <label for="populationCheckbox">인구 표시:</label>
-    <input type="checkbox" id="populationCheckbox">
-  </div>
-  <div>
-    <label for="subwayCheckbox">지하철</label>
-    <input type="checkbox" id="subwayCheckbox">
+    <label for="dongCheckbox">대전 구별 표시:</label>
+    <input type="checkbox" id="dongCheckbox">
   </div>
 </div>
 <script>
@@ -43,49 +39,32 @@
           source: new ol.source.TileWMS({
             url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL, 자기 설정으로 수정  http://localhost:포트번호/geoserver/저장소/wms
             params: {
-              'LAYERS': 'ne:test',  // 사용하려는 레이어 이름
+              'LAYERS': 'ne:daejeon_dong',  // 사용하려는 레이어 이름
               'TILED': true,
               'FORMAT': 'image/png',
-              'SRS': 'EPSG:4326'  // 좌표계 설정
+              'SRS': 'EPSG:5186'  // 좌표계 설정
             },
             serverType: 'geoserver'
           }),
-          visible: false  // 기본적으로 WMS 레이어가 보이지 않도록 설정
+          visible: false  // 대전 전체 레이어
         }),  //1번
         new ol.layer.Tile({
           source: new ol.source.TileWMS({
             url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
             params: {
-              'LAYERS': 'ne:population',  // 사용하려는 레이어 이름
+              'LAYERS': 'ne:daejeon_gu',  // 사용하려는 레이어 이름
               'TILED': true,
               'FORMAT': 'image/png',
-              'SRS': 'EPSG:4326'  // 좌표계 설정
+              'SRS': 'EPSG:5186'  // 좌표계 설정
             },
             serverType: 'geoserver'
           }),
           visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-          opacity: 0.8,  // 80% 투명도
-          zIndex: 90
-        }), // 2번 인구 데이터
-        new ol.layer.Tile({
-          source: new ol.source.TileWMS({
-            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
-            params: {
-              'LAYERS': 'ne:subway',  // 사용하려는 레이어 이름
-              'TILED': true,
-              'FORMAT': 'image/png',
-              'SRS': 'EPSG:4326'  // 좌표계 설정
-            },
-            serverType: 'geoserver'
-          }),
-          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-          opacity: 1,
-          zIndex: 100
-        })
+        }) // 대전 동별 레이어
       ],
       view: new ol.View({
         projection: 'EPSG:4326',  // 지도 좌표계 설정
-        center: [126.978, 37.566],  // 서울의 경도, 위도 좌표
+        center: [127.3845, 36.3504],  // 대전의 경도, 위도 좌표
         zoom: 11,  // 기본 줌 레벨
         minZoom: 1, // 최소 줌 레벨 설정
         maxZoom: 15, // 최대 줌 레벨 설정
@@ -98,15 +77,10 @@
       var wmsLayer = map.getLayers().item(1); // WMS 레이어
       wmsLayer.setVisible(wmsLayerCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
     });
-    var populationCheckbox = document.getElementById('populationCheckbox');
-    populationCheckbox.addEventListener('change', function() {
+    var dongCheckbox = document.getElementById('dongCheckbox');
+    dongCheckbox.addEventListener('change', function() {
       var wmsLayer = map.getLayers().item(2); // WMS 레이어
-      wmsLayer.setVisible(populationCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
-    });
-    var subwayCheckbox = document.getElementById('subwayCheckbox');
-    subwayCheckbox.addEventListener('change', function() {
-      var wmsLayer = map.getLayers().item(3); // WMS 레이어
-      wmsLayer.setVisible(subwayCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+      wmsLayer.setVisible(dongCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
     });
 
     // 지도 클릭시
@@ -135,30 +109,6 @@
                   text.textContent = '현재 클릭한 곳은 ' + name + ' 입니다.';
                 })
                 .catch(error => console.error('Error fetching feature info:', error));
-      }
-
-      // 클릭한 위치 거주 인원
-      var url2 = map.getLayers().item(2).getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, {
-        'INFO_FORMAT': 'application/json'
-      });
-      if (url2) {
-        fetch(url2)
-                .then(response => response.json())
-                .then(data => {
-                  if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.val) {
-                    const val = data.features[0].properties.val;
-                    let text = document.getElementById("population_text");
-                    text.textContent = '현재 클릭한 곳의 거주 인원는 약 ' + val + '명 입니다.';
-                  } else {
-                    let text = document.getElementById("population_text");
-                    text.textContent = '이곳의 거주 인원은 없는 것 같습니다.';
-                  }
-                })
-                .catch(error => {
-                  console.error('Error fetching feature info:', error);
-                  let text = document.getElementById("population_text");
-                  text.textContent = '이곳의 거주 인원은 없는 것 같습니다.';
-                });
       }
     });
   });
