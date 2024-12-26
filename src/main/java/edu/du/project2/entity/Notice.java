@@ -24,7 +24,7 @@ public class Notice {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT") // 긴 텍스트 저장
     private String content;
 
     @Column(nullable = false)

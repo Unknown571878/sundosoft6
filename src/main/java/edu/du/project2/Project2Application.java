@@ -43,6 +43,52 @@ public class Project2Application {
         memberRequest.setDetailAddress("");
         memberService.registerMember(memberRequest);
     }
+
+    @PostConstruct
+    public void init1(){
+        List<Notice> notices = new ArrayList<>();
+
+        notices.add(Notice.builder()
+                .title("개인정보처리방침 안내")
+                .content("본 공지는 개인정보처리방침에 대한 내용을 안내드립니다.\n\n" +
+                        "1. 수집하는 개인정보 항목\n" +
+                        "- 이름, 이메일 주소, 전화번호, 서비스 이용 기록 등\n\n" +
+                        "2. 개인정보의 수집 및 이용 목적\n" +
+                        "- 회원 관리, 서비스 제공 및 개선, 마케팅 및 광고\n\n" +
+                        "3. 개인정보의 보유 및 이용 기간\n" +
+                        "- 회원 탈퇴 시 지체 없이 파기하며, 관련 법령에 따라 보관이 필요한 경우 해당 기간 동안 보관\n\n" +
+                        "4. 개인정보 제3자 제공\n" +
+                        "- 원칙적으로 제3자에게 제공하지 않으며, 법령에 따라 필요한 경우에 한하여 제공\n\n" +
+                        "5. 개인정보 보호를 위한 기술적 및 관리적 대책\n" +
+                        "- 데이터 암호화, 접근 제어, 주기적인 보안 점검 등\n\n" +
+                        "자세한 내용은 첨부된 개인정보처리방침 전문을 확인해 주시기 바랍니다.")
+                .hits(0)
+                .filePaths(List.of("files/privacy_policy.pdf"))
+                .build());
+
+        notices.add(Notice.builder()
+                .title("이용약관 변경 안내")
+                .content("안녕하세요, 서비스 이용약관 변경에 대한 안내드립니다.\n\n" +
+                        "1. 변경 사항 주요 내용\n" +
+                        "- 회원의 권리 및 의무에 대한 추가 명시\n" +
+                        "- 서비스 이용 시 금지되는 행위 구체화\n" +
+                        "- 서비스 제공 범위 및 회사 책임 사항 업데이트\n\n" +
+                        "2. 변경 일자\n" +
+                        "- 변경된 약관은 2024년 1월 1일부터 적용됩니다.\n\n" +
+                        "3. 동의 여부\n" +
+                        "- 본 약관에 동의하지 않는 경우, 회원 탈퇴를 요청하실 수 있으며, 계속 이용하실 경우 변경된 약관에 동의하신 것으로 간주됩니다.\n\n" +
+                        "4. 문의처\n" +
+                        "- 이메일: support@example.com\n" +
+                        "- 고객센터 전화번호: 123-456-7890\n\n" +
+                        "변경된 약관 전문은 첨부된 파일을 통해 확인하실 수 있습니다. 서비스 이용에 참고 부탁드립니다.")
+                .hits(0)
+                .filePaths(List.of("files/terms_of_service.pdf"))
+                .build());
+
+        noticeRepository.saveAll(notices);
+
+    }
+
     @PostConstruct
     public void init2() {
         List<FaQ> faqList = new ArrayList<>();
