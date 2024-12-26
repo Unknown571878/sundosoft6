@@ -37,8 +37,9 @@ public class Project2Application {
         memberRequest.setEmail("123@123");
         memberRequest.setPassword("123");
         memberRequest.setName("test1");
-        memberRequest.setAddress("");
-        memberRequest.setDetailAddress("");
+        memberRequest.setZipcode("123");
+        memberRequest.setAddress("123");
+        memberRequest.setDetailAddress("123");
         memberService.registerMember(memberRequest);
     }
 

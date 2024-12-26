@@ -29,11 +29,8 @@
             <label for="flexCheckDefault" style="font-size: 14px;">아이디 기억하기</label>
         </div>
 
-        <div th:if="${error}" class="alert alert-danger " role="alert">
+        <div th:if="${error}" class="alert alert-danger fade-out " role="alert">
             <span th:text="${error}"></span>
-        </div>
-        <div th:if="${message}" class="alert alert-success " role="alert">
-            <span th:text="${message}"></span>
         </div>
 
         <button type="submit" class="btn btn-secondary w-100 border border-secondary rounded-pill mt-3 mb-1">로그인</button>

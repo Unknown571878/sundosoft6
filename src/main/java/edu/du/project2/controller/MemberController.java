@@ -83,10 +83,9 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+    public String logout(HttpSession session) {
         session.invalidate();  // 세션 무효화 (로그아웃 처리)
-        redirectAttributes.addFlashAttribute("message", "로그아웃 하였습니다.");
-        return "redirect:/login";  // 로그인 페이지로 리디렉션
+        return "redirect:/";  // 로그인 페이지로 리디렉션
     }
 
     @GetMapping("/findId")
