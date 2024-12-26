@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>자주 묻는 질문</title>
+  <title>FAQ</title>
   <link rel="stylesheet" href="/css/faqList.css">
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
@@ -12,7 +12,7 @@
 <div class="ft">
   <div class="container">
     <div class="main-title">
-      <h1>자주 묻는 질문</h1>
+      <h1>FAQ 목록</h1>
       <div class="split--div-post"></div>
     </div>
     <table class="post-table">
@@ -43,7 +43,6 @@
         <li th:classappend="${pageNumber < pageSize} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="@{/faq/faqList(page=0)}">
             <span>&laquo;</span>
-            <span class="sr-only">First</span>
           </a>
         </li>
 
@@ -51,7 +50,6 @@
         <li th:classappend="${faqs.first} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="${faqs.first} ? '#' : @{/faq/faqList(page=${pageNumber - 1})}" aria-label="Previous">
             <span aria-hidden="true">&lt;</span>
-            <span class="sr-only">Previous</span>
           </a>
         </li>
 
@@ -64,7 +62,6 @@
         <li th:classappend="${faqs.last} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="${faqs.last} ? '#' : @{/faq/faqList(page=${pageNumber + 1})}" aria-label="Next">
             <span aria-hidden="true">&gt;</span>
-            <span class="sr-only">Next</span>
           </a>
         </li>
 
@@ -72,7 +69,6 @@
         <li th:classappend=" ${T(java.lang.Math).floor(totalPages / pageSize) * pageSize - 1 <= startPage} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="@{/faq/faqList(page=${totalPages - 1})}">
             <span>&raquo;</span>
-            <span class="sr-only">Last</span>
           </a>
         </li>
       </ul>

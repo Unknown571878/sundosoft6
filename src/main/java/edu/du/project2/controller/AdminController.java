@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,8 @@ public class AdminController {
         final int start = (int) pageable.getOffset();
         final int end = Math.min(start + pageable.getPageSize(), notices.size());
         final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
         return "admin/admin_notice";
     }
@@ -63,6 +66,8 @@ public class AdminController {
         List<QnA> qna = qnARepository.findAll();
         List<QnAList> qnALists = qnAListRepository.findAll();
         List<Member> members = memberRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         model.addAttribute("qna", qna);
         model.addAttribute("qnaList", qnALists);
         model.addAttribute("member", members);
@@ -75,6 +80,8 @@ public class AdminController {
         model.addAttribute("lists", qnAService.getInquiryReplies(id));
         QnAList qnAList = qnAService.getInquiryDetail(id);
         Member member = memberRepository.findById(qnAList.getUid()).get();
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         model.addAttribute("member", member);
         return "/admin/admin_qnaDetail";
     }
@@ -129,6 +136,8 @@ public class AdminController {
         if (authInfo != null) {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         model.addAttribute("notice", notice);
         model.addAttribute("filePath", notice.getFilePaths());
         return "admin/admin_noticeDetail";  // 관리자 페이지
@@ -170,6 +179,8 @@ public class AdminController {
     @GetMapping("/admin/admin_faqDetail")
     public String faqDetail(@RequestParam Long id, Model model) {
         FaQ faQ = faqService.faqDetail(id);
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         model.addAttribute("faq", faQ);
         return "/admin/admin_faqDetail";
     }

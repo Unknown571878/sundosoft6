@@ -39,7 +39,7 @@
           <td>
             <a th:href="@{/admin/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
           </td>
-          <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+          <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(notice.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(notice.createdAt, 'HH:mm')} : ${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}"></td>
           <td th:text="${notice.hits}"></td>
         </tr>
       </th:block>
@@ -59,7 +59,6 @@
         <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="@{/admin_notice(page=0)}">
             <span>&laquo;</span>
-            <span class="sr-only">First</span>
           </a>
         </li>
 
@@ -67,7 +66,6 @@
         <li th:classappend="${list.first} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="${list.first} ? '#' : @{/admin_notice(page=${pageNumber - 1})}" aria-label="Previous">
             <span aria-hidden="true">&lt;</span>
-            <span class="sr-only">Previous</span>
           </a>
         </li>
 
@@ -80,7 +78,6 @@
         <li th:classappend="${list.last} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="${list.last} ? '#' : @{/admin_notice(page=${pageNumber + 1})}" aria-label="Next">
             <span aria-hidden="true">&gt;</span>
-            <span class="sr-only">Next</span>
           </a>
         </li>
 
@@ -88,7 +85,6 @@
         <li th:classappend="${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
           <a class="page-link" th:href="@{/admin_notice(page=${totalPages - 1})}">
             <span>&raquo;</span>
-            <span class="sr-only">Last</span>
           </a>
         </li>
       </ul>

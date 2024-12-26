@@ -45,6 +45,8 @@ public class QnAController {
             return showMessageAndRedirect(message, model);
         }
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         Page<QnAList> inquiries = qnAService.getInquiries(authInfo, pageable);
         model.addAttribute("inquiries", inquiries);
         List<QnAList> lists = qnAService.getInquiryNum(authInfo);
@@ -57,6 +59,8 @@ public class QnAController {
         model.addAttribute("qna", qnAService.getInquiryDetail(id));
         model.addAttribute("lists", qnAService.getInquiryReplies(id));
         QnAList qnAList = qnAService.getInquiryDetail(id);
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
         Member member = memberRepository.findById(qnAList.getUid()).get();
         model.addAttribute("member", member);
         return "/qna/inquiryDetail";

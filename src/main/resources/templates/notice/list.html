@@ -50,8 +50,8 @@
                     <td>
                         <a th:href="@{/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
                     </td>
-                    <!-- 공지사항 작성일을 'yyyy/MM/dd HH:mm' 형식으로 출력 -->
-                    <td th:text="${#temporals.format(notice.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+                    <!-- 공지사항 작성일을 당일 작성이면 HH:mm을 아니면 yyyy-MM-dd 형식으로 출력 -->
+                    <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(notice.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(notice.createdAt, 'HH:mm')} : ${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}"></td>
                     <!-- 조회수 출력 -->
                     <td th:text="${notice.hits}"></td>
                 </tr>
@@ -79,7 +79,6 @@
                 <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
                     <a class="page-link" th:href="@{/noticeList(page=0)}">
                         <span>&laquo;</span>
-                        <span class="sr-only">First</span>
                     </a>
                 </li>
 
@@ -87,7 +86,6 @@
                 <li th:classappend="${list.first} ? 'disabled'" class="page-item">
                     <a class="page-link" th:href="${list.first} ? '#' : @{/noticeList(page=${pageNumber - 1})}" aria-label="Previous">
                         <span aria-hidden="true">&lt;</span>
-                        <span class="sr-only">Previous</span>
                     </a>
                 </li>
 
@@ -100,7 +98,6 @@
                 <li th:classappend="${list.last} ? 'disabled'" class="page-item">
                     <a class="page-link" th:href="${list.last} ? '#' : @{/noticeList(page=${pageNumber + 1})}" aria-label="Next">
                         <span aria-hidden="true">&gt;</span>
-                        <span class="sr-only">Next</span>
                     </a>
                 </li>
 
@@ -108,7 +105,6 @@
                 <li th:classappend="${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
                     <a class="page-link" th:href="@{/noticeList(page=${totalPages - 1})}">
                         <span>&raquo;</span>
-                        <span class="sr-only">Last</span>
                     </a>
                 </li>
             </ul>

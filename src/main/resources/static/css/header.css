@@ -3,7 +3,7 @@
 /* 상단 가장 위에 위치하며 로그인 및 회원가입 링크를 포함합니다.
    간결한 레이아웃과 어두운 배경색으로 페이지 상단을 구성합니다. */
 
-ul li {list-style:none;}
+ul .header-li {list-style:none;}
 .nav-links:after{content:'';display:block; clear:both;}
 
 body {
@@ -19,12 +19,12 @@ header {
     z-index: 1000;
     background:linear-gradient(white 50px, rgba(255,255,255,0.8) 50px, rgba(255,255,255,0.8) );
 }
-nav > ul {
+.header-nav > ul {
     position: relative; /* 하위 메뉴 위치를 설정하기 위한 상대 위치 지정 */
 }
-nav {width:960px; margin:0 auto;}
-nav > ul > li {float:left; line-height:50px; margin-right:40px;}
-nav > ul > li ul{
+.header-nav {width:960px; margin:0 auto;}
+.header-nav > ul > .header-li {float:left; line-height:50px; margin-right:40px;}
+.header-nav > ul > .header-li ul{
     width:100%;
     position: absolute; /* 부모 메뉴 기준으로 위치 고정 */}
 
@@ -90,7 +90,7 @@ nav > ul > li ul{
 }
 
 .submenu {
-
+    text-align: center;
     gap: 30px; /* 링크 간 간격 설정 */
     margin: 0; /* 외부 여백 제거 */
     justify-content: center; /* 중앙 정렬 */
