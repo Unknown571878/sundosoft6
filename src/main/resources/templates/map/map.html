@@ -12,11 +12,71 @@
 <body>
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
 <div class="ft">
-  <div id="map" style="width: 100%; height: 600px;"></div>
-  <div id="map_text"></div>
-  <div id="subway"></div>
-  <div id="map_position"></div>
-  <div id="population_text"></div>
+  <div class="menu" id="menu">
+    <div class="menu-header">
+      <span>레이어 선택</span>
+      <button onclick="toggleMenu()">&times;</button> <!-- 닫기 버튼 -->
+    </div>
+    <div class="menu-search">
+      <input type="text" placeholder="검색..."> <!-- 검색창 -->
+    </div>
+    <ul>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">지역</span> <!-- 메인 메뉴 -->
+        <ul class="submenu"> <!-- 서브메뉴 리스트 -->
+          <li>
+            <span class="submenu-item">광주</span>
+            <input type="checkbox"> <!-- 체크박스 -->
+          </li>
+          <li>
+            <span class="submenu-item">천안</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">도서관</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item">인구수</span>
+            <input type="checkbox">
+          </li>
+          <li>
+            <span class="submenu-item">건물현황</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">그늘막</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item">인구수</span>
+            <input type="checkbox">
+          </li>
+          <li>
+            <span class="submenu-item">유동인구</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">무인발급기</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item">인구수</span>
+            <input type="checkbox">
+          </li>
+          <li>
+            <span class="submenu-item">유동인구</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"></button> <!-- 메뉴 열기 버튼 -->
+  <div id="map" style="width: 100%; height: 600px; padding-right: 20px; padding-left: 20px"></div>
     <div class="check-layer" id="check-layer">
       <!-- 레이어 헤더 -->
       <div class="layer-header" id="layer-header">
@@ -36,53 +96,6 @@
         <button id="submit-button">Submit</button> <!-- 제출 버튼 -->
       </div>
     </div>
-    <div class="popup-layer" id="popup-layer">
-      <div class="popup-header" id="popup-header">
-        <h3>레이어 리스트</h3>
-      </div>
-      <div class="popup-content">
-        <div class="sub-dropdown" id="sub-dropdown">
-          <ul>
-            <li>
-              지역
-              <ul>
-                <li><input type="checkbox" id="moption1"> <label for="moption1">천안</label></li>
-                <li><input type="checkbox" id="moption2"> <label for="moption2">광주</label></li>
-              </ul>
-            </li>
-            <li>
-              도서관
-              <ul>
-                <li><input type="checkbox" id="moption3"> <label for="moption3">인구수</label></li>
-                <li><input type="checkbox" id="moption4"> <label for="moption4">건물현황</label></li>
-              </ul>
-            </li>
-            <li>
-              그늘막
-              <ul>
-                <li><input type="checkbox" id="moption5"> <label for="moption5">인구수</label></li>
-                <li><input type="checkbox" id="moption6"> <label for="moption6">유동인구</label></li>
-              </ul>
-            </li>
-            <li>
-              무인발급기
-              <ul>
-                <li><input type="checkbox" id="moption7"> <label for="moption7">인구수</label></li>
-                <li><input type="checkbox" id="moption8"> <label for="moption8">유동인구</label></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  <div>
-    <label for="wmsLayerCheckbox">광주 동별 표시:</label>
-    <input type="checkbox" id="wmsLayerCheckbox">
-  </div>
-  <div>
-    <label for="dongCheckbox">광주 구별 표시:</label>
-    <input type="checkbox" id="dongCheckbox">
-  </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -170,7 +183,20 @@
       }
     });
   });
+  // 메뉴 열고 닫기 토글 기능
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const menuButton = document.getElementById('menu-button');
+    menu.classList.toggle('hidden');
+    menuButton.classList.toggle('hidden');
+  }
 
+  // 서브메뉴 열고 닫기 토글 기능
+  function toggleSubmenu(event, element) {
+    event.preventDefault();
+    const listItem = element.parentElement;
+    listItem.classList.toggle('active');
+  }
 </script>
 <script src="/js/mapOptionLayer.js"></script>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
