@@ -2,15 +2,11 @@ const draggableList = document.getElementById('draggable-checkbox-list'); // 드
 const submitButton = document.getElementById('submit-button'); // 제출 버튼 요소 가져오기
 const checkLayer = document.getElementById('check-layer'); // 체크 레이어 요소 가져오기
 const layerHeader = document.getElementById('layer-header'); // 레이어 헤더 요소 가져오기
-const subDropdownItems = document.querySelectorAll('.sub-dropdown > ul > li'); // 서브 드롭다운 항목들 가져오기
-const popupLayer = document.getElementById('popup-layer'); // 팝업 레이어 요소 가져오기
-const popupHeader = document.getElementById('popup-header'); // 팝업 헤더 요소 가져오기
+let startX, startY, initialLeft, initialTop; // 팝업 드래그 관련 변수 초기화
 
 let draggedItem = null; // 드래그 중인 항목
 let placeholder = null; // 플레이스홀더 요소
 let isDragging = false; // 드래그 상태 확인
-let offsetX = 0; // 레이어 드래그 X 오프셋
-let offsetY = 0; // 레이어 드래그 Y 오프셋
 
 // 드래그 앤 드롭 이벤트 처리
 draggableList.addEventListener('dragstart', (e) => {
@@ -83,38 +79,4 @@ submitButton.addEventListener('click', () => {
         }
     });
     alert(`Selected options: ${selectedOptions.join(', ')}`); // 선택된 옵션 알림 표시
-});
-
-// 서브 드롭다운 항목 클릭 이벤트 처리
-subDropdownItems.forEach(item => {
-    item.addEventListener('click', () => {
-        item.classList.toggle('active'); // 활성화 상태 토글
-    });
-});
-
-let startX, startY, initialLeft, initialTop; // 팝업 드래그 관련 변수 초기화
-
-// 팝업 헤더 드래그 이벤트 처리
-popupHeader.addEventListener('mousedown', (e) => {
-    isDragging = true; // 드래그 상태 활성화
-    startX = e.clientX; // 마우스의 초기 X 위치
-    startY = e.clientY; // 마우스의 초기 Y 위치
-    const rect = popupLayer.getBoundingClientRect(); // 팝업 레이어의 위치 정보 가져오기
-    initialLeft = rect.left; // 팝업 레이어의 초기 X 위치
-    initialTop = rect.top; // 팝업 레이어의 초기 Y 위치
-    document.body.style.userSelect = "none"; // 텍스트 선택 방지
-});
-
-popupHeader.addEventListener('mousemove', (e) => {
-    if (isDragging) { // 드래그 상태일 경우
-        const dx = e.clientX - startX; // 마우스 X 이동 거리
-        const dy = e.clientY - startY; // 마우스 Y 이동 거리
-        popupLayer.style.left = `${initialLeft + dx}px`; // 팝업 레이어의 새로운 X 위치 설정
-        popupLayer.style.top = `${initialTop + dy}px`; // 팝업 레이어의 새로운 Y 위치 설정
-    }
-});
-
-popupHeader.addEventListener('mouseup', () => {
-    isDragging = false; // 드래그 상태 비활성화
-    document.body.style.userSelect = ""; // 텍스트 선택 재활성화
 });
