@@ -12,6 +12,7 @@
 <body>
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
 <div class="ft">
+  <div class="main-map">
   <div class="menu" id="menu">
     <div class="menu-header">
       <span>레이어 선택</span>
@@ -76,7 +77,7 @@
     </ul>
   </div>
   <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"></button> <!-- 메뉴 열기 버튼 -->
-  <div id="map" style="width: 100%; height: 600px; padding-right: 20px; padding-left: 20px"></div>
+  <div id="map" style="width: 100%; height: 850px; padding-right: 20px; padding-left: 20px"></div>
     <div class="check-layer" id="check-layer">
       <!-- 레이어 헤더 -->
       <div class="layer-header" id="layer-header">
@@ -96,6 +97,7 @@
         <button id="submit-button">Submit</button> <!-- 제출 버튼 -->
       </div>
     </div>
+  </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
