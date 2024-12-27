@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>문의하기</title>
+  <title>입지분석</title>
   <link rel="stylesheet" href="/css/ol.css">
+  <link rel="stylesheet" href="/css/mapOptionLayer.css">
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
   <script type="text/javascript" th:src="@{/js/ol.js}"></script>
@@ -16,7 +17,64 @@
   <div id="subway"></div>
   <div id="map_position"></div>
   <div id="population_text"></div>
-
+    <div class="check-layer" id="check-layer">
+      <!-- 레이어 헤더 -->
+      <div class="layer-header" id="layer-header">
+        <h3>레이어 우선순위</h3> <!-- 제목 -->
+      </div>
+      <div class="layer-content">
+        <!-- 드래그 가능한 체크박스 리스트 -->
+        <ul class="draggable-checkbox-list" id="draggable-checkbox-list">
+          <li draggable="true"><input type="checkbox" id="option1"> <label for="option1">도서관</label></li>
+          <li draggable="true"><input type="checkbox" id="option2"> <label for="option2">무인발급기</label></li>
+          <li draggable="true"><input type="checkbox" id="option3"> <label for="option3">공공와이파이</label></li>
+          <li draggable="true"><input type="checkbox" id="option4"> <label for="option4">무더위 그늘막</label></li>
+        </ul>
+      </div>
+      <!-- 레이어 푸터 -->
+      <div class="layer-footer">
+        <button id="submit-button">Submit</button> <!-- 제출 버튼 -->
+      </div>
+    </div>
+    <div class="popup-layer" id="popup-layer">
+      <div class="popup-header" id="popup-header">
+        <h3>레이어 리스트</h3>
+      </div>
+      <div class="popup-content">
+        <div class="sub-dropdown" id="sub-dropdown">
+          <ul>
+            <li>
+              지역
+              <ul>
+                <li><input type="checkbox" id="moption1"> <label for="moption1">천안</label></li>
+                <li><input type="checkbox" id="moption2"> <label for="moption2">광주</label></li>
+              </ul>
+            </li>
+            <li>
+              도서관
+              <ul>
+                <li><input type="checkbox" id="moption3"> <label for="moption3">인구수</label></li>
+                <li><input type="checkbox" id="moption4"> <label for="moption4">건물현황</label></li>
+              </ul>
+            </li>
+            <li>
+              그늘막
+              <ul>
+                <li><input type="checkbox" id="moption5"> <label for="moption5">인구수</label></li>
+                <li><input type="checkbox" id="moption6"> <label for="moption6">유동인구</label></li>
+              </ul>
+            </li>
+            <li>
+              무인발급기
+              <ul>
+                <li><input type="checkbox" id="moption7"> <label for="moption7">인구수</label></li>
+                <li><input type="checkbox" id="moption8"> <label for="moption8">유동인구</label></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   <div>
     <label for="wmsLayerCheckbox">광주 동별 표시:</label>
     <input type="checkbox" id="wmsLayerCheckbox">
@@ -112,7 +170,9 @@
       }
     });
   });
+
 </script>
+<script src="/js/mapOptionLayer.js"></script>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
