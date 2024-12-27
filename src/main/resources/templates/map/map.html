@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>문의하기</title>
+  <title>입지분석</title>
   <link rel="stylesheet" href="/css/ol.css">
+  <link rel="stylesheet" href="/css/mapOptionLayer.css">
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
   <script type="text/javascript" th:src="@{/js/ol.js}"></script>
@@ -11,25 +12,90 @@
 <body>
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
 <div class="ft">
-  <div id="map" style="width: 100%; height: 600px;"></div>
-  <div id="map_position"></div>
-
-  <div>
-    <label for="wmsLayerCheckbox">광주 동별 표시:</label>
-    <input type="checkbox" id="wmsLayerCheckbox">
+  <div class="menu" id="menu">
+    <div class="menu-header">
+      <span>레이어 선택</span>
+      <button onclick="toggleMenu()">&times;</button> <!-- 닫기 버튼 -->
+    </div>
+    <div class="menu-search">
+      <input type="text" placeholder="검색..."> <!-- 검색창 -->
+    </div>
+    <ul>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">지역</span> <!-- 메인 메뉴 -->
+        <ul class="submenu"> <!-- 서브메뉴 리스트 -->
+          <li>
+            <span class="submenu-item">광주</span>
+            <input type="checkbox"> <!-- 체크박스 -->
+          </li>
+          <li>
+            <span class="submenu-item">천안</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">도서관</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item">인구수</span>
+            <input type="checkbox">
+          </li>
+          <li>
+            <span class="submenu-item">건물현황</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">그늘막</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item">인구수</span>
+            <input type="checkbox">
+          </li>
+          <li>
+            <span class="submenu-item">유동인구</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">무인발급기</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item">인구수</span>
+            <input type="checkbox">
+          </li>
+          <li>
+            <span class="submenu-item">유동인구</span>
+            <input type="checkbox">
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
-  <div>
-    <label for="dongCheckbox">광주 구별 표시:</label>
-    <input type="checkbox" id="dongCheckbox">
-  </div>
-  <div>
-    <label for="gwangju_population">광주 인구 표시:</label>
-    <input type="checkbox" id="gwangju_population">
-  </div>
-  <div>
-    <label for="gwangju_library">도서관 표시:</label>
-    <input type="checkbox" id="gwangju_library">
-  </div>
+  <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"></button> <!-- 메뉴 열기 버튼 -->
+  <div id="map" style="width: 100%; height: 600px; padding-right: 20px; padding-left: 20px"></div>
+    <div class="check-layer" id="check-layer">
+      <!-- 레이어 헤더 -->
+      <div class="layer-header" id="layer-header">
+        <h3>레이어 우선순위</h3> <!-- 제목 -->
+      </div>
+      <div class="layer-content">
+        <!-- 드래그 가능한 체크박스 리스트 -->
+        <ul class="draggable-checkbox-list" id="draggable-checkbox-list">
+          <li draggable="true"><input type="checkbox" id="option1"> <label for="option1">도서관</label></li>
+          <li draggable="true"><input type="checkbox" id="option2"> <label for="option2">무인발급기</label></li>
+          <li draggable="true"><input type="checkbox" id="option3"> <label for="option3">공공와이파이</label></li>
+          <li draggable="true"><input type="checkbox" id="option4"> <label for="option4">무더위 그늘막</label></li>
+        </ul>
+      </div>
+      <!-- 레이어 푸터 -->
+      <div class="layer-footer">
+        <button id="submit-button">Submit</button> <!-- 제출 버튼 -->
+      </div>
+    </div>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -51,7 +117,7 @@
             },
             serverType: 'geoserver'
           }),
-          visible: false  // 광주 동 전체 레이어
+          visible: false  // 광주 전체 레이어
         }),  //1번
         new ol.layer.Tile({
           source: new ol.source.TileWMS({
@@ -65,33 +131,7 @@
             serverType: 'geoserver'
           }),
           visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-        }), // 대전 구별 레이어
-        new ol.layer.Tile({
-          source: new ol.source.TileWMS({
-            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
-            params: {
-              'LAYERS': 'ne:gwangju_population',  // 사용하려는 레이어 이름
-              'TILED': true,
-              'FORMAT': 'image/png',
-              'SRS': 'EPSG:4326'  // 좌표계 설정
-            },
-            serverType: 'geoserver'
-          }),
-          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-        }),
-        new ol.layer.Tile({
-          source: new ol.source.TileWMS({
-            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
-            params: {
-              'LAYERS': 'ne:gwangju_library',  // 사용하려는 레이어 이름
-              'TILED': true,
-              'FORMAT': 'image/png',
-              'SRS': 'EPSG:4326'  // 좌표계 설정
-            },
-            serverType: 'geoserver'
-          }),
-          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-        }) // 광주 도서관
+        }) // 대전 동별 레이어
       ],
       view: new ol.View({
         projection: 'EPSG:4326',  // 지도 좌표계 설정
@@ -113,18 +153,6 @@
       var wmsLayer = map.getLayers().item(2); // WMS 레이어
       wmsLayer.setVisible(dongCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
     });
-    var gwangju_population = document.getElementById('gwangju_population');
-    gwangju_population.addEventListener('change', function() {
-      var wmsLayer = map.getLayers().item(3); // WMS 레이어
-      wmsLayer.setVisible(gwangju_population.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
-    });
-    var gwangju_library = document.getElementById('gwangju_library');
-    gwangju_library.addEventListener('change', function() {
-      var wmsLayer = map.getLayers().item(4); // WMS 레이어
-      wmsLayer.setVisible(gwangju_library.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
-    });
-
-
 
     // 지도 클릭시
     map.on('click', function (event) {
@@ -137,9 +165,40 @@
       var lonLatText = '클릭한 위치의 위도 : ' +  coordinate[1].toFixed(6) + ', 경도 : ' + coordinate[0].toFixed(6); // 위도, 경도
       let coordinateText = document.getElementById("map_position");
       coordinateText.textContent = lonLatText;
+
+
+      // 클릭한 위치 이름
+      var url1 = map.getLayers().item(1).getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, {
+        'INFO_FORMAT': 'application/json'
+      });
+      if (url1) {
+        fetch(url1)
+                .then(response => response.json())
+                .then(data => {
+                  const name = data.features[0].properties.name;
+                  let text = document.getElementById("map_text");
+                  text.textContent = '현재 클릭한 곳은 ' + name + ' 입니다.';
+                })
+                .catch(error => console.error('Error fetching feature info:', error));
+      }
     });
   });
+  // 메뉴 열고 닫기 토글 기능
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const menuButton = document.getElementById('menu-button');
+    menu.classList.toggle('hidden');
+    menuButton.classList.toggle('hidden');
+  }
+
+  // 서브메뉴 열고 닫기 토글 기능
+  function toggleSubmenu(event, element) {
+    event.preventDefault();
+    const listItem = element.parentElement;
+    listItem.classList.toggle('active');
+  }
 </script>
+<script src="/js/mapOptionLayer.js"></script>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="/layout/footer :: footerLayout"></th:block>
 </body>
