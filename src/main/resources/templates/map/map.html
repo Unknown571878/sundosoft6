@@ -12,10 +12,7 @@
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
 <div class="ft">
   <div id="map" style="width: 100%; height: 600px;"></div>
-  <div id="map_text"></div>
-  <div id="subway"></div>
   <div id="map_position"></div>
-  <div id="population_text"></div>
 
   <div>
     <label for="wmsLayerCheckbox">광주 동별 표시:</label>
@@ -24,6 +21,14 @@
   <div>
     <label for="dongCheckbox">광주 구별 표시:</label>
     <input type="checkbox" id="dongCheckbox">
+  </div>
+  <div>
+    <label for="gwangju_population">광주 인구 표시:</label>
+    <input type="checkbox" id="gwangju_population">
+  </div>
+  <div>
+    <label for="gwangju_library">도서관 표시:</label>
+    <input type="checkbox" id="gwangju_library">
   </div>
 </div>
 <script>
@@ -46,7 +51,7 @@
             },
             serverType: 'geoserver'
           }),
-          visible: false  // 광주 전체 레이어
+          visible: false  // 광주 동 전체 레이어
         }),  //1번
         new ol.layer.Tile({
           source: new ol.source.TileWMS({
@@ -60,7 +65,33 @@
             serverType: 'geoserver'
           }),
           visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-        }) // 대전 동별 레이어
+        }), // 대전 구별 레이어
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }),
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_library',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }) // 광주 도서관
       ],
       view: new ol.View({
         projection: 'EPSG:4326',  // 지도 좌표계 설정
@@ -82,6 +113,18 @@
       var wmsLayer = map.getLayers().item(2); // WMS 레이어
       wmsLayer.setVisible(dongCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
     });
+    var gwangju_population = document.getElementById('gwangju_population');
+    gwangju_population.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(3); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_library = document.getElementById('gwangju_library');
+    gwangju_library.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(4); // WMS 레이어
+      wmsLayer.setVisible(gwangju_library.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+
+
 
     // 지도 클릭시
     map.on('click', function (event) {
@@ -94,22 +137,6 @@
       var lonLatText = '클릭한 위치의 위도 : ' +  coordinate[1].toFixed(6) + ', 경도 : ' + coordinate[0].toFixed(6); // 위도, 경도
       let coordinateText = document.getElementById("map_position");
       coordinateText.textContent = lonLatText;
-
-
-      // 클릭한 위치 이름
-      var url1 = map.getLayers().item(1).getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, {
-        'INFO_FORMAT': 'application/json'
-      });
-      if (url1) {
-        fetch(url1)
-                .then(response => response.json())
-                .then(data => {
-                  const name = data.features[0].properties.name;
-                  let text = document.getElementById("map_text");
-                  text.textContent = '현재 클릭한 곳은 ' + name + ' 입니다.';
-                })
-                .catch(error => console.error('Error fetching feature info:', error));
-      }
     });
   });
 </script>
