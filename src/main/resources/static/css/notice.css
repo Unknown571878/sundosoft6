@@ -163,16 +163,26 @@ td, th {
     color: #555; /* 텍스트 색상 */
 }
 
+a {
+    color: black; /* 기본 글씨 색상을 검정으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+a:hover {
+    color: black; /* 호버 시에도 글씨를 검정으로 유지 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
 /* 제목 링크 스타일 */
 td.title a {
-    color: #2c3e50; /* 링크 색상 */
+    color: black; /* 링크 색상 */
     text-decoration: none; /* 밑줄 제거 */
     font-weight: bold; /* 글자 두껍게 */
 }
 
 /* 제목 링크에 마우스를 올렸을 때 스타일 */
 td.title a:hover {
-    text-decoration: underline; /* 밑줄 추가 */
+    text-decoration: none; /* 밑줄 제거 */
 }
 
 /* 작성 버튼 스타일 */
