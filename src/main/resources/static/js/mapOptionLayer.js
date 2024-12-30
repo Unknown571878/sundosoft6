@@ -80,3 +80,36 @@ submitButton.addEventListener('click', () => {
     });
     alert(`Selected options: ${selectedOptions.join(', ')}`); // 선택된 옵션 알림 표시
 });
+
+const fullscreen = document.getElementById('fullscreenButton');
+const map = document.getElementById('map');
+
+fullscreen.addEventListener('click', () => {
+    if (map.requestFullscreen) {
+        map.requestFullscreen(); // 표준 API
+    } else if (map.webkitRequestFullscreen) {
+        map.webkitRequestFullscreen(); // Safari
+    } else if (map.msRequestFullscreen) {
+        map.msRequestFullscreen(); // IE/Edge
+    }
+});
+
+const layer_invisible = document.getElementById('layer-invisible');
+const check_layer = document.getElementById('check-layer');
+const layer_cancel = document.getElementById('layer-cancel');
+
+layer_cancel.addEventListener('click', ()=>{
+    if (check_layer.style.display === 'block' || check_layer.style.display === '') {
+        check_layer.style.display = 'none';
+    }
+});
+
+layer_invisible.addEventListener('click', () => {
+    if (check_layer.style.display === 'block' || check_layer.style.display === '') {
+        check_layer.style.display = 'none'; // 안 보이게 설정
+    }
+    else if (check_layer.style.display === 'none') {
+        check_layer.style.display = 'block'; // 보이게 설정
+
+    }
+});
