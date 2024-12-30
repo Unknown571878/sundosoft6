@@ -14,7 +14,7 @@ html, body {
     display: block;
     position: fixed; /* 화면에 고정 */
     top: 150px; /* 화면 상단에서 20px */
-    right: 20px; /* 화면 오른쪽에서 20px */
+    right: 60px; /* 화면 오른쪽에서 20px */
     transform: translate(0, 0); /* 위치 초기화 */
     width: 300px; /* 레이어 너비 */
     height: 300px; /* 레이어 높이 */
@@ -52,6 +52,15 @@ html, body {
     list-style: none; /* 리스트 스타일 제거 */
     margin: 0; /* 외부 여백 제거 */
     padding: 0; /* 내부 여백 제거 */
+}
+
+.draggable-checkbox-list img {
+    position: absolute;
+    right: 30px;
+}
+
+.draggable-checkbox-list label {
+    margin-left: 10px;
 }
 
 /* 리스트 항목 스타일 */
@@ -117,7 +126,7 @@ html, body {
     color: black;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
-    transition: lemain-map 0.3s ease; /* 슬라이드 애니메이션 */
+    transition: left 0.3s ease; /* 슬라이드 애니메이션 */
 }
 
 /* 메뉴 숨김 상태 */
@@ -240,4 +249,35 @@ html, body {
 
 .menu-button.hidden {
     display: none; /* 메뉴 버튼 숨김 */
+}
+
+.overlay-button-container {
+    position: absolute;
+    top: 10px; /* Slightly offset from the top */
+    right: 10px; /* Slightly offset from the right */
+    display: flex;
+    flex-direction: column; /* Arrange buttons vertically */
+    gap: 10px;
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+.overlay-button-container button {
+    width: 40px; /* Small square button */
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(0, 123, 255, 0.6); /* Semi-transparent background */
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+.overlay-button-container button:hover {
+    background-color: rgba(0, 86, 179, 0.6); /* Darker semi-transparent background on hover */
+}
+
+.map {
+    width: 100%;
+    height: 850px;
+    padding-left: 20px;
 }

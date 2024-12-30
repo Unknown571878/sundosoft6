@@ -161,3 +161,18 @@ header {
     font-weight: 500; /* 텍스트 두께 */
     transition: all 0.3s ease; /* 부드러운 효과 */
 }
+
+.nav-link {
+    color: #333; /* 다소 진한 회색 텍스트 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: 500; /* 글자 두께를 조금 더 강조 */
+    transition: all 0.3s ease; /* 효과를 부드럽게 전환 */
+}
+
+.cancel-button {
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+}
