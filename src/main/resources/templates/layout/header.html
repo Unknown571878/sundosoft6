@@ -97,12 +97,15 @@
               function() {
                 $header.stop().animate({ height: '300px' }, 300);
               },
-              // 마우스를 떼면 원래 높이로 복구
+              // 마우스를 떼면 3초 뒤에 원래 높이로 복구
               function() {
-                $header.stop().animate({ height: '140px' }, 300);
+                setTimeout(function() {
+                  $header.stop().animate({ height: '140px' }, 300);
+                }, 100); // 3초 지연 후 실행
               }
       );
     });
+
   </script>
   </body>
 </th:block>
