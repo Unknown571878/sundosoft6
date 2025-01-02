@@ -23,6 +23,7 @@ function validateName(input) {
     }else{
         input.setCustomValidity('');
     }
+    input.reportValidity();
 }
 
 // 전화번호 설정
