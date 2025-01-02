@@ -208,7 +208,7 @@ html, body {
 
 /* 서브메뉴 활성화 상태 */
 .menu ul li.active .submenu {
-    max-height: 200px; /* 서브메뉴가 표시됨 */
+    max-height: 1000px; /* 서브메뉴가 표시됨 */
 }
 
 .menu ul li .submenu-item {
