@@ -56,6 +56,8 @@ public class AdminController {
         final int end = Math.min(start + pageable.getPageSize(), notices.size());
         final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
         LocalDateTime now = LocalDateTime.now();
+        long totalNotices = noticeService.getTotalNotices();
+        model.addAttribute("notices", totalNotices);
         model.addAttribute("now", now);
         model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
         return "admin/admin_notice";
