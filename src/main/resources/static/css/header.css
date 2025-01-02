@@ -4,6 +4,10 @@
    간결한 레이아웃과 어두운 배경색으로 페이지 상단을 구성합니다. */
 
 /* 리스트 스타일 제거 (기본 점 제거) */
+html, body{
+    margin: 0;
+}
+
 ul .header-li {
     list-style: none;
 }
@@ -146,6 +150,7 @@ header {
 
 /* 서브메뉴 스타일 */
 .submenu {
+    padding: 0;
     text-align: center; /* 텍스트 중앙 정렬 */
     gap: 30px; /* 간격 */
     margin: 0; /* 외부 여백 제거 */
