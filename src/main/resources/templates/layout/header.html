@@ -92,14 +92,23 @@
       var $firstMenu = $('.header-nav > ul > .header-li'),
               $header = $('header');
 
+      // 마우스가 메뉴 위에 있는지 여부를 추적하는 변수
+      var isHovering = false;
+
       // 첫 번째 메뉴에 마우스를 올릴 때 헤더 높이 증가
       $firstMenu.hover(
               function() {
+                isHovering = true;
                 $header.stop().animate({ height: '300px' }, 300);
               },
-              // 마우스를 떼면 원래 높이로 복구
               function() {
-                $header.stop().animate({ height: '140px' }, 300);
+                isHovering = false;
+                // 3초 후에 헤더를 닫지만, 여전히 메뉴 위에 있으면 닫지 않음
+                setTimeout(function() {
+                  if (!isHovering) {
+                    $header.stop().animate({ height: '140px' }, 300);
+                  }
+                }, 300); // 0.3초 지연 후 실행
               }
       );
     });
