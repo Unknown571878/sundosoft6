@@ -32,6 +32,12 @@
         </td>
       </tr>
       <tr>
+        <th>비밀번호</th>
+        <td><a type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#changePwModal">
+          비밀번호 변경
+        </a></td>
+      </tr>
+      <tr>
         <th>이메일</th>
         <td><input type="email" th:value="${my.email}" name="email" readonly/></td>
       </tr>
@@ -58,9 +64,7 @@
       </tr>
     </table>
     <a href="#this" id="edit" class="btn btn-primary mt-3" >변경하기</a>
-    <a type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#changePwModal">
-      비밀번호 변경
-    </a>
+
   </div>
 </form>
 
@@ -113,7 +117,12 @@
       if (loginId.length < 5) {
         $("#loginId-btn").removeClass('btn-outline-primary')
                 .addClass('btn-outline-danger')
-                .text("ID는 최소 5자 이상");
+                .text("ID는 최소 5자 이상")
+        $("#edit")
+                .addClass('disabled') // 비활성화 스타일 추가
+                .css('pointer-events', 'none') // 클릭 비활성화
+                .css('opacity', '0.65') // 시각적으로 비활성화 표시
+                .attr('aria-disabled', 'true'); // 접근성 속성 추가
         return false;
       }
 
@@ -123,6 +132,11 @@
         data: { loginId: loginId },
         success: function(response) {
           alert(response); // Display the response from the server
+          $("#edit")
+                  .removeClass('disabled') // 비활성화 스타일 제거
+                  .css('pointer-events', 'auto') // 클릭 활성화
+                  .css('opacity', '1') // 원래 상태로 복원
+                  .removeAttr('aria-disabled'); // 접근성 속성 제거
         },
         error: function() {
           alert("아이디 중복 확인 실패");

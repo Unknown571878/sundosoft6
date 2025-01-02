@@ -30,6 +30,10 @@ public class NoticeService {
         return noticeRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
     }
 
+    public Long getTotalNotices() {
+        return noticeRepository.count();
+    }
+
     // 파일 업로드 경로 설정
     private final String UPLOAD_DIR = "C:/teamproject/sundosoft6/uploads";
 
