@@ -1,6 +1,7 @@
 /* 스타일 설정 */
 html, body {
     height: 100%;
+    margin: 0;
 }
 
 .main-map {
@@ -129,7 +130,7 @@ html, body {
 
 /* 메뉴 숨김 상태 */
 .menu.hidden {
-    left: -250px; /* 메뉴를 화면 왼쪽으로 숨김 */
+    left: -400px; /* 메뉴를 화면 왼쪽으로 숨김 */
 }
 
 /* 메뉴 헤더 스타일 */
