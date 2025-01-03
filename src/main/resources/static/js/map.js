@@ -264,11 +264,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 각 체크박스에 대해 이벤트 리스너 추가
     layers.forEach(function(layerInfo) {
         var checkbox = document.getElementById(layerInfo.id);
-        checkbox.addEventListener('change', function(event) {
-            if (event.target.checked) {
-                var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
-                wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
-            }
+        checkbox.addEventListener('change', function() {
+            var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+            wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
         });
     });
 
