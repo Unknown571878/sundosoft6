@@ -185,6 +185,16 @@ header {
 }
 
 .cancel-button {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.cancel-layer {
+    align-items: center;
     background-color: transparent;
     border: none;
     color: black;

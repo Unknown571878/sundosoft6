@@ -53,14 +53,22 @@ html, body {
     padding: 0; /* 내부 여백 제거 */
 }
 
-.draggable-checkbox-list img {
-    position: absolute;
-    right: 30px;
+.draggable-checkbox-list li {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 10px; /* 각 요소 사이의 간격 */
+    padding: 5px 10px; /* 내부 여백 */
+    border-bottom: 1px solid #ddd; /* 리스트 항목 구분선 */
 }
 
-.draggable-checkbox-list label {
-    margin-left: 10px;
+.draggable-checkbox-list li img {
+    margin: 0; /* 이미지 기본 여백 제거 */
 }
+
+.draggable-checkbox-list li label {
+    flex-grow: 1; /* 라벨이 가로로 확장 */
+}
+
 
 /* 리스트 항목 스타일 */
 .main-map .draggable-checkbox-list li {
@@ -87,30 +95,40 @@ html, body {
     height: 50px; /* 높이 설정 */
 }
 
-/* 레이어 하단 스타일 */
-.main-map .layer-footer {
-    padding: 10px; /* 내부 여백 */
-    background-color: #f1f1f1; /* 배경 색상 */
-    border-top: 1px solid #ddd; /* 위쪽 테두리 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    border-bottom-left-radius: 10px; /* 왼쪽 하단 모서리 둥글게 */
-    border-bottom-right-radius: 10px; /* 오른쪽 하단 모서리 둥글게 */
+/* 스크롤 가능한 레이어 콘텐츠 */
+.layer-content {
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    max-height: calc(100% - 60px); /* 푸터를 제외한 영역에 맞게 스크롤 영역 설정 */
+    padding-bottom: 60px; /* 푸터와 콘텐츠 간 공간 확보 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
 }
 
-/* 제출 버튼 스타일 */
-.main-map .layer-footer button {
-    padding: 10px 20px; /* 버튼 여백 */
-    background-color: #007BFF; /* 버튼 배경 색상 */
-    color: #ffffff; /* 버튼 텍스트 색상 */
-    border: none; /* 테두리 제거 */
-    border-radius: 5px; /* 버튼 모서리 둥글게 */
-    cursor: pointer; /* 클릭 가능한 커서 */
-    font-size: 16px; /* 텍스트 크기 */
+/* 푸터 고정 */
+.layer-content-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f4f4f4; /* 푸터 배경색 */
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #ddd; /* 상단 테두리 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    border-radius: 0 0 10px 10px; /* 아래쪽 모서리 둥글게 */
 }
 
-/* 버튼 호버 스타일 */
-.main-map .layer-footer button:hover {
-    background-color: #0056b3; /* 버튼 호버 시 배경 색상 */
+/* 푸터 버튼 스타일 */
+.layer-content-footer button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.layer-content-footer button:hover {
+    background-color: #0056b3;
 }
 
 /* 슬라이드 메뉴 컨테이너 스타일 */

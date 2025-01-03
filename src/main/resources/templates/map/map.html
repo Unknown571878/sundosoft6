@@ -652,7 +652,7 @@
           </li>
           <li class="check-item">
             <span class="submenu-item">도서관</span>
-            <input type="checkbox" id="gwangju_library">
+            <input type="checkbox" id="gwangju_library">도서관</input>
           </li>
           <li>
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">토지 이용</span>
@@ -793,16 +793,17 @@
         <!-- 레이어 헤더 -->
         <div class="layer-header" id="layer-header">
           <span>레이어 우선순위</span> <!-- 제목 -->
-          <button class="cancel-button" id="layer-cancel">&times;</button>
+          <button class="cancel-button" id="layer-cancel"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>
         </div>
         <div class="layer-content">
           <!-- 드래그 가능한 체크박스 리스트 -->
           <ul class="draggable-checkbox-list" id="draggable-checkbox-list">
-            <li draggable="true"><input type="checkbox" id="option1"> <label for="option1">도서관</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
-            <li draggable="true"><input type="checkbox" id="option2"> <label for="option2">무인발급기</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
-            <li draggable="true"><input type="checkbox" id="option3"> <label for="option3">공공와이파이</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
-            <li draggable="true"><input type="checkbox" id="option4"> <label for="option4">무더위 그늘막</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
+            <li draggable="true" id="cancel-layer"><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"><label for="option3">공공와이파이</label><button class="cancel-layer" id="cancel-layer"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>
+            <li draggable="true"><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"><label for="option4">무더위 그늘막</label><button class="cancel-layer" id="cancel-layer"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>
           </ul>
+          <div class="layer-content-footer">
+            <button>입지분석</button>
+          </div>
         </div>
       </div>
       <div class="overlay-button-container">
