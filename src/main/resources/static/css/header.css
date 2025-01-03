@@ -4,10 +4,6 @@
    간결한 레이아웃과 어두운 배경색으로 페이지 상단을 구성합니다. */
 
 /* 리스트 스타일 제거 (기본 점 제거) */
-html, body{
-    margin: 0;
-}
-
 ul .header-li {
     list-style: none;
 }
@@ -150,7 +146,6 @@ header {
 
 /* 서브메뉴 스타일 */
 .submenu {
-    padding: 0;
     text-align: center; /* 텍스트 중앙 정렬 */
     gap: 30px; /* 간격 */
     margin: 0; /* 외부 여백 제거 */
@@ -160,11 +155,25 @@ header {
 /* 서브메뉴 링크 스타일 */
 .submenu a {
     margin-top: 10px; /* 상단 여백 */
-    display: flex; /* 블록으로 표시 */
+    display: block; /* 블록 요소로 변경 */
     color: #333; /* 회색 텍스트 */
     text-decoration: none; /* 밑줄 제거 */
     font-weight: 500; /* 텍스트 두께 */
     transition: all 0.3s ease; /* 부드러운 효과 */
+    width: 130px; /* 고정 너비 */
+    height: 40px; /* 고정 높이 */
+    border-radius: 50px; /* 둥근 모서리 */
+    background-color: transparent; /* 기본 배경색 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    line-height: 40px; /* 수직 중앙 정렬 */
+}
+
+/* 서브메뉴 링크 호버 시 스타일 */
+.submenu a:hover {
+    background-color: #070719; /* 배경색 변경 */
+    color: white; /* 텍스트 색상 변경 */
+    font-weight: bold; /* 두껍게 */
+    text-decoration: none; /* 밑줄 제거 */
 }
 
 .nav-link {
