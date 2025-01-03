@@ -1,18 +1,18 @@
 const layer_names = [
     { name: '광주 전체', id: 'gwangju_dong' },
     { name: '광주 구', id: 'gwangju_gu' },
-    { name: '초등학생', id: 'gwangju_population_10c_2024_10' },
-    { name: '중학생', id: 'gwangju_population_10j_2024_10' },
-    { name: '고등학생', id: 'gwangju_population_10g_2024_10' },
-    { name: '20대', id: 'gwangju_population_20y_2024_10' },
-    { name: '30대', id: 'gwangju_population_30y_2024_10' },
-    { name: '40대', id: 'gwangju_population_40y_2024_10' },
-    { name: '50대', id: 'gwangju_population_50y_2024_10' },
-    { name: '60대', id: 'gwangju_population_60y_2024_10' },
-    { name: '70대', id: 'gwangju_population_70y_2024_10' },
-    { name: '80대', id: 'gwangju_population_80y_2024_10' },
-    { name: '90대', id: 'gwangju_population_90y_2024_10' },
-    { name: '모든 연령대', id: 'gwangju_population_all_2024_10' },
+    { name: '초등학생', id: 'gwangju_population_10c' },
+    { name: '중학생', id: 'gwangju_population_10j' },
+    { name: '고등학생', id: 'gwangju_population_10g' },
+    { name: '20대', id: 'gwangju_population_20y' },
+    { name: '30대', id: 'gwangju_population_30y' },
+    { name: '40대', id: 'gwangju_population_40y' },
+    { name: '50대', id: 'gwangju_population_50y' },
+    { name: '60대', id: 'gwangju_population_60y' },
+    { name: '70대', id: 'gwangju_population_70y' },
+    { name: '80대', id: 'gwangju_population_80y' },
+    { name: '90대', id: 'gwangju_population_90y' },
+    { name: '모든 연령대', id: 'gwangju_population_all' },
     { name: '경지정리답', id: 'gwangju_toji_use_1110' },
     { name: '미경지정리답', id: 'gwangju_toji_use_1120' },
     { name: '보통,특수작물', id: 'gwangju_toji_use_1210' },
@@ -44,8 +44,21 @@ const layer_names = [
     { name: '가축사육시설', id: 'gwangju_toji_use_3550' },
     { name: '하천', id: 'gwangju_toji_use_4210' },
     { name: '호, 소', id: 'gwangju_toji_use_4310' },
-    { name: '댐', id: 'gwangju_toji_use_4320' }
-]
+    { name: '댐', id: 'gwangju_toji_use_4320' },
+    { name: '일본인, 창씨명등', id: 'gwangju_toji_owner_00' },
+    { name: '개인', id: 'gwangju_toji_owner_01' },
+    { name: '국유지', id: 'gwangju_toji_owner_02' },
+    { name: '외국인, 외국공공기관', id: 'gwangju_toji_owner_03' },
+    { name: '시, 도유지', id: 'gwangju_toji_owner_04' },
+    { name: '군유지', id: 'gwangju_toji_owner_05' },
+    { name: '법인', id: 'gwangju_toji_owner_06' },
+    { name: '종증', id: 'gwangju_toji_owner_07' },
+    { name: '종교단체', id: 'gwangju_toji_owner_08' },
+    { name: '기타', id: 'gwangju_toji_owner_09' },
+    { name: '도서관', id: 'gwangju_library' },
+    { name: '민원발급기', id: 'gwangju_civil_service_machines' }
+];
+
 
 // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
 const layers = [
@@ -114,8 +127,6 @@ layers.forEach(function(layerInfo) {
     var checkbox = document.getElementById(layerInfo.id);
     checkbox.addEventListener('change', function(event) {
         if (event.target.checked) {
-            var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
-            wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
             // 레이어 우선순위에 추가
             // ul 요소 선택
             const ul = document.getElementById("draggable-checkbox-list");
@@ -155,6 +166,8 @@ layers.forEach(function(layerInfo) {
 
             // ul에 li 추가
             ul.appendChild(newLi);
+
+            console.log(newLi);
 
             // cancel 버튼 클릭 이벤트 추가
             newBtn.addEventListener('click', function() {
@@ -246,6 +259,17 @@ document.addEventListener('DOMContentLoaded', function() {
             minZoom: 1, // 최소 줌 레벨 설정
             maxZoom: 15, // 최대 줌 레벨 설정
         })
+    });
+
+    // 각 체크박스에 대해 이벤트 리스너 추가
+    layers.forEach(function(layerInfo) {
+        var checkbox = document.getElementById(layerInfo.id);
+        checkbox.addEventListener('change', function(event) {
+            if (event.target.checked) {
+                var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+                wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+            }
+        });
     });
 
     // WMS 레이어 생성 함수
