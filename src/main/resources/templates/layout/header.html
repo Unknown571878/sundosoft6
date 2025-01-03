@@ -101,15 +101,15 @@
                 isHovering = true;
                 $header.stop().animate({ height: '300px' }, 300);
               },
-              // function() {
-              //   isHovering = false;
-              //   // 3초 후에 헤더를 닫지만, 여전히 메뉴 위에 있으면 닫지 않음
-              //   setTimeout(function() {
-              //     if (!isHovering) {
-              //       $header.stop().animate({ height: '125px' }, 300);
-              //     }
-              //   }, 300); // 0.3초 지연 후 실행
-              // }
+              function() {
+                isHovering = false;
+                // 3초 후에 헤더를 닫지만, 여전히 메뉴 위에 있으면 닫지 않음
+                setTimeout(function() {
+                  if (!isHovering) {
+                    $header.stop().animate({ height: '125px' }, 300);
+                  }
+                }, 300); // 0.3초 지연 후 실행
+              }
       );
     });
   </script>
