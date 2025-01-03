@@ -51,7 +51,20 @@ document.addEventListener('DOMContentLoaded', function() {
             createWmsLayer('ne:gwangju_toji_use_3550', false), // 43번 가축사육시설
             createWmsLayer('ne:gwangju_toji_use_4210', false), // 44번 하천
             createWmsLayer('ne:gwangju_toji_use_4310', false), // 45번 호, 소
-            createWmsLayer('ne:gwangju_toji_use_4320', false) // 46번 댐
+            createWmsLayer('ne:gwangju_toji_use_4320', false), // 46번 댐
+            createWmsLayer('ne:gwangju_toji_owner_00', false), // 47번 일본인, 창씨명등
+            createWmsLayer('ne:gwangju_toji_owner_01', false), // 48번 개인
+            createWmsLayer('ne:gwangju_toji_owner_02', false), // 49번 국유지
+            createWmsLayer('ne:gwangju_toji_owner_03', false), // 50번 외국인, 외국공공기간
+            createWmsLayer('ne:gwangju_toji_owner_04', false), // 51번 시, 도유지
+            createWmsLayer('ne:gwangju_toji_owner_05', false), // 52번 군유지
+            createWmsLayer('ne:gwangju_toji_owner_06', false), // 53번 법인
+            createWmsLayer('ne:gwangju_toji_owner_07', false), // 54번 종증
+            createWmsLayer('ne:gwangju_toji_owner_08', false), // 55번 종교단체
+            createWmsLayer('ne:gwangju_toji_owner_09', false), // 56번 기타
+            createWmsLayer('ne:gwangju_library', false), // 57번 도서관
+            createWmsLayer('ne:gwangju_civil_service_machines', false), // 58번 민원발급기
+
         ],
         view: new ol.View({
             projection: 'EPSG:4326',  // 지도 좌표계 설정
@@ -126,7 +139,20 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'gwangju_toji_use_3550', layerIndex: 43 },
         { id: 'gwangju_toji_use_4210', layerIndex: 44 },
         { id: 'gwangju_toji_use_4310', layerIndex: 45 },
-        { id: 'gwangju_toji_use_4320', layerIndex: 46 }
+        { id: 'gwangju_toji_use_4320', layerIndex: 46 },
+        { id: 'gwangju_toji_owner_00', layerIndex: 47 },
+        { id: 'gwangju_toji_owner_01', layerIndex: 48 },
+        { id: 'gwangju_toji_owner_02', layerIndex: 49 },
+        { id: 'gwangju_toji_owner_03', layerIndex: 50 },
+        { id: 'gwangju_toji_owner_04', layerIndex: 51 },
+        { id: 'gwangju_toji_owner_05', layerIndex: 52 },
+        { id: 'gwangju_toji_owner_06', layerIndex: 53 },
+        { id: 'gwangju_toji_owner_07', layerIndex: 54 },
+        { id: 'gwangju_toji_owner_08', layerIndex: 55 },
+        { id: 'gwangju_toji_owner_09', layerIndex: 56 },
+        { id: 'gwangju_library', layerIndex: 57 },
+        { id: 'gwangju_civil_service_machines', layerIndex: 58 }
+
     ];
 
     // 각 체크박스에 대해 이벤트 리스너 추가
@@ -166,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 // 메뉴 열고 닫기 토글 기능
 function toggleMenu() {
     const menu = document.getElementById('menu');

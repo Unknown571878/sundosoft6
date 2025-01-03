@@ -654,139 +654,194 @@
             <span class="submenu-item">도서관</span>
             <input type="checkbox" id="gwangju_library">
           </li>
+          <li class="check-item">
+            <span class="submenu-item">민원발급기</span>
+            <input type="checkbox" id="gwangju_civil_service_machines">
+          </li>
           <li>
-            <span class="submenu-item" onclick="toggleSubmenu(event, this)">토지 이용</span>
+            <span class="submenu-item" onclick="toggleSubmenu(event, this)">토지</span>
             <ul class="submenu">
               <li>
-                <span class="submenu-item">경지정리답</span>
-                <input type="checkbox" id="gwangju_toji_use_1110">
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">소유정보</span>
+                <ul class="submenu">
+                  <li>
+                    <span class="submenu-item">일본인, 창씨명등</span>
+                    <input type="checkbox" id="gwangju_toji_owner_00">
+                  </li>
+                  <li>
+                    <span class="submenu-item">개인</span>
+                    <input type="checkbox" id="gwangju_toji_owner_01">
+                  </li>
+                  <li>
+                    <span class="submenu-item">국유지</span>
+                    <input type="checkbox" id="gwangju_toji_owner_02">
+                  </li>
+                  <li>
+                    <span class="submenu-item">외국인, 외국공공기관</span>
+                    <input type="checkbox" id="gwangju_toji_owner_03">
+                  </li>
+                  <li>
+                    <span class="submenu-item">시, 도유지</span>
+                    <input type="checkbox" id="gwangju_toji_owner_04">
+                  </li>
+                  <li>
+                    <span class="submenu-item">군유지</span>
+                    <input type="checkbox" id="gwangju_toji_owner_05">
+                  </li>
+                  <li>
+                    <span class="submenu-item">법인</span>
+                    <input type="checkbox" id="gwangju_toji_owner_06">
+                  </li>
+                  <li>
+                    <span class="submenu-item">종증</span>
+                    <input type="checkbox" id="gwangju_toji_owner_07">
+                  </li>
+                  <li>
+                    <span class="submenu-item">종교단체</span>
+                    <input type="checkbox" id="gwangju_toji_owner_08">
+                  </li>
+                  <li>
+                    <span class="submenu-item">기타</span>
+                    <input type="checkbox" id="gwangju_toji_owner_09">
+                  </li>
+                </ul>
               </li>
               <li>
-                <span class="submenu-item">미경지정리답</span>
-                <input type="checkbox" id="gwangju_toji_use_1120">
-              </li>
-              <li>
-                <span class="submenu-item">보통, 특수작물</span>
-                <input type="checkbox" id="gwangju_toji_use_1210">
-              </li>
-              <li>
-                <span class="submenu-item">과수원 기타</span>
-                <input type="checkbox" id="gwangju_toji_use_1220">
-              </li>
-              <li>
-                <span class="submenu-item">자연초지</span>
-                <input type="checkbox" id="gwangju_toji_use_2110">
-              </li>
-              <li>
-                <span class="submenu-item">인공초지</span>
-                <input type="checkbox" id="gwangju_toji_use_2120">
-              </li>
-              <li>
-                <span class="submenu-item">침엽수림</span>
-                <input type="checkbox" id="gwangju_toji_use_2210">
-              </li>
-              <li>
-                <span class="submenu-item">활엽수림</span>
-                <input type="checkbox" id="gwangju_toji_use_2220">
-              </li>
-              <li>
-                <span class="submenu-item">혼합수림</span>
-                <input type="checkbox" id="gwangju_toji_use_2230">
-              </li>
-              <li>
-                <span class="submenu-item">골프장</span>
-                <input type="checkbox" id="gwangju_toji_use_2310">
-              </li>
-              <li>
-                <span class="submenu-item">공원묘지</span>
-                <input type="checkbox" id="gwangju_toji_use_2320">
-              </li>
-              <li>
-                <span class="submenu-item">유원지</span>
-                <input type="checkbox" id="gwangju_toji_use_2330">
-              </li>
-              <li>
-                <span class="submenu-item">일반주택지</span>
-                <input type="checkbox" id="gwangju_toji_use_3110">
-              </li>
-              <li>
-                <span class="submenu-item">고층주택지</span>
-                <input type="checkbox" id="gwangju_toji_use_3120">
-              </li>
-              <li>
-                <span class="submenu-item">상업, 업무지</span>
-                <input type="checkbox" id="gwangju_toji_use_3130">
-              </li>
-              <li>
-                <span class="submenu-item">나대지 및 인공녹지</span>
-                <input type="checkbox" id="gwangju_toji_use_3140">
-              </li>
-              <li>
-                <span class="submenu-item">도로</span>
-                <input type="checkbox" id="gwangju_toji_use_3210">
-              </li>
-              <li>
-                <span class="submenu-item">철로 및 주변지역</span>
-                <input type="checkbox" id="gwangju_toji_use_3220">
-              </li>
-              <li>
-                <span class="submenu-item">공항</span>
-                <input type="checkbox" id="gwangju_toji_use_3230">
-              </li>
-              <li>
-                <span class="submenu-item">공업시설</span>
-                <input type="checkbox" id="gwangju_toji_use_3310">
-              </li>
-              <li>
-                <span class="submenu-item">공업나지, 기타</span>
-                <input type="checkbox" id="gwangju_toji_use_3320">
-              </li>
-              <li>
-                <span class="submenu-item">발전시설</span>
-                <input type="checkbox" id="gwangju_toji_use_3410">
-              </li>
-              <li>
-                <span class="submenu-item">처리장</span>
-                <input type="checkbox" id="gwangju_toji_use_3420">
-              </li>
-              <li>
-                <span class="submenu-item">교육, 군사시설</span>
-                <input type="checkbox" id="gwangju_toji_use_3430">
-              </li>
-              <li>
-                <span class="submenu-item">공공용지</span>
-                <input type="checkbox" id="gwangju_toji_use_3440">
-              </li>
-              <li>
-                <span class="submenu-item">양어장, 양식장</span>
-                <input type="checkbox" id="gwangju_toji_use_3510">
-              </li>
-              <li>
-                <span class="submenu-item">채광지역</span>
-                <input type="checkbox" id="gwangju_toji_use_3520">
-              </li>
-              <li>
-                <span class="submenu-item">매립지</span>
-                <input type="checkbox" id="gwangju_toji_use_3530">
-              </li>
-              <li>
-                <span class="submenu-item">가축사육시설</span>
-                <input type="checkbox" id="gwangju_toji_use_3550">
-              </li>
-              <li>
-                <span class="submenu-item">하천</span>
-                <input type="checkbox" id="gwangju_toji_use_4210">
-              </li>
-              <li>
-                <span class="submenu-item">호, 소</span>
-                <input type="checkbox" id="gwangju_toji_use_4310">
-              </li>
-              <li>
-                <span class="submenu-item">댐</span>
-                <input type="checkbox" id="gwangju_toji_use_4320">
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">이용현황</span>
+                <ul class="submenu">
+                  <li>
+                    <span class="submenu-item">경지정리답</span>
+                    <input type="checkbox" id="gwangju_toji_use_1110">
+                  </li>
+                  <li>
+                    <span class="submenu-item">미경지정리답</span>
+                    <input type="checkbox" id="gwangju_toji_use_1120">
+                  </li>
+                  <li>
+                    <span class="submenu-item">보통, 특수작물</span>
+                    <input type="checkbox" id="gwangju_toji_use_1210">
+                  </li>
+                  <li>
+                    <span class="submenu-item">과수원 기타</span>
+                    <input type="checkbox" id="gwangju_toji_use_1220">
+                  </li>
+                  <li>
+                    <span class="submenu-item">자연초지</span>
+                    <input type="checkbox" id="gwangju_toji_use_2110">
+                  </li>
+                  <li>
+                    <span class="submenu-item">인공초지</span>
+                    <input type="checkbox" id="gwangju_toji_use_2120">
+                  </li>
+                  <li>
+                    <span class="submenu-item">침엽수림</span>
+                    <input type="checkbox" id="gwangju_toji_use_2210">
+                  </li>
+                  <li>
+                    <span class="submenu-item">활엽수림</span>
+                    <input type="checkbox" id="gwangju_toji_use_2220">
+                  </li>
+                  <li>
+                    <span class="submenu-item">혼합수림</span>
+                    <input type="checkbox" id="gwangju_toji_use_2230">
+                  </li>
+                  <li>
+                    <span class="submenu-item">골프장</span>
+                    <input type="checkbox" id="gwangju_toji_use_2310">
+                  </li>
+                  <li>
+                    <span class="submenu-item">공원묘지</span>
+                    <input type="checkbox" id="gwangju_toji_use_2320">
+                  </li>
+                  <li>
+                    <span class="submenu-item">유원지</span>
+                    <input type="checkbox" id="gwangju_toji_use_2330">
+                  </li>
+                  <li>
+                    <span class="submenu-item">일반주택지</span>
+                    <input type="checkbox" id="gwangju_toji_use_3110">
+                  </li>
+                  <li>
+                    <span class="submenu-item">고층주택지</span>
+                    <input type="checkbox" id="gwangju_toji_use_3120">
+                  </li>
+                  <li>
+                    <span class="submenu-item">상업, 업무지</span>
+                    <input type="checkbox" id="gwangju_toji_use_3130">
+                  </li>
+                  <li>
+                    <span class="submenu-item">나대지 및 인공녹지</span>
+                    <input type="checkbox" id="gwangju_toji_use_3140">
+                  </li>
+                  <li>
+                    <span class="submenu-item">도로</span>
+                    <input type="checkbox" id="gwangju_toji_use_3210">
+                  </li>
+                  <li>
+                    <span class="submenu-item">철로 및 주변지역</span>
+                    <input type="checkbox" id="gwangju_toji_use_3220">
+                  </li>
+                  <li>
+                    <span class="submenu-item">공항</span>
+                    <input type="checkbox" id="gwangju_toji_use_3230">
+                  </li>
+                  <li>
+                    <span class="submenu-item">공업시설</span>
+                    <input type="checkbox" id="gwangju_toji_use_3310">
+                  </li>
+                  <li>
+                    <span class="submenu-item">공업나지, 기타</span>
+                    <input type="checkbox" id="gwangju_toji_use_3320">
+                  </li>
+                  <li>
+                    <span class="submenu-item">발전시설</span>
+                    <input type="checkbox" id="gwangju_toji_use_3410">
+                  </li>
+                  <li>
+                    <span class="submenu-item">처리장</span>
+                    <input type="checkbox" id="gwangju_toji_use_3420">
+                  </li>
+                  <li>
+                    <span class="submenu-item">교육, 군사시설</span>
+                    <input type="checkbox" id="gwangju_toji_use_3430">
+                  </li>
+                  <li>
+                    <span class="submenu-item">공공용지</span>
+                    <input type="checkbox" id="gwangju_toji_use_3440">
+                  </li>
+                  <li>
+                    <span class="submenu-item">양어장, 양식장</span>
+                    <input type="checkbox" id="gwangju_toji_use_3510">
+                  </li>
+                  <li>
+                    <span class="submenu-item">채광지역</span>
+                    <input type="checkbox" id="gwangju_toji_use_3520">
+                  </li>
+                  <li>
+                    <span class="submenu-item">매립지</span>
+                    <input type="checkbox" id="gwangju_toji_use_3530">
+                  </li>
+                  <li>
+                    <span class="submenu-item">가축사육시설</span>
+                    <input type="checkbox" id="gwangju_toji_use_3550">
+                  </li>
+                  <li>
+                    <span class="submenu-item">하천</span>
+                    <input type="checkbox" id="gwangju_toji_use_4210">
+                  </li>
+                  <li>
+                    <span class="submenu-item">호, 소</span>
+                    <input type="checkbox" id="gwangju_toji_use_4310">
+                  </li>
+                  <li>
+                    <span class="submenu-item">댐</span>
+                    <input type="checkbox" id="gwangju_toji_use_4320">
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
+
         </ul>
       </div>
       <div class="check-layer" id="check-layer">
