@@ -25,17 +25,6 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/")
-    public String index(HttpSession session, Model model) {
-        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        if (authInfo != null) {
-            model.addAttribute("isLoggedIn", true);  // 로그인된 상태
-        } else {
-            model.addAttribute("isLoggedIn", false); // 로그인되지 않은 상태
-        }
-        return "main/home";
-    }
-
     @GetMapping("/register")
     public String register() {
         return "user/register";

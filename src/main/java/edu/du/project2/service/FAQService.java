@@ -32,6 +32,10 @@ public class FAQService {
         return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 
+    public List<FaQ> getUserFAQs() {
+        return faqRepository.findAllByDeletedYn("N");
+    }
+
     public FaQ faqDetail(Long id) {
         return faqRepository.findById(id).orElse(null);
     }

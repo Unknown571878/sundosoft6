@@ -15,6 +15,36 @@
   <link rel="stylesheet" href="/css/header.css">
   <link rel="stylesheet" href="/css/footer.css">
   <link rel="stylesheet" href="/css/main.css"> <!-- Custom CSS file for additional styling -->
+  <style>
+    ul {
+      list-style: none; /* 불필요한 리스트 스타일 제거 */
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 10px; /* 항목 간 간격 추가 */
+      display: block; /* 줄 바꿈 적용 */
+    }
+
+    .notice-title {
+      font-weight: bold; /* 제목을 강조 */
+    }
+
+    .notice-date {
+      color: #666; /* 날짜를 강조하지 않도록 설정 */
+      font-size: 0.9em; /* 날짜 크기 조정 */
+    }
+
+    a{
+      text-decoration: none;
+      color: black;
+    }
+
+    hr{
+      color: #6c757d;
+    }
+  </style>
 </head>
 <body>
 
@@ -72,43 +102,44 @@
     <!-- 메인 내용 추가: 공공시설 관련 버튼 및 글 -->
     <div class="public-facilities-section">
       <div class="container">
-        <h2>공공시설 안내</h2>
-        <p>도시 내 주요 공공시설과 관련된 다양한 서비스를 확인하실 수 있습니다. 각 시설에 대한 정보를 제공하며, 관련 링크를 통해 더 자세히 알아보세요.</p>
+        <h2>서비스 안내</h2>
+        <p>인공지능(AI)을 활용한 입지 분석 모델은 다양한 데이터를 통합하여 정교한 분석이 가능하며, 이를 통해 공공시설의 최적 배치를 지원합니다.</p>
+        <p>공공시설의 위치 선정은 다양한 인구 및 지역 데이터를 바탕으로 최적의 입지를 결정하여 시민 접근성을 높이고 자원을 효율적으로 배분해야 합니다. <br/>더불어, 정부 정책을 효과적으로 지원하고 반복적인 입지분석으로 인한 피해를 예방하기 위해 일관된 데이터 분석 체계를 구축할 필요가 있습니다.</p>
 
-        <!-- 공공시설 버튼들 -->
+        <!-- 카드 항목 -->
         <div class="row">
-          <!-- 공공시설 1 -->
-          <div class="col-md-4">
+          <!-- 공지사항 -->
+          <div class="col-md-6">
             <div class="card">
-              <img src="/images/public-facility-1.jpg" class="card-img-top" alt="공공시설 1">
               <div class="card-body">
-                <h5 class="card-title">도서관</h5>
-                <p class="card-text">도서관의 위치와 개방시간을 확인하고, 온라인으로 예약할 수 있습니다.</p>
-                <a href="/library" class="btn btn-primary">자세히 보기</a>
+                <h5 class="card-title"><a href="/noticeList">공지사항</a></h5>
+                <hr/>
+                <ul>
+                  <th:block th:each="notice : ${notices}">
+                    <li class="d-flex justify-content-between">
+                      <a th:href="@{/noticeDetail(id=${notice.id})}"><span class="notice-title" th:text="${notice.title}"></span></a>
+                      <span class="notice-date" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}"></span>
+                    </li>
+                  </th:block>
+                </ul>
               </div>
             </div>
           </div>
 
-          <!-- 공공시설 2 -->
-          <div class="col-md-4">
+          <!-- FAQ -->
+          <div class="col-md-6">
             <div class="card">
-              <img src="/images/public-facility-2.jpg" class="card-img-top" alt="공공시설 2">
               <div class="card-body">
-                <h5 class="card-title">체육관</h5>
-                <p class="card-text">체육관의 운동 시설과 프로그램에 대해 알아보세요.</p>
-                <a href="/gym" class="btn btn-primary">자세히 보기</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- 공공시설 3 -->
-          <div class="col-md-4">
-            <div class="card">
-              <img src="/images/public-facility-3.jpg" class="card-img-top" alt="공공시설 3">
-              <div class="card-body">
-                <h5 class="card-title">헬스케어 센터</h5>
-                <p class="card-text">헬스케어 센터에서 제공하는 다양한 건강 관리 서비스를 확인하세요.</p>
-                <a href="/healthcare" class="btn btn-primary">자세히 보기</a>
+                <h5 class="card-title"><a href="/faq">FAQ</a></h5>
+                <hr/>
+                <ul>
+                  <th:block th:each="faq : ${faqs}">
+                    <li class="d-flex justify-content-between">
+                      <a th:href="@{/faq/faqDetail(id=${faq.id})}"><span class="notice-title" th:text="${faq.title}"></span></a>
+                      <span class="notice-date" th:text="${#temporals.format(faq.createdAt, 'yyyy-MM-dd')}"></span>
+                    </li>
+                  </th:block>
+                </ul>
               </div>
             </div>
           </div>
