@@ -19,7 +19,39 @@ document.addEventListener('DOMContentLoaded', function() {
             createWmsLayer('ne:gwangju_population_70y_2024_10', false), // 11번 70대
             createWmsLayer('ne:gwangju_population_80y_2024_10', false), // 12번 80대
             createWmsLayer('ne:gwangju_population_90y_2024_10', false), // 13번 90대
-            createWmsLayer('ne:gwangju_population_all_2024_10', false) // 14번 모든 연령대
+            createWmsLayer('ne:gwangju_population_all_2024_10', false), // 14번 모든 연령대
+            createWmsLayer('ne:gwangju_toji_use_1110', false), // 15번 경지정리답
+            createWmsLayer('ne:gwangju_toji_use_1120', false), // 16번 미경지정리답
+            createWmsLayer('ne:gwangju_toji_use_1210', false), // 17번 보통,특수작물
+            createWmsLayer('ne:gwangju_toji_use_1220', false), // 18번 과수원 기타
+            createWmsLayer('ne:gwangju_toji_use_2110', false), // 19번 자연초지
+            createWmsLayer('ne:gwangju_toji_use_2120', false), // 20번 인공초지
+            createWmsLayer('ne:gwangju_toji_use_2210', false), // 21번 침엽수림
+            createWmsLayer('ne:gwangju_toji_use_2220', false), // 22번 활엽수림
+            createWmsLayer('ne:gwangju_toji_use_2230', false), // 23번 혼합수림
+            createWmsLayer('ne:gwangju_toji_use_2310', false), // 24번 골프장
+            createWmsLayer('ne:gwangju_toji_use_2320', false), // 25번 공원묘지
+            createWmsLayer('ne:gwangju_toji_use_2330', false), // 26번 유원지
+            createWmsLayer('ne:gwangju_toji_use_3110', false), // 27번 일반주택지
+            createWmsLayer('ne:gwangju_toji_use_3120', false), // 28번 고층주택지
+            createWmsLayer('ne:gwangju_toji_use_3130', false), // 29번 상업,업무지
+            createWmsLayer('ne:gwangju_toji_use_3140', false), // 30번 나대지 및 인공녹지
+            createWmsLayer('ne:gwangju_toji_use_3210', false), // 31번 도로
+            createWmsLayer('ne:gwangju_toji_use_3220', false), // 32번 철로 및 주변지역
+            createWmsLayer('ne:gwangju_toji_use_3230', false), // 33번 공항
+            createWmsLayer('ne:gwangju_toji_use_3310', false), // 34번 공업시설
+            createWmsLayer('ne:gwangju_toji_use_3320', false), // 35번 공업나지, 기타
+            createWmsLayer('ne:gwangju_toji_use_3410', false), // 36번 발전시설
+            createWmsLayer('ne:gwangju_toji_use_3420', false), // 37번 처리장
+            createWmsLayer('ne:gwangju_toji_use_3430', false), // 38번 교육, 군사시설
+            createWmsLayer('ne:gwangju_toji_use_3440', false), // 39번 공공용지
+            createWmsLayer('ne:gwangju_toji_use_3510', false), // 40번 양어장, 양식장
+            createWmsLayer('ne:gwangju_toji_use_3520', false), // 41번 채광지역
+            createWmsLayer('ne:gwangju_toji_use_3530', false), // 42번 매립지
+            createWmsLayer('ne:gwangju_toji_use_3550', false), // 43번 가축사육시설
+            createWmsLayer('ne:gwangju_toji_use_4210', false), // 44번 하천
+            createWmsLayer('ne:gwangju_toji_use_4310', false), // 45번 호, 소
+            createWmsLayer('ne:gwangju_toji_use_4320', false) // 46번 댐
         ],
         view: new ol.View({
             projection: 'EPSG:4326',  // 지도 좌표계 설정
@@ -49,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
     var layers = [
+        { id: 'gwangju_dong', layerIndex: 1 },
+        { id: 'gwangju_gu', layerIndex: 2 },
         { id: 'gwangju_population_10c', layerIndex: 3 },
         { id: 'gwangju_population_10j', layerIndex: 4 },
         { id: 'gwangju_population_10g', layerIndex: 5 },
@@ -60,7 +94,39 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'gwangju_population_70y', layerIndex: 11 },
         { id: 'gwangju_population_80y', layerIndex: 12 },
         { id: 'gwangju_population_90y', layerIndex: 13 },
-        { id: 'gwangju_population_all', layerIndex: 14 }
+        { id: 'gwangju_population_all', layerIndex: 14 },
+        { id: 'gwangju_toji_use_1110', layerIndex: 15 },
+        { id: 'gwangju_toji_use_1120', layerIndex: 16 },
+        { id: 'gwangju_toji_use_1210', layerIndex: 17 },
+        { id: 'gwangju_toji_use_1220', layerIndex: 18 },
+        { id: 'gwangju_toji_use_2110', layerIndex: 19 },
+        { id: 'gwangju_toji_use_2120', layerIndex: 20 },
+        { id: 'gwangju_toji_use_2210', layerIndex: 21 },
+        { id: 'gwangju_toji_use_2220', layerIndex: 22 },
+        { id: 'gwangju_toji_use_2230', layerIndex: 23 },
+        { id: 'gwangju_toji_use_2310', layerIndex: 24 },
+        { id: 'gwangju_toji_use_2320', layerIndex: 25 },
+        { id: 'gwangju_toji_use_2330', layerIndex: 26 },
+        { id: 'gwangju_toji_use_3110', layerIndex: 27 },
+        { id: 'gwangju_toji_use_3120', layerIndex: 28 },
+        { id: 'gwangju_toji_use_3130', layerIndex: 29 },
+        { id: 'gwangju_toji_use_3140', layerIndex: 30 },
+        { id: 'gwangju_toji_use_3210', layerIndex: 31 },
+        { id: 'gwangju_toji_use_3220', layerIndex: 32 },
+        { id: 'gwangju_toji_use_3230', layerIndex: 33 },
+        { id: 'gwangju_toji_use_3310', layerIndex: 34 },
+        { id: 'gwangju_toji_use_3320', layerIndex: 35 },
+        { id: 'gwangju_toji_use_3410', layerIndex: 36 },
+        { id: 'gwangju_toji_use_3420', layerIndex: 37 },
+        { id: 'gwangju_toji_use_3430', layerIndex: 38 },
+        { id: 'gwangju_toji_use_3440', layerIndex: 39 },
+        { id: 'gwangju_toji_use_3510', layerIndex: 40 },
+        { id: 'gwangju_toji_use_3520', layerIndex: 41 },
+        { id: 'gwangju_toji_use_3530', layerIndex: 42 },
+        { id: 'gwangju_toji_use_3550', layerIndex: 43 },
+        { id: 'gwangju_toji_use_4210', layerIndex: 44 },
+        { id: 'gwangju_toji_use_4310', layerIndex: 45 },
+        { id: 'gwangju_toji_use_4320', layerIndex: 46 }
     ];
 
     // 각 체크박스에 대해 이벤트 리스너 추가
