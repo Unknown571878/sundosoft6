@@ -122,67 +122,7 @@ const layers = [
     { id: 'gwangju_civil_service_machines', layerIndex: 58 }
 ];
 
-// 각 체크박스에 대해 이벤트 리스너 추가
-layers.forEach(function(layerInfo) {
-    var checkbox = document.getElementById(layerInfo.id);
-    checkbox.addEventListener('change', function(event) {
-        if (event.target.checked) {
-            // 레이어 우선순위에 추가
-            // ul 요소 선택
-            const ul = document.getElementById("draggable-checkbox-list");
-            // 새로운 li 요소 생성
-            const newLi = document.createElement("li");
-            newLi.setAttribute("draggable", "true");
-            newLi.setAttribute("id", layerInfo.id+'-layer');
 
-            const newBtn = document.createElement("button");
-            newBtn.setAttribute("id", layerInfo.id);
-            newBtn.setAttribute("class", "cancel-layer");
-
-            // 새로운 img 생성
-            const newDragImg = document.createElement("img");
-            newDragImg.setAttribute("src", "/images/icons8-메뉴.svg");
-            newDragImg.setAttribute("style", "width: 20px; height: 20px");
-
-            // 새로운 label 생성
-            const newLabel = document.createElement("label");
-            newLabel.setAttribute("for", layerInfo.id);
-
-            var findName = layer_names.find(layer => layer.id === layerInfo.id);
-            // li 태그 텍스트
-            newLabel.textContent = findName.name;
-
-            // 새로운 img 생성
-            const newCancelImg = document.createElement("img");
-            newCancelImg.setAttribute("src", "/images/icons8-취소.svg");
-            newCancelImg.setAttribute("style", "width: 20px; height: 20px");
-
-            newBtn.appendChild(newCancelImg);
-
-            // li에 checkbox, label, img 추가
-            newLi.appendChild(newDragImg);
-            newLi.appendChild(newLabel);
-            newLi.appendChild(newBtn);
-
-            // ul에 li 추가
-            ul.appendChild(newLi);
-
-            console.log(newLi);
-
-            // cancel 버튼 클릭 이벤트 추가
-            newBtn.addEventListener('click', function() {
-                // li 태그 삭제
-                newLi.remove();
-                // 체크박스 해제
-                checkbox.checked = false;
-            });
-        } else {
-            const div_layer = document.querySelector(`#${layerInfo.id}-layer`);
-            if (div_layer)
-                div_layer.remove();
-        }
-    });
-});
 
 document.addEventListener('DOMContentLoaded', function() {
     // OpenLayers Map 객체 생성
@@ -259,6 +199,71 @@ document.addEventListener('DOMContentLoaded', function() {
             minZoom: 1, // 최소 줌 레벨 설정
             maxZoom: 15, // 최대 줌 레벨 설정
         })
+    });
+
+    // 각 체크박스에 대해 이벤트 리스너 추가
+    layers.forEach(function(layerInfo) {
+        var checkbox = document.getElementById(layerInfo.id);
+        checkbox.addEventListener('change', function(event) {
+            if (event.target.checked) {
+                // 레이어 우선순위에 추가
+                // ul 요소 선택
+                const ul = document.getElementById("draggable-checkbox-list");
+                // 새로운 li 요소 생성
+                const newLi = document.createElement("li");
+                newLi.setAttribute("draggable", "true");
+                newLi.setAttribute("id", layerInfo.id+'-layer');
+
+                const newBtn = document.createElement("button");
+                newBtn.setAttribute("id", layerInfo.id);
+                newBtn.setAttribute("class", "cancel-layer");
+
+                // 새로운 img 생성
+                const newDragImg = document.createElement("img");
+                newDragImg.setAttribute("src", "/images/icons8-메뉴.svg");
+                newDragImg.setAttribute("style", "width: 20px; height: 20px");
+
+                // 새로운 label 생성
+                const newLabel = document.createElement("label");
+                newLabel.setAttribute("for", layerInfo.id);
+
+                var findName = layer_names.find(layer => layer.id === layerInfo.id);
+                // li 태그 텍스트
+                newLabel.textContent = findName.name;
+
+                // 새로운 img 생성
+                const newCancelImg = document.createElement("img");
+                newCancelImg.setAttribute("src", "/images/icons8-취소.svg");
+                newCancelImg.setAttribute("style", "width: 20px; height: 20px");
+
+                newBtn.appendChild(newCancelImg);
+
+                // li에 checkbox, label, img 추가
+                newLi.appendChild(newDragImg);
+                newLi.appendChild(newLabel);
+                newLi.appendChild(newBtn);
+
+                // ul에 li 추가
+                ul.appendChild(newLi);
+
+                console.log(newLi);
+
+                // cancel 버튼 클릭 이벤트 추가
+                newBtn.addEventListener('click', function() {
+                    // li 태그 삭제
+                    newLi.remove();
+                    // 체크박스 해제
+                    checkbox.checked = false;
+                    var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+                    wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+
+                });
+            } else {
+                const div_layer = document.querySelector(`#${layerInfo.id}-layer`);
+                if (div_layer)
+                    div_layer.remove();
+            }
+        });
     });
 
     // 각 체크박스에 대해 이벤트 리스너 추가
