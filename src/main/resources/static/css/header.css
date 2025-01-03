@@ -81,7 +81,6 @@ header {
 
 /* 최상단 헤더(로그인/회원가입 링크 포함) 스타일 */
 .top-header {
-    display: flex; /* 좌우 배치를 위한 플렉스 사용 */
     text-align: right; /* 텍스트를 오른쪽 정렬 */
     padding: 10px 20px; /* 내부 여백 */
     background-color: #070719; /* 어두운 배경색 */
@@ -134,7 +133,6 @@ header {
 /* 네비게이션 서브메뉴와 링크 호버 시 스타일 */
 .submenu a:hover, .nav-link:hover {
     font-weight: bold; /* 두껍게 */
-    text-decoration: underline; /* 밑줄 추가 */
 }
 
 /* 네비게이션 메뉴 컨테이너 */

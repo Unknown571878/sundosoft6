@@ -21,6 +21,17 @@ draggableList.addEventListener('dragend', () => {
             placeholder = null; // 플레이스홀더 제거
         }
         draggedItem = null; // 드래그 항목 초기화
+
+        const items = Array.from(draggableList.querySelectorAll('li')); // 모든 li 요소를 배열로 가져오기
+        console.log(items); // 가져온 li 요소를 확인
+
+        console.log('현재 리스트 순서:');
+        items.forEach((item, index) => {
+            const label = item.querySelector('label'); // li 안의 label 요소 선택
+            const labelText = label.textContent.trim(); // label 텍스트 가져오기
+            const id = item.id.slice(0, -6);
+            console.log(`${index + 1}, ${id}, ${labelText}`); // 순서, id, label 텍스트 출력
+        });
     }
 });
 
