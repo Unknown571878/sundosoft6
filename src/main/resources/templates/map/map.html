@@ -13,676 +13,672 @@
 <th:block th:replace="/layout/header :: headerLayout"></th:block>
 <div class="ft">
   <div class="main-map">
-  <div id="map" class="map">
-    <div class="menu" id="menu">
-      <div class="menu-header">
-        <span>레이어 선택</span>
-        <button onclick="toggleMenu()"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
-      </div>
-      <div class="menu-search">
-        <input type="text" placeholder="검색..."> <!-- 검색창 -->
-      </div>
-      <ul>
-        <li>
-          <span class="submenu-item" onclick="toggleSubmenu(event, this)">수치지도</span> <!-- 메인 메뉴 -->
-          <ul class="submenu"> <!-- 서브메뉴 리스트 -->
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">가건물</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14118">
-                    </li>
-                    <li>
-                      <span class="submenu-item">공장</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14311">
-                    </li>
-                    <li>
-                      <span class="submenu-item">구청</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14216">
-                    </li>
-                    <li>
-                      <span class="submenu-item">군청</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14215">
-                    </li>
-                    <li>
-                      <span class="submenu-item">면사무소</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14219">
-                    </li>
-                    <li>
-                      <span class="submenu-item">무벽건물</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14116">
-                    </li>
-                    <li>
-                      <span class="submenu-item">법원</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14221">
-                    </li>
-                    <li>
-                      <span class="submenu-item">세무서</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14233">
-                    </li>
-                    <li>
-                      <span class="submenu-item">시장경계</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14324">
-                    </li>
-                    <li>
-                      <span class="submenu-item">시청</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14214">
-                    </li>
-                    <li>
-                      <span class="submenu-item">아파트</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14115">
-                    </li>
-                    <li>
-                      <span class="submenu-item">연립주택</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14113">
-                    </li>
-                    <li>
-                      <span class="submenu-item">온실</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14117">
-                    </li>
-                    <li>
-                      <span class="submenu-item">우체국</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14235">
-                    </li>
-                    <li>
-                      <span class="submenu-item">읍사무소</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14217">
-                    </li>
-                    <li>
-                      <span class="submenu-item">일반병원</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14611">
-                    </li>
-                    <li>
-                      <span class="submenu-item">주민센터</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14218">
-                    </li>
-                    <li>
-                      <span class="submenu-item">주택</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14112">
-                    </li>
-                    <li>
-                      <span class="submenu-item">주택외건물</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14111">
-                    </li>
-                    <li>
-                      <span class="submenu-item">창고</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14524">
-                    </li>
-                    <li>
-                      <span class="submenu-item">파출소</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14224">
-                    </li>
-                    <li>
-                      <span class="submenu-item">학교</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14411">
-                    </li>
-                    <li>
-                      <span class="submenu-item">호텔</span>
-                      <input type="checkbox" id="gwangju_digital_B00_14511">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">담장</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">담장(미분류)</span>
-                      <input type="checkbox" id="gwangju_digital_B00_24120">
-                    </li>
-                    <li>
-                      <span class="submenu-item">문주</span>
-                      <input type="checkbox" id="gwangju_digital_B00_24127">
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">경계</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">행정경계</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">구계</span>
-                      <input type="checkbox" id="gwangju_digital_G00_18115">
-                    </li>
-                    <li>
-                      <span class="submenu-item">군계</span>
-                      <input type="checkbox" id="gwangju_digital_G00_18114">
-                    </li>
-                    <li>
-                      <span class="submenu-item">동계</span>
-                      <input type="checkbox" id="gwangju_digital_G00_18117">
-                    </li>
-                    <li>
-                      <span class="submenu-item">시계</span>
-                      <input type="checkbox" id="gwangju_digital_G00_18113">
-                    </li>
-                    <li>
-                      <span class="submenu-item">읍계</span>
-                      <input type="checkbox" id="gwangju_digital_G00_18116">
-                    </li>
-                    <li>
-                      <span class="submenu-item">특별시,광역시,도</span>
-                      <input type="checkbox" id="gwangju_digital_G00_18112">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">수부지형경계</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">모래</span>
-                      <input type="checkbox" id="gwangju_digital_G00_22312">
-                    </li>
-                    <li>
-                      <span class="submenu-item">모래기호</span>
-                      <input type="checkbox" id="gwangju_digital_G00_22322">
-                    </li>
-                    <li>
-                      <span class="submenu-item">습지</span>
-                      <input type="checkbox" id="gwangju_digital_G00_22313">
-                    </li>
-                    <li>
-                      <span class="submenu-item">습지기호</span>
-                      <input type="checkbox" id="gwangju_digital_G00_22323">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">기타경계</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">(산업지역경계)미분류</span>
-                      <input type="checkbox" id="gwangju_digital_G00_38210">
-                    </li>
-                    <li>
-                      <span class="submenu-item">관광단지</span>
-                      <input type="checkbox" id="gwangju_digital_G00_38232">
-                    </li>
-                    <li>
-                      <span class="submenu-item">너덜바위</span>
-                      <input type="checkbox" id="gwangju_digital_G00_37214">
-                    </li>
-                    <li>
-                      <span class="submenu-item">문화제보호구역</span>
-                      <input type="checkbox" id="gwangju_digital_G00_38231">
-                    </li>
-                    <li>
-                      <span class="submenu-item">벼랑바위</span>
-                      <input type="checkbox" id="gwangju_digital_G00_37213">
-                    </li>
-                    <li>
-                      <span class="submenu-item">위락단지</span>
-                      <input type="checkbox" id="gwangju_digital_G00_38233">
-                    </li>
-                    <li>
-                      <span class="submenu-item">축산단지</span>
-                      <input type="checkbox" id="gwangju_digital_G00_38214">
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">도로</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">도로경계</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">(기본도로)고속도로</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13111">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(기본도로)군도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13116">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(기본도로)면리간도로</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13117">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(기본도로)시도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13115">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(기본도로)일반국도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13112">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(기본도로)지방도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13113">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(기본도로)특별시도,광역시도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13114">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(도로번호-기호)고속국도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13431">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(도로번호-기호)일반국도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13432">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(도로번호-기호)지방도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13433">
-                    </li>
-                    <li>
-                      <span class="submenu-item">부지안도로</span>
-                      <input type="checkbox" id="gwangju_digital_A00_13118">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">도로중심선</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">고속도로</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23211">
-                    </li>
-                    <li>
-                      <span class="submenu-item">군도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23216">
-                    </li>
-                    <li>
-                      <span class="submenu-item">면리간도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23217">
-                    </li>
-                    <li>
-                      <span class="submenu-item">소로</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23119">
-                    </li>
-                    <li>
-                      <span class="submenu-item">시도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23215">
-                    </li>
-                    <li>
-                      <span class="submenu-item">일반국도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23212">
-                    </li>
-                    <li>
-                      <span class="submenu-item">지방도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23213">
-                    </li>
-                    <li>
-                      <span class="submenu-item">특별시도,광역시도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_23214">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">인도</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">인도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_33324">
-                    </li>
-                    <li>
-                      <span class="submenu-item">자전거도로</span>
-                      <input type="checkbox" id="gwangju_digital_A00_33327">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item">횡단보도</span>
-                  <input type="checkbox" id="gwangju_digital_A00_43325">
-                </li>
-                <li>
-                  <span class="submenu-item">안전지대</span>
-                  <input type="checkbox" id="gwangju_digital_A00_53326">
-                </li>
-                <li>
-                  <span class="submenu-item">육교</span>
-                  <input type="checkbox" id="gwangju_digital_A00_63321">
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">교량</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">다리</span>
-                      <input type="checkbox" id="gwangju_digital_A00_73340">
-                    </li>
-                    <li>
-                      <span class="submenu-item">철교</span>
-                      <input type="checkbox" id="gwangju_digital_A00_71210">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">입체교차부</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">고가차도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_93351">
-                    </li>
-                    <li>
-                      <span class="submenu-item">지하차도</span>
-                      <input type="checkbox" id="gwangju_digital_A00_93352">
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">수계</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">하천중심선</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">세류</span>
-                      <input type="checkbox" id="gwangju_digital_E00_22112">
-                    </li>
-                    <li>
-                      <span class="submenu-item">하천중심선</span>
-                      <input type="checkbox" id="gwangju_digital_E00_22115">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item">실폭하천</span>
-                  <input type="checkbox" id="gwangju_digital_E00_32111">
-                </li>
-                <li>
-                  <span class="submenu-item">유수방향</span>
-                  <input type="checkbox" id="gwangju_digital_E00_42326">
-                </li>
-                <li>
-                  <span class="submenu-item">호수,저수지</span>
-                  <input type="checkbox" id="gwangju_digital_E00_52114">
-                </li>
-                <li>
-                  <span class="submenu-item">용수로</span>
-                  <input type="checkbox" id="gwangju_digital_E00_62273">
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">시설</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item">선착장</span>
-                  <input type="checkbox" id="gwangju_digital_C00_32254">
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">제방</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">콘크리트방조제(상단)</span>
-                      <input type="checkbox" id="gwangju_digital_C00_52221">
-                    </li>
-                    <li>
-                      <span class="submenu-item">콘크리트제방(상단)</span>
-                      <input type="checkbox" id="gwangju_digital_C00_52211">
-                    </li>
-                    <li>
-                      <span class="submenu-item">콘크리트제방(하단)</span>
-                      <input type="checkbox" id="gwangju_digital_C00_52212">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">수문</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">배수갑문</span>
-                      <input type="checkbox" id="gwangju_digital_C00_62242">
-                    </li>
-                    <li>
-                      <span class="submenu-item">보</span>
-                      <input type="checkbox" id="gwangju_digital_C00_62243">
-                    </li>
+    <div id="map" class="map">
+      <div class="menu" id="menu">
+        <div class="menu-header">
+          <span>레이어 선택</span>
+          <button onclick="toggleMenu()"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
+        </div>
+        <div class="menu-search">
+          <input type="text" placeholder="검색..."> <!-- 검색창 -->
+        </div>
+        <ul>
+          <li>
+            <span class="submenu-item" onclick="toggleSubmenu(event, this)">수치지도</span> <!-- 메인 메뉴 -->
+            <ul class="submenu"> <!-- 서브메뉴 리스트 -->
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">가건물</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14118">
+                      </li>
+                      <li>
+                        <span class="submenu-item">공장</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14311">
+                      </li>
+                      <li>
+                        <span class="submenu-item">구청</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14216">
+                      </li>
+                      <li>
+                        <span class="submenu-item">군청</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14215">
+                      </li>
+                      <li>
+                        <span class="submenu-item">면사무소</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14219">
+                      </li>
+                      <li>
+                        <span class="submenu-item">무벽건물</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14116">
+                      </li>
+                      <li>
+                        <span class="submenu-item">법원</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14221">
+                      </li>
+                      <li>
+                        <span class="submenu-item">세무서</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14233">
+                      </li>
+                      <li>
+                        <span class="submenu-item">시장경계</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14324">
+                      </li>
+                      <li>
+                        <span class="submenu-item">시청</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14214">
+                      </li>
+                      <li>
+                        <span class="submenu-item">아파트</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14115">
+                      </li>
+                      <li>
+                        <span class="submenu-item">연립주택</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14113">
+                      </li>
+                      <li>
+                        <span class="submenu-item">온실</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14117">
+                      </li>
+                      <li>
+                        <span class="submenu-item">우체국</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14235">
+                      </li>
+                      <li>
+                        <span class="submenu-item">읍사무소</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14217">
+                      </li>
+                      <li>
+                        <span class="submenu-item">일반병원</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14611">
+                      </li>
+                      <li>
+                        <span class="submenu-item">주민센터</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14218">
+                      </li>
+                      <li>
+                        <span class="submenu-item">주택</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14112">
+                      </li>
+                      <li>
+                        <span class="submenu-item">주택외건물</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14111">
+                      </li>
+                      <li>
+                        <span class="submenu-item">창고</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14524">
+                      </li>
+                      <li>
+                        <span class="submenu-item">파출소</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14224">
+                      </li>
+                      <li>
+                        <span class="submenu-item">학교</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14411">
+                      </li>
+                      <li>
+                        <span class="submenu-item">호텔</span>
+                        <input type="checkbox" id="gwangju_digital_B00_14511">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">담장</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">담장(미분류)</span>
+                        <input type="checkbox" id="gwangju_digital_B00_24120">
+                      </li>
+                      <li>
+                        <span class="submenu-item">문주</span>
+                        <input type="checkbox" id="gwangju_digital_B00_24127">
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">경계</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">행정경계</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">구계</span>
+                        <input type="checkbox" id="gwangju_digital_G00_18115">
+                      </li>
+                      <li>
+                        <span class="submenu-item">군계</span>
+                        <input type="checkbox" id="gwangju_digital_G00_18114">
+                      </li>
+                      <li>
+                        <span class="submenu-item">동계</span>
+                        <input type="checkbox" id="gwangju_digital_G00_18117">
+                      </li>
+                      <li>
+                        <span class="submenu-item">시계</span>
+                        <input type="checkbox" id="gwangju_digital_G00_18113">
+                      </li>
+                      <li>
+                        <span class="submenu-item">읍계</span>
+                        <input type="checkbox" id="gwangju_digital_G00_18116">
+                      </li>
+                      <li>
+                        <span class="submenu-item">특별시,광역시,도</span>
+                        <input type="checkbox" id="gwangju_digital_G00_18112">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">수부지형경계</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">모래</span>
+                        <input type="checkbox" id="gwangju_digital_G00_22312">
+                      </li>
+                      <li>
+                        <span class="submenu-item">모래기호</span>
+                        <input type="checkbox" id="gwangju_digital_G00_22322">
+                      </li>
+                      <li>
+                        <span class="submenu-item">습지</span>
+                        <input type="checkbox" id="gwangju_digital_G00_22313">
+                      </li>
+                      <li>
+                        <span class="submenu-item">습지기호</span>
+                        <input type="checkbox" id="gwangju_digital_G00_22323">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">기타경계</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">(산업지역경계)미분류</span>
+                        <input type="checkbox" id="gwangju_digital_G00_38210">
+                      </li>
+                      <li>
+                        <span class="submenu-item">관광단지</span>
+                        <input type="checkbox" id="gwangju_digital_G00_38232">
+                      </li>
+                      <li>
+                        <span class="submenu-item">너덜바위</span>
+                        <input type="checkbox" id="gwangju_digital_G00_37214">
+                      </li>
+                      <li>
+                        <span class="submenu-item">문화제보호구역</span>
+                        <input type="checkbox" id="gwangju_digital_G00_38231">
+                      </li>
+                      <li>
+                        <span class="submenu-item">벼랑바위</span>
+                        <input type="checkbox" id="gwangju_digital_G00_37213">
+                      </li>
+                      <li>
+                        <span class="submenu-item">위락단지</span>
+                        <input type="checkbox" id="gwangju_digital_G00_38233">
+                      </li>
+                      <li>
+                        <span class="submenu-item">축산단지</span>
+                        <input type="checkbox" id="gwangju_digital_G00_38214">
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">도로</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">도로경계</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">(기본도로)고속도로</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13111">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(기본도로)군도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13116">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(기본도로)면리간도로</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13117">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(기본도로)시도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13115">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(기본도로)일반국도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13112">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(기본도로)지방도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13113">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(기본도로)특별시도,광역시도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13114">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(도로번호-기호)고속국도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13431">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(도로번호-기호)일반국도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13432">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(도로번호-기호)지방도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13433">
+                      </li>
+                      <li>
+                        <span class="submenu-item">부지안도로</span>
+                        <input type="checkbox" id="gwangju_digital_A00_13118">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">도로중심선</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">고속도로</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23211">
+                      </li>
+                      <li>
+                        <span class="submenu-item">군도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23216">
+                      </li>
+                      <li>
+                        <span class="submenu-item">면리간도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23217">
+                      </li>
+                      <li>
+                        <span class="submenu-item">소로</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23119">
+                      </li>
+                      <li>
+                        <span class="submenu-item">시도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23215">
+                      </li>
+                      <li>
+                        <span class="submenu-item">일반국도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23212">
+                      </li>
+                      <li>
+                        <span class="submenu-item">지방도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23213">
+                      </li>
+                      <li>
+                        <span class="submenu-item">특별시도,광역시도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_23214">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">인도</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">인도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_33324">
+                      </li>
+                      <li>
+                        <span class="submenu-item">자전거도로</span>
+                        <input type="checkbox" id="gwangju_digital_A00_33327">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item">횡단보도</span>
+                    <input type="checkbox" id="gwangju_digital_A00_43325">
+                  </li>
+                  <li>
+                    <span class="submenu-item">안전지대</span>
+                    <input type="checkbox" id="gwangju_digital_A00_53326">
+                  </li>
+                  <li>
+                    <span class="submenu-item">육교</span>
+                    <input type="checkbox" id="gwangju_digital_A00_63321">
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">교량</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">다리</span>
+                        <input type="checkbox" id="gwangju_digital_A00_73340">
+                      </li>
+                      <li>
+                        <span class="submenu-item">철교</span>
+                        <input type="checkbox" id="gwangju_digital_A00_71210">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">입체교차부</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">고가차도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_93351">
+                      </li>
+                      <li>
+                        <span class="submenu-item">지하차도</span>
+                        <input type="checkbox" id="gwangju_digital_A00_93352">
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">수계</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">하천중심선</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">세류</span>
+                        <input type="checkbox" id="gwangju_digital_E00_22112">
+                      </li>
+                      <li>
+                        <span class="submenu-item">하천중심선</span>
+                        <input type="checkbox" id="gwangju_digital_E00_22115">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item">실폭하천</span>
+                    <input type="checkbox" id="gwangju_digital_E00_32111">
+                  </li>
+                  <li>
+                    <span class="submenu-item">유수방향</span>
+                    <input type="checkbox" id="gwangju_digital_E00_42326">
+                  </li>
+                  <li>
+                    <span class="submenu-item">호수,저수지</span>
+                    <input type="checkbox" id="gwangju_digital_E00_52114">
+                  </li>
+                  <li>
+                    <span class="submenu-item">용수로</span>
+                    <input type="checkbox" id="gwangju_digital_E00_62273">
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">시설</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item">선착장</span>
+                    <input type="checkbox" id="gwangju_digital_C00_32254">
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">제방</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">콘크리트방조제(상단)</span>
+                        <input type="checkbox" id="gwangju_digital_C00_52221">
+                      </li>
+                      <li>
+                        <span class="submenu-item">콘크리트제방(상단)</span>
+                        <input type="checkbox" id="gwangju_digital_C00_52211">
+                      </li>
+                      <li>
+                        <span class="submenu-item">콘크리트제방(하단)</span>
+                        <input type="checkbox" id="gwangju_digital_C00_52212">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">수문</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">배수갑문</span>
+                        <input type="checkbox" id="gwangju_digital_C00_62242">
+                      </li>
+                      <li>
+                        <span class="submenu-item">보</span>
+                        <input type="checkbox" id="gwangju_digital_C00_62243">
+                      </li>
 
-                    <li>
-                      <span class="submenu-item">수문</span>
-                      <input type="checkbox" id="gwangju_digital_C00_62241">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">암거</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">암거</span>
-                      <input type="checkbox" id="gwangju_digital_C00_76116">
-                    </li>
-                    <li>
-                      <span class="submenu-item">측구</span>
-                      <input type="checkbox" id="gwangju_digital_C00_76117">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item">우물</span>
-                  <input type="checkbox" id="gwangju_digital_C00_96311">
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">식생</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">경지계</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">과수원</span>
-                      <input type="checkbox" id="gwangju_digital_D00_15213">
-                    </li>
-                    <li>
-                      <span class="submenu-item">논</span>
-                      <input type="checkbox" id="gwangju_digital_D00_15211">
-                    </li>
-                    <li>
-                      <span class="submenu-item">밭</span>
-                      <input type="checkbox" id="gwangju_digital_D00_15212">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item">지류계</span>
-                  <input type="checkbox" id="gwangju_digital_D00_25111">
-                </li>
-                <li>
-                  <span class="submenu-item">목장</span>
-                  <input type="checkbox" id="gwangju_digital_D00_45214">
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">주기</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item">도곽</span>
-                  <input type="checkbox" id="gwangju_digital_H00_17334">
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">기준점</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">삼각점</span>
-                      <input type="checkbox" id="gwangju_digital_H00_27311">
-                    </li>
-                    <li>
-                      <span class="submenu-item">수준점</span>
-                      <input type="checkbox" id="gwangju_digital_H00_27312">
-                    </li>
-                    <li>
-                      <span class="submenu-item">통합기준점</span>
-                      <input type="checkbox" id="gwangju_digital_H00_27313">
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <span class="submenu-item" onclick="toggleSubmenu(event, this)">지형</span>
-              <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">등고선</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">(볼록지)계곡선</span>
-                      <input type="checkbox" id="gwangju_digital_F00_17114">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(볼록지)주곡선</span>
-                      <input type="checkbox" id="gwangju_digital_F00_17111">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(오목지)계곡선</span>
-                      <input type="checkbox" id="gwangju_digital_F00_17124">
-                    </li>
-                    <li>
-                      <span class="submenu-item">(오목지)주곡선</span>
-                      <input type="checkbox" id="gwangju_digital_F00_17121">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item">표고점</span>
-                  <input type="checkbox" id="gwangju_digital_F00_27217">
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">성,절토</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">성토(상단)</span>
-                      <input type="checkbox" id="gwangju_digital_F00_37221">
-                    </li>
-                    <li>
-                      <span class="submenu-item">성토(하단)</span>
-                      <input type="checkbox" id="gwangju_digital_F00_37223">
-                    </li>
-                    <li>
-                      <span class="submenu-item">절토(상단)</span>
-                      <input type="checkbox" id="gwangju_digital_F00_37222">
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <span class="submenu-item" onclick="toggleSubmenu(event, this)">옹벽</span>
-                  <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
-                    <li>
-                      <span class="submenu-item">콘크리트옹벽(상단)</span>
-                      <input type="checkbox" id="gwangju_digital_F00_47224">
-                    </li>
-                    <li>
-                      <span class="submenu-item">콘크리트옹벽(하단)</span>
-                      <input type="checkbox" id="gwangju_digital_F00_47225">
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <span class="submenu-item" onclick="toggleSubmenu(event, this)">인구</span>
-          <ul class="submenu">
-            <li>
-              <span class="submenu-item">초등학생</span>
-              <input type="checkbox" id="gwangju_population_10c">
-            </li>
-            <li>
-              <span class="submenu-item">중학생</span>
-              <input type="checkbox" id="gwangju_population_10j">
-            </li>
-            <li>
-              <span class="submenu-item">고등학생</span>
-              <input type="checkbox" id="gwangju_population_10g">
-            </li>
-            <li>
-              <span class="submenu-item">20대</span>
-              <input type="checkbox" id="gwangju_population_20y">
-            </li>
-            <li>
-              <span class="submenu-item">30대</span>
-              <input type="checkbox" id="gwangju_population_30y">
-            </li>
-            <li>
-              <span class="submenu-item">40대</span>
-              <input type="checkbox" id="gwangju_population_40y">
-            </li>
-            <li>
-              <span class="submenu-item">50대</span>
-              <input type="checkbox" id="gwangju_population_50y">
-            </li>
-            <li>
-              <span class="submenu-item">60대</span>
-              <input type="checkbox" id="gwangju_population_60y">
-            </li>
-            <li>
-              <span class="submenu-item">70대</span>
-              <input type="checkbox" id="gwangju_population_70y">
-            </li>
-            <li>
-              <span class="submenu-item">80대</span>
-              <input type="checkbox" id="gwangju_population_80y">
-            </li>
-            <li>
-              <span class="submenu-item">90대</span>
-              <input type="checkbox" id="gwangju_population_90y">
-            </li>
-            <li>
-              <span class="submenu-item">100세 이상</span>
-              <input type="checkbox" id="gwangju_population_100y">
-            </li>
-            <li>
-              <span class="submenu-item">전체</span>
-              <input type="checkbox" id="gwangju_population_all">
-            </li>
-          </ul>
-        </li>
-        <li>
-          <span class="submenu-item" onclick="toggleSubmenu(event, this)">기본 레이어</span>
-          <ul class="submenu">
-            <li>
-              <span class="submenu-item">동별</span>
-              <input type="checkbox" id="gwangju_dong">
-            </li>
-            <li>
-              <span class="submenu-item">구별</span>
-              <input type="checkbox" id="gwangju_gu">
-            </li>
-          </ul>
-        </li>
-        <li>
-          <span class="submenu-item">도서관</span>
-          <input type="checkbox" id="gwangju_library">
-        </li>
-      </ul>
-    </div>
-    <div class="check-layer" id="check-layer">
-      <!-- 레이어 헤더 -->
-      <div class="layer-header" id="layer-header">
-        <span>레이어 우선순위</span> <!-- 제목 -->
-        <button class="cancel-button" id="layer-cancel">&times;</button>
-      </div>
-      <div class="layer-content">
-        <!-- 드래그 가능한 체크박스 리스트 -->
-        <ul class="draggable-checkbox-list" id="draggable-checkbox-list">
-          <li draggable="true"><input type="checkbox" id="option1"> <label for="option1">도서관</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
-          <li draggable="true"><input type="checkbox" id="option2"> <label for="option2">무인발급기</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
-          <li draggable="true"><input type="checkbox" id="option3"> <label for="option3">공공와이파이</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
-          <li draggable="true"><input type="checkbox" id="option4"> <label for="option4">무더위 그늘막</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
+                      <li>
+                        <span class="submenu-item">수문</span>
+                        <input type="checkbox" id="gwangju_digital_C00_62241">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">암거</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">암거</span>
+                        <input type="checkbox" id="gwangju_digital_C00_76116">
+                      </li>
+                      <li>
+                        <span class="submenu-item">측구</span>
+                        <input type="checkbox" id="gwangju_digital_C00_76117">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item">우물</span>
+                    <input type="checkbox" id="gwangju_digital_C00_96311">
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">식생</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">경지계</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">과수원</span>
+                        <input type="checkbox" id="gwangju_digital_D00_15213">
+                      </li>
+                      <li>
+                        <span class="submenu-item">논</span>
+                        <input type="checkbox" id="gwangju_digital_D00_15211">
+                      </li>
+                      <li>
+                        <span class="submenu-item">밭</span>
+                        <input type="checkbox" id="gwangju_digital_D00_15212">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item">지류계</span>
+                    <input type="checkbox" id="gwangju_digital_D00_25111">
+                  </li>
+                  <li>
+                    <span class="submenu-item">목장</span>
+                    <input type="checkbox" id="gwangju_digital_D00_45214">
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">주기</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item">도곽</span>
+                    <input type="checkbox" id="gwangju_digital_H00_17334">
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">기준점</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">삼각점</span>
+                        <input type="checkbox" id="gwangju_digital_H00_27311">
+                      </li>
+                      <li>
+                        <span class="submenu-item">수준점</span>
+                        <input type="checkbox" id="gwangju_digital_H00_27312">
+                      </li>
+                      <li>
+                        <span class="submenu-item">통합기준점</span>
+                        <input type="checkbox" id="gwangju_digital_H00_27313">
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <span class="submenu-item" onclick="toggleSubmenu(event, this)">지형</span>
+                <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">등고선</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">(볼록지)계곡선</span>
+                        <input type="checkbox" id="gwangju_digital_F00_17114">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(볼록지)주곡선</span>
+                        <input type="checkbox" id="gwangju_digital_F00_17111">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(오목지)계곡선</span>
+                        <input type="checkbox" id="gwangju_digital_F00_17124">
+                      </li>
+                      <li>
+                        <span class="submenu-item">(오목지)주곡선</span>
+                        <input type="checkbox" id="gwangju_digital_F00_17121">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item">표고점</span>
+                    <input type="checkbox" id="gwangju_digital_F00_27217">
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">성,절토</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">성토(상단)</span>
+                        <input type="checkbox" id="gwangju_digital_F00_37221">
+                      </li>
+                      <li>
+                        <span class="submenu-item">성토(하단)</span>
+                        <input type="checkbox" id="gwangju_digital_F00_37223">
+                      </li>
+                      <li>
+                        <span class="submenu-item">절토(상단)</span>
+                        <input type="checkbox" id="gwangju_digital_F00_37222">
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <span class="submenu-item" onclick="toggleSubmenu(event, this)">옹벽</span>
+                    <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
+                      <li>
+                        <span class="submenu-item">콘크리트옹벽(상단)</span>
+                        <input type="checkbox" id="gwangju_digital_F00_47224">
+                      </li>
+                      <li>
+                        <span class="submenu-item">콘크리트옹벽(하단)</span>
+                        <input type="checkbox" id="gwangju_digital_F00_47225">
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <span class="submenu-item" onclick="toggleSubmenu(event, this)">인구</span>
+            <ul class="submenu">
+              <li>
+                <span class="submenu-item">초등학생</span>
+                <input type="checkbox" id="gwangju_population_10c">
+              </li>
+              <li>
+                <span class="submenu-item">중학생</span>
+                <input type="checkbox" id="gwangju_population_10j">
+              </li>
+              <li>
+                <span class="submenu-item">고등학생</span>
+                <input type="checkbox" id="gwangju_population_10g">
+              </li>
+              <li>
+                <span class="submenu-item">20대</span>
+                <input type="checkbox" id="gwangju_population_20y">
+              </li>
+              <li>
+                <span class="submenu-item">30대</span>
+                <input type="checkbox" id="gwangju_population_30y">
+              </li>
+              <li>
+                <span class="submenu-item">40대</span>
+                <input type="checkbox" id="gwangju_population_40y">
+              </li>
+              <li>
+                <span class="submenu-item">50대</span>
+                <input type="checkbox" id="gwangju_population_50y">
+              </li>
+              <li>
+                <span class="submenu-item">60대</span>
+                <input type="checkbox" id="gwangju_population_60y">
+              </li>
+              <li>
+                <span class="submenu-item">70대</span>
+                <input type="checkbox" id="gwangju_population_70y">
+              </li>
+              <li>
+                <span class="submenu-item">80대</span>
+                <input type="checkbox" id="gwangju_population_80y">
+              </li>
+              <li>
+                <span class="submenu-item">90대</span>
+                <input type="checkbox" id="gwangju_population_90y">
+              </li>
+              <li>
+                <span class="submenu-item">전체</span>
+                <input type="checkbox" id="gwangju_population_all">
+              </li>
+            </ul>
+          </li>
+          <li>
+            <span class="submenu-item" onclick="toggleSubmenu(event, this)">기본 레이어</span>
+            <ul class="submenu">
+              <li>
+                <span class="submenu-item">동별</span>
+                <input type="checkbox" id="gwangju_dong">
+              </li>
+              <li>
+                <span class="submenu-item">구별</span>
+                <input type="checkbox" id="gwangju_gu">
+              </li>
+            </ul>
+          </li>
+          <li>
+            <span class="submenu-item">도서관</span>
+            <input type="checkbox" id="gwangju_library">
+          </li>
         </ul>
       </div>
+      <div class="check-layer" id="check-layer">
+        <!-- 레이어 헤더 -->
+        <div class="layer-header" id="layer-header">
+          <span>레이어 우선순위</span> <!-- 제목 -->
+          <button class="cancel-button" id="layer-cancel">&times;</button>
+        </div>
+        <div class="layer-content">
+          <!-- 드래그 가능한 체크박스 리스트 -->
+          <ul class="draggable-checkbox-list" id="draggable-checkbox-list">
+            <li draggable="true"><input type="checkbox" id="option1"> <label for="option1">도서관</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
+            <li draggable="true"><input type="checkbox" id="option2"> <label for="option2">무인발급기</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
+            <li draggable="true"><input type="checkbox" id="option3"> <label for="option3">공공와이파이</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
+            <li draggable="true"><input type="checkbox" id="option4"> <label for="option4">무더위 그늘막</label><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="overlay-button-container">
+        <button id="fullscreenButton"><img src="/images/전체화면.svg" style="width: 20px; height: 20px"></button>
+        <button id="layer-invisible"><img src="/images/layer.svg" style="width: 20px; height: 20px"></button>
+        <button>3</button>
+      </div>
+      <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"><img src="/images/right.svg" style="width: 20px; height: 20px"></button>
     </div>
-    <div class="overlay-button-container">
-      <button id="fullscreenButton"><img src="/images/전체화면.svg" style="width: 20px; height: 20px"></button>
-      <button id="layer-invisible"><img src="/images/layer.svg" style="width: 20px; height: 20px"></button>
-      <button>3</button>
-    </div>
-    <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"><img src="/images/right.svg" style="width: 20px; height: 20px"></button>
-  </div>
   </div>
 </div>
 <script>
@@ -719,7 +715,163 @@
             serverType: 'geoserver'
           }),
           visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
-        }) // 대전 동별 레이어
+        }), // 대전 동별 레이어
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_10c_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 3번 초등학생
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_10j_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 4번 중학생
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_10g_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 5번 고등학생
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_20y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), //6번 20대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_30y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 7번 30대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_40y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 8번 40대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_50y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 9번 50대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_60y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 11번 70대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_70y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 11번 70대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_80y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 12번 80대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_90y_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }), // 13번 90대
+        new ol.layer.Tile({
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
+            params: {
+              'LAYERS': 'ne:gwangju_population_all_2024_10',  // 사용하려는 레이어 이름
+              'TILED': true,
+              'FORMAT': 'image/png',
+              'SRS': 'EPSG:4326'  // 좌표계 설정
+            },
+            serverType: 'geoserver'
+          }),
+          visible: false,  // 기본적으로 레이어가 보이지 않도록 설정
+        }) // 13번 90대
       ],
       view: new ol.View({
         projection: 'EPSG:4326',  // 지도 좌표계 설정
@@ -731,15 +883,65 @@
     });
 
     // 체크박스를 클릭할 때 레이어의 가시성 토글
-    var wmsLayerCheckbox = document.getElementById('wmsLayerCheckbox');
-    wmsLayerCheckbox.addEventListener('change', function() {
-      var wmsLayer = map.getLayers().item(1); // WMS 레이어
-      wmsLayer.setVisible(wmsLayerCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    var gwangju_population_10c = document.getElementById('gwangju_population_10c');
+    gwangju_population_10c.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(3); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_10c.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
     });
-    var dongCheckbox = document.getElementById('dongCheckbox');
-    dongCheckbox.addEventListener('change', function() {
-      var wmsLayer = map.getLayers().item(2); // WMS 레이어
-      wmsLayer.setVisible(dongCheckbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    var gwangju_population_10j = document.getElementById('gwangju_population_10j');
+    gwangju_population_10j.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(4); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_10j.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_10g = document.getElementById('gwangju_population_10g');
+    gwangju_population_10g.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(5); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_10g.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_20y = document.getElementById('gwangju_population_20y');
+    gwangju_population_20y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(6); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_20y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_30y = document.getElementById('gwangju_population_30y');
+    gwangju_population_30y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(7); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_30y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_40y = document.getElementById('gwangju_population_40y');
+    gwangju_population_40y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(8); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_40y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_50y = document.getElementById('gwangju_population_50y');
+    gwangju_population_50y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(9); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_50y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_60y = document.getElementById('gwangju_population_60y');
+    gwangju_population_60y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(10); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_60y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_70y = document.getElementById('gwangju_population_70y');
+    gwangju_population_70y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(11); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_70y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_80y = document.getElementById('gwangju_population_80y');
+    gwangju_population_80y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(12); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_80y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_90y = document.getElementById('gwangju_population_90y');
+    gwangju_population_90y.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(13); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_90y.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
+    });
+    var gwangju_population_all = document.getElementById('gwangju_population_all');
+    gwangju_population_all.addEventListener('change', function() {
+      var wmsLayer = map.getLayers().item(14); // WMS 레이어
+      wmsLayer.setVisible(gwangju_population_all.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
     });
 
     // 지도 클릭시
