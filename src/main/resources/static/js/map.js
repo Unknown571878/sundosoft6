@@ -317,10 +317,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // cancel 버튼 클릭 이벤트 추가
                 newBtn.addEventListener('click', function() {
+                    var searchBox = document.getElementById('search-'+layerInfo.id);
                     // li 태그 삭제
                     newLi.remove();
                     // 체크박스 해제
                     checkbox.checked = false;
+                    searchBox.checked = false;
                     var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
                     wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
 
@@ -454,4 +456,52 @@ function toggleSubmenu(event, element) {
     if (submenu) {
         submenu.classList.toggle('active');
     }
+}
+
+// 검색 입력 필드에 이벤트 리스너 추가
+document.getElementById('layer-search').addEventListener('input', filterList);
+
+function filterList() {
+    const keyword = document.getElementById('layer-search').value.trim().toLowerCase();
+    const searchList = document.getElementById('search-list');
+
+    if (keyword === '') {
+        searchList.style.display = 'none'; // 검색어가 없으면 숨기기
+        searchList.innerHTML = ''; // 리스트 초기화
+        return;
+    }
+
+    searchList.style.display = 'block'; // 검색어가 있으면 표시
+    searchList.innerHTML = ''; // 기존 검색 결과 초기화
+
+    // 입력된 키워드와 일치하는 항목 필터링
+    const filteredItems = layer_names.filter(item => item.name.toLowerCase().includes(keyword));
+
+    filteredItems.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('check-item'); // li에 클래스 추가
+
+        const span = document.createElement('span');
+        span.classList.add('submenu-item');
+        span.textContent = item.name; // 레이어 이름 표시
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = item.id;
+        checkbox.id = 'search-' + item.id;
+        checkbox.checked = document.getElementById(item.id)?.checked || false; // 기존 체크박스 상태 동기화
+
+        listItem.appendChild(span);
+        listItem.appendChild(checkbox);
+        searchList.appendChild(listItem);
+
+        // 기존 체크박스와 동기화
+        checkbox.addEventListener('change', function (event) {
+            const originalCheckbox = document.getElementById(item.id);
+            originalCheckbox.checked = event.target.checked; // 원래 체크박스 상태 동기화
+
+            // 기존 이벤트 트리거
+            originalCheckbox.dispatchEvent(new Event('change'));
+        });
+    });
 }
