@@ -31,7 +31,6 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class AdminController {
 
     private final NoticeService noticeService;
@@ -236,7 +235,6 @@ public class AdminController {
     @GetMapping("/admin_apply/detail")
     public String applyDetail(@RequestParam Long id, Model model) {
         Apply apply = applyService.selectApplyDetail(id);
-        log.info("게시글 내용{}", apply.toString());
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("now", now);
         model.addAttribute("apply", apply);
