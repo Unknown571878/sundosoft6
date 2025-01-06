@@ -61,7 +61,7 @@ public class Project2Application {
                         "- 데이터 암호화, 접근 제어, 주기적인 보안 점검 등\n\n" +
                         "자세한 내용은 첨부된 개인정보처리방침 전문을 확인해 주시기 바랍니다.")
                 .hits(0)
-                .files(List.of(new FileDetail("files/privacy_policy.pdf", "privacy_policy.pdf")))
+                .files(List.of(new FileDetail("/privacy_policy.pdf", "privacy_policy.pdf")))
                 .build());
 
         notices.add(Notice.builder()
@@ -80,7 +80,7 @@ public class Project2Application {
                         "- 고객센터 전화번호: 123-456-7890\n\n" +
                         "변경된 약관 전문은 첨부된 파일을 통해 확인하실 수 있습니다. 서비스 이용에 참고 부탁드립니다.")
                 .hits(0)
-                .files(List.of(new FileDetail("files/terms_of_service.pdf","terms_of_service.pdf")))
+                .files(List.of(new FileDetail("/terms_of_service.pdf","terms_of_service.pdf")))
                 .build());
 
         noticeRepository.saveAll(notices);
