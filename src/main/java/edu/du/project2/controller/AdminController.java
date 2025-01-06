@@ -3,13 +3,16 @@ package edu.du.project2.controller;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.*;
+import edu.du.project2.repository.ApplyRepository;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.repository.QnARepository;
 import edu.du.project2.repository.QnA_ListRepository;
+import edu.du.project2.service.ApplyService;
 import edu.du.project2.service.FAQService;
 import edu.du.project2.service.NoticeService;
 import edu.du.project2.service.QnAService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +31,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class AdminController {
 
     private final NoticeService noticeService;
@@ -212,5 +216,30 @@ public class AdminController {
                             @RequestParam String answer) {
         faqService.faqUpdate(id, title, question, answer);
         return "redirect:/admin_faq";
+    }
+
+
+//    관리자 페이지에 입지분석 신청 내역 확인 코드 추가해야함
+//    신청내역 목록/신청내역 상세/신청한 입지분석 적용 후 완료된 내역을 메일로?? 어떻게 해야하지
+    private final ApplyRepository applyRepository;
+    private final ApplyService applyService;
+
+    @GetMapping("/admin_apply")
+    public String apply(Model model) {
+        List<Apply> applies = applyRepository.findAll();
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
+        model.addAttribute("applies", applies);
+        return "/admin/admin_apply";
+    }
+
+    @GetMapping("/admin_apply/detail")
+    public String applyDetail(@RequestParam Long id, Model model) {
+        Apply apply = applyService.selectApplyDetail(id);
+        log.info("게시글 내용{}", apply.toString());
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("now", now);
+        model.addAttribute("apply", apply);
+        return "/admin/admin_applyDetail";
     }
 }

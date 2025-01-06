@@ -1,9 +1,6 @@
 package edu.du.project2.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Apply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +22,19 @@ public class Apply {
     private String title;
 
     @Column(nullable = false)
+    private String author;
+
+    @Column(nullable = false)
     private String content;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;  // 생성일시
 
+    private char endYn;
+
     @ElementCollection
-    private List<String> filePaths = new ArrayList<>();  // 여러 파일 경로를 저장
+    @CollectionTable(name = "apply_files", joinColumns = @JoinColumn(name = "apply_id"))
+    private List<FileDetail> files = new ArrayList<>();  // 파일 경로와 이름을 함께 저장
 
     // 생성일시 자동 설정
     @PrePersist
