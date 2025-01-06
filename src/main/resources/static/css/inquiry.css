@@ -27,12 +27,14 @@ html, body {
     margin: 0 auto 5px; /* 가운데 정렬 및 하단 여백 */
 }
 
+/* 카운트 텍스트 스타일 */
 .count {
-    text-align: right; /* 텍스트를 오른쪽 정렬 */
-    font-size: 14px; /* 글자 크기 설정 */
-    position: relative; /* 상대 위치 */
-    left: 70px; /* 기존 위치에서 오른쪽으로 20px 이동 */
+    text-align: right; /* 텍스트 오른쪽 정렬 */
+    font-size: 15px; /* 텍스트 크기 */
+    position: relative; /* 상대 위치 설정 */
+    left: 565px; /* 왼쪽으로 이동 */
 }
+
 
 /* 메인 헤더 스타일 */
 .main-tihome {
@@ -124,12 +126,11 @@ td {
     color: #555; /* 텍스트 색상 */
 }
 
-/* 테이블 헤더 */
 thead th {
+    text-align: center; /* 텍스트 가운데 정렬 */
     background-color: #f7f7f7; /* 헤더 배경색 */
-    padding: 10px; /* 내부 여백 */
-    font-weight: bold; /* 텍스트 두껍게 */
-    color: #333; /* 텍스트 색상 */
+    font-weight: bold; /* 두꺼운 폰트 */
+    color: black; /* 텍스트 색상 */
     border-bottom: 2px solid #ddd; /* 하단 경계선 */
 }
 

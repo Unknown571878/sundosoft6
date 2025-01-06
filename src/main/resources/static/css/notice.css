@@ -30,9 +30,9 @@ html, body {
 /* 카운트 텍스트 스타일 */
 .count {
     text-align: right; /* 텍스트 오른쪽 정렬 */
-    font-size: 14px; /* 텍스트 크기 */
+    font-size: 15px; /* 텍스트 크기 */
     position: relative; /* 상대 위치 설정 */
-    left: 70px; /* 왼쪽으로 이동 */
+    left: 565px; /* 왼쪽으로 이동 */
 }
 
 /* 메인 헤더 스타일 */
@@ -81,13 +81,11 @@ html, body {
 .post-tbody-tr th:nth-child(3) { width: 20%; } /* 작성일 */
 .post-tbody-tr th:nth-child(4) { width: 10%; } /* 조회수 */
 
-/* 테이블 본문 스타일 */
+/* 테이블 본문 행 스타일 */
 .post-tbody-tr td {
-    border-top: 2px solid #333; /* 헤더 상단에 굵은 경계선 추가 */
-    /*border-bottom: 1px solid #ddd; !* 셀 하단 경계선 *!*/
+    border-bottom: 1px solid #ddd; /* 셀 하단 경계선 */
     padding: 8px; /* 셀 내부 여백 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    color: #555; /* 텍스트 색상 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
 }
 
 thead th {
