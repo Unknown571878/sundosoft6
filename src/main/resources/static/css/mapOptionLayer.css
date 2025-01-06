@@ -28,7 +28,7 @@ html, body {
 }
 
 /* 레이어 헤더 스타일 */
-.main-map .layer-header {
+.main-map {
     padding: 10px; /* 내부 여백 */
     background-color: #f1f1f1; /* 배경 색상 */
     border-bottom: 1px solid #ddd; /* 아래쪽 테두리 */
@@ -42,7 +42,7 @@ html, body {
 }
 
 /* 레이어 콘텐츠 스타일 */
-.main-map .layer-content {
+.main-map {
     padding: 20px; /* 내부 여백 */
 }
 
@@ -99,7 +99,7 @@ html, body {
 .layer-content {
     overflow-y: auto; /* 세로 스크롤 활성화 */
     max-height: calc(100% - 60px); /* 푸터를 제외한 영역에 맞게 스크롤 영역 설정 */
-    padding-bottom: 60px; /* 푸터와 콘텐츠 간 공간 확보 */
+    padding: 20px 20px 60px 20px; /* 푸터와 콘텐츠 간 공간 확보 */
     box-sizing: border-box; /* 패딩 포함 크기 계산 */
 }
 
@@ -389,4 +389,33 @@ html, body {
 .search-list li input[type="checkbox"]:checked + .submenu-item {
     font-weight: bold;
     color: #007bff; /* 선택 시 파란색으로 강조 */
+}
+
+
+.cancel-button {
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.cancel-layer {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.layer-header {
+    display: flex;
+    padding: 10px; /* 내부 여백 */
+    background-color: #f1f1f1; /* 배경 색상 */
+    border-bottom: 1px solid #ddd; /* 아래쪽 테두리 */
+    border-top-left-radius: 10px; /* 왼쪽 상단 모서리 둥글게 */
+    border-top-right-radius: 10px; /* 오른쪽 상단 모서리 둥글게 */
+    align-items: center;
 }

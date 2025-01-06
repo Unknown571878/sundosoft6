@@ -861,7 +861,7 @@
         <!-- 레이어 헤더 -->
         <div class="layer-header" id="layer-header">
           <span>레이어 우선순위</span> <!-- 제목 -->
-          <button class="cancel-button" id="layer-cancel"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>
+          <button class="cancel-button" id="layer-cancel"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px;"></button>
         </div>
         <div class="layer-content">
           <!-- 드래그 가능한 체크박스 리스트 -->
@@ -884,8 +884,6 @@
 </div>
 <script th:src="@{/js/map.js}"></script>
 <!--<script src="/js/mapOptionLayer.js"></script>-->
-<div class="footers"></div> <!-- 이거 지우면 안됨 -->
-<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 <script src="/js/mapOptionLayer.js"></script>
 </body>
 </html>

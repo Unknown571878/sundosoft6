@@ -188,21 +188,3 @@ header {
     font-weight: 500; /* 글자 두께를 조금 더 강조 */
     transition: all 0.3s ease; /* 효과를 부드럽게 전환 */
 }
-
-.cancel-button {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: black;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-.cancel-layer {
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    color: black;
-    font-size: 25px;
-    cursor: pointer;
-}
