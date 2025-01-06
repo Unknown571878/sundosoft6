@@ -1,7 +1,7 @@
 package edu.du.project2.controller;
 
-import edu.du.project2.entity.FaQ;
-import edu.du.project2.service.FAQService;
+import edu.du.project2.entity.Faq;
+import edu.du.project2.service.FaqService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,27 +16,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * FAQ 관련 요청을 처리하는 컨트롤러.
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/faq")
-public class FAQController {
+public class FaqController {
 
-    private final FAQService faqService;
+    private final FaqService faqService;
 
-    @GetMapping("")
+    // FAQ 목록 페이지를 반환.
+    @GetMapping
     public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<FaQ> lists = faqService.getUserFAQs(pageable);
-        model.addAttribute("faqs", lists);
+        Page<Faq> faqs = faqService.getActiveFAQs(pageable);
+        model.addAttribute("faqs", faqs);
         return "/faq/faqList";
     }
 
+    // FAQ 상세 페이지를 반환.
     @GetMapping("/faqDetail")
     public String faqDetail(@RequestParam("id") Long id, Model model) {
-        FaQ faQ = faqService.faqDetail(id);
-        LocalDateTime now = LocalDateTime.now();
-        model.addAttribute("faq", faQ);
-        model.addAttribute("now", now);
+        Faq faq = faqService.faqDetail(id);
+        model.addAttribute("faq", faq);
+        model.addAttribute("now", LocalDateTime.now());
         return "/faq/faqDetail";
     }
-
 }

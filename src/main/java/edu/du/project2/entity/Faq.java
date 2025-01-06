@@ -1,21 +1,22 @@
 package edu.du.project2.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 상세 분석 신청서 엔티티.
+ * 자주 묻는 질문(FAQ) 엔티티.
  */
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Apply {
+public class Faq {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,19 +26,16 @@ public class Apply {
     private String title; // 제목
 
     @Column(nullable = false)
-    private String author; // 작성자
+    private String question; // 질문
 
     @Column(nullable = false)
-    private String content; // 내용
+    private String answer; // 답변
+
+    @Column(nullable = false)
+    private char deletedYn; // 삭제 여부 ('Y': 삭제, 'N': 미삭제)
 
     @Column(nullable = false)
     private LocalDateTime createdAt; // 생성일시
-
-    private char completedYn; // 분석 완료 여부 ('Y': 완료, 'N': 미완료)
-
-    @ElementCollection
-    @CollectionTable(name = "apply_files", joinColumns = @JoinColumn(name = "apply_id"))
-    private List<FileDetail> files = new ArrayList<>(); // 첨부 파일 리스트
 
     @PrePersist
     public void prePersist() {
