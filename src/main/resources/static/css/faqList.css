@@ -71,7 +71,6 @@ html, body {
 thead th {
     text-align: center; /* 텍스트 가운데 정렬 */
     background-color: white; /* 헤더 배경색 */
-    /*padding: 5px; !* 내부 여백 *!*/
     font-weight: lighter; /* 가벼운 폰트 두께 */
     color: black; /* 텍스트 색상 */
     border-bottom: 1px solid lightgrey; /* 하단 경계선 */
@@ -104,7 +103,7 @@ td.title:hover {
 td.title a {
     color: black; /* 링크 기본 색상 */
     text-decoration: none; /* 밑줄 제거 */
-    font-weight: lighter; /* 굵은 폰트 */
+    font-weight: lighter; /* 얇은 폰트 */
 }
 
 
