@@ -34,7 +34,8 @@ public class Notice {
     private LocalDateTime createdAt;  // 생성일시
 
     @ElementCollection
-    private List<String> filePaths = new ArrayList<>();  // 여러 파일 경로를 저장
+    @CollectionTable(name = "notice_files", joinColumns = @JoinColumn(name = "notice_id"))
+    private List<FileDetail> files = new ArrayList<>();  // 파일 경로와 이름을 함께 저장
 
 
     // 생성일시 자동 설정

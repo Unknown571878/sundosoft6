@@ -25,7 +25,7 @@ import java.util.List;
 public class ApplyController {
     private final ApplyService applyService;
 
-    @GetMapping("")
+    @GetMapping("/list")
     public String analysisList(Model model,
                                 @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Apply> applies = applyService.findAll();
@@ -43,28 +43,28 @@ public class ApplyController {
         Apply apply = applyService.selectApplyDetail(id);
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("apply", apply);
-        model.addAttribute("filePath", apply.getFilePaths());
         model.addAttribute("now", now);
         return "map/apply_detail";
     }
 
-    @GetMapping("/write")
+    @GetMapping("")
     public String analysisWrite(){
         return "map/apply_write";
     }
 
     @PostMapping("/analysisApply")
-    public String analysisApply(@RequestParam String title,
+    public String analysisApply(@RequestParam String author,
+                                @RequestParam String title,
                                 @RequestParam String content,
                                 @RequestParam(value = "files", required = false) MultipartFile[] files) throws IOException {
         if (files == null || files.length == 0 || files[0].isEmpty()) {
             // 파일이 없는 경우
-            applyService.createBoard(title, content);
+            applyService.createBoard(author, title, content);
         } else {
             // 파일이 있는 경우
-            applyService.createBoard(title, content, files);
+            applyService.createBoard(author, title, content, files);
         }
-        return "redirect:/analysis";
+        return "redirect:/analysis/list";
     }
 
     @PostMapping("/analysisUpdate")

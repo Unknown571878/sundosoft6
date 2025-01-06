@@ -1,6 +1,7 @@
 package edu.du.project2.service;
 
 import edu.du.project2.entity.Apply;
+import edu.du.project2.entity.FileDetail;
 import edu.du.project2.repository.ApplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -14,34 +15,38 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class ApplyService {
     private final ApplyRepository applyRepository;
-    private final String UPLOAD_DIR = "C:/teamproject/sundosoft6/uploads";
+    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
 
     public List<Apply> findAll() {
         return applyRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
     }
 
-    public void createBoard(String title, String content){
+    @Transactional
+    public void createBoard(String author, String title, String content){
         Apply apply = Apply.builder()
+                .author(author)
                 .title(title)
                 .content(content)
+                .endYn('N')
                 .createdAt(LocalDateTime.now())
                 .build();
 
         applyRepository.save(apply);
     }
 
-    public void createBoard(String title, String content, MultipartFile[] files)throws IOException{
+    @Transactional
+    public void createBoard(String author, String title, String content, MultipartFile[] files)throws IOException{
         Apply apply = Apply.builder()
+                .author(author)
                 .title(title)
                 .content(content)
+                .endYn('N')
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -51,27 +56,26 @@ public class ApplyService {
                 Files.createDirectory(uploadPath);
             }
 
-            List<String> filePaths = new ArrayList<>();
+            List<FileDetail> fileDetails = new ArrayList<>();
 
             for(MultipartFile file : files){
                 if(!file.isEmpty()){
                     String originalFilename = file.getOriginalFilename();
-                    String extension = "";
-                    if(originalFilename != null && originalFilename.contains(".")){
-                        extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                    if (originalFilename == null || originalFilename.isEmpty()) {
+                        throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
                     }
+                    Path filePath = Paths.get(UPLOAD_DIR, originalFilename);
 
-                    String fileName = UUID.randomUUID().toString().substring(0, 8) + extension;
-                    Path filePath = Paths.get(UPLOAD_DIR, fileName);
-
+                    // 파일을 지정된 경로에 저장
                     file.transferTo(filePath.toFile());
 
-                    filePaths.add(fileName);
+                    // 파일 경로 및 이름 객체 생성
+                    FileDetail fileDetail = new FileDetail("/uploads/" + originalFilename,originalFilename);
+                    fileDetails.add(fileDetail);
                 }
             }
-            apply.setFilePaths(filePaths);
-        }else{
-            apply.setFilePaths(Collections.emptyList());
+            // 신청서에 파일 정보 추가
+            apply.setFiles(fileDetails);
         }
         applyRepository.save(apply);
     }

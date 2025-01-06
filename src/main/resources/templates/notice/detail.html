@@ -43,26 +43,26 @@
                               th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}"></textarea>
     </td>
   </tr>
-  <th:block th:if="${notice.filePaths != null and !notice.filePaths.isEmpty()}">
+  <th:block th:if="${notice.files != null and !notice.files.isEmpty()}">
   <tr>
     <th>첨부 파일</th>
     <td colspan="3">
-      <div th:each="fileName : ${notice.filePaths}">
-        <div th:if="${#strings.endsWith(fileName, '.jpg') or
-                         #strings.endsWith(fileName, '.jpeg') or
-                         #strings.endsWith(fileName, '.png') or
-                         #strings.endsWith(fileName, '.gif')}">
-          <img th:src="@{/uploads/{fileName}(fileName=${fileName})}" alt="Uploaded Image" style="max-width: 300px;" />
+      <div th:each="file : ${notice.files}">
+        <div th:if="${#strings.endsWith(file.fileName, '.jpg') or
+                         #strings.endsWith(file.fileName, '.jpeg') or
+                         #strings.endsWith(file.fileName, '.png') or
+                         #strings.endsWith(file.fileName, '.gif')}">
+          <img th:src="${file.filePath}" alt="Uploaded Image" style="max-width: 300px;" />
           <br />
-          <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" download>사진 다운로드</a>
+          <a th:href="${file.filePath}" download>사진 다운로드</a>
         </div>
 
-        <div th:if="${fileName != null and fileName != '' and !(#strings.endsWith(fileName, '.jpg') or
-                                                                  #strings.endsWith(fileName, '.jpeg') or
-                                                                  #strings.endsWith(fileName, '.png') or
-                                                                  #strings.endsWith(fileName, '.gif'))}">
-          <p th:text="${fileName}"></p>
-          <a th:href="@{/uploads/{fileName}(fileName=${fileName})}" download>파일 다운로드</a>
+        <div th:if="${file.fileName != null and file.fileName != '' and !(#strings.endsWith(file.fileName, '.jpg') or
+                                                                  #strings.endsWith(file.fileName, '.jpeg') or
+                                                                  #strings.endsWith(file.fileName, '.png') or
+                                                                  #strings.endsWith(file.fileName, '.gif'))}">
+          <p th:text="${file.fileName}"></p>
+          <a th:href="${file.filePath}" download>파일 다운로드</a>
         </div>
       </div>
     </td>

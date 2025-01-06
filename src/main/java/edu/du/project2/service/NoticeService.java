@@ -1,6 +1,7 @@
 package edu.du.project2.service;
 
 
+import edu.du.project2.entity.FileDetail;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class NoticeService {
     }
 
     // 파일 업로드 경로 설정
-    private final String UPLOAD_DIR = "C:/teamproject/sundosoft6/uploads";
+    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
 
     public void createNotice(String title, String content, MultipartFile[] files) throws IOException {
         Notice notice = new Notice();
@@ -51,35 +52,30 @@ public class NoticeService {
                 Files.createDirectories(uploadPath);   // 디렉토리가 없으면 생성
             }
 
-            List<String> filePaths = new ArrayList<>(); // 파일 경로를 저장할 리스트
+            List<FileDetail> fileDetails = new ArrayList<>(); // 파일 정보 리스트 생성
 
             for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
                     // 원본 파일 이름에서 확장자 추출
                     String originalFilename = file.getOriginalFilename();
-                    String extension = "";
-                    if (originalFilename != null && originalFilename.contains(".")) {
-                        extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+                    if (originalFilename == null || originalFilename.isEmpty()) {
+                        throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
                     }
 
-                    // UUID를 사용하되, 앞 8자리만 사용하여 짧게 만듬
-                    String fileName = UUID.randomUUID().toString().substring(0, 8) + extension;
-                    Path filePath = Paths.get(UPLOAD_DIR, fileName);
+                    Path filePath = Paths.get(UPLOAD_DIR, originalFilename);
 
                     // 파일을 지정된 경로에 저장
                     file.transferTo(filePath.toFile());
 
-                    // 저장된 파일 경로를 리스트에 추가
-                    filePaths.add(fileName);
+                    // 파일 경로 및 이름 객체 생성
+                    FileDetail fileDetail = new FileDetail("/uploads/" + originalFilename,originalFilename);
+                    fileDetails.add(fileDetail);
                 }
             }
-
-            // 공지사항에 파일 경로 저장 (여러 개의 파일 경로 저장)
-            notice.setFilePaths(filePaths);
-        } else {
-            notice.setFilePaths(Collections.emptyList()); // 파일이 없으면 빈 리스트로 설정
+            // 공지사항에 파일 정보 추가
+            notice.setFiles(fileDetails);
         }
-
         // 공지사항 저장
         noticeRepository.save(notice);
     }

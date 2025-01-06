@@ -17,6 +17,7 @@
     </div>
     <div>
       <form th:action="@{/analysis/analysisApply}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="author" th:value="${session.authInfo.name}">
         <div class="form-group">
           <label for="title">제목:</label>
           <input type="text" id="title" name="title" required>
