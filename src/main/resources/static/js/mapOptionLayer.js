@@ -13,7 +13,6 @@ draggableList.addEventListener('dragstart', (e) => {
         e.target.parentNode.insertBefore(placeholder, e.target.nextSibling); // 플레이스홀더를 드래그 항목 아래에 추가
     }
 });
-
 draggableList.addEventListener('dragend', () => {
     if (draggedItem) { // 드래그 항목이 있을 경우
         draggedItem.classList.remove('dragging'); // 드래그 중 스타일 제거
@@ -40,7 +39,6 @@ draggableList.addEventListener('dragend', () => {
         console.log('layer_list:', layer_list); // 최종적으로 저장된 배열 출력
     }
 });
-
 draggableList.addEventListener('dragover', (e) => {
     e.preventDefault(); // 기본 동작 방지
     const draggingOverItem = e.target.closest('li'); // 드래그 중인 항목 탐지
@@ -293,6 +291,14 @@ document.addEventListener('DOMContentLoaded', function() {
         var checkbox = document.getElementById(layerInfo.id);
         checkbox.addEventListener('change', function(event) {
             if (event.target.checked) {
+
+                var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+                wmsLayer.setVisible(true);  // 체크된 상태에 따라 레이어 표시
+
+                // 'visible'이 true인 레이어만 필터링하여 출력
+                const visibleLayers = map.getLayers().getArray().filter(layer => layer.getVisible());
+                console.log('현재 보이는 레이어:', visibleLayers);
+
                 // 레이어 우선순위에 추가
                 // ul 요소 선택
                 const ul = document.getElementById("draggable-checkbox-list");
@@ -344,11 +350,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
                     wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
 
+                    // 레이어 숨기기
+                    var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+                    wmsLayer.setVisible(false);  // 체크 해제된 상태에 따라 레이어 숨기기
+
+                    // 'visible'이 true인 레이어만 필터링하여 출력
+                    const visibleLayers = map.getLayers().getArray().filter(layer => layer.getVisible());
+                    console.log('현재 보이는 레이어:', visibleLayers);
+
                 });
             } else {
                 const div_layer = document.querySelector(`#${layerInfo.id}-layer`);
                 if (div_layer)
                     div_layer.remove();
+
             }
         });
     });
@@ -359,30 +374,6 @@ document.addEventListener('DOMContentLoaded', function() {
         checkbox.addEventListener('change', function() {
             var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
             wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
-        });
-    });
-
-    // 레이어 우선순위에 대해 이벤트 리스너 추가
-    layers.forEach(function(layerInfo) {
-        var checkbox = document.getElementById(layerInfo.id);
-        checkbox.addEventListener('change', function(event) {
-            if (event.target.checked) {
-                // 레이어 표시
-                var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
-                wmsLayer.setVisible(true);  // 체크된 상태에 따라 레이어 표시
-
-                // 'visible'이 true인 레이어만 필터링하여 출력
-                const visibleLayers = map.getLayers().getArray().filter(layer => layer.getVisible());
-                console.log('현재 보이는 레이어:', visibleLayers);
-            } else {
-                // 레이어 숨기기
-                var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
-                wmsLayer.setVisible(false);  // 체크 해제된 상태에 따라 레이어 숨기기
-
-                // 'visible'이 true인 레이어만 필터링하여 출력
-                const visibleLayers = map.getLayers().getArray().filter(layer => layer.getVisible());
-                console.log('현재 보이는 레이어:', visibleLayers);
-            }
         });
     });
 
@@ -401,6 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }),
             visible: visible  // 기본적으로 레이어 가시성 설정
         });
+
     }
     // 지도 클릭시
     map.on('click', function (event) {
