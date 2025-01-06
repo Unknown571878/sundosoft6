@@ -141,7 +141,6 @@ public class AdminController {
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("now", now);
         model.addAttribute("notice", notice);
-        model.addAttribute("filePath", notice.getFiles());
         return "admin/admin_noticeDetail";  // 관리자 페이지
     }
 

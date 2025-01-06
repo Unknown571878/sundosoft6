@@ -50,9 +50,9 @@
                          #strings.endsWith(file.fileName, '.jpeg') or
                          #strings.endsWith(file.fileName, '.png') or
                          #strings.endsWith(file.fileName, '.gif')}">
-                  <img th:src="@{/uploads/{filePath}(filePath=${file.filePath})}" alt="Uploaded Image" style="max-width: 300px;" />
+                  <img th:src="${file.filePath}" alt="Uploaded Image" style="max-width: 300px;" />
                   <br />
-                  <a th:href="@{/uploads/{filePath}(filePath=${file.filePath})}" download>사진 다운로드</a>
+                  <a th:href="${file.filePath}" download>사진 다운로드</a>
                 </div>
 
                 <div th:if="${file.fileName != null and file.fileName != '' and !(#strings.endsWith(file.fileName, '.jpg') or
@@ -60,7 +60,7 @@
                                                                   #strings.endsWith(file.fileName, '.png') or
                                                                   #strings.endsWith(file.fileName, '.gif'))}">
                   <p th:text="${file.fileName}"></p>
-                  <a th:href="@{/uploads/{filePath}(filePath=${file.filePath})}" download>파일 다운로드</a>
+                  <a th:href="${file.filePath}" download>파일 다운로드</a>
                 </div>
               </div>
             </td>

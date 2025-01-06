@@ -38,7 +38,6 @@ public class NoticeService {
     // 파일 업로드 경로 설정
     private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
 
-
     public void createNotice(String title, String content, MultipartFile[] files) throws IOException {
         Notice notice = new Notice();
         notice.setTitle(title);
@@ -63,13 +62,14 @@ public class NoticeService {
                     if (originalFilename == null || originalFilename.isEmpty()) {
                         throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
                     }
+
                     Path filePath = Paths.get(UPLOAD_DIR, originalFilename);
 
                     // 파일을 지정된 경로에 저장
                     file.transferTo(filePath.toFile());
 
                     // 파일 경로 및 이름 객체 생성
-                    FileDetail fileDetail = new FileDetail("/"+filePath.getFileName().toString(), originalFilename);
+                    FileDetail fileDetail = new FileDetail("/uploads/" + originalFilename,originalFilename);
                     fileDetails.add(fileDetail);
                 }
             }
