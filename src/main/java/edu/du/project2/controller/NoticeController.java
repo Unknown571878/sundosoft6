@@ -49,7 +49,7 @@ public class NoticeController {
             model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
         }
         model.addAttribute("notice", notice);
-        model.addAttribute("filePath", notice.getFilePaths());
+        model.addAttribute("filePath", notice.getFiles());
         model.addAttribute("now", now);
         return "notice/detail";  // 일반 사용자 페이지
     }

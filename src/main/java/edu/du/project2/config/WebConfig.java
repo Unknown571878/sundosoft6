@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:/C:/teamproject/sundosoft6/uploads/");
+                .addResourceLocations("file:" + System.getProperty("user.dir") + "/uploads/");
+
     }
 }
