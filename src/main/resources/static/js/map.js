@@ -1,5 +1,67 @@
+const draggableList = document.getElementById('draggable-checkbox-list'); // 드래그 가능한 리스트 요소 가져오기
+let draggedItem = null; // 드래그 중인 항목
+let placeholder = null; // 플레이스홀더 요소
+let layer_list = [];
+
+// 드래그 앤 드롭 이벤트 처리
+draggableList.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'LI') { // 드래그가 LI 요소에서 시작될 때만 실행
+        draggedItem = e.target; // 드래그 중인 항목 저장
+        draggedItem.classList.add('dragging'); // 드래그 중인 항목에 스타일 추가
+        placeholder = document.createElement('li'); // 플레이스홀더 생성
+        placeholder.className = 'placeholder'; // 플레이스홀더 스타일 클래스 추가
+        e.target.parentNode.insertBefore(placeholder, e.target.nextSibling); // 플레이스홀더를 드래그 항목 아래에 추가
+    }
+});
+draggableList.addEventListener('dragover', (e) => {
+    e.preventDefault(); // 기본 동작 방지
+    const draggingOverItem = e.target.closest('li'); // 드래그 중인 항목 탐지
+    if (draggingOverItem && draggingOverItem !== placeholder && draggingOverItem !== draggedItem) { // 유효한 항목일 경우
+        const bounding = draggingOverItem.getBoundingClientRect(); // 항목의 위치 정보 가져오기
+        const offset = e.clientY - bounding.top; // 마우스 위치 계산
+        if (offset > bounding.height / 2) { // 마우스가 항목의 하단에 위치한 경우
+            draggingOverItem.after(placeholder); // 플레이스홀더를 항목 뒤로 이동
+        } else { // 상단에 위치한 경우
+            draggingOverItem.before(placeholder); // 플레이스홀더를 항목 앞으로 이동
+        }
+    }
+});
+
+const fullscreen = document.getElementById('fullscreenButton');
+const map = document.getElementById('map');
+
+fullscreen.addEventListener('click', () => {
+    if (map.requestFullscreen) {
+        map.requestFullscreen(); // 표준 API
+    } else if (map.webkitRequestFullscreen) {
+        map.webkitRequestFullscreen(); // Safari
+    } else if (map.msRequestFullscreen) {
+        map.msRequestFullscreen(); // IE/Edge
+    }
+});
+
+const layer_invisible = document.getElementById('layer-invisible');
+const check_layer = document.getElementById('check-layer');
+const layer_cancel = document.getElementById('layer-cancel');
+
+layer_cancel.addEventListener('click', ()=>{
+    if (check_layer.style.display === 'block' || check_layer.style.display === '') {
+        check_layer.style.display = 'none';
+    }
+});
+
+layer_invisible.addEventListener('click', () => {
+    if (check_layer.style.display === 'block' || check_layer.style.display === '') {
+        check_layer.style.display = 'none'; // 안 보이게 설정
+    }
+    else if (check_layer.style.display === 'none') {
+        check_layer.style.display = 'block'; // 보이게 설정
+
+    }
+});
+
 const layer_names = [
-    { name: '광주 전체', id: 'gwangju_dong' },
+    { name: '광주 동', id: 'gwangju_dong' },
     { name: '광주 구', id: 'gwangju_gu' },
     { name: '초등학생', id: 'gwangju_population_10c' },
     { name: '중학생', id: 'gwangju_population_10j' },
@@ -58,7 +120,6 @@ const layer_names = [
     { name: '도서관', id: 'gwangju_library' },
     { name: '민원발급기', id: 'gwangju_civil_service_machines' }
 ];
-
 
 // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
 const layers = [
@@ -121,8 +182,6 @@ const layers = [
     { id: 'gwangju_library', layerIndex: 57 },
     { id: 'gwangju_civil_service_machines', layerIndex: 58 }
 ];
-
-
 
 document.addEventListener('DOMContentLoaded', function() {
     // OpenLayers Map 객체 생성
@@ -201,11 +260,19 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     });
 
-    // 각 체크박스에 대해 이벤트 리스너 추가
+    // 레이어우선순위에 대해 이벤트 리스너 추가
     layers.forEach(function(layerInfo) {
         var checkbox = document.getElementById(layerInfo.id);
         checkbox.addEventListener('change', function(event) {
             if (event.target.checked) {
+
+                var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+                wmsLayer.setVisible(true);  // 체크된 상태에 따라 레이어 표시
+
+                // 'visible'이 true인 레이어만 필터링하여 출력
+                const visibleLayers = map.getLayers().getArray().filter(layer => layer.getVisible());
+                console.log('현재 보이는 레이어:', visibleLayers);
+
                 // 레이어 우선순위에 추가
                 // ul 요소 선택
                 const ul = document.getElementById("draggable-checkbox-list");
@@ -257,16 +324,64 @@ document.addEventListener('DOMContentLoaded', function() {
                     var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
                     wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
 
+                    // 레이어 숨기기
+                    var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
+                    wmsLayer.setVisible(false);  // 체크 해제된 상태에 따라 레이어 숨기기
+
+                    // 'visible'이 true인 레이어만 필터링하여 출력
+                    const visibleLayers = map.getLayers().getArray().filter(layer => layer.getVisible());
+                    console.log('현재 보이는 레이어:', visibleLayers);
+
                 });
             } else {
                 const div_layer = document.querySelector(`#${layerInfo.id}-layer`);
                 if (div_layer)
                     div_layer.remove();
+
             }
         });
     });
 
-    // 각 체크박스에 대해 이벤트 리스너 추가
+    draggableList.addEventListener('dragend', () => {
+        if (draggedItem) { // 드래그 항목이 있을 경우
+            draggedItem.classList.remove('dragging'); // 드래그 중 스타일 제거
+            if (placeholder) { // 플레이스홀더가 존재할 경우
+                placeholder.parentNode.replaceChild(draggedItem, placeholder); // 플레이스홀더를 드래그 항목으로 교체
+                placeholder = null; // 플레이스홀더 제거
+            }
+            draggedItem = null; // 드래그 항목 초기화
+
+            const items = Array.from(draggableList.querySelectorAll('li')); // 모든 li 요소를 배열로 가져오기
+            layer_list = []; // 배열 초기화 (이전에 저장된 값들을 제거)
+
+            items.forEach((item, index) => {
+                const label = item.querySelector('label'); // li 안의 label 요소 선택
+                const labelText = label.textContent.trim(); // label 텍스트 가져오기
+                const id = item.id.slice(0, -6); // ID에서 _layer 부분 제거
+                layer_list.push({ index: 1000 - (index * 50), id: "ne:" + id, labelText: labelText });
+            });
+
+            // 현재 맵에 존재하는 레이어를 순회하면서 id가 일치하는 레이어의 zIndex를 수정
+            map.getLayers().getArray().forEach(layer => {
+                const layerId = layer.get('id');
+                const matchingLayer = layer_list.find(item => item.id === layerId);
+
+                if (matchingLayer) {
+                    // 해당 레이어가 layer_list에 존재하면 zIndex 값을 수정
+                    layer.setZIndex(matchingLayer.index);
+                    console.log(`Layer ${layerId} zIndex updated to ${matchingLayer.index}`);
+                }
+            });
+
+            console.log('layer_list:', layer_list); // 최종적으로 저장된 배열 출력
+        }
+    });
+
+
+
+
+
+    // 왼쪽 체크박스에 대해 이벤트 리스너 추가
     layers.forEach(function(layerInfo) {
         var checkbox = document.getElementById(layerInfo.id);
         checkbox.addEventListener('change', function() {
@@ -274,10 +389,9 @@ document.addEventListener('DOMContentLoaded', function() {
             wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
         });
     });
-
     // WMS 레이어 생성 함수
     function createWmsLayer(layerName, visible) {
-        return new ol.layer.Tile({
+        const layer = new ol.layer.Tile({
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
                 params: {
@@ -290,6 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }),
             visible: visible  // 기본적으로 레이어 가시성 설정
         });
+        layer.set('id', layerName);  // layerName을 id로 설정
+        return layer;
     }
     // 지도 클릭시
     map.on('click', function (event) {
@@ -300,23 +416,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 클릭한 위치 좌표
         var lonLatText = '클릭한 위치의 위도 : ' +  coordinate[1].toFixed(6) + ', 경도 : ' + coordinate[0].toFixed(6); // 위도, 경도
-        let coordinateText = document.getElementById("map_position");
-        coordinateText.textContent = lonLatText;
+        console.log(lonLatText);
 
         // 클릭한 위치 이름
         var url1 = map.getLayers().item(1).getSource().getGetFeatureInfoUrl(coordinate, resolution, projection, {
             'INFO_FORMAT': 'application/json'
         });
-        if (url1) {
-            fetch(url1)
-                .then(response => response.json())
-                .then(data => {
-                    const name = data.features[0].properties.name;
-                    let text = document.getElementById("map_text");
-                    text.textContent = '현재 클릭한 곳은 ' + name + ' 입니다.';
-                })
-                .catch(error => console.error('Error fetching feature info:', error));
-        }
+
+        // 데이터 요청
+        fetch(url1)
+            .then(response => response.json())  // JSON 형식으로 응답을 처리
+            .then(data => {
+                const properties = data.features.map(feature => feature.properties);
+                console.log(properties);
+                const name = data.features.map(feature => feature.properties.adm_nm);
+                console.log("이름 : "+name);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);  // 에러 처리
+            });
     });
 });
 
