@@ -48,7 +48,7 @@
             <td th:text="${list.title}"></td>
             <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(list.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(list.createdAt, 'HH:mm')} : ${#temporals.format(list.createdAt, 'yyyy-MM-dd')}"></td>
             <td th:text="${list.author}"></td>
-            <td th:text="${#strings.equals(list.endYn, 'Y') ? '분석 종료' : '분석 신청'}"></td>
+            <td th:text="${#strings.equals(list.completedYn, 'Y') ? '분석 종료' : '분석 신청'}"></td>
           </tr>
         </th:block>
         </tbody>
@@ -111,10 +111,10 @@
       let applied = 0;
 
       applyList.forEach(function(item) {
-        if (item.endYn === 'Y') {
+        if (item.completedYn === 'Y') {
           completed++;
         }
-        if (item.endYn === 'N') {
+        if (item.completedYn === 'N') {
           applied++;
         }
       });

@@ -5,14 +5,13 @@ import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.*;
 import edu.du.project2.repository.ApplyRepository;
 import edu.du.project2.repository.MemberRepository;
-import edu.du.project2.repository.QnARepository;
-import edu.du.project2.repository.QnA_ListRepository;
+import edu.du.project2.repository.QnaListRepository;
+import edu.du.project2.repository.QnaRepository;
 import edu.du.project2.service.ApplyService;
-import edu.du.project2.service.FAQService;
+import edu.du.project2.service.FaqService;
 import edu.du.project2.service.NoticeService;
-import edu.du.project2.service.QnAService;
+import edu.du.project2.service.QnaService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -34,11 +33,11 @@ import java.util.Map;
 public class AdminController {
 
     private final NoticeService noticeService;
-    private final QnA_ListRepository qnAListRepository;
+    private final QnaListRepository qnAListRepository;
     private final MemberRepository memberRepository;
-    private final QnARepository qnARepository;
-    private final QnAService qnAService;
-    private final FAQService faqService;
+    private final QnaRepository qnARepository;
+    private final QnaService qnAService;
+    private final FaqService faqService;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
@@ -68,8 +67,8 @@ public class AdminController {
 
     @GetMapping("/admin_qna")
     public String qnaList(Model model) {
-        List<QnA> qna = qnARepository.findAll();
-        List<QnAList> qnALists = qnAListRepository.findAll();
+        List<Qna> qna = qnARepository.findAll();
+        List<QnaList> qnALists = qnAListRepository.findAll();
         List<Member> members = memberRepository.findAll();
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("now", now);
@@ -83,7 +82,7 @@ public class AdminController {
     public String qnaDetail(@RequestParam("id") Long id, Model model) {
         model.addAttribute("qna", qnAService.getInquiryDetail(id));
         model.addAttribute("lists", qnAService.getInquiryReplies(id));
-        QnAList qnAList = qnAService.getInquiryDetail(id);
+        QnaList qnAList = qnAService.getInquiryDetail(id);
         Member member = memberRepository.findById(qnAList.getUid()).get();
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("now", now);
@@ -92,7 +91,7 @@ public class AdminController {
     }
 
     @PostMapping("/admin/inquiryInsert")
-    public String qnaInsert(@ModelAttribute QnAList list,
+    public String qnaInsert(@ModelAttribute QnaList list,
                             @RequestParam String content,
                             HttpSession session) {
         qnAService.insertInquiry(list, content, session);
@@ -103,13 +102,13 @@ public class AdminController {
     public String answerInsert(@RequestParam String content,
                                @RequestParam String role,
                                @RequestParam Long id) {
-        qnAService.insertAnswer(content, role, id);
+        qnAService.addAnswer(content, role, id);
         return "redirect:/admin/admin_qnaDetail?id=" + id;
     }
 
     @PostMapping("/admin/end/{id}")
     public String end(@PathVariable Long id, Model model) {
-        QnAList qnAList = qnAListRepository.findById(id).get();
+        QnaList qnAList = qnAListRepository.findById(id).get();
         qnAList.setEndYn('Y');
         qnAListRepository.save(qnAList);
         MessageDto message = new MessageDto("문의를 종료하였습니다.", "/admin_qna", RequestMethod.GET, null);
@@ -175,17 +174,17 @@ public class AdminController {
 
     @GetMapping("/admin_faq")
     public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<FaQ> lists = faqService.getFAQs(pageable);
+        Page<Faq> lists = faqService.getAllFAQs(pageable);
         model.addAttribute("faqs", lists);
         return "/admin/admin_faq";
     }
 
     @GetMapping("/admin/admin_faqDetail")
     public String faqDetail(@RequestParam Long id, Model model) {
-        FaQ faQ = faqService.faqDetail(id);
+        Faq faq = faqService.faqDetail(id);
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("now", now);
-        model.addAttribute("faq", faQ);
+        model.addAttribute("faq", faq);
         return "/admin/admin_faqDetail";
     }
 
