@@ -591,6 +591,10 @@
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">인구</span>
             <ul class="submenu">
               <li class="check-item">
+                <span class="submenu-item">모든 연령대</span>
+                <input type="checkbox" id="gwangju_population_all">
+              </li>
+              <li class="check-item">
                 <span class="submenu-item">초등학생</span>
                 <input type="checkbox" id="gwangju_population_10c">
               </li>
@@ -634,21 +638,17 @@
                 <span class="submenu-item">90대</span>
                 <input type="checkbox" id="gwangju_population_90y">
               </li>
-              <li class="check-item">
-                <span class="submenu-item">전체</span>
-                <input type="checkbox" id="gwangju_population_all">
-              </li>
             </ul>
           </li>
           <li>
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">기본 레이어</span>
             <ul class="submenu">
               <li class="check-item">
-                <span class="submenu-item">동별</span>
+                <span class="submenu-item">광주 동</span>
                 <input type="checkbox" id="gwangju_dong">
               </li>
               <li class="check-item">
-                <span class="submenu-item">구별</span>
+                <span class="submenu-item">광주 구</span>
                 <input type="checkbox" id="gwangju_gu">
               </li>
             </ul>
@@ -860,8 +860,8 @@
       <div class="check-layer" id="check-layer">
         <!-- 레이어 헤더 -->
         <div class="layer-header" id="layer-header">
-          <span>레이어 우선순위</span> <!-- 제목 -->
-          <button class="cancel-button" id="layer-cancel"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>
+          <span>레이어 리스트</span> <!-- 제목 -->
+          <button class="cancel-button" id="layer-cancel"><img class="cancel-image" src="/images/icons8-취소.svg"></button>
         </div>
         <div class="layer-content">
           <!-- 드래그 가능한 체크박스 리스트 -->
@@ -869,9 +869,6 @@
 <!--            <li draggable="true" id="cancel-layer"><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"><label for="option3">공공와이파이</label><button class="cancel-layer" id="cancel-layer"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>-->
 <!--            <li draggable="true"><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"><label for="option4">무더위 그늘막</label><button class="cancel-layer" id="cancel-layer"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>-->
           </ul>
-          <div class="layer-content-footer">
-            <button>입지분석</button>
-          </div>
         </div>
       </div>
       <div class="overlay-button-container">
@@ -884,8 +881,6 @@
 </div>
 <script th:src="@{/js/map.js}"></script>
 <!--<script src="/js/mapOptionLayer.js"></script>-->
-<div class="footers"></div> <!-- 이거 지우면 안됨 -->
-<th:block th:replace="/layout/footer :: footerLayout"></th:block>
 <script src="/js/mapOptionLayer.js"></script>
 </body>
 </html>
