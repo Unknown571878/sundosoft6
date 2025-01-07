@@ -25,7 +25,17 @@
           <input class="layer-search" id="layer-search" type="text" placeholder="검색..."> <!-- 검색창 -->
           <ul class="search-list" id="search-list"></ul>
         </div>
-        <ul>
+        <div class="menu-category">
+          <h1>카테고리</h1>
+          <div class="category-button" id="category-button">
+            <button id="category-all">전체</button>
+            <button id="category-library">도서관</button>
+            <button id="category-wifi">공공와이파이</button>
+            <button id="category-issuingMachine">무인발급기</button>
+            <button id="category-shade">무더위그늘막</button>
+          </div>
+        </div>
+        <ul class="submenu-list" id="submenu-list">
           <li>
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">수치지도</span> <!-- 메인 메뉴 -->
             <ul class="submenu"> <!-- 서브메뉴 리스트 -->
@@ -653,7 +663,7 @@
               </li>
             </ul>
           </li>
-          <li>
+          <li id="library">
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">도서관</span>
             <ul class="submenu">
               <li class="check-item">
@@ -854,7 +864,6 @@
               </li>
             </ul>
           </li>
-
         </ul>
       </div>
       <div class="check-layer" id="check-layer">
