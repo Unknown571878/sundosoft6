@@ -32,11 +32,12 @@ public class NoticeController {
     @GetMapping("/noticeList")
     public String getNoticeList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
-        Page<Notice> noticePage = PagingUtils.createPage(notices, pageable);
-
-        model.addAttribute("notices", noticePage); // 공지사항 리스트를 페이징 처리 후 모델에 추가
-        model.addAttribute("totalNotices", notices.size()); // 총 공지사항 개수
-        model.addAttribute("now", getCurrentTime()); // 현재 시간
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min(start + pageable.getPageSize(), notices.size());
+        final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
+        model.addAttribute("notices", notices.size());
+        model.addAttribute("now", getCurrentTime());
+        model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
         return "notice/list";
     }
 
