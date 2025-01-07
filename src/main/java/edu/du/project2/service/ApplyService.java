@@ -25,7 +25,7 @@ import java.util.List;
 @Service
 public class ApplyService {
     private final ApplyRepository applyRepository;
-    private static final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
+    private final FileService fileService;
 
     // 모든 입지 분석 신청서를 생성일시 내림차순으로 정렬.
     public List<Apply> findAll() {
@@ -66,7 +66,7 @@ public class ApplyService {
         Apply apply = buildApply(author, title, content);
 
         if (files != null && files.length > 0) {
-            List<FileDetail> fileDetails = processFiles(files);
+            List<FileDetail> fileDetails = fileService.uploadFiles(files);
             apply.setFiles(fileDetails);
         }
 
@@ -101,28 +101,5 @@ public class ApplyService {
                 .completedYn('N')
                 .createdAt(LocalDateTime.now())
                 .build();
-    }
-
-    // 파일 처리 로직 분리
-    private List<FileDetail> processFiles(MultipartFile[] files) throws IOException {
-        Path uploadPath = Paths.get(UPLOAD_DIR);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectory(uploadPath);
-        }
-
-        List<FileDetail> fileDetails = new ArrayList<>();
-        for (MultipartFile file : files) {
-            if (!file.isEmpty()) {
-                String originalFilename = file.getOriginalFilename();
-                if (originalFilename == null || originalFilename.isEmpty()) {
-                    throw new IllegalArgumentException("유효하지 않은 파일 이름입니다.");
-                }
-
-                Path filePath = Paths.get(UPLOAD_DIR, originalFilename);
-                file.transferTo(filePath.toFile());
-                fileDetails.add(new FileDetail("/uploads/" + originalFilename, originalFilename));
-            }
-        }
-        return fileDetails;
     }
 }

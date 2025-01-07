@@ -3,6 +3,7 @@ package edu.du.project2.controller;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.service.NoticeService;
+import edu.du.project2.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,40 +19,48 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * 공지사항 관련 요청을 처리하는 컨트롤러.
+ */
 @Controller
 @RequiredArgsConstructor
 public class NoticeController {
 
     private final NoticeService noticeService;
 
+    // 공지사항 목록 페이지를 반환합니다.
     @GetMapping("/noticeList")
-    public String noticeList(Model model,
-                             @PageableDefault(page = 0, size = 10) Pageable pageable) {
+    public String getNoticeList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
-        LocalDateTime now = LocalDateTime.now();
-        final int start = (int) pageable.getOffset();
-        final int end = Math.min(start + pageable.getPageSize(), notices.size());
-        final Page<Notice> page = new PageImpl<>(notices.subList(start, end), pageable, notices.size());
-        long totalNotices = noticeService.getTotalNotices();
-        model.addAttribute("notices", totalNotices);
-        model.addAttribute("now", now);
-        model.addAttribute("list", page); // 게시글 목록을 페이지 형식으로 모델에 추가
+        Page<Notice> noticePage = PagingUtils.createPage(notices, pageable);
+
+        model.addAttribute("notices", noticePage); // 공지사항 리스트를 페이징 처리 후 모델에 추가
+        model.addAttribute("totalNotices", notices.size()); // 총 공지사항 개수
+        model.addAttribute("now", getCurrentTime()); // 현재 시간
         return "notice/list";
     }
 
-    // 컨트롤러 계층
+    // 공지사항 상세 페이지를 반환합니다.
     @GetMapping("/noticeDetail")
-    public String noticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
-        Notice notice = noticeService.selectNoticeDetail(id,true);  // 조회수 증가 처리가 서비스에서만 발생
-        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        LocalDateTime now = LocalDateTime.now();
+    public String getNoticeDetail(@RequestParam Long id, Model model, HttpSession session) throws Exception {
+        Notice notice = noticeService.getNoticeDetail(id, true); // 조회수 증가
+        AuthInfo authInfo = getAuthInfo(session);
+
         if (authInfo != null) {
-            model.addAttribute("authInfo", authInfo); // 템플릿에서 접근 가능하도록 모델에 추가
+            model.addAttribute("authInfo", authInfo);
         }
-        model.addAttribute("notice", notice);
-        model.addAttribute("now", now);
-        return "notice/detail";  // 일반 사용자 페이지
+        model.addAttribute("notice", notice); // 공지사항 정보
+        model.addAttribute("now", getCurrentTime()); // 현재 시간
+        return "notice/detail";
     }
 
+    // 세션에서 AuthInfo 객체를 가져옵니다.
+    private AuthInfo getAuthInfo(HttpSession session) {
+        return (AuthInfo) session.getAttribute("authInfo");
+    }
 
+    // 현재 시간을 반환합니다.
+    private LocalDateTime getCurrentTime() {
+        return LocalDateTime.now();
+    }
 }

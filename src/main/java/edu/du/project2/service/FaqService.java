@@ -2,6 +2,7 @@ package edu.du.project2.service;
 
 import edu.du.project2.entity.Faq;
 import edu.du.project2.repository.FaqRepository;
+import edu.du.project2.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,13 +23,13 @@ public class FaqService {
     // 모든 FAQ를 페이징 처리하여 반환합니다.
     public Page<Faq> getAllFAQs(Pageable pageable) {
         List<Faq> list = faqRepository.findAll();
-        return createPage(list, pageable);
+        return PagingUtils.createPage(list, pageable);
     }
 
     // 삭제되지 않은 FAQ를 페이징 처리하여 반환합니다.
     public Page<Faq> getActiveFAQs(Pageable pageable) {
         List<Faq> list = faqRepository.findAllByDeletedYn('N');
-        return createPage(list, pageable);
+        return PagingUtils.createPage(list, pageable);
     }
 
     // 삭제되지 않은 FAQ 리스트를 반환합니다.
@@ -61,13 +62,6 @@ public class FaqService {
         faq.setQuestion(question);
         faq.setAnswer(answer);
         faqRepository.save(faq);
-    }
-
-    // FAQ 리스트를 페이징 처리합니다.
-    private Page<Faq> createPage(List<Faq> list, Pageable pageable) {
-        int start = (int) pageable.getOffset();
-        int end = Math.min(start + pageable.getPageSize(), list.size());
-        return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 
     // FAQ 객체를 생성합니다.

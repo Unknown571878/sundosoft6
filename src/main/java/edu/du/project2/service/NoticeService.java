@@ -1,6 +1,5 @@
 package edu.du.project2.service;
 
-
 import edu.du.project2.entity.FileDetail;
 import edu.du.project2.entity.Notice;
 import edu.du.project2.repository.NoticeRepository;
@@ -22,82 +21,62 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 공지사항 관련 비즈니스 로직을 처리하는 서비스.
+ */
 @Service
 @RequiredArgsConstructor
 public class NoticeService {
     private final NoticeRepository noticeRepository;
+    private final FileService fileService;
 
+    // 모든 공지사항을 생성일시 기준 내림차순으로 반환합니다.
     public List<Notice> getAllNotices() {
         return noticeRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
     }
 
-    public Long getTotalNotices() {
-        return noticeRepository.count();
-    }
-
-    // 파일 업로드 경로 설정
-    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
-
+    // 새로운 공지사항을 생성합니다.
     public void createNotice(String title, String content, MultipartFile[] files) throws IOException {
-        Notice notice = new Notice();
-        notice.setTitle(title);
-        notice.setContent(content);
-        notice.setHits(0);  // 초기 조회수 0
-        notice.setCreatedAt(LocalDateTime.now());  // 생성일시 현재 시간으로 설정
+        Notice notice = Notice.builder()
+                .title(title)
+                .content(content)
+                .hits(0) // 조회수 초기값
+                .createdAt(LocalDateTime.now())
+                .build();
 
         // 파일 업로드 처리
-        if (files != null && files.length > 0) {
-            Path uploadPath = Paths.get(UPLOAD_DIR);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);   // 디렉토리가 없으면 생성
-            }
+        List<FileDetail> fileDetails = fileService.uploadFiles(files);
+        notice.setFiles(fileDetails);
 
-            List<FileDetail> fileDetails = new ArrayList<>(); // 파일 정보 리스트 생성
-
-            for (MultipartFile file : files) {
-                if (!file.isEmpty()) {
-                    // 원본 파일 이름에서 확장자 추출
-                    String originalFilename = file.getOriginalFilename();
-
-                    if (originalFilename == null || originalFilename.isEmpty()) {
-                        throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
-                    }
-
-                    Path filePath = Paths.get(UPLOAD_DIR, originalFilename);
-
-                    // 파일을 지정된 경로에 저장
-                    file.transferTo(filePath.toFile());
-
-                    // 파일 경로 및 이름 객체 생성
-                    FileDetail fileDetail = new FileDetail("/uploads/" + originalFilename,originalFilename);
-                    fileDetails.add(fileDetail);
-                }
-            }
-            // 공지사항에 파일 정보 추가
-            notice.setFiles(fileDetails);
-        }
-        // 공지사항 저장
         noticeRepository.save(notice);
     }
 
     // 특정 게시글을 조회하고, 조회수 증가 여부를 설정하여 게시글 반환
+    // 수정 전 메서드 명: selectNoticeDetail
     @Transactional
-    public Notice selectNoticeDetail(Long id, boolean increaseHitCount) throws Exception{
-        noticeRepository.selectNoticeDetail(id); // 게시글 조회
+    public Notice getNoticeDetail(Long id, boolean increaseHitCount) {
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("공지사항을 찾을 수 없습니다. ID: " + id));
+
         if (increaseHitCount) {
-            noticeRepository.updateHitCount(id);
+            notice.setHits(notice.getHits() + 1);
+            noticeRepository.save(notice);
         }
-        return noticeRepository.selectNoticeDetail(id);
-    }
-    @Transactional
-    public void updateNotice(Notice notice) {
-        Notice updateNotice = noticeRepository.findById(notice.getId())
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        updateNotice.setTitle(notice.getTitle()); // 제목 수정
-        updateNotice.setContent(notice.getContent()); // 내용 수정
-        noticeRepository.save(updateNotice);  // 수정된 공지사항 저장
+
+        return notice;
     }
 
+    // 공지사항을 수정합니다.
+    @Transactional
+    public void updateNotice(Notice notice) {
+        Notice existingNotice = noticeRepository.findById(notice.getId())
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+        existingNotice.setTitle(notice.getTitle()); // 제목 수정
+        existingNotice.setContent(notice.getContent()); // 내용 수정
+        noticeRepository.save(existingNotice);  // 수정된 공지사항 저장
+    }
+
+    // 특정 공지사항을 삭제합니다.
     @Transactional
     public void deleteNotice(Long id) {
         noticeRepository.deleteById(id);
