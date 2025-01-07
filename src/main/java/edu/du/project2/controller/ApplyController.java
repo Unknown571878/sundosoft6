@@ -4,6 +4,7 @@ import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.Apply;
 import edu.du.project2.service.ApplyService;
+import edu.du.project2.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -36,7 +37,8 @@ public class ApplyController {
     // 신청서 목록 페이지를 반환
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<Apply> page = getPagedApplies(pageable);
+        List<Apply> applies = applyService.findAll();
+        Page<Apply> page = PagingUtils.createPage(applies, pageable);
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", page);
         return "map/apply_list";
@@ -98,13 +100,5 @@ public class ApplyController {
     public String delete(@RequestParam Long id){
         applyService.deleteApply(id);
         return "redirect:/analysis";
-    }
-
-    // 페이징 처리 로직 분리
-    private Page<Apply> getPagedApplies(Pageable pageable) {
-        List<Apply> applies = applyService.findAll();
-        int start = (int) pageable.getOffset();
-        int end = Math.min(start + pageable.getPageSize(), applies.size());
-        return new PageImpl<>(applies.subList(start, end), pageable, applies.size());
     }
 }
