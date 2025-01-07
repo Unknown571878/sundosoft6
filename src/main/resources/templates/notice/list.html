@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <h1 class="count" th:text="'총 '+${notices}+'건'"></h1>
+            <h1 class="count" th:text="'총 '+${totalNotices}+'건'"></h1>
 
             <table class="post-table">
                 <thead>
@@ -38,7 +38,7 @@
                 </thead>
                 <tbody class="post-tbody-tr1">
                 <!-- 공지사항 목록을 반복문으로 출력 -->
-                <th:block th:each="notice : ${list.content}">
+                <th:block th:each="notice : ${notices.content}">
                     <tr class="tr-click table--row" th:id="${notice.id}">
                         <!-- 공지사항 번호 출력 -->
                         <td th:text="${notice.id}"></td>
@@ -60,9 +60,9 @@
             <a th:if="${session.authInfo != null and session.authInfo.role == 'ADMIN'}" th:href="@{/admin}" class="write-button">뒤로가기</a>
 
             <!-- 페이징 -->
-            <div th:if="${!list.isEmpty()}" class="text-center">
+            <div th:if="${!notices.isEmpty()}" class="text-center">
                 <!-- 전역 변수 선언 -->
-                <nav th:with="pageNumber = ${list.pageable.pageNumber}, pageSize = ${list.pageable.pageSize}, totalPages = ${list.totalPages}, startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1}, tempEndPage = ${startPage + pageSize - 1}, endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+                <nav th:with="pageNumber = ${notices.pageable.pageNumber}, pageSize = ${notices.pageable.pageSize}, totalPages = ${notices.totalPages}, startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1}, tempEndPage = ${startPage + pageSize - 1}, endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
                      aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
 
@@ -74,8 +74,8 @@
                         </li>
 
                         <!-- 이전 페이지로 이동 버튼 -->
-                        <li th:classappend="${list.first} ? 'disabled'" class="page-item">
-                            <a class="page-link" th:href="${list.first} ? '#' : @{/noticeList(page=${pageNumber - 1})}" aria-label="Previous">
+                        <li th:classappend="${notices.first} ? 'disabled'" class="page-item">
+                            <a class="page-link" th:href="${notices.first} ? '#' : @{/noticeList(page=${pageNumber - 1})}" aria-label="Previous">
                                 <span aria-hidden="true">&lt;</span>
                             </a>
                         </li>
@@ -88,8 +88,8 @@
 
 
                         <!-- 다음 페이지로 이동 버튼 -->
-                        <li th:classappend="${list.last} ? 'disabled'" class="page-item">
-                            <a class="page-link" th:href="${list.last} ? '#' : @{/noticeList(page=${pageNumber + 1})}" aria-label="Next">
+                        <li th:classappend="${notices.last} ? 'disabled'" class="page-item">
+                            <a class="page-link" th:href="${notices.last} ? '#' : @{/noticeList(page=${pageNumber + 1})}" aria-label="Next">
                                 <span aria-hidden="true">&gt;</span>
                             </a>
                         </li>

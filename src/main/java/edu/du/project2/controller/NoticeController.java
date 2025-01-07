@@ -34,7 +34,7 @@ public class NoticeController {
         List<Notice> notices = noticeService.getAllNotices();
         Page<Notice> noticePage = PagingUtils.createPage(notices, pageable);
 
-        model.addAttribute("list", noticePage); // 공지사항 리스트를 페이징 처리 후 모델에 추가
+        model.addAttribute("notices", noticePage); // 공지사항 리스트를 페이징 처리 후 모델에 추가
         model.addAttribute("totalNotices", notices.size()); // 총 공지사항 개수
         model.addAttribute("now", getCurrentTime()); // 현재 시간
         return "notice/list";
