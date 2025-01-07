@@ -122,28 +122,6 @@ td, th {
     color: #555; /* 텍스트 색상 */
 }
 
-/* 작성 버튼 스타일 */
-.write-button {
-    display: inline-block; /* 인라인 블록 */
-    color: black; /* 기본 텍스트 색상 */
-    text-decoration: none; /* 밑줄 제거 */
-    font-weight: bold; /* 글자 두껍게 */
-    font-size: 14px; /* 텍스트 크기 */
-    background-color: transparent; /* 기본 배경 투명 */
-    padding: 5px 8px; /* 내부 여백 */
-    width: 70px;
-    border: none; /* 테두리 제거 */
-    border-radius: 50px; /* 둥근 테두리 */
-    position: relative; /* 상대 위치 */
-    left: 94%; /* 오른쪽 정렬 */
-}
-
-.write-button:hover {
-    background-color: #070719; /* 호버 시 배경색 변경 */
-    color: #fff; /* 호버 시 텍스트 색상 변경 */
-    width: 70px;
-}
-
 /* 링크 스타일 */
 a {
     color: black; /* 기본 링크 색상 */

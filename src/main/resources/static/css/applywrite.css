@@ -1,14 +1,15 @@
-/* 기본 설정 */
-html{
-    height: 100%;
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+/* 기본 스타일 */
+html, body {
+    height: 100%; /* 문서와 뷰포트의 높이를 100%로 설정 */
+    margin: 0; /* 기본 여백 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    font-family: 'Noto Sans KR', sans-serif; /* Noto Sans KR 폰트 적용 */
+    background-color: white; /* 배경색 설정 */
 }
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
+
 .insert-form{
     height: 100%;
 }
@@ -18,9 +19,9 @@ body {
     max-width: 800px; /* 폼의 최대 넓이 */
     margin: 50px auto; /* 화면 중앙 정렬 */
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
+    background-color: #fff; /* 배경색 설정 */
+    border-radius: 8px; /* 둥근 모서리 */
+    border: 1px solid #ddd; /* 연한 회색 테두리 */
 }
 
 /* 제목 스타일 */
