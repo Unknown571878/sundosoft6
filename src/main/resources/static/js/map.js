@@ -2,6 +2,30 @@ const draggableList = document.getElementById('draggable-checkbox-list'); // 드
 let draggedItem = null; // 드래그 중인 항목
 let placeholder = null; // 플레이스홀더 요소
 let layer_list = [];
+const categoryButton = document.querySelectorAll('#category-button button');
+const submenuList = document.querySelectorAll('#submenu-list li');
+
+// 각 버튼에 클릭 이벤트 추가
+categoryButton.forEach((button) => {
+    button.addEventListener('click', () => {
+        const category = button.id.replace('category-', '');
+
+        if (category === 'all') {
+            // "전체" 버튼 클릭 시 모든 li 표시
+            submenuList.forEach((li) => li.classList.remove('hidden'));
+        } else {
+            // 모든 li 숨기기
+            submenuList.forEach((li) => {
+                console.log(category);
+                if (li.id === category) {
+                    li.classList.remove('hidden'); // 선택된 카테고리는 표시
+                } else {
+                    li.classList.add('hidden'); // 나머지는 숨기기
+                }
+            });
+        }
+    });
+});
 
 // 드래그 앤 드롭 이벤트 처리
 draggableList.addEventListener('dragstart', (e) => {

@@ -399,3 +399,58 @@ html, body {
 .layer-header span {
     margin-right: 15px;
 }
+
+/* 카테고리 전체 스타일 */
+.menu-category {
+    padding: 5px;
+    background-color: #f8f9fa; /* 배경색 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}
+
+.menu-category h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center; /* 제목 중앙 정렬 */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+/* 버튼 컨테이너 */
+.category-button {
+    display: flex; /* 수평 정렬 */
+    justify-content: space-between; /* 버튼 사이에 여백 */
+    gap: 10px; /* 버튼 간 간격 */
+    margin-bottom: 10px;
+}
+
+/* 버튼 스타일 */
+.category-button button {
+    flex: 1; /* 버튼 크기를 균등하게 */
+    /*width: 20px;*/
+    /*height: 20px;*/
+    color: #fff; /* 텍스트 흰색 */
+    background-color: #007bff; /* 기본 색상 (파란색) */
+    border: none;
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* 버튼 호버 효과 */
+.category-button button:hover {
+    transform: translateY(-2px); /* 살짝 떠오르는 효과 */
+}
+
+/* 버튼 활성화 효과 */
+.category-button button:active {
+    transform: translateY(0); /* 원래 위치로 */
+}
+
+.submenu-list li {
+    display: list-item; /* 기본적으로 모두 보이게 설정 */
+}
+
+.submenu-list li.hidden {
+    display: none; /* 숨겨야 할 항목에만 적용 */
+}
