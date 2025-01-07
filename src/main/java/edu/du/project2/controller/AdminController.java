@@ -36,7 +36,7 @@ public class AdminController {
     private final QnaListRepository qnAListRepository;
     private final MemberRepository memberRepository;
     private final QnaRepository qnARepository;
-    private final QnaService qnAService;
+    private final QnaService qnaService;
     private final FaqService faqService;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
@@ -80,9 +80,9 @@ public class AdminController {
 
     @GetMapping("/admin/admin_qnaDetail")
     public String qnaDetail(@RequestParam("id") Long id, Model model) {
-        model.addAttribute("qna", qnAService.getInquiryDetail(id));
-        model.addAttribute("lists", qnAService.getInquiryReplies(id));
-        QnaList qnAList = qnAService.getInquiryDetail(id);
+        model.addAttribute("qna", qnaService.getInquiryDetail(id));
+        model.addAttribute("lists", qnaService.getInquiryReplies(id));
+        QnaList qnAList = qnaService.getInquiryDetail(id);
         Member member = memberRepository.findById(qnAList.getUid()).get();
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("now", now);
@@ -94,7 +94,7 @@ public class AdminController {
     public String qnaInsert(@ModelAttribute QnaList list,
                             @RequestParam String content,
                             HttpSession session) {
-        qnAService.insertInquiry(list, content, session);
+        qnaService.createInquiry(list, content, session);
         return "redirect:/admin/admin_qnaDetail";
     }
 
@@ -102,7 +102,7 @@ public class AdminController {
     public String answerInsert(@RequestParam String content,
                                @RequestParam String role,
                                @RequestParam Long id) {
-        qnAService.addAnswer(content, role, id);
+        qnaService.addAnswer(content, role, id);
         return "redirect:/admin/admin_qnaDetail?id=" + id;
     }
 
