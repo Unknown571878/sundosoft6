@@ -1,52 +1,68 @@
-/* 공통 스타일 */
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-html {
-    height: 100%;
+/* 기본 스타일 */
+html, body {
+    height: 100%; /* 문서와 뷰포트의 높이를 100%로 설정 */
+    margin: 0; /* 기본 여백 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    font-family: 'Noto Sans KR', sans-serif; /* Noto Sans KR 폰트 적용 */
+    background-color: white; /* 배경색 설정 */
 }
 
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
+/* 제목 스타일 */
 h1 {
     text-align: left;
     font-size: 2em;
     color: #333;
+    margin-bottom: 20px;
 }
+
+/* 구분선 */
 .split--div-post {
-    min-width: 1100px;
     height: 2px;
     background-color: gray;
-    margin: 20px 0 50px;
+    /*margin: 10px 0;*/
 }
 
 .main-title {
-    width: 80%;
+    width: 100%;
     margin: 20px auto;
 }
+
+/* 메인 컨테이너 */
+.main-container {
+    max-width: 1000px; /* 폼의 최대 넓이 */
+    margin: 50px auto; /* 화면 중앙 정렬 */
+    padding: 20px;
+    background-color: #fff; /* 배경색 설정 */
+    /*border-radius: 8px; !* 둥근 모서리 *!*/
+    /*border: 1px solid #ddd; !* 연한 회색 테두리 *!*/
+}
+
+/* 테이블 스타일 */
 .board_detail {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: collapse; /* 테두리 겹침 제거 */
+    border: 1px solid #ddd; /* 테이블 전체 테두리 */
+    border-radius: 8px; /* 테이블 둥근 테두리 */
+    overflow: hidden; /* 테두리 넘치지 않도록 설정 */
 }
 
-.board_detail td {
-    padding: 10px;
-    vertical-align: middle;
+/* 테이블의 셀 스타일 */
+.board_detail th, .board_detail td {
+    border: 1px solid #ddd; /* 각 셀에 테두리 추가 */
+    padding: 10px; /* 셀 내부 여백 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    vertical-align: middle; /* 수직 중앙 정렬 */
+    background-color: #fff; /* 셀 배경색 */
 }
 
-/* 라벨 스타일 */
-.board_detail label {
-    font-size: 16px;
-    color: #333;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
+/* 헤더 스타일 */
+.board_detail th {
+    background-color: #f7f7f7; /* 헤더 셀 배경색 */
+    font-weight: bold; /* 헤더 텍스트 굵게 */
+    text-align: center; /* 헤더 가운데 정렬 */
 }
 
 /* 입력 필드 스타일 */
@@ -69,49 +85,14 @@ h1 {
 
 /* 텍스트 영역 스타일 */
 .board_detail textarea {
-    min-height: 200px;
-    resize: vertical;
+    min-height: 400px;
+    resize: vertical; /* 크기 조정 가능 */
 }
 
-
-/* 제출 버튼 스타일 */
-.container .btn {
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 12px 25px;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-/* 제출 버튼 hover */
-.container .btn:hover {
-    background-color: #0056b3;
-}
-
-/* 제출 버튼 클릭 시 활성화 상태 */
-.container .btn:active {
-    background-color: #004085;
-}
-
-
-/* 기본적인 입력 필드 포커스 효과 */
-input[type="text"]:focus,
-textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    outline: none;
-}
-
-/* 버튼들을 가로로 나열할 컨테이너 */
+/* 버튼 그룹 스타일 */
 .button-group {
     display: flex;           /* Flexbox로 가로 정렬 */
-    justify-content: flex-start;  /* 버튼들을 왼쪽 정렬 (필요에 따라 center로 수정 가능) */
+    justify-content: flex-end; /* 버튼을 오른쪽 정렬 */
     align-items: center;     /* 버튼들을 세로로 중앙 정렬 */
     gap: 10px;               /* 버튼 간의 간격 설정 */
     margin-top: 20px;        /* 버튼들의 상단 여백 */
@@ -122,8 +103,8 @@ a.mbtn, a.rbtn, a.dbtn {
     text-decoration: none;  /* 기본 밑줄 제거 */
     font-size: 16px;  /* 폰트 크기 */
     font-weight: 600;  /* 폰트 두께 */
-    padding: 10px 20px;  /* 버튼 크기 조정 */
-    border-radius: 5px;  /* 둥근 모서리 */
+    padding: 5px 15px;  /* 버튼 크기 조정 */
+    border-radius: 30px;  /* 둥근 모서리 */
     display: inline-block;  /* 한 줄로 나열되게 설정 */
     text-align: center;  /* 텍스트 가운데 정렬 */
     transition: background-color 0.3s ease, color 0.3s ease;  /* 색상 변화에 부드러운 전환 효과 추가 */
