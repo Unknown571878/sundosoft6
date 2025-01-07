@@ -1,5 +1,7 @@
 package edu.du.project2.controller;
 
+import edu.du.project2.dto.AuthInfo;
+import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.Apply;
 import edu.du.project2.service.ApplyService;
 import edu.du.project2.utils.PagingUtils;
@@ -10,12 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +28,11 @@ import java.util.List;
 @RequestMapping("/analysis")
 public class ApplyController {
     private final ApplyService applyService;
+
+    private String showMessageAndRedirect(final MessageDto params, Model model) {
+        model.addAttribute("params", params);
+        return "/common/messageRedirect";
+    }
 
     // 신청서 목록 페이지를 반환
     @GetMapping("/list")
@@ -51,7 +56,12 @@ public class ApplyController {
 
     // 신청서 작성 페이지를 반환
     @GetMapping("")
-    public String write(){
+    public String write(HttpSession session, Model model) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        if (session.getAttribute("authInfo") == null) {
+            MessageDto message = new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
         return "map/apply_write";
     }
 
