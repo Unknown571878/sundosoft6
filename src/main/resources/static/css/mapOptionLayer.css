@@ -430,8 +430,7 @@ html, body {
     /*width: 20px;*/
     /*height: 20px;*/
     color: #fff; /* 텍스트 흰색 */
-    background-color: #007bff; /* 기본 색상 (파란색) */
-    border: none;
+    background-color: #ffffff; /* 기본 색상 (파란색) */
     border-radius: 5px; /* 버튼 모서리 둥글게 */
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;

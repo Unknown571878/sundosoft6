@@ -9,14 +9,12 @@ const submenuList = document.querySelectorAll('#submenu-list li');
 categoryButton.forEach((button) => {
     button.addEventListener('click', () => {
         const category = button.id.replace('category-', '');
-
         if (category === 'all') {
             // "전체" 버튼 클릭 시 모든 li 표시
             submenuList.forEach((li) => li.classList.remove('hidden'));
         } else {
             // 모든 li 숨기기
             submenuList.forEach((li) => {
-                console.log(category);
                 if (li.id === category) {
                     li.classList.remove('hidden'); // 선택된 카테고리는 표시
                 } else {
