@@ -29,7 +29,6 @@ html, body {
 
 /* 레이어 헤더 스타일 */
 .main-map {
-    padding: 10px; /* 내부 여백 */
     background-color: #f1f1f1; /* 배경 색상 */
     border-bottom: 1px solid #ddd; /* 아래쪽 테두리 */
     border-top-left-radius: 10px; /* 왼쪽 상단 모서리 둥글게 */
@@ -39,11 +38,6 @@ html, body {
 /* 드래그 중 커서 스타일 */
 .main-map .layer-header:active {
     cursor: grabbing; /* 드래그 중 커서 스타일 */
-}
-
-/* 레이어 콘텐츠 스타일 */
-.main-map {
-    padding: 20px; /* 내부 여백 */
 }
 
 /* 드래그 가능한 리스트 스타일 */
@@ -99,36 +93,8 @@ html, body {
 .layer-content {
     overflow-y: auto; /* 세로 스크롤 활성화 */
     max-height: calc(100% - 60px); /* 푸터를 제외한 영역에 맞게 스크롤 영역 설정 */
-    padding: 20px 20px 60px 20px; /* 푸터와 콘텐츠 간 공간 확보 */
+    padding: 10px; /* 푸터와 콘텐츠 간 공간 확보 */
     box-sizing: border-box; /* 패딩 포함 크기 계산 */
-}
-
-/* 푸터 고정 */
-.layer-content-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f4f4f4; /* 푸터 배경색 */
-    text-align: center;
-    padding: 10px;
-    border-top: 1px solid #ddd; /* 상단 테두리 */
-    box-sizing: border-box; /* 패딩 포함 크기 계산 */
-    border-radius: 0 0 10px 10px; /* 아래쪽 모서리 둥글게 */
-}
-
-/* 푸터 버튼 스타일 */
-.layer-content-footer button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.layer-content-footer button:hover {
-    background-color: #0056b3;
 }
 
 /* 슬라이드 메뉴 컨테이너 스타일 */
@@ -393,6 +359,7 @@ html, body {
 
 
 .cancel-button {
+    position: relative;
     background-color: transparent;
     border: none;
     color: black;
@@ -411,11 +378,24 @@ html, body {
 }
 
 .layer-header {
-    display: flex;
-    padding: 10px; /* 내부 여백 */
-    background-color: #f1f1f1; /* 배경 색상 */
-    border-bottom: 1px solid #ddd; /* 아래쪽 테두리 */
     border-top-left-radius: 10px; /* 왼쪽 상단 모서리 둥글게 */
     border-top-right-radius: 10px; /* 오른쪽 상단 모서리 둥글게 */
+    display: flex;
+    justify-content: center;
     align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cancel-image {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%); /* 자신의 크기만큼 이동 */
+    width: 20px;
+    height: 20px;
+}
+
+.layer-header span {
+    margin-right: 15px;
 }

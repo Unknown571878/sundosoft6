@@ -13,6 +13,7 @@ draggableList.addEventListener('dragstart', (e) => {
         e.target.parentNode.insertBefore(placeholder, e.target.nextSibling); // 플레이스홀더를 드래그 항목 아래에 추가
     }
 });
+
 draggableList.addEventListener('dragover', (e) => {
     e.preventDefault(); // 기본 동작 방지
     const draggingOverItem = e.target.closest('li'); // 드래그 중인 항목 탐지
@@ -289,10 +290,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const newDragImg = document.createElement("img");
                 newDragImg.setAttribute("src", "/images/icons8-메뉴.svg");
                 newDragImg.setAttribute("style", "width: 20px; height: 20px");
+                newDragImg.setAttribute("draggable", "false");
 
                 // 새로운 label 생성
                 const newLabel = document.createElement("label");
-                newLabel.setAttribute("for", layerInfo.id);
+                newLabel.setAttribute("for", layerInfo.id+'-label');
 
                 var findName = layer_names.find(layer => layer.id === layerInfo.id);
                 // li 태그 텍스트

@@ -13,32 +13,7 @@ draggableList.addEventListener('dragstart', (e) => {
         e.target.parentNode.insertBefore(placeholder, e.target.nextSibling); // 플레이스홀더를 드래그 항목 아래에 추가
     }
 });
-draggableList.addEventListener('dragend', () => {
-    if (draggedItem) { // 드래그 항목이 있을 경우
-        draggedItem.classList.remove('dragging'); // 드래그 중 스타일 제거
-        if (placeholder) { // 플레이스홀더가 존재할 경우
-            placeholder.parentNode.replaceChild(draggedItem, placeholder); // 플레이스홀더를 드래그 항목으로 교체
-            placeholder = null; // 플레이스홀더 제거
-        }
-        draggedItem = null; // 드래그 항목 초기화
 
-        const items = Array.from(draggableList.querySelectorAll('li')); // 모든 li 요소를 배열로 가져오기
-        console.log(items); // 가져온 li 요소를 확인
-
-        console.log('현재 리스트 순서:');
-        layer_list = []; // 배열 초기화 (이전에 저장된 값들을 제거)
-
-        items.forEach((item, index) => {
-            const label = item.querySelector('label'); // li 안의 label 요소 선택
-            const labelText = label.textContent.trim(); // label 텍스트 가져오기
-            const id = item.id.slice(0, -6); // ID에서 _layer 부분 제거
-            console.log(`${index + 1}, ${id}, ${labelText}`); // 순서, id, label 텍스트 출력
-            // 배열에 순서, id, labelText를 객체로 저장
-            layer_list.push({ index: index + 1, id: id, labelText: labelText });
-        });
-        console.log('layer_list:', layer_list); // 최종적으로 저장된 배열 출력
-    }
-});
 draggableList.addEventListener('dragover', (e) => {
     e.preventDefault(); // 기본 동작 방지
     const draggingOverItem = e.target.closest('li'); // 드래그 중인 항목 탐지
@@ -87,7 +62,7 @@ layer_invisible.addEventListener('click', () => {
 });
 
 const layer_names = [
-    { name: '광주 전체', id: 'gwangju_dong' },
+    { name: '광주 동', id: 'gwangju_dong' },
     { name: '광주 구', id: 'gwangju_gu' },
     { name: '초등학생', id: 'gwangju_population_10c' },
     { name: '중학생', id: 'gwangju_population_10j' },
@@ -315,10 +290,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const newDragImg = document.createElement("img");
                 newDragImg.setAttribute("src", "/images/icons8-메뉴.svg");
                 newDragImg.setAttribute("style", "width: 20px; height: 20px");
+                newDragImg.setAttribute("draggable", "false");
 
                 // 새로운 label 생성
                 const newLabel = document.createElement("label");
-                newLabel.setAttribute("for", layerInfo.id);
+                newLabel.setAttribute("for", layerInfo.id+'-label');
 
                 var findName = layer_names.find(layer => layer.id === layerInfo.id);
                 // li 태그 텍스트
@@ -343,10 +319,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // cancel 버튼 클릭 이벤트 추가
                 newBtn.addEventListener('click', function() {
+                    var searchBox = document.getElementById('search-'+layerInfo.id);
                     // li 태그 삭제
                     newLi.remove();
                     // 체크박스 해제
                     checkbox.checked = false;
+                    searchBox.checked = false;
                     var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
                     wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
 
@@ -368,6 +346,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    draggableList.addEventListener('dragend', () => {
+        if (draggedItem) { // 드래그 항목이 있을 경우
+            draggedItem.classList.remove('dragging'); // 드래그 중 스타일 제거
+            if (placeholder) { // 플레이스홀더가 존재할 경우
+                placeholder.parentNode.replaceChild(draggedItem, placeholder); // 플레이스홀더를 드래그 항목으로 교체
+                placeholder = null; // 플레이스홀더 제거
+            }
+            draggedItem = null; // 드래그 항목 초기화
+
+            const items = Array.from(draggableList.querySelectorAll('li')); // 모든 li 요소를 배열로 가져오기
+            layer_list = []; // 배열 초기화 (이전에 저장된 값들을 제거)
+
+            items.forEach((item, index) => {
+                const label = item.querySelector('label'); // li 안의 label 요소 선택
+                const labelText = label.textContent.trim(); // label 텍스트 가져오기
+                const id = item.id.slice(0, -6); // ID에서 _layer 부분 제거
+                layer_list.push({ index: 1000 - (index * 50), id: "ne:" + id, labelText: labelText });
+            });
+
+            // 현재 맵에 존재하는 레이어를 순회하면서 id가 일치하는 레이어의 zIndex를 수정
+            map.getLayers().getArray().forEach(layer => {
+                const layerId = layer.get('id');
+                const matchingLayer = layer_list.find(item => item.id === layerId);
+
+                if (matchingLayer) {
+                    // 해당 레이어가 layer_list에 존재하면 zIndex 값을 수정
+                    layer.setZIndex(matchingLayer.index);
+                    console.log(`Layer ${layerId} zIndex updated to ${matchingLayer.index}`);
+                }
+            });
+
+            console.log('layer_list:', layer_list); // 최종적으로 저장된 배열 출력
+        }
+    });
+
+
+
+
+
     // 왼쪽 체크박스에 대해 이벤트 리스너 추가
     layers.forEach(function(layerInfo) {
         var checkbox = document.getElementById(layerInfo.id);
@@ -376,10 +393,9 @@ document.addEventListener('DOMContentLoaded', function() {
             wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
         });
     });
-
     // WMS 레이어 생성 함수
     function createWmsLayer(layerName, visible) {
-        return new ol.layer.Tile({
+        const layer = new ol.layer.Tile({
             source: new ol.source.TileWMS({
                 url: 'http://localhost:8080/geoserver/ne/wms',  // GeoServer WMS URL
                 params: {
@@ -392,7 +408,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }),
             visible: visible  // 기본적으로 레이어 가시성 설정
         });
-
+        layer.set('id', layerName);  // layerName을 id로 설정
+        return layer;
     }
     // 지도 클릭시
     map.on('click', function (event) {
@@ -441,4 +458,52 @@ function toggleSubmenu(event, element) {
     if (submenu) {
         submenu.classList.toggle('active');
     }
+}
+
+// 검색 입력 필드에 이벤트 리스너 추가
+document.getElementById('layer-search').addEventListener('input', filterList);
+
+function filterList() {
+    const keyword = document.getElementById('layer-search').value.trim().toLowerCase();
+    const searchList = document.getElementById('search-list');
+
+    if (keyword === '') {
+        searchList.style.display = 'none'; // 검색어가 없으면 숨기기
+        searchList.innerHTML = ''; // 리스트 초기화
+        return;
+    }
+
+    searchList.style.display = 'block'; // 검색어가 있으면 표시
+    searchList.innerHTML = ''; // 기존 검색 결과 초기화
+
+    // 입력된 키워드와 일치하는 항목 필터링
+    const filteredItems = layer_names.filter(item => item.name.toLowerCase().includes(keyword));
+
+    filteredItems.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('check-item'); // li에 클래스 추가
+
+        const span = document.createElement('span');
+        span.classList.add('submenu-item');
+        span.textContent = item.name; // 레이어 이름 표시
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = item.id;
+        checkbox.id = 'search-' + item.id;
+        checkbox.checked = document.getElementById(item.id)?.checked || false; // 기존 체크박스 상태 동기화
+
+        listItem.appendChild(span);
+        listItem.appendChild(checkbox);
+        searchList.appendChild(listItem);
+
+        // 기존 체크박스와 동기화
+        checkbox.addEventListener('change', function (event) {
+            const originalCheckbox = document.getElementById(item.id);
+            originalCheckbox.checked = event.target.checked; // 원래 체크박스 상태 동기화
+
+            // 기존 이벤트 트리거
+            originalCheckbox.dispatchEvent(new Event('change'));
+        });
+    });
 }

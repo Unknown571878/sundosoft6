@@ -591,6 +591,10 @@
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">인구</span>
             <ul class="submenu">
               <li class="check-item">
+                <span class="submenu-item">모든 연령대</span>
+                <input type="checkbox" id="gwangju_population_all">
+              </li>
+              <li class="check-item">
                 <span class="submenu-item">초등학생</span>
                 <input type="checkbox" id="gwangju_population_10c">
               </li>
@@ -633,10 +637,6 @@
               <li class="check-item">
                 <span class="submenu-item">90대</span>
                 <input type="checkbox" id="gwangju_population_90y">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">모든 연령대</span>
-                <input type="checkbox" id="gwangju_population_all">
               </li>
             </ul>
           </li>
@@ -860,8 +860,8 @@
       <div class="check-layer" id="check-layer">
         <!-- 레이어 헤더 -->
         <div class="layer-header" id="layer-header">
-          <span>레이어 우선순위</span> <!-- 제목 -->
-          <button class="cancel-button" id="layer-cancel"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px;"></button>
+          <span>레이어 리스트</span> <!-- 제목 -->
+          <button class="cancel-button" id="layer-cancel"><img class="cancel-image" src="/images/icons8-취소.svg"></button>
         </div>
         <div class="layer-content">
           <!-- 드래그 가능한 체크박스 리스트 -->
@@ -869,9 +869,6 @@
 <!--            <li draggable="true" id="cancel-layer"><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"><label for="option3">공공와이파이</label><button class="cancel-layer" id="cancel-layer"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>-->
 <!--            <li draggable="true"><img src="/images/icons8-메뉴.svg" style="width: 20px; height: 20px"><label for="option4">무더위 그늘막</label><button class="cancel-layer" id="cancel-layer"><img src="/images/icons8-취소.svg" style="width: 20px; height: 20px"></button>-->
           </ul>
-          <div class="layer-content-footer">
-            <button>입지분석</button>
-          </div>
         </div>
       </div>
       <div class="overlay-button-container">
