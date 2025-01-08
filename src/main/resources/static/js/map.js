@@ -141,7 +141,8 @@ const layer_names = [
     { name: '종교단체', id: 'gwangju_toji_owner_08' },
     { name: '기타', id: 'gwangju_toji_owner_09' },
     { name: '도서관', id: 'gwangju_library' },
-    { name: '민원발급기', id: 'gwangju_civil_service_machines' }
+    { name: '민원발급기', id: 'gwangju_civil_service_machines' },
+    { name: '천안 구', id: 'cheonan_si'}
 ];
 
 // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
@@ -203,10 +204,50 @@ const layers = [
     { id: 'gwangju_toji_owner_08', layerIndex: 55 },
     { id: 'gwangju_toji_owner_09', layerIndex: 56 },
     { id: 'gwangju_library', layerIndex: 57 },
-    { id: 'gwangju_civil_service_machines', layerIndex: 58 }
+    { id: 'gwangju_civil_service_machines', layerIndex: 58 },
+    { id: 'cheonan_si', layerIndex: 59}
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
+    const regions = {
+        gwangju: { center: [126.8526, 35.1595], zoom: 11 },
+        cheonan: { center: [127.1523, 36.8154], zoom: 12 }
+    };
+    // 광주 메뉴 보이기
+    document.getElementById('submenu-list').style.display = 'block';
+
+    // 천안 메뉴 숨기기
+    document.getElementById('submenu-list2').style.display = 'none';
+
+    // 광주 버튼 클릭 시
+    document.getElementById('btn-gwangju').addEventListener('click', function() {
+        const view = map.getView();
+        view.setCenter(regions.gwangju.center); // 광주 중심으로 이동
+        view.setZoom(regions.gwangju.zoom);    // 광주 줌 레벨 설정
+
+
+        // 광주 메뉴 보이기
+        document.getElementById('submenu-list').style.display = 'block';
+
+        // 천안 메뉴 숨기기
+        document.getElementById('submenu-list2').style.display = 'none';
+
+    });
+
+    // 천안 버튼 클릭 시
+    document.getElementById('btn-cheonan').addEventListener('click', function() {
+        const view = map.getView();
+        view.setCenter(regions.cheonan.center); // 천안 중심으로 이동
+        view.setZoom(regions.cheonan.zoom);    // 천안 줌 레벨 설정
+
+
+
+        // 천안 메뉴 보이기
+        document.getElementById('submenu-list2').style.display = 'block';
+
+        // 광주 메뉴 숨기기
+        document.getElementById('submenu-list').style.display = 'none';
+    });
     // OpenLayers Map 객체 생성
     var map = new ol.Map({
         target: 'map', // map div에 지도 표시
@@ -272,6 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
             createWmsLayer('ne:gwangju_toji_owner_09', false), // 56번 기타
             createWmsLayer('ne:gwangju_library', false), // 57번 도서관
             createWmsLayer('ne:gwangju_civil_service_machines', false), // 58번 민원발급기
+            createWmsLayer('ne:cheonan_si', false) // 59번 천안 구
 
         ],
         view: new ol.View({
