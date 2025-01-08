@@ -258,6 +258,28 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
+  // 지도 컨테이너와 자식 요소들 가져오기
+  const mapContainer = document.getElementById('map');
+  const childElements = mapContainer.querySelectorAll('*'); // #map 아래의 모든 자식 요소 선택
+
+  // 각 자식 요소에 마우스 이벤트 추가
+  childElements.forEach(element => {
+    // 마우스가 자식 요소 위에 올라가면 지도 상호작용 비활성화
+    element.addEventListener('mouseover', () => {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+    });
+
+    // 마우스가 자식 요소에서 벗어나면 지도 상호작용 활성화
+    element.addEventListener('mouseout', () => {
+      map.dragging.enable();
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
+      map.scrollWheelZoom.enable();
+    });
+  });
   // WMS 레이어 추가 함수
   function createWmsLayer(layerId) {
     return L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
@@ -267,6 +289,21 @@
       attribution: '&copy; GeoServer Contributors'
     });
   }
+
+  // 전체화면 버튼 구현
+  const fullscreenButton = document.getElementById('fullscreenButton');
+
+  fullscreenButton.addEventListener('click', () => {
+    if (mapContainer.requestFullscreen) {
+      mapContainer.requestFullscreen(); // 표준 API
+    } else if (mapContainer.webkitRequestFullscreen) {
+      mapContainer.webkitRequestFullscreen(); // Safari
+    } else if (mapContainer.msRequestFullscreen) {
+      mapContainer.msRequestFullscreen(); // IE/Edge
+    } else {
+      alert('전체화면 API가 지원되지 않는 브라우저입니다.');
+    }
+  });
 
 
 
