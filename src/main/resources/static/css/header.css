@@ -2,6 +2,8 @@
 /* 최상단 헤더 스타일 */
 /* 상단 가장 위에 위치하며 로그인 및 회원가입 링크를 포함합니다.
    간결한 레이아웃과 어두운 배경색으로 페이지 상단을 구성합니다. */
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
 /* 리스트 스타일 제거 (기본 점 제거) */
 ul .header-li {
@@ -23,6 +25,8 @@ ul .header-li {
 body {
     overflow-y: scroll; /* 세로 스크롤 허용 */
     padding-top: 125px; /* 헤더 높이만큼 상단 공간 확보 */
+    font-family: 'Noto Sans KR', sans-serif; /* Noto Sans KR 폰트 적용 */
+    background-color: white; /* 배경색 설정 */
 }
 
 /* 헤더의 전역 스타일 */
@@ -35,6 +39,8 @@ header {
     top: 0;
     z-index: 1500; /* 페이지 내에서 상위에 위치 */
     background: linear-gradient(white 50px, rgba(255, 255, 255, 0.8) 50px, rgba(255, 255, 255, 0.8)); /* 그라데이션 배경 */
+    font-family: 'Noto Sans KR', sans-serif; /* Noto Sans KR 폰트 적용 */
+    background-color: white; /* 배경색 설정 */
 }
 
 /* 네비게이션 컨테이너의 스타일 */
@@ -127,8 +133,8 @@ header {
 /* 브랜드 제목 스타일 */
 .brand-title {
     margin: 0; /* 외부 여백 제거 */
-    font-size: 17px; /* 폰트 크기 줄임 */
-    line-height: 1.2; /* 텍스트 높이를 줄임 */
+    font-size: 24px; /* 폰트 크기 줄임 */
+    font-weight: bold; /* 텍스트 두껍게 설정 */
     display: inline-block; /* 필요한 경우 inline-block 사용 */
     white-space: nowrap; /* 줄바꿈 방지 */
 }
