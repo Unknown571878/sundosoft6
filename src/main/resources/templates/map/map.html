@@ -21,6 +21,10 @@
 <!--          <span>레이어 선택</span>-->
           <button onclick="toggleMenu()"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
         </div>
+        <div>
+          <button id="btn-gwangju">광주</button>
+          <button id="btn-cheonan">천안</button>
+        </div>
         <div class="menu-search">
           <input class="layer-search" id="layer-search" type="text" placeholder="검색..."> <!-- 검색창 -->
           <ul class="search-list" id="search-list"></ul>
@@ -861,6 +865,17 @@
                     <input type="checkbox" id="gwangju_toji_use_4320">
                   </li>
                 </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="submenu-list2" id="submenu-list2">
+          <li>
+            <span class="submenu-item" onclick="toggleSubmenu(event, this)">천안 구</span>
+            <ul class="submenu">
+              <li class="check-item">
+                <span class="submenu-item">천안 구</span>
+                <input type="checkbox" id="cheonan_si">
               </li>
             </ul>
           </li>
