@@ -38,7 +38,7 @@
             <tbody class="post-tbody-tr1">
             <!-- 신청현황 목록을 반복문으로 출력 -->
             <th:block th:each="apply : ${applies.content}">
-                <tr class="tr-click table-row" th:id="${apply.id}">
+                <tr class="tr-click" th:id="${apply.id}">
                     <!-- 신청현황 번호 출력 -->
                     <td th:text="${apply.id}"></td>
                     <td>
