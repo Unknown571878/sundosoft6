@@ -127,13 +127,18 @@ header {
 /* 브랜드 제목 스타일 */
 .brand-title {
     margin: 0; /* 외부 여백 제거 */
-    font-size: 24px; /* 글자 크기 */
+    font-size: 17px; /* 폰트 크기 줄임 */
+    line-height: 1.2; /* 텍스트 높이를 줄임 */
+    display: inline-block; /* 필요한 경우 inline-block 사용 */
+    white-space: nowrap; /* 줄바꿈 방지 */
 }
 
-/* 브랜드 링크 스타일 */
+/* 브랜드 제목 링크 스타일 */
 .brand-title a {
-    color: #333; /* 진한 회색 텍스트 */
+    color: #333; /* 텍스트 색상 */
     text-decoration: none; /* 밑줄 제거 */
+    font-size: inherit; /* 부모 폰트 크기 상속 */
+    line-height: inherit; /* 부모 라인 높이 상속 */
 }
 
 /* 네비게이션 서브메뉴와 링크 호버 시 스타일 */
