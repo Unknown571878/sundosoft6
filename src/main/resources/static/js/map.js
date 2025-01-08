@@ -257,18 +257,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }), // 0번
             createWmsLayer('ne:gwangju_dong', false), // 1번 광주 전체
             createWmsLayer('ne:gwangju_gu', false), // 2번 광주 구
-            createWmsLayer('ne:gwangju_population_10c_2024_10', false), // 3번 초등학생
-            createWmsLayer('ne:gwangju_population_10j_2024_10', false), // 4번 중학생
-            createWmsLayer('ne:gwangju_population_10g_2024_10', false), // 5번 고등학생
-            createWmsLayer('ne:gwangju_population_20y_2024_10', false), // 6번 20대
-            createWmsLayer('ne:gwangju_population_30y_2024_10', false), // 7번 30대
-            createWmsLayer('ne:gwangju_population_40y_2024_10', false), // 8번 40대
-            createWmsLayer('ne:gwangju_population_50y_2024_10', false), // 9번 50대
-            createWmsLayer('ne:gwangju_population_60y_2024_10', false), // 10번 60대
-            createWmsLayer('ne:gwangju_population_70y_2024_10', false), // 11번 70대
-            createWmsLayer('ne:gwangju_population_80y_2024_10', false), // 12번 80대
-            createWmsLayer('ne:gwangju_population_90y_2024_10', false), // 13번 90대
-            createWmsLayer('ne:gwangju_population_all_2024_10', false), // 14번 모든 연령대
+            createWmsLayer('ne:gwangju_population_10c', false), // 3번 초등학생
+            createWmsLayer('ne:gwangju_population_10j', false), // 4번 중학생
+            createWmsLayer('ne:gwangju_population_10g', false), // 5번 고등학생
+            createWmsLayer('ne:gwangju_population_20y', false), // 6번 20대
+            createWmsLayer('ne:gwangju_population_30y', false), // 7번 30대
+            createWmsLayer('ne:gwangju_population_40y', false), // 8번 40대
+            createWmsLayer('ne:gwangju_population_50y', false), // 9번 50대
+            createWmsLayer('ne:gwangju_population_60y', false), // 10번 60대
+            createWmsLayer('ne:gwangju_population_70y', false), // 11번 70대
+            createWmsLayer('ne:gwangju_population_80y', false), // 12번 80대
+            createWmsLayer('ne:gwangju_population_90y', false), // 13번 90대
+            createWmsLayer('ne:gwangju_population_all', false), // 14번 모든 연령대
             createWmsLayer('ne:gwangju_toji_use_1110', false), // 15번 경지정리답
             createWmsLayer('ne:gwangju_toji_use_1120', false), // 16번 미경지정리답
             createWmsLayer('ne:gwangju_toji_use_1210', false), // 17번 보통,특수작물
@@ -460,6 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
             wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
         });
     });
+
     // WMS 레이어 생성 함수
     function createWmsLayer(layerName, visible) {
         const layer = new ol.layer.Tile({
