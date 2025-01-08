@@ -368,6 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const newCancelImg = document.createElement("img");
                 newCancelImg.setAttribute("src", "/images/icons8-취소.svg");
                 newCancelImg.setAttribute("style", "width: 20px; height: 20px");
+                newCancelImg.setAttribute("draggable", "false");
 
                 newBtn.appendChild(newCancelImg);
 
@@ -388,7 +389,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     newLi.remove();
                     // 체크박스 해제
                     checkbox.checked = false;
-                    searchBox.checked = false;
+                    if (searchBox !== null){
+                        searchBox.checked = false;
+                    }
                     var wmsLayer = map.getLayers().item(layerInfo.layerIndex); // WMS 레이어
                     wmsLayer.setVisible(checkbox.checked);  // 체크된 상태에 따라 레이어 표시/숨기기
 
