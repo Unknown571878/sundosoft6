@@ -227,15 +227,53 @@
     gwangju: { center: [35.1595, 126.8526], zoom: 11 },  // 광주의 중심 좌표 및 줌 레벨
     cheonan: { center: [36.8154, 127.1523], zoom: 12 }   // 천안의 중심 좌표 및 줌 레벨
   };
+  // 현재 지역 상태 저장
+  let currentRegion = 'gwangju'; // 초기값: 광주
+  let activeLayers = []; // 현재 활성화된 레이어들을 저장할 배열
+
+
+  // 초기화 상태 저장
+  const initialCheckboxState = {};
+  layers.forEach(layerInfo => {
+    initialCheckboxState[layerInfo.id] = false; // 모든 체크박스 기본값은 false
+  });
+  const initialDraggableListHTML = ''; // 초기 우선순위 리스트는 비어 있음
+
+  // 모든 활성화된 레이어와 우선순위 리스트 초기화 및 복원
+  function resetToInitialState() {
+    // 지도에서 활성화된 레이어 제거
+    activeLayers.forEach(layer => {
+      map.removeLayer(layer);
+    });
+    activeLayers = []; // 활성화된 레이어 리스트 초기화
+
+    // 체크박스 상태 초기화
+    layers.forEach(layerInfo => {
+      const checkbox = document.getElementById(layerInfo.id); // 왼쪽 체크박스
+      const searchCheckbox = document.getElementById('search-' + layerInfo.id); // 검색 체크박스
+      const initialState = initialCheckboxState[layerInfo.id];
+      if (checkbox) checkbox.checked = initialState; // 초기 상태로 복원
+      if (searchCheckbox) searchCheckbox.checked = initialState; // 초기 상태로 복원
+    });
+
+    // 우선순위 리스트 초기화
+    const draggableList = document.getElementById('draggable-checkbox-list');
+    draggableList.innerHTML = initialDraggableListHTML; // 초기 HTML로 복원
+  }
+
   // 광주 메뉴 보이기
   document.getElementById('submenu-list').style.display = 'block';
   // 천안 메뉴 숨기기
   document.getElementById('submenu-list2').style.display = 'none';
+
   // 광주 버튼 클릭 시
   document.getElementById('btn-gwangju').addEventListener('click', function() {
     // 광주 중심으로 이동하고 줌 레벨 설정
     map.setView(regions.gwangju.center, regions.gwangju.zoom);
-
+    currentRegion = 'gwangju'; // 현재 지역 설정
+    document.getElementById('layer-search').value = ''; // 검색창 초기화
+    resetToInitialState()
+    filterList(); // 검색 결과 갱신
     // 광주 메뉴 보이기
     document.getElementById('submenu-list').style.display = 'block';
 
@@ -246,7 +284,10 @@
   document.getElementById('btn-cheonan').addEventListener('click', function() {
     // 천안 중심으로 이동하고 줌 레벨 설정
     map.setView(regions.cheonan.center, regions.cheonan.zoom);
-
+    currentRegion = 'cheonan'; // 현재 지역 설정
+    document.getElementById('layer-search').value = ''; // 검색창 초기화
+    resetToInitialState();
+    filterList(); // 검색 결과 갱신
     // 천안 메뉴 보이기
     document.getElementById('submenu-list2').style.display = 'block';
 
@@ -262,6 +303,7 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
+<<<<<<< HEAD
   // JavaScript에서 input 필드의 값 (JSON 문자열)을 가져옴
   var jsonData = document.getElementById("jsonData").value;
 
@@ -281,6 +323,30 @@
     );
   });
 
+=======
+  // 지도 컨테이너와 자식 요소들 가져오기
+  const mapContainer = document.getElementById('map');
+  const childElements = mapContainer.querySelectorAll('*'); // #map 아래의 모든 자식 요소 선택
+
+  // 각 자식 요소에 마우스 이벤트 추가
+  childElements.forEach(element => {
+    // 마우스가 자식 요소 위에 올라가면 지도 상호작용 비활성화
+    element.addEventListener('mouseover', () => {
+      map.dragging.disable();
+      map.touchZoom.disable();
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+    });
+
+    // 마우스가 자식 요소에서 벗어나면 지도 상호작용 활성화
+    element.addEventListener('mouseout', () => {
+      map.dragging.enable();
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
+      map.scrollWheelZoom.enable();
+    });
+  });
+>>>>>>> d6496061112b1c91e405fccb4bb051884722abdd
   // WMS 레이어 추가 함수
   function createWmsLayer(layerId) {
     return L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
@@ -291,6 +357,26 @@
     });
   }
 
+<<<<<<< HEAD
+=======
+  // 전체화면 버튼 구현
+  const fullscreenButton = document.getElementById('fullscreenButton');
+
+  fullscreenButton.addEventListener('click', () => {
+    if (mapContainer.requestFullscreen) {
+      mapContainer.requestFullscreen(); // 표준 API
+    } else if (mapContainer.webkitRequestFullscreen) {
+      mapContainer.webkitRequestFullscreen(); // Safari
+    } else if (mapContainer.msRequestFullscreen) {
+      mapContainer.msRequestFullscreen(); // IE/Edge
+    } else {
+      alert('전체화면 API가 지원되지 않는 브라우저입니다.');
+    }
+  });
+
+
+
+>>>>>>> d6496061112b1c91e405fccb4bb051884722abdd
   // 레이어 배열을 돌면서 WMS 레이어 생성
   const layerInstances = {};  // 레이어 인스턴스를 저장할 객체
   console.log(layerInstances);
@@ -307,6 +393,7 @@
     checkbox.addEventListener('change', function(event) {
       if (event.target.checked) {
         map.addLayer(wmsLayer);  // Leaflet에서 레이어를 추가하는 방법
+        activeLayers.push(wmsLayer);
         // 레이어 우선순위에 추가
         const ul = document.getElementById("draggable-checkbox-list");
         const newLi = document.createElement("li");
@@ -352,12 +439,14 @@
 
           // WMS 레이어 제거
           map.removeLayer(wmsLayer);  // Leaflet에서 지도에서 제거
+          activeLayers = activeLayers.filter(layer => layer !== wmsLayer);
         });
       } else {
         const div_layer = document.querySelector(`#${layerInfo.id}-layer`);
         if (div_layer)
           div_layer.remove();
         map.removeLayer(wmsLayer);  // Leaflet에서 레이어를 제거하는 방법
+        activeLayers = activeLayers.filter(layer => layer !== wmsLayer);
       }
       // 오른쪽 체크박스 상태 동기화
       if (rightCheckbox) {
@@ -461,7 +550,9 @@
     searchList.innerHTML = ''; // 기존 검색 결과 초기화
 
     // 입력된 키워드와 일치하는 항목 필터링
-    const filteredItems = layer_names.filter(item => item.name.toLowerCase().includes(keyword));
+    const filteredItems = layer_names.filter(item =>
+            item.name.toLowerCase().includes(keyword)&&
+            item.id.startsWith(currentRegion)); // 현재 지역에 해당하는 ID만 포함);););
 
     filteredItems.forEach(item => {
       const listItem = document.createElement('li');
