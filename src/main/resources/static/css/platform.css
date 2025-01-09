@@ -1,19 +1,15 @@
-/* 공통 스타일 */
-@charset "UTF-8"; /* 문자 인코딩 설정 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap'); /* Google Fonts에서 Noto Sans KR 불러오기 */
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-/* HTML, body 기본 스타일 */
-html {
-    height: 100%; /* 전체 높이를 100%로 설정 */
-}
-
-body {
-    font-family: 'Noto Sans KR', sans-serif; /* 글꼴 설정 */
+/* 기본 스타일 */
+html, body {
+    height: 100%; /* 문서와 뷰포트의 높이를 100%로 설정 */
+    margin: 0; /* 기본 여백 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    font-family: 'Noto Sans KR', sans-serif; /* Noto Sans KR 폰트 적용 */
     background-color: white; /* 배경색 설정 */
-    margin: 0;
-    padding: 0;
-    height: 100%;
 }
+
 
 /* 제목 스타일 */
 h1 {

@@ -9,36 +9,37 @@
     <title>입지분석</title>
   </head>
   <body>
-  <div class="menu" id="menu">
-    <div class="menu-header">
-      <h1 class="brand-title">
-        <a href="/" style="padding-left: 10px; text-decoration: none; color: black" class="text-decoration-none">공공복합시설 입지분석 플랫폼</a> <!-- 메인 페이지 링크 -->
-      </h1>
-      <!--          <span>레이어 선택</span>-->
-      <button onclick="toggleMenu()"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
-    </div>
-    <div>
-      <button id="btn-gwangju">광주</button>
-      <button id="btn-cheonan">천안</button>
-    </div>
-    <div class="menu-search">
-      <input class="layer-search" id="layer-search" type="text" placeholder="검색..."> <!-- 검색창 -->
-      <ul class="search-list" id="search-list"></ul>
-    </div>
-    <div class="menu-category">
-      <h1>카테고리</h1>
-      <div class="category-button" id="category-button">
-        <button id="category-all"><img src="/images/all.svg"></button>
-        <button id="category-library"><img src="/images/book.svg"></button>
-        <button id="category-wifi"><img src="/images/wifi.svg"></button>
-        <button id="category-issuingMachine"><img src="/images/print.svg"></button>
-        <button id="category-shade"><img src="/images/shade.svg"></button>
-      </div>
-    </div>
-    <ul class="submenu-list" id="submenu-list">
+<div class="menu" id="menu">
+        <div class="menu-header">
+          <h1 class="brand-title">
+            <a href="/" style="padding-left: 5px; text-decoration: none; color: black" class="text-decoration-none">공공복합시설 입지분석 플랫폼</a> <!-- 메인 페이지 링크 -->
+          </h1>
+          <!--          <span>레이어 선택</span>-->
+          <button onclick="toggleMenu()"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
+        </div>
+        <div>
+          <button id="btn-gwangju">광주</button>
+          <button id="btn-cheonan">천안</button>
+        </div>
+        <div class="menu-search">
+          <input class="layer-search" id="layer-search" type="text" placeholder="검색..."> <!-- 검색창 -->
+          <ul class="search-list" id="search-list"></ul>
+        </div>
+        <div class="menu-category">
+          <h1>카테고리</h1>
+          <div class="category-button" id="category-button">
+            <button id="category-all"><img src="/images/all.svg"></button>
+            <button id="category-library"><img src="/images/book.svg"></button>
+            <button id="category-wifi"><img src="/images/wifi.svg"></button>
+            <button id="category-issuingMachine"><img src="/images/print.svg"></button>
+            <button id="category-shade"><img src="/images/shade.svg"></button>
+          </div>
+        </div>
+        <ul class="submenu-list" id="submenu-list">
       <li>
         <span class="submenu-item" onclick="toggleSubmenu(event, this)">수치지도</span> <!-- 메인 메뉴 -->
         <ul class="submenu"> <!-- 서브메뉴 리스트 -->
+
           <li>
             <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
             <ul class="submenu"> <!-- 드롭다운 내부의 드롭다운 -->
