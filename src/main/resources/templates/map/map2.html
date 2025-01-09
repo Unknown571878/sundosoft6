@@ -26,7 +26,6 @@
 
 <!-- Leaflet JS 파일 포함 -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
 <script>
   L_NO_TOUCH = false;
   L_DISABLE_3D = false;
@@ -231,7 +230,6 @@
   let currentRegion = 'gwangju'; // 초기값: 광주
   let activeLayers = []; // 현재 활성화된 레이어들을 저장할 배열
 
-
   // 초기화 상태 저장
   const initialCheckboxState = {};
   layers.forEach(layerInfo => {
@@ -303,7 +301,6 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-<<<<<<< HEAD
   // JavaScript에서 input 필드의 값 (JSON 문자열)을 가져옴
   var jsonData = document.getElementById("jsonData").value;
 
@@ -323,7 +320,6 @@
     );
   });
 
-=======
   // 지도 컨테이너와 자식 요소들 가져오기
   const mapContainer = document.getElementById('map');
   const childElements = mapContainer.querySelectorAll('*'); // #map 아래의 모든 자식 요소 선택
@@ -346,19 +342,22 @@
       map.scrollWheelZoom.enable();
     });
   });
->>>>>>> d6496061112b1c91e405fccb4bb051884722abdd
   // WMS 레이어 추가 함수
-  function createWmsLayer(layerId) {
-    return L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
+  function createWmsLayer(layerId, zIndex) {
+    const wmsLayer = L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
       layers: `ne:${layerId}`,  // 'ne:' 접두사 추가
       format: 'image/png',
       transparent: true,
-      attribution: '&copy; GeoServer Contributors'
+      attribution: '&copy; GeoServer Contributors',
+      zIndex: zIndex  // zIndex를 추가하여 레이어의 우선순위를 설정
     });
+
+    // 레이어에 id 속성 추가 (id는 layerId 값으로 설정)
+    wmsLayer.id = "ne:" + layerId;
+
+    return wmsLayer;
   }
 
-<<<<<<< HEAD
-=======
   // 전체화면 버튼 구현
   const fullscreenButton = document.getElementById('fullscreenButton');
 
@@ -374,16 +373,13 @@
     }
   });
 
-
-
->>>>>>> d6496061112b1c91e405fccb4bb051884722abdd
   // 레이어 배열을 돌면서 WMS 레이어 생성
   const layerInstances = {};  // 레이어 인스턴스를 저장할 객체
   console.log(layerInstances);
 
   // 레이어 추가 삭제
   layers.forEach(function(layerInfo) {
-    const wmsLayer = createWmsLayer(layerInfo.id);
+    const wmsLayer = createWmsLayer(layerInfo.id, layerInfo.index); // zIndex 값을 함께 전달
     layerInstances[layerInfo.id] = wmsLayer;  // WMS 레이어를 객체에 저장
 
     // 체크박스에 이벤트 리스너 추가
@@ -452,10 +448,6 @@
       if (rightCheckbox) {
         rightCheckbox.checked = checkbox.checked;
       }
-
-
-
-
     });
 
     // 오른쪽 체크박스의 상태가 바뀌었을 때 왼쪽 체크박스도 변경
@@ -499,16 +491,16 @@
         const id = item.id.slice(0, -6);  // ID에서 _layer 부분 제거
         layer_list.push({ index: 1000 - (index * 50), id: "ne:" + id, labelText: labelText });
       });
-
-      // 현재 맵에 존재하는 레이어를 순회하면서 id가 일치하는 레이어의 zIndex를 수정
-      map.getLayers().getArray().forEach(layer => {
-        const layerId = layer.get('id');
-        const matchingLayer = layer_list.find(item => item.id === layerId);
-
-        if (matchingLayer) {
-          // 해당 레이어가 layer_list에 존재하면 zIndex 값을 수정
-          layer.setZIndex(matchingLayer.index);
-          console.log(`Layer ${layerId} zIndex updated to ${matchingLayer.index}`);
+      console.log(layer_list)
+      layer_list.forEach(layerInfo => {
+        const layer = layerInstances[layerInfo.id];  // layerInstances에서 해당 id의 레이어 찾기
+        console.log(layer)
+        if (layer) {
+          // zIndex 값 적용
+          layer.setZIndex(layerInfo.index);  // 우선순위에 맞춰 zIndex 설정
+          console.log(`Layer ${layerInfo.id} zIndex updated to ${layerInfo.index}`);
+        } else {
+          console.log(`Layer with id ${layerInfo.id} not found`);
         }
       });
 
