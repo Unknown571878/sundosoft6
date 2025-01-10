@@ -454,3 +454,168 @@ html, body {
     display: none; /* 숨겨야 할 항목에만 적용 */
 }
 
+.submenu-list2 li {
+    display: list-item; /* 기본적으로 모두 보이게 설정 */
+}
+
+.submenu-list2 li.hidden {
+    display: none; /* 숨겨야 할 항목에만 적용 */
+}
+
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    bottom: 20px; /* 하단 여백 추가 */
+    left: 420px; /* 슬라이드 메뉴(400px) 공간을 고려한 여백 */
+    width: calc(100% - 480px); /* 오른쪽 여백 추가: 60px, 왼쪽 여백 20px */
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+    border-radius: 10px; /* 모서리 둥글게 */
+    min-height: 120px; /* 최소 높이 2배 증가 */
+}
+
+.modal .modal-close {
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.modal .modal-close img {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.menu-badge {
+    display: inline-block;
+    background-color: #335cff;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 8px; /* 텍스트와 뱃지 간격 */
+    padding: 2px 6px;
+    border-radius: 12px; /* 둥근 모양 */
+    text-align: center;
+    line-height: 1; /* 뱃지 내부 숫자 정렬 */
+    vertical-align: middle; /* 텍스트와 수평 정렬 */
+    position: relative; /* 뱃지 위치 조정을 위해 추가 */
+    top: -2px; /* 텍스트와 수직으로 맞추기 위해 살짝 올림 */
+}
+
+.analysis-layer {
+    position: absolute;
+    top: 320px;
+    right: 60px;
+    width: 450px;
+    height: 450px;
+    padding: 0;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex; /* 내부 레이아웃을 flex로 설정 */
+    flex-direction: column; /* 자식 요소를 세로로 배치 */
+    overflow: hidden; /* 넘치는 콘텐츠를 숨김 */
+}
+
+.analysis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+
+.analysis-header button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.analysis-header img {
+    width: 16px;
+    height: 16px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    background-color: #eee;
+    padding: 5px;
+}
+
+.tab-button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.tab-button:hover {
+    background-color: #ddd;
+}
+
+.tab-button.active {
+    background-color: #ccc;
+    font-weight: bold;
+}
+
+.tab-content {
+    flex: 1; /* 남은 공간을 모두 차지 */
+    padding: 20px;
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+}
+
+.tab-content input {
+    width: calc(100% - 20px); /* 텍스트박스 너비 조정 */
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 계산 */
+}
+
+.action-buttons {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* 버튼을 중앙 정렬 */
+    align-items: center;
+}
+.action-buttons button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.action-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.analysis-cancel {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 0;
+    right: 10px;
+}
