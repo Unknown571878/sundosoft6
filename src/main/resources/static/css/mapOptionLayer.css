@@ -454,3 +454,33 @@ html, body {
     display: none; /* 숨겨야 할 항목에만 적용 */
 }
 
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    bottom: 20px; /* 하단 여백 추가 */
+    left: 420px; /* 슬라이드 메뉴(400px) 공간을 고려한 여백 */
+    width: calc(100% - 480px); /* 오른쪽 여백 추가: 60px, 왼쪽 여백 20px */
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+    border-radius: 10px; /* 모서리 둥글게 */
+    min-height: 120px; /* 최소 높이 2배 증가 */
+}
+
+.modal .close {
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.modal .close img {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
