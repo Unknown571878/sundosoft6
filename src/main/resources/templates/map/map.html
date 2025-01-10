@@ -394,6 +394,44 @@
         }
     });
 
+    // 입지분석 레이어 on/off 버튼
+    const analysisBtn = document.getElementById('analysisBtn');
+    const analysisLayer = document.getElementById('analysis-layer');
+    const analysisCancel = document.getElementById('analysis-cancel');
+
+    analysisCancel.addEventListener('click', ()=>{
+        if (analysisLayer.style.display === 'flex' || analysisLayer.style.display === '') {
+            analysisLayer.style.display = 'none';
+        }
+    });
+    analysisBtn.addEventListener('click', () => {
+        if (analysisLayer.style.display === 'flex' || analysisLayer.style.display === '') {
+            analysisLayer.style.display = 'none'; // 안 보이게 설정
+        }
+        else if (analysisLayer.style.display === 'none') {
+            analysisLayer.style.display = 'flex'; // 보이게 설정
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const tabs = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        // 탭 전환 기능
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                // 모든 탭 비활성화
+                tabs.forEach((t) => t.classList.remove("active"));
+                tabContents.forEach((content) => (content.style.display = "none"));
+
+                // 선택한 탭 활성화
+                tab.classList.add("active");
+                const target = tab.getAttribute("data-tab");
+                document.getElementById(target).style.display = "block";
+            });
+        });
+    });
+
     // 레이어 배열을 돌면서 WMS 레이어 생성
     const layerInstances = {};  // 레이어 인스턴스를 저장할 객체
     console.log(layerInstances);
