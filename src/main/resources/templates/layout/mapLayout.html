@@ -894,9 +894,55 @@
       </ul>
     </div>
   </div>
+  <div class="analysis-layer" id="analysis-layer">
+    <!-- 레이어 헤더 -->
+    <div class="analysis-header" id="analysis-header">
+      <span>입지분석</span>
+      <button class="analysis-cancel" id="analysis-cancel">
+        <img class="cancel-image" src="/images/icons8-취소.svg" alt="닫기">
+      </button>
+    </div>
+
+    <!-- 탭 메뉴 -->
+    <div class="tabs">
+      <button class="tab-button active" data-tab="tab1">공공 와이파이</button>
+      <button class="tab-button" data-tab="tab2">도서관</button>
+      <button class="tab-button" data-tab="tab3">무더위 그늘막</button>
+      <button class="tab-button" data-tab="tab4">무인 발급기</button>
+    </div>
+
+    <!-- 탭 내용 -->
+    <div class="tab-content" id="tab1">
+      <input type="text" placeholder="공공 와이파이 1" id="input-tab1-1" />
+      <input type="text" placeholder="공공 와이파이 2" id="input-tab1-2" />
+      <input type="text" placeholder="공공 와이파이 3" id="input-tab1-3" />
+    </div>
+    <div class="tab-content" id="tab2" style="display: none;">
+      <input type="text" placeholder="도서관 1" id="input-tab2-1" />
+      <input type="text" placeholder="도서관 2" id="input-tab2-2" />
+      <input type="text" placeholder="도서관 3" id="input-tab2-3" />
+    </div>
+    <div class="tab-content" id="tab3" style="display: none;">
+      <input type="text" placeholder="무더위 그늘막 1" id="input-tab3-1" />
+      <input type="text" placeholder="무더위 그늘막 2" id="input-tab3-2" />
+      <input type="text" placeholder="무더위 그늘막 3" id="input-tab3-3" />
+    </div>
+    <div class="tab-content" id="tab4" style="display: none;">
+      <input type="text" placeholder="무인 발급기 1" id="input-tab4-1" />
+      <input type="text" placeholder="무인 발급기 2" id="input-tab4-2" />
+      <input type="text" placeholder="무인 발급기 3" id="input-tab4-3" />
+    </div>
+
+    <!-- 하단 버튼 -->
+    <div class="action-buttons">
+      <button id="submit-button">제출</button>
+    </div>
+  </div>
+
   <div class="overlay-button-container">
     <button id="fullscreenButton"><img src="/images/전체화면.svg" style="width: 20px; height: 20px"></button>
     <button id="layer-invisible"><img src="/images/layer.svg" style="width: 20px; height: 20px"></button>
+    <button id="analysisBtn"><img src="/images/filter.svg" style="width: 20px; height: 20px"></button>
   </div>
   <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"><img src="/images/right.svg" style="width: 20px; height: 20px"></button>
   <div id="modal" class="modal">
