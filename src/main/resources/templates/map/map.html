@@ -319,7 +319,6 @@
         // 광주 메뉴 숨기기
         document.getElementById('submenu-list').style.display = 'none';
     });
-
     // 지도 생성
     var map = L.map('map').setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
 
@@ -336,6 +335,10 @@
     const modalClose = document.getElementById('modal-close');
     const modalContent = document.getElementById('modal-content');
 
+    document.getElementById('modal').addEventListener('wheel', (e) => {
+        e.stopPropagation();
+    });
+
     // 각 자식 요소에 마우스 이벤트 추가
     childElements.forEach(element => {
         // 마우스가 자식 요소 위에 올라가면 지도 상호작용 비활성화
@@ -344,6 +347,7 @@
             map.touchZoom.disable();
             map.doubleClickZoom.disable();
             map.scrollWheelZoom.disable();
+            map.off('click')
         });
 
         // 마우스가 자식 요소에서 벗어나면 지도 상호작용 활성화
@@ -364,6 +368,7 @@
     modalClose.addEventListener('click', function (e) {
         modal.style.display = 'none';
     });
+
     // WMS 레이어 추가 함수
     function createWmsLayer(layerId) {
         return L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
