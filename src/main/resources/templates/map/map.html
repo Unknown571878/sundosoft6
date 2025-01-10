@@ -33,6 +33,29 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 모든 상위 메뉴 항목을 선택
+        const menuItems = document.querySelectorAll(".submenu-item");
+
+        menuItems.forEach((menuItem) => {
+            // 다음 형제 요소가 <ul>인지 확인
+            const submenu = menuItem.nextElementSibling;
+
+            if (submenu && submenu.tagName === "UL") {
+                // 하위 메뉴의 <li> 개수 카운트
+                const itemCount = submenu.querySelectorAll("li").length;
+
+                // 카운트 뱃지 생성
+                const badge = document.createElement("span");
+                badge.className = "menu-badge";
+                badge.textContent = itemCount;
+
+                // 메뉴 항목에 뱃지를 추가
+                menuItem.appendChild(badge);
+            }
+        });
+    });
+
     const draggableList = document.getElementById('draggable-checkbox-list'); // 드래그 가능한 리스트 요소 가져오기
     let draggedItem = null; // 드래그 중인 항목
     let placeholder = null; // 플레이스홀더 요소

@@ -484,3 +484,19 @@ html, body {
     width: 20px;
     height: 20px;
 }
+
+.menu-badge {
+    display: inline-block;
+    background-color: #335cff;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 8px; /* 텍스트와 뱃지 간격 */
+    padding: 2px 6px;
+    border-radius: 12px; /* 둥근 모양 */
+    text-align: center;
+    line-height: 1; /* 뱃지 내부 숫자 정렬 */
+    vertical-align: middle; /* 텍스트와 수평 정렬 */
+    position: relative; /* 뱃지 위치 조정을 위해 추가 */
+    top: -2px; /* 텍스트와 수직으로 맞추기 위해 살짝 올림 */
+}
