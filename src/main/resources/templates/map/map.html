@@ -62,6 +62,7 @@
     let layer_list = [];
     const categoryButton = document.querySelectorAll('#category-button button');
     const submenuList = document.querySelectorAll('#submenu-list li');
+    const submenuList2 = document.querySelectorAll('#submenu-list2 li');
 
     // 각 버튼에 클릭 이벤트 추가
     categoryButton.forEach((button) => {
@@ -70,10 +71,18 @@
             if (category === 'all') {
                 // "전체" 버튼 클릭 시 모든 li 표시
                 submenuList.forEach((li) => li.classList.remove('hidden'));
+                submenuList2.forEach((li) => li.classList.remove('hidden'));
             } else {
                 // 모든 li 숨기기
                 submenuList.forEach((li) => {
-                    if (li.id === category) {
+                    if (li.id.includes(category)) {
+                        li.classList.remove('hidden'); // 선택된 카테고리는 표시
+                    } else {
+                        li.classList.add('hidden'); // 나머지는 숨기기
+                    }
+                });
+                submenuList2.forEach((li) => {
+                    if (li.id.includes(category)) {
                         li.classList.remove('hidden'); // 선택된 카테고리는 표시
                     } else {
                         li.classList.add('hidden'); // 나머지는 숨기기
@@ -183,7 +192,8 @@
         { name: '기타', id: 'gwangju_toji_owner_09' },
         { name: '도서관', id: 'gwangju_library' },
         { name: '민원발급기', id: 'gwangju_civil_service_machines' },
-        { name: '천안 구', id: 'cheonan_si'}
+        { name: '천안 구', id: 'cheonan_si'},
+        { name: '도서관', id: 'cheonan_library_20240610'}
     ];
     // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
     const layers = [
@@ -245,7 +255,8 @@
         { id: 'gwangju_toji_owner_09', layerIndex: 56 },
         { id: 'gwangju_library', layerIndex: 57 },
         { id: 'gwangju_civil_service_machines', layerIndex: 58 },
-        { id: 'cheonan_si', layerIndex: 59}
+        { id: 'cheonan_si', layerIndex: 59},
+        { id: 'cheonan_library_20240610', layerIndex: 60}
     ];
 
     const regions = {
