@@ -454,6 +454,14 @@ html, body {
     display: none; /* 숨겨야 할 항목에만 적용 */
 }
 
+.submenu-list2 li {
+    display: list-item; /* 기본적으로 모두 보이게 설정 */
+}
+
+.submenu-list2 li.hidden {
+    display: none; /* 숨겨야 할 항목에만 적용 */
+}
+
 .modal {
     display: none; /* 기본적으로 숨김 */
     position: fixed;
