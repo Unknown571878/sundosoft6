@@ -619,3 +619,53 @@ html, body {
     padding: 0;
     right: 10px;
 }
+
+.mapOption-layer {
+    position: absolute;
+    top: 320px;
+    right: 60px;
+    width: 100px;
+    height: 150px;
+    padding: 0;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none; /* 내부 레이아웃을 flex로 설정 */
+    flex-direction: column; /* 자식 요소를 세로로 배치 */
+    overflow: hidden; /* 넘치는 콘텐츠를 숨김 */
+}
+
+.mapOption-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+
+.mapOption-header button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.mapOption-header img {
+    width: 16px;
+    height: 16px;
+}
+
+.mapOption-cancel {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 0;
+    right: 10px;
+}
