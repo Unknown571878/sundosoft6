@@ -37,6 +37,8 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
+    const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
+
     document.addEventListener("DOMContentLoaded", function () {
         // 모든 상위 메뉴 항목을 선택
         const menuItems = document.querySelectorAll(".submenu-item");
@@ -335,7 +337,6 @@
         document.getElementById('submenu-list').style.display = 'none';
     });
     // 지도 생성
-    const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
     var map = L.map('map').setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
@@ -345,22 +346,39 @@
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
 
-    L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
+    var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
         maxZoom: 15,
         minZoom: 1,
         zIndex: 10  // zIndex 설정
-    }).addTo(map);
-
-    // VWorld Satellite Hybrid Map 타일 레이어 추가
-    L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
+    });
+    var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
         maxZoom: 15,
         minZoom: 1,
         zIndex: 5  // zIndex 설정
-    }).addTo(map);
-
+    });
     vworldLayer.addTo(map);
+    var general_map = document.getElementById('general_map');
+    general_map.addEventListener('click', function (){
+        if(satellite){
+            hybrid.remove();
+            satellite.remove();
+        }
+        satellite_true = !satellite_true;
+    })
+    var satellite_map = document.getElementById('satellite_map');
+    var satellite_true = true;
+    satellite_map.addEventListener('click', function (){
+        // 상태에 따라 다른 작업 실행
+        if (satellite_true) {
+            console.log('True: 위성지도를 활성화');
+            hybrid.addTo(map);
+            satellite.addTo(map);
+        }
+        // 상태를 변경 (true <-> false)
+        satellite_true = !satellite_true;
+    })
 
     // 지도 컨테이너와 자식 요소들 가져오기
     const mapContainer = document.getElementById('map');
@@ -417,7 +435,6 @@
 
     // 전체화면 버튼 구현
     const fullscreenButton = document.getElementById('fullscreenButton');
-
     fullscreenButton.addEventListener('click', () => {
         if (mapContainer.requestFullscreen) {
             mapContainer.requestFullscreen(); // 표준 API
@@ -434,7 +451,6 @@
     const analysisBtn = document.getElementById('analysisBtn');
     const analysisLayer = document.getElementById('analysis-layer');
     const analysisCancel = document.getElementById('analysis-cancel');
-
     analysisCancel.addEventListener('click', ()=>{
         if (analysisLayer.style.display === 'flex' || analysisLayer.style.display === '') {
             analysisLayer.style.display = 'none';
@@ -570,7 +586,6 @@
             }
         }
     });
-
     draggableList.addEventListener('dragend', () => {
         if (draggedItem) {  // 드래그 항목이 있을 경우
             draggedItem.classList.remove('dragging');  // 드래그 중 스타일 제거
