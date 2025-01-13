@@ -428,6 +428,25 @@
         }
     });
 
+    const mapOptionLayerBtn = document.getElementById('map-option');
+    const mapOptionLayer = document.getElementById('mapOption-layer');
+    const mapOptionLayerCancel = document.getElementById('mapOption-cancel');
+
+    mapOptionLayerCancel.addEventListener('click', ()=>{
+        if (mapOptionLayer.style.display === 'flex' || mapOptionLayer.style.display === '') {
+            mapOptionLayer.style.display = 'none';
+        }
+    });
+    mapOptionLayerBtn.addEventListener('click', () => {
+        if (mapOptionLayer.style.display === 'flex') {
+            mapOptionLayer.style.display = 'none'; // 안 보이게 설정
+        }
+        else if (mapOptionLayer.style.display === 'none' || mapOptionLayer.style.display === '') {
+            mapOptionLayer.style.display = 'flex'; // 보이게 설정
+        }
+    });
+
+
     document.addEventListener("DOMContentLoaded", () => {
         const tabs = document.querySelectorAll(".tab-button");
         const tabContents = document.querySelectorAll(".tab-content");
