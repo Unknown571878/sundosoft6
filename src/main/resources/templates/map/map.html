@@ -7,7 +7,11 @@
     <!-- Leaflet CSS 파일 포함 -->
     <link rel="stylesheet" href="/css/mapOptionLayer.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-
+    <script type="text/javascript"
+            src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://map.vworld.kr/jquery/ol3/jquery-1.11.3.min.js" async></script>
     <style>
         /* 지도 크기 설정 */
         #map {
@@ -33,6 +37,8 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
+    const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
+
     document.addEventListener("DOMContentLoaded", function () {
         // 모든 상위 메뉴 항목을 선택
         const menuItems = document.querySelectorAll(".submenu-item");
@@ -340,7 +346,39 @@
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
 
+    var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
+        attribution: '&copy; VWorld',
+        maxZoom: 15,
+        minZoom: 1,
+        zIndex: 10  // zIndex 설정
+    });
+    var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
+        attribution: '&copy; VWorld',
+        maxZoom: 15,
+        minZoom: 1,
+        zIndex: 5  // zIndex 설정
+    });
     vworldLayer.addTo(map);
+    var general_map = document.getElementById('general_map');
+    general_map.addEventListener('click', function (){
+        if(satellite){
+            hybrid.remove();
+            satellite.remove();
+        }
+        satellite_true = !satellite_true;
+    })
+    var satellite_map = document.getElementById('satellite_map');
+    var satellite_true = true;
+    satellite_map.addEventListener('click', function (){
+        // 상태에 따라 다른 작업 실행
+        if (satellite_true) {
+            console.log('True: 위성지도를 활성화');
+            hybrid.addTo(map);
+            satellite.addTo(map);
+        }
+        // 상태를 변경 (true <-> false)
+        satellite_true = !satellite_true;
+    })
 
     // 지도 컨테이너와 자식 요소들 가져오기
     const mapContainer = document.getElementById('map');
@@ -390,13 +428,13 @@
             layers: `ne:${layerId}`,  // 'ne:' 접두사 추가
             format: 'image/png',
             transparent: true,
-            attribution: '&copy; GeoServer Contributors'
+            attribution: '&copy; GeoServer Contributors',
+            zIndex : '200'
         });
     }
 
     // 전체화면 버튼 구현
     const fullscreenButton = document.getElementById('fullscreenButton');
-
     fullscreenButton.addEventListener('click', () => {
         if (mapContainer.requestFullscreen) {
             mapContainer.requestFullscreen(); // 표준 API
@@ -413,7 +451,6 @@
     const analysisBtn = document.getElementById('analysisBtn');
     const analysisLayer = document.getElementById('analysis-layer');
     const analysisCancel = document.getElementById('analysis-cancel');
-
     analysisCancel.addEventListener('click', ()=>{
         if (analysisLayer.style.display === 'flex' || analysisLayer.style.display === '') {
             analysisLayer.style.display = 'none';
@@ -549,7 +586,6 @@
             }
         }
     });
-
     draggableList.addEventListener('dragend', () => {
         if (draggedItem) {  // 드래그 항목이 있을 경우
             draggedItem.classList.remove('dragging');  // 드래그 중 스타일 제거
