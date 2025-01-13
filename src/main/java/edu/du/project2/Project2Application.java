@@ -28,19 +28,19 @@ public class Project2Application {
         SpringApplication.run(Project2Application.class, args);
     }
 
-    @PostConstruct
-    public void init() {
-        MemberRequest memberRequest = new MemberRequest();
-        memberRequest.setTel("");
-        memberRequest.setLoginId("123");
-        memberRequest.setEmail("123@123");
-        memberRequest.setPassword("123");
-        memberRequest.setName("test1");
-        memberRequest.setZipcode("123");
-        memberRequest.setAddress("123");
-        memberRequest.setDetailAddress("123");
-        memberService.registerMember(memberRequest);
-    }
+//    @PostConstruct
+//    public void init() {
+//        MemberRequest memberRequest = new MemberRequest();
+//        memberRequest.setTel("");
+//        memberRequest.setLoginId("123");
+//        memberRequest.setEmail("123@123");
+//        memberRequest.setPassword("123");
+//        memberRequest.setName("test1");
+//        memberRequest.setZipcode("123");
+//        memberRequest.setAddress("123");
+//        memberRequest.setDetailAddress("123");
+//        memberService.registerMember(memberRequest);
+//    }
 
     @PostConstruct
     public void init1(){

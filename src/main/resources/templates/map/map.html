@@ -37,7 +37,7 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
-
+    // 브이월트 키 값
     const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -98,6 +98,7 @@
             }
         });
     });
+
     // 드래그 앤 드롭 이벤트 처리
     draggableList.addEventListener('dragstart', (e) => {
         if (e.target.tagName === 'LI') { // 드래그가 LI 요소에서 시작될 때만 실행
@@ -346,7 +347,6 @@
         "maxNativeZoom": 19,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
-
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
         maxZoom: 19,
@@ -700,6 +700,49 @@
             });
         });
     }
+
+
+    var category_kiosk = document.getElementById('category-kiosk');
+    category_kiosk.addEventListener('click',function (){
+        var data = {
+            name: 'kiosk_20_05',  // 필요에 맞게 수정
+        };
+
+        // 비동기 POST 요청
+        fetch('/kiosk/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // 데이터 요청 본문에 포함
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return Promise.reject('서버 응답 실패');
+                }
+            }) // 응답을 JSON으로 파싱
+            .then(data => {
+                if (data.status === 'success') {
+                    // 받은 데이터로 마커 및 팝업 생성
+                    data.kioskData.forEach(kiosk => {
+                        var lat = kiosk.lat;
+                        var lng = kiosk.lon;
+                        var popupContent = `여기는 ${kiosk.name}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
+
+                        // 마커 추가
+                        L.marker([lat, lng])
+                            .addTo(map)
+                            .bindPopup(popupContent)  // 팝업 내용 추가
+                            .openPopup();  // 팝업 열기
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
+            });
+    })
 </script>
 </body>
 </html>
