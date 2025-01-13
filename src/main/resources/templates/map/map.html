@@ -342,20 +342,20 @@
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
-        "maxZoom": 21,
-        "maxNativeZoom": 21,
+        "maxZoom": 19,
+        "maxNativeZoom": 19,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
 
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
-        maxZoom: 21,
+        maxZoom: 19,
         minZoom: 6,
         zIndex: 10  // zIndex 설정
     });
     var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
-        maxZoom: 21,
+        maxZoom: 19,
         minZoom: 6,
         zIndex: 5  // zIndex 설정
     });
