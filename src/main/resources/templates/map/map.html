@@ -1246,6 +1246,48 @@
             });
         });
     }
+
+    var category_kiosk = document.getElementById('category-issuingMachine');
+    category_kiosk.addEventListener('click',function (){
+        var data = {
+            name: 'kiosk_20_05',  // 필요에 맞게 수정
+        };
+
+        // 비동기 POST 요청
+        fetch('/kiosk/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // 데이터 요청 본문에 포함
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    return Promise.reject('서버 응답 실패');
+                }
+            }) // 응답을 JSON으로 파싱
+            .then(data => {
+                if (data.status === 'success') {
+                    // 받은 데이터로 마커 및 팝업 생성
+                    data.kioskData.forEach(kiosk => {
+                        var lat = kiosk.lat;
+                        var lng = kiosk.lon;
+                        var popupContent = `여기는 ${kiosk.name}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
+
+                        // 마커 추가
+                        L.marker([lat, lng])
+                            .addTo(map)
+                            .bindPopup(popupContent)  // 팝업 내용 추가
+                            .openPopup();  // 팝업 열기
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
+            });
+    })
 </script>
 </body>
 </html>
