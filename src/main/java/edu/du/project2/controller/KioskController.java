@@ -1,51 +1,45 @@
 package edu.du.project2.controller;
 
 import edu.du.project2.dto.KioskRequest;
-import edu.du.project2.entity.KioskBase;
-import edu.du.project2.repository.KioskBaseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 public class KioskController {
-    public final KioskBaseRepository kioskBaseRepository;
 
-    @PostMapping("/kiosk/data")
-    public ResponseEntity<Map<String, Object>> getKioskData(@RequestBody KioskRequest request) {
-        String name = request.getName();
-        System.out.println("Received data: " + name);
+    @PostMapping("/json")
+    public String json(@RequestBody KioskRequest kioskRequest) throws IOException {
+        // 클라이언트에서 받은 데이터 출력
+        log.info("Received data: {}", kioskRequest);
 
-        // 예시로 요청한 name 값을 기준으로 데이터를 가져옵니다.
-        List<KioskBase> kiosks = kioskBaseRepository.findAllByName(name);
-        System.out.println("Kiosk data: " + kiosks);
+        String filePath = "C:\\Users\\DU\\sundosoft\\json\\"+kioskRequest.getName()+".json";
 
-        // totalScore 기준으로 내림차순 정렬하고 상위 5개만 가져오기
-        List<KioskBase> topKiosks = kiosks.stream()
-                .sorted(Comparator.comparingDouble(KioskBase::getTotalScore).reversed())
-                .limit(5)
-                .collect(Collectors.toList());
+        try {
+            // 파일 내용 읽기
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
 
-        // 결과를 Map 형태로 감싸서 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "success");
-        response.put("kioskData", topKiosks);
+            // 파일 내용을 콘솔에 출력
+            System.out.println(content);
 
-        // ResponseEntity로 반환하며, HttpStatus.OK 상태 코드 반환
-        return new ResponseEntity<>(response, HttpStatus.OK);
+            // 파일 내용을 로깅
+            log.info("File content: {}", content);
+
+            // 서버에서 응답으로 JSON 데이터 반환
+            return "{\"message\": \"파일 내용이 콘솔에 출력되었습니다.\", \"data\": " + content + "}";
+        } catch (IOException e) {
+            // 파일 읽기 에러 처리
+            log.error("파일 읽기 중 오류 발생", e);
+            return "{\"error\": \"파일을 읽는 도중 오류가 발생했습니다: " + e.getMessage() + "\"}";
+        }
     }
 
 }
