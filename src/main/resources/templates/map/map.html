@@ -359,7 +359,11 @@
         zIndex: 5  // zIndex 설정
     });
     vworldLayer.addTo(map);
+
+    // 일반지도, 위성지도 띄우는거 선택
     var general_map = document.getElementById('general_map');
+    var satellite_map = document.getElementById('satellite_map');
+    var satellite_true = true;
     general_map.addEventListener('click', function (){
         if(satellite){
             hybrid.remove();
@@ -367,8 +371,6 @@
         }
         satellite_true = !satellite_true;
     })
-    var satellite_map = document.getElementById('satellite_map');
-    var satellite_true = true;
     satellite_map.addEventListener('click', function (){
         // 상태에 따라 다른 작업 실행
         if (satellite_true) {
@@ -423,14 +425,16 @@
     });
 
     // WMS 레이어 추가 함수
-    function createWmsLayer(layerId) {
-        return L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
+    function createWmsLayer(layerId, layerIndex) {
+        const layer = L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
             layers: `ne:${layerId}`,  // 'ne:' 접두사 추가
             format: 'image/png',
             transparent: true,
             attribution: '&copy; GeoServer Contributors',
-            zIndex : '200'
+            zIndex: layerIndex  // 숫자로 zIndex 설정
         });
+        layer.options.id = `ne:${layerId}`;
+        return layer;
     }
 
     // 전체화면 버튼 구현
@@ -490,7 +494,7 @@
 
     // 레이어 추가 삭제
     layers.forEach(function(layerInfo) {
-        const wmsLayer = createWmsLayer(layerInfo.id);
+        const wmsLayer = createWmsLayer(layerInfo.id, layerInfo.layerIndex*10);
         layerInstances[layerInfo.id] = wmsLayer;  // WMS 레이어를 객체에 저장
 
         // 체크박스에 이벤트 리스너 추가
@@ -586,6 +590,7 @@
             }
         }
     });
+    // 레이어 우선 순위
     draggableList.addEventListener('dragend', () => {
         if (draggedItem) {  // 드래그 항목이 있을 경우
             draggedItem.classList.remove('dragging');  // 드래그 중 스타일 제거
@@ -607,14 +612,18 @@
             });
 
             // 현재 맵에 존재하는 레이어를 순회하면서 id가 일치하는 레이어의 zIndex를 수정
-            map.getLayers().getArray().forEach(layer => {
-                const layerId = layer.get('id');
+            map.eachLayer(function (layer) {
+                const layerId = layer.options.id;  // Leaflet에서 레이어의 id는 options에 저장됩니다.
+                console.log(`Layer ID: ${layerId}`);  // 레이어 ID 확인
+
                 const matchingLayer = layer_list.find(item => item.id === layerId);
 
                 if (matchingLayer) {
                     // 해당 레이어가 layer_list에 존재하면 zIndex 값을 수정
-                    layer.setZIndex(matchingLayer.index);
                     console.log(`Layer ${layerId} zIndex updated to ${matchingLayer.index}`);
+                    layer.setZIndex(matchingLayer.index);  // zIndex 설정
+                } else {
+                    console.log(`No matching layer found for ${layerId}`);
                 }
             });
 
