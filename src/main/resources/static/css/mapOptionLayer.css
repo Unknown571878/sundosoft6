@@ -281,7 +281,7 @@ html, body {
     gap: 10px;
     z-index: 1000; /* Ensure it appears above other elements */
 }
-.overlay-button-container button {
+.overlay-button-containerBtn {
     width: 40px; /* Small square button */
     height: 40px;
     border: none;
@@ -622,11 +622,11 @@ html, body {
 
 .mapOption-layer {
     position: absolute;
-    top: 320px;
-    right: 60px;
+    top: 150px;
+    right: 0;
     width: 100px;
-    height: 150px;
-    padding: 0;
+    height: 130px;
+    padding: 10px;
     background-color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -638,12 +638,16 @@ html, body {
 }
 
 .mapOption-header {
+    text-align: center;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     padding: 10px;
     background-color: #f4f4f4;
     border-bottom: 1px solid #ddd;
+}
+
+.mapOption-header span{
 }
 
 .mapOption-header button {
@@ -654,18 +658,19 @@ html, body {
     cursor: pointer;
 }
 
-.mapOption-header img {
-    width: 16px;
-    height: 16px;
+#mapOptionBtn:hover .mapOption-layer {
+    display: flex;
 }
 
-.mapOption-cancel {
-    position: relative;
-    background-color: transparent;
+.mapOption-button {
+    margin-top: 5px;
+    width: 100px; /* Small square button */
+    height: 40px;
     border: none;
-    color: black;
-    font-size: 25px;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 14px;
     cursor: pointer;
-    padding: 0;
-    right: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
 }
