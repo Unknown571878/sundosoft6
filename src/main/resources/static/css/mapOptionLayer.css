@@ -281,7 +281,7 @@ html, body {
     gap: 10px;
     z-index: 1000; /* Ensure it appears above other elements */
 }
-.overlay-button-container button {
+.overlay-button-containerBtn {
     width: 40px; /* Small square button */
     height: 40px;
     border: none;
@@ -618,4 +618,59 @@ html, body {
     cursor: pointer;
     padding: 0;
     right: 10px;
+}
+
+.mapOption-layer {
+    position: absolute;
+    top: 150px;
+    right: 0;
+    width: 100px;
+    height: 130px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none; /* 내부 레이아웃을 flex로 설정 */
+    flex-direction: column; /* 자식 요소를 세로로 배치 */
+    overflow: hidden; /* 넘치는 콘텐츠를 숨김 */
+}
+
+.mapOption-header {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+
+.mapOption-header span{
+}
+
+.mapOption-header button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#mapOptionBtn:hover .mapOption-layer {
+    display: flex;
+}
+
+.mapOption-button {
+    margin-top: 5px;
+    width: 100px; /* Small square button */
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
 }
