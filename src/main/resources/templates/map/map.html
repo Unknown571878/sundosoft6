@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-
+<div id="scale-line"></div>
 <!-- Leaflet JS 파일 포함 -->
 <script th:src="${scriptPath}" th:text="${scriptPath}"></script>
 
@@ -37,6 +37,7 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
 <script>
+
     const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -341,24 +342,26 @@
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
-        "maxZoom": 22,
+        "maxZoom": 19,
         "maxNativeZoom": 19,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
 
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
-        maxZoom: 15,
-        minZoom: 1,
+        maxZoom: 19,
+        minZoom: 6,
         zIndex: 10  // zIndex 설정
     });
     var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
-        maxZoom: 15,
-        minZoom: 1,
+        maxZoom: 19,
+        minZoom: 6,
         zIndex: 5  // zIndex 설정
     });
     vworldLayer.addTo(map);
+    // 축척선 추가
+    L.control.scale({ position: 'bottomright' }).addTo(map);
 
     // 일반지도, 위성지도 띄우는거 선택
     var general_map = document.getElementById('general_map');
