@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,6 +51,7 @@ public class ApplyController {
     public String detail(@RequestParam Long id, Model model) {
         Apply apply = applyService.selectApplyDetail(id);
         LocalDateTime now = LocalDateTime.now();
+        System.out.println(apply);
         model.addAttribute("apply", apply);
         model.addAttribute("now", now);
         return "map/apply_detail";
@@ -104,9 +107,13 @@ public class ApplyController {
 
     // 신청 결과 확인
     @PostMapping("/analysisResult")
-    public String result(Apply apply, Model model){
-        String name = apply.getAuthor();
+    public String result(Apply apply, Model model) throws IOException {
         System.out.println(apply);
-        return "map/map_result";
+        String filePath = apply.getLink();
+        System.out.println(filePath);
+        String content = new String(Files.readAllBytes(Paths.get(filePath)));
+        System.out.println(content);
+        model.addAttribute("content", content);
+        return "/map/map_result";
     }
 }

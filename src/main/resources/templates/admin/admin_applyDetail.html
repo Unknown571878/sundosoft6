@@ -34,12 +34,12 @@
           <tr>
             <th>제목</th>
             <td colspan="3"><input type="text" id="title" name="title" th:value="${apply.title }"
-                                   th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}"/></td>
+                                   th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}" readonly/></td>
           </tr>
           <tr>
             <th>내용</th>
             <td colspan="3"><textarea title="내용" id="content" name="content" th:text="${apply.content }"
-                                      th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}"></textarea>
+                                      th:attr="readonly=${session.authInfo == null || session.authInfo.role != 'ADMIN'}" readonly></textarea>
             </td>
           </tr>
           <th:block th:if="${apply.files != null and !apply.files.isEmpty()}">
@@ -67,6 +67,10 @@
             </td>
           </tr>
           </th:block>
+          <tr>
+            <th>결과 파일</th>
+            <td colspan="3"><input type="text" id="link" name="link" th:value="${apply.link}"></td>
+          </tr>
           </tbody>
         </table>
       </form>
@@ -83,9 +87,9 @@
     $("#list").on("click", function(){
       location.href = "/admin_apply";
     });
-    $("#edit").on("click", function(){
+    $("#result").on("click", function(){
       var frm = $("#frm")[0];
-      frm.action = "/admin/updateNotice"; // 수정해야함
+      frm.action = "/admin_apply_result";
       frm.submit();
     });
   });

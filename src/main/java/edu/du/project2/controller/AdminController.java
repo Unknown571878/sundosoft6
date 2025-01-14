@@ -227,4 +227,13 @@ public class AdminController {
         model.addAttribute("now", getCurrentTime());
         return "/admin/admin_applyDetail";
     }
+
+    @PostMapping("/admin_apply_result")
+    public String applyResult(Apply apply){
+        Apply updateApply = applyRepository.selectApplyDetail(apply.getId());
+        updateApply.setCompletedYn('Y');
+        updateApply.setLink(apply.getLink());
+        applyService.updateApply(apply);
+        return "redirect:/admin_apply";
+    }
 }

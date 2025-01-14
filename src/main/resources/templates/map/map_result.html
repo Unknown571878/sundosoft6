@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>결과 확인</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script type="text/javascript" src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<h1>여기가 결과다</h1>
+<input type="hidden" id="json" th:value="${content}"/>
+<div id="map">
+</div>
+<script>
+    // 브이월드 API 키
+    // const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
+    var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
+    var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
+        "minZoom": 6,
+        "maxZoom": 19,
+        "maxNativeZoom": 19,
+        "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
+    });
+    vworldLayer.addTo(map);
+    // 축척선 추가
+    L.control.scale({ position: 'bottomright' }).addTo(map);
+    // 줌 추가
+    L.control.zoom({position: 'bottomright'}).addTo(map);
+
+    // JSON 데이터 파싱
+    const data = JSON.parse(document.getElementById("json").value)
+        .sort((a, b) => b.total_score - a.total_score)  // total_score 기준 내림차순 정렬
+        .slice(0, 5);  // 상위 5개 항목만 선택
+
+    // 상위 5개의 데이터를 지도에 마커로 추가
+    data.forEach(kiosk => {
+        var lat = kiosk.lat;  // 위도
+        var lng = kiosk.lon;  // 경도
+        var popupContent = `여기는 ${kiosk.name || '이름 없음'}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
+
+        // 마커 추가
+        L.marker([lat, lng])
+            .addTo(map)
+            .bindPopup(popupContent)  // 팝업 내용 추가
+            .openPopup();  // 팝업 열기 (필요하면 이 줄을 삭제하여 팝업을 열지 않을 수 있음)
+    });
+</script>
 </body>
 </html>
