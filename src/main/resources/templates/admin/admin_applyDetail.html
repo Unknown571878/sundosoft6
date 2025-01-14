@@ -68,6 +68,27 @@
           </tr>
           </th:block>
           <tr>
+          <tr>
+            <th>지역</th>
+            <td>
+              <select id="location" name="location" onchange="updateOptions()">
+                <option value="cheonan">천안</option>
+                <option value="gwangju">광주</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>선택 항목</th>
+            <td>
+              <select id="type" name="type">
+                <!-- Default options, to be updated dynamically -->
+                <option value="library">도서관</option>
+                <option value="atm">무인발급기</option>
+                <option value="wifi">와이파이</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
             <th>결과 파일</th>
             <td colspan="3"><input type="text" id="link" name="link" th:value="${apply.link}"></td>
           </tr>
@@ -93,6 +114,39 @@
       frm.submit();
     });
   });
+
+
+  function updateOptions() {
+    const citySelect = document.getElementById('location');
+    const optionSelect = document.getElementById('type');
+    const selectedCity = citySelect.value;
+
+    // Clear current options
+    optionSelect.innerHTML = '';
+
+    if (selectedCity === 'cheonan') {
+      // 천안 선택 시 옵션
+      const cheonanOptions = ['도서관', '무인발급기', '와이파이'];
+      cheonanOptions.forEach(function(option) {
+        const opt = document.createElement('option');
+        opt.value = option.toLowerCase();
+        opt.textContent = option;
+        optionSelect.appendChild(opt);
+      });
+    } else if (selectedCity === 'gwangju') {
+      // 광주 선택 시 옵션
+      const gwangjuOptions = ['도서관', '무인발급기', '와이파이', '그늘막'];
+      gwangjuOptions.forEach(function(option) {
+        const opt = document.createElement('option');
+        opt.value = option.toLowerCase();
+        opt.textContent = option;
+        optionSelect.appendChild(opt);
+      });
+    }
+  }
+
+  // Initialize options based on default city
+  updateOptions();
 </script>
 </div>
 </body>

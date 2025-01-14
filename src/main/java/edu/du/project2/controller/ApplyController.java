@@ -113,6 +113,7 @@ public class ApplyController {
         System.out.println(filePath);
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
         System.out.println(content);
+        model.addAttribute("apply", apply);
         model.addAttribute("content", content);
         return "/map/map_result";
     }
