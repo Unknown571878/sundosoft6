@@ -49,8 +49,6 @@ public class QnaController {
     @GetMapping("/inquiry")
     public String qnaList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = getAuthInfo(session, model);
-        if (authInfo == null) return showMessageAndRedirect(new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null), model);
-
         model.addAttribute("now", LocalDateTime.now());
         Page<QnaList> inquiries = qnaService.getInquiries(authInfo, pageable);
         model.addAttribute("inquiries", inquiries);
