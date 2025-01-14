@@ -14,11 +14,13 @@
 <div class="ft">
   <div class="main-container">
     <div class="main-title">
-      <h1>상세 입지분석 신청</h1>
+      <h1>상세 입지분석 신청결과</h1>
         </div>
       <form id="frm" method="post">
         <div class="split--div-post"></div>
         <input type="hidden" name="id" th:value="${apply.id}" />
+        <input type="hidden" name="author" th:value="${apply.author}" />
+        <input type="hidden" name="completedYn" th:value="${apply.completedYn}" />
       <table class="board_detail">
         <tbody>
         <tr>
@@ -65,6 +67,12 @@
           </td>
         </tr>
         </th:block>
+        <th:block th:if="${apply.completedYn == 'Y'}">
+          <tr>
+            <th>결과확인</th>
+            <td colspan="3"><a href="#this" id="result">결과보기</a></td>
+          </tr>
+        </th:block>
         </tbody>
       </table>
       </form>
@@ -95,6 +103,12 @@
       frm.action = "/analysis/analysisDelete";
       frm.submit();
     });
+
+    $("#result").on("click", function (){
+      var frm = $("#frm")[0];
+      frm.action = "/analysis/analysisResult";
+      frm.submit();
+    })
   });
 </script>
 </div>
