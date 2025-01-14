@@ -31,7 +31,7 @@ public class FaqController {
     public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<Faq> faqs = faqService.getActiveFAQs(pageable);
         model.addAttribute("faqs", faqs);
-        return "/faq/faqList";
+        return "faq/faqList";
     }
 
     // FAQ 상세 페이지를 반환.
@@ -40,6 +40,6 @@ public class FaqController {
         Faq faq = faqService.faqDetail(id);
         model.addAttribute("faq", faq);
         model.addAttribute("now", LocalDateTime.now());
-        return "/faq/faqDetail";
+        return "faq/faqDetail";
     }
 }

@@ -33,7 +33,7 @@ public class ApplyController {
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
-        return "/common/messageRedirect";
+        return "common/messageRedirect";
     }
 
     // 신청서 목록 페이지를 반환
@@ -114,6 +114,6 @@ public class ApplyController {
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
         System.out.println(content);
         model.addAttribute("content", content);
-        return "/map/map_result";
+        return "map/map_result";
     }
 }

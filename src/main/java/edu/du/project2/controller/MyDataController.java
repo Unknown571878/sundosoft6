@@ -20,7 +20,7 @@ public class MyDataController {
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
-        return "/common/messageRedirect";
+        return "common/messageRedirect";
     }
 
     @GetMapping("/profile")

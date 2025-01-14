@@ -47,7 +47,7 @@ public class AdminController {
     // 메시지 출력 및 리다이렉트를 처리하는 공통 메서드.
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
-        return "/common/messageRedirect";
+        return "common/messageRedirect";
     }
     // 현재 시간을 반환하는 공통 메서드.
     private LocalDateTime getCurrentTime() {
@@ -60,7 +60,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String admin() {
-        return "/admin/adminPage";
+        return "admin/adminPage";
     }
 
     // -------------------------------------------
@@ -135,7 +135,7 @@ public class AdminController {
         model.addAttribute("qna", qnAList);
         model.addAttribute("lists", qnaService.getInquiryReplies(id));
         model.addAttribute("now", getCurrentTime());
-        return "/admin/admin_qnaDetail";
+        return "admin/admin_qnaDetail";
     }
 
     @PostMapping("/admin/inquiryInsert")
@@ -170,14 +170,14 @@ public class AdminController {
     @GetMapping("/admin/admin_faq")
     public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         model.addAttribute("faqs", faqService.getAllFAQs(pageable));
-        return "/admin/admin_faq";
+        return "admin/admin_faq";
     }
 
     @GetMapping("/admin/admin_faqDetail")
     public String faqDetail(@RequestParam Long id, Model model) {
         model.addAttribute("now", getCurrentTime());
         model.addAttribute("faq", faqService.faqDetail(id));
-        return "/admin/admin_faqDetail";
+        return "admin/admin_faqDetail";
     }
 
     @GetMapping("/admin/admin_faqWrite")
@@ -218,14 +218,14 @@ public class AdminController {
     public String apply(Model model) {
         model.addAttribute("applies", applyRepository.findAll());
         model.addAttribute("now", getCurrentTime());
-        return "/admin/admin_apply";
+        return "admin/admin_apply";
     }
 
     @GetMapping("/admin/admin_apply/detail")
     public String applyDetail(@RequestParam Long id, Model model) {
         model.addAttribute("apply", applyService.selectApplyDetail(id));
         model.addAttribute("now", getCurrentTime());
-        return "/admin/admin_applyDetail";
+        return "admin/admin_applyDetail";
     }
 
     @PostMapping("/admin/admin_apply_result")
