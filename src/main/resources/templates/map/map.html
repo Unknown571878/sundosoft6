@@ -811,7 +811,70 @@
         { id: 'cheonan_digital_A00_93352', layerIndex: 332 },
         { id: 'cheonan_digital_A00_43325', layerIndex: 333 }
     ];
-    const layers_style = [];
+    const layers_style = [
+        { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
+        { style : "ne:dot_style_bright_yellow", shape : "dot", color : "#f1c40f" },
+        { style : "ne:dot_style_carmine_red", shape : "dot", color : "#e74c3c" },
+        { style : "ne:dot_style_carrot_orange", shape : "dot", color : "#e67e22" },
+        { style : "ne:dot_style_dark_blue_gray", shape : "dot", color : "#34495e" },
+        { style : "ne:dot_style_dodger_blue", shape : "dot", color : "#3498db" },
+        { style : "ne:dot_style_emerald_green", shape : "dot", color : "#2ecc71" },
+        { style : "ne:dot_style_golden_yellow", shape : "dot", color : "#f39c12" },
+        { style : "ne:dot_style_lime_green", shape : "dot", color : "#66b032" },
+        { style : "ne:dot_style_medium_blue", shape : "dot", color : "#1f77b4" },
+        { style : "ne:dot_style_pumpkin_orange", shape : "dot", color : "#d35400" },
+        { style : "ne:dot_style_purple", shape : "dot", color : "#9b59b6" },
+        { style : "ne:dot_style_purple_dark", shape : "dot", color : "#8e44ad" },
+        { style : "ne:dot_style_red", shape : "dot", color : "#c43c39" },
+        { style : "ne:dot_style_sky_blue", shape : "dot", color : "#4f9db8" },
+        { style : "ne:dot_style_teal", shape : "dot", color : "#16a085" },
+        { style : "ne:dot_style_tomato", shape : "dot", color : "#ff6347" },
+        { style : "ne:dot_style_turquoise", shape : "dot", color : "#1abc9c" },
+        { style : "ne:dot_style_vivid_blue", shape : "dot", color : "#2d87d3" },
+        { style : "ne:dot_style_yellow", shape : "dot", color : "#f4b400" },
+        { style : "ne:line_style_amethyst_purple", shape : "line", color : "#9b59b6" },
+        { style : "ne:line_style_bright_yellow", shape : "line", color : "#f1c40f" },
+        { style : "ne:line_style_carmine_red", shape : "line", color : "#e74c3c" },
+        { style : "ne:line_style_carrot_orange", shape : "line", color : "#e67e22" },
+        { style : "ne:line_style_dark_blue_gray", shape : "line", color : "#34495e" },
+        { style : "ne:line_style_dodger_blue", shape : "line", color : "#3498db" },
+        { style : "ne:line_style_emerald_green", shape : "line", color : "#2ecc71" },
+        { style : "ne:line_style_golden_yellow", shape : "line", color : "#f39c12" },
+        { style : "ne:line_style_lime_green", shape : "line", color : "#66b032" },
+        { style : "ne:line_style_medium_blue", shape : "line", color : "#1f77b4" },
+        { style : "ne:line_style_pumpkin_orange", shape : "line", color : "#d35400" },
+        { style : "ne:line_style_purple", shape : "line", color : "#9b59b6" },
+        { style : "ne:line_style_purple_dark", shape : "line", color : "#8e44ad" },
+        { style : "ne:line_style_red", shape : "line", color : "#c43c39" },
+        { style : "ne:line_style_sky_blue", shape : "line", color : "#4f9db8" },
+        { style : "ne:line_style_teal", shape : "line", color : "#16a085" },
+        { style : "ne:line_style_tomato", shape : "line", color : "#ff6347" },
+        { style : "ne:line_style_turquoise", shape : "line", color : "#1abc9c" },
+        { style : "ne:line_style_vivid_blue", shape : "line", color : "#2d87d3" },
+        { style : "ne:line_style_yellow", shape : "line", color : "#f4b400" },
+        { style : "ne:polygon_style_amethyst_purple", shape : "polygon", color : "#9b59b6" },
+        { style : "ne:polygon_style_bright_yellow", shape : "polygon", color : "#f1c40f" },
+        { style : "ne:polygon_style_carmine_red", shape : "polygon", color : "#e74c3c" },
+        { style : "ne:polygon_style_carrot_orange", shape : "polygon", color : "#e67e22" },
+        { style : "ne:polygon_style_dark_blue_gray", shape : "polygon", color : "#34495e" },
+        { style : "ne:polygon_style_dodger_blue", shape : "polygon", color : "#3498db" },
+        { style : "ne:polygon_style_emerald_green", shape : "polygon", color : "#2ecc71" },
+        { style : "ne:polygon_style_golden_yellow", shape : "polygon", color : "#f39c12" },
+        { style : "ne:polygon_style_lime_green", shape : "polygon", color : "#66b032" },
+        { style : "ne:polygon_style_medium_blue", shape : "polygon", color : "#1f77b4" },
+        { style : "ne:polygon_style_pumpkin_orange", shape : "polygon", color : "#d35400" },
+        { style : "ne:polygon_style_purple", shape : "polygon", color : "#9b59b6" },
+        { style : "ne:polygon_style_purple_dark", shape : "polygon", color : "#8e44ad" },
+        { style : "ne:polygon_style_red", shape : "polygon", color : "#c43c39" },
+        { style : "ne:polygon_style_sky_blue", shape : "polygon", color : "#4f9db8" },
+        { style : "ne:polygon_style_teal", shape : "polygon", color : "#16a085" },
+        { style : "ne:polygon_style_tomato", shape : "polygon", color : "#ff6347" },
+        { style : "ne:polygon_style_turquoise", shape : "polygon", color : "#1abc9c" },
+        { style : "ne:polygon_style_vivid_blue", shape : "polygon", color : "#2d87d3" },
+        { style : "ne:polygon_style_yellow", shape : "polygon", color : "#f4b400" }
+
+
+    ];
 
     const regions = {
         gwangju: { center: [35.1595, 126.8526], zoom: 11 },  // 광주의 중심 좌표 및 줌 레벨
@@ -885,7 +948,7 @@
         document.getElementById('submenu-list').style.display = 'none';
     });
     // 지도 생성
-    var map = L.map('map').setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
+    var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
@@ -893,7 +956,6 @@
         "maxNativeZoom": 19,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
-
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
         maxZoom: 19,
@@ -909,6 +971,7 @@
     vworldLayer.addTo(map);
     // 축척선 추가
     L.control.scale({ position: 'bottomright' }).addTo(map);
+    L.control.zoom({position: 'bottomright'}).addTo(map);
 
     // 일반지도, 위성지도 띄우는거 선택
     var general_map = document.getElementById('general_map');
@@ -976,7 +1039,7 @@
 
     // WMS 레이어 추가 함수
     function createWmsLayer(layerId, layerIndex) {
-        const layer = L.tileLayer.wms('http://localhost:8080/geoserver/ne/wms', {
+        const layer = L.tileLayer.wms('http://133.186.146.80:8080/geoserver/ne/wms', {
             layers: `ne:${layerId}`,  // 'ne:' 접두사 추가
             format: 'image/png',
             transparent: true,
