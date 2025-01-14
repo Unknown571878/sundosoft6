@@ -40,7 +40,7 @@
                 aria-label="Page navigation">
           <ul class="pagination">
             <!-- 처음으로 이동 -->
-            <li th:classappend="${pageNumber < pageSize} ? 'disabled'" class="page-item">
+            <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
               <a class="page-link" th:href="@{/faq/faqList(page=0)}">
                 <span>&laquo;</span>
               </a>
@@ -66,7 +66,7 @@
             </li>
 
             <!-- 마지막으로 이동 -->
-            <li th:classappend=" ${T(java.lang.Math).floor(totalPages / pageSize) * pageSize - 1 <= startPage} ? 'disabled'" class="page-item">
+            <li th:classappend=" ${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
               <a class="page-link" th:href="@{/faq/faqList(page=${totalPages - 1})}">
                 <span>&raquo;</span>
               </a>

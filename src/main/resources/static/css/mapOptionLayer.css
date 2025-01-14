@@ -426,16 +426,43 @@ html, body {
 
 button[data-tooltip] {
     position: relative;
+    z-index: 1001;
 }
 button[data-tooltip]:hover::after {
     opacity: 1;
     visibility: visible;
 }
 button[data-tooltip]::after {
-    z-index: 1005;
+    z-index: 9999;
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 120%;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+button[data-tooltip2] {
+    position: relative;
+}
+button[data-tooltip2]:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+button[data-tooltip2]::after {
+    z-index: 9999;
+    content: attr(data-tooltip2);
+    position: absolute;
+    top: 120%;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
