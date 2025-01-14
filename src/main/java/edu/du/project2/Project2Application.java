@@ -87,6 +87,8 @@ public class Project2Application {
 
     }
 
+
+
     @PostConstruct
     public void init2() {
         List<Faq> faqList = new ArrayList<>();
