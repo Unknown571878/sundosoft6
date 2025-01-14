@@ -1085,7 +1085,9 @@
                 newLi.appendChild(newBtn);
                 ul.appendChild(newLi);
 
-
+                if (rightCheckbox !== null) {
+                    rightCheckbox.checked = true;
+                }
 
                 // cancel 버튼 클릭 이벤트 추가
                 newBtn.addEventListener('click', function() {
