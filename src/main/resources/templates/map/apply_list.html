@@ -11,7 +11,7 @@
 
 <body>
 <!-- 헤더 레이아웃을 호출하는 Thymeleaf 템플릿 -->
-<th:block th:replace="/layout/header :: headerLayout"></th:block>
+<th:block th:replace="layout/header :: headerLayout"></th:block>
 
 <!-- 본문 내용 시작 -->
 <div class="ft main-sub-manu">
@@ -106,6 +106,6 @@
 </script>
 <!-- 푸터 레이아웃을 호출하는 Thymeleaf 템플릿 -->
 <div class="footers"></div> <!-- 이 부분은 지우지 말아야 합니다. -->
-<th:block th:replace="/layout/footer :: footerLayout"></th:block>
+<th:block th:replace="layout/footer :: footerLayout"></th:block>
 </body>
 </html>
