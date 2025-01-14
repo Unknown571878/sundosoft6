@@ -10,7 +10,7 @@
 </head>
 <body>
 <!-- 공통 헤더 포함 -->
-<th:block th:replace="/layout/header :: headerLayout"></th:block>
+<th:block th:replace="layout/header :: headerLayout"></th:block>
 
 <!-- 페이지 메인 콘텐츠 -->
 <div class="ft main-sub-manu">
@@ -110,6 +110,6 @@
 </div>
 <script th:src="@{/js/faq.js}"></script>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
-<th:block th:replace="/layout/footer :: footerLayout"></th:block>
+<th:block th:replace="layout/footer :: footerLayout"></th:block>
 </body>
 </html>
