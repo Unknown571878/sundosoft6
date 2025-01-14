@@ -18,6 +18,7 @@
       </div>
       <form id="frm" method="post">
         <input type="hidden" name="id" th:value="${apply.id}" />
+        <input type="hidden" name="completedYn" th:value="${apply.completedYn}" />
         <table class="board_detail">
           <tbody>
           <tr>
@@ -71,6 +72,7 @@
       </form>
       <div class="button-group">
         <a href="#this" id="list" class="mbtn" >목록으로</a>
+        <a href="#this" id="result" class="mbtn" >결과 전송</a>
       </div>
     </div>
   </div>
@@ -81,16 +83,9 @@
     $("#list").on("click", function(){
       location.href = "/admin_apply";
     });
-
     $("#edit").on("click", function(){
       var frm = $("#frm")[0];
       frm.action = "/admin/updateNotice"; // 수정해야함
-      frm.submit();
-    });
-
-    $("#delete").on("click", function(){
-      var frm = $("#frm")[0];
-      frm.action = "/admin/deleteNotice"; // 수정해야함
       frm.submit();
     });
   });
