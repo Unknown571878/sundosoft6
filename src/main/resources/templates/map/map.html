@@ -1177,8 +1177,9 @@
                 newLi.appendChild(newBtn);
                 ul.appendChild(newLi);
 
-                if (rightCheckbox !== null) {
-                    rightCheckbox.checked = true;
+                var searchBox1 = document.getElementById('search-' + layerInfo.id);
+                if (searchBox1 !== null) {
+                    searchBox1.checked = true;
                 }
 
                 // cancel 버튼 클릭 이벤트 추가
@@ -1203,6 +1204,10 @@
                     div_layer.remove();
                 map.removeLayer(wmsLayer);  // Leaflet에서 레이어를 제거하는 방법
                 activeLayers = activeLayers.filter(layer => layer !== wmsLayer);
+                var searchBox = document.getElementById('search-' + layerInfo.id);
+                if (searchBox !== null) {
+                    searchBox.checked = false;
+                }
             }
             // 오른쪽 체크박스 상태 동기화
             if (rightCheckbox) {
