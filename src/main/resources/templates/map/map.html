@@ -251,8 +251,8 @@
         { id: 'gwangju_population_80y_2024_10', name: '80대' },
         { id: 'gwangju_population_90y_2024_10', name: '90대' },
         { id: 'gwangju_population_all_2024_10', name: '모든연령대' },
-        { id: 'gwangju_dong', name: '동별' },
-        { id: 'gwangju_gu', name: '구별' },
+        { id: 'gwangju_dong', name: '동계' },
+        { id: 'gwangju_gu', name: '구계' },
         { id: 'gwangju_library', name: '도서관' },
         { id: 'gwangju_toji_use_1110', name: '경지정리답' },
         { id: 'gwangju_toji_use_1120', name: '미경지정리답' },
@@ -296,7 +296,7 @@
         { id: 'gwangju_toji_owner_07', name: '종증' },
         { id: 'gwangju_toji_owner_08', name: '종교단체' },
         { id: 'gwangju_toji_owner_09', name: '기타' },
-        { id: 'gwangju_civil_service_machines', name: '민원 발급기' },
+        { id: 'gwangju_civil_service_machines', name: '무인발급기' },
         { id: 'gwangju_pub_wifi', name: '공공와이파이' },
         { id: 'gwangju_gtr', name: '교통현황' },
         { id: 'gwangju_gm', name: '통합' },
@@ -1176,6 +1176,12 @@
                 newLi.appendChild(newLabel);
                 newLi.appendChild(newBtn);
                 ul.appendChild(newLi);
+
+                var searchBox1 = document.getElementById('search-' + layerInfo.id);
+                if (searchBox1 !== null) {
+                    searchBox1.checked = true;
+                }
+
                 // cancel 버튼 클릭 이벤트 추가
                 newBtn.addEventListener('click', function() {
                     var searchBox = document.getElementById('search-' + layerInfo.id);
@@ -1198,6 +1204,10 @@
                     div_layer.remove();
                 map.removeLayer(wmsLayer);  // Leaflet에서 레이어를 제거하는 방법
                 activeLayers = activeLayers.filter(layer => layer !== wmsLayer);
+                var searchBox = document.getElementById('search-' + layerInfo.id);
+                if (searchBox !== null) {
+                    searchBox.checked = false;
+                }
             }
             // 오른쪽 체크박스 상태 동기화
             if (rightCheckbox) {
