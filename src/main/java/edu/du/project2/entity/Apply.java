@@ -35,6 +35,8 @@ public class Apply {
 
     private char completedYn; // 분석 완료 여부 ('Y': 완료, 'N': 미완료)
 
+    private String link;
+
     @ElementCollection
     @CollectionTable(name = "apply_files", joinColumns = @JoinColumn(name = "apply_id"))
     private List<FileDetail> files = new ArrayList<>(); // 첨부 파일 리스트

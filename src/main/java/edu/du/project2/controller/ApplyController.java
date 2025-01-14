@@ -101,4 +101,12 @@ public class ApplyController {
         applyService.deleteApply(id);
         return "redirect:/analysis";
     }
+
+    // 신청 결과 확인
+    @PostMapping("/analysisResult")
+    public String result(Apply apply, Model model){
+        String name = apply.getAuthor();
+        System.out.println(apply);
+        return "map/map_result";
+    }
 }
