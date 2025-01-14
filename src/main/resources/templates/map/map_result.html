@@ -19,13 +19,21 @@
     </style>
 </head>
 <body>
+
 <input type="hidden" id="json" th:value="${content}"/>
-<input type="hidden" id="apply" th:value="${apply}"/>
+<input type="hidden" id="location" th:value="${apply.location}"/>
+<input type="hidden" id="type" th:value="${apply.type}"/>
 <div id="map">
 </div>
 <script>
     // 브이월드 API 키
     // const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
+
+    var location = document.getElementById("location");
+    console.log(location);
+    var type = document.getElementById("type");
+    console.log(type);
+
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
@@ -39,8 +47,7 @@
     // 줌 추가
     L.control.zoom({position: 'bottomright'}).addTo(map);
 
-    var apply = document.getElementById("apply").value;
-    console.log(apply)
+
     // JSON 데이터 파싱
     const data = JSON.parse(document.getElementById("json").value)
         .sort((a, b) => b.total_score - a.total_score)  // total_score 기준 내림차순 정렬

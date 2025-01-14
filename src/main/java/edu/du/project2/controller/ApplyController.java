@@ -106,15 +106,19 @@ public class ApplyController {
     }
 
     // 신청 결과 확인
+    @GetMapping("/map/map_result")
+    public String index(){
+        return "map/map_result";
+    }
     @PostMapping("/analysisResult")
     public String result(Apply apply, Model model) throws IOException {
-        System.out.println(apply);
+        Apply apply1 = applyService.selectApplyDetail(apply.getId());
         String filePath = apply.getLink();
         System.out.println(filePath);
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
         System.out.println(content);
-        model.addAttribute("apply", apply);
+        model.addAttribute("apply", apply1);
         model.addAttribute("content", content);
-        return "/map/map_result";
+        return "map/map_result";
     }
 }
