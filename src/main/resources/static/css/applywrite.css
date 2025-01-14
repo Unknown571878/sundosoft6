@@ -61,7 +61,7 @@ textarea {
 }
 
 textarea {
-    resize: vertical; /* 수직 방향 크기 조정 가능 */
+    resize: none; /* 수직 방향 크기 조정 가능 */
     height: 250px; /* 기본 높이를 늘림 */
 }
 
