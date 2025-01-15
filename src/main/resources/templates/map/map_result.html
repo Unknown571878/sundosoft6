@@ -22,16 +22,57 @@
 
 <input type="hidden" id="json" th:value="${content}"/>
 <input type="hidden" id="apply" th:value="${apply}"/>
+<input type="hidden" id="location" th:value="${location}"/>
+<input type="hidden" id="type" th:value="${type}"/>
 <div id="map">
 </div>
 <script>
     // 브이월드 API 키
     // const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
 
-    var apply = document.getElementById("apply").value;
+    const apply = document.getElementById("apply").value;
     console.log(apply);
+    const loc = document.getElementById('location').value;
+    console.log(loc);
+    const type = document.getElementById("type").value;
+    console.log(type);
+    const layers_style = [
+        { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
+        { style : "ne:dot_style_bright_yellow", shape : "dot", color : "#f1c40f" },
+        { style : "ne:dot_style_carmine_red", shape : "dot", color : "#e74c3c" },
+        { style : "ne:dot_style_carrot_orange", shape : "dot", color : "#e67e22" },
+        { style : "ne:dot_style_dark_blue_gray", shape : "dot", color : "#34495e" },
+        { style : "ne:dot_style_dodger_blue", shape : "dot", color : "#3498db" },
+        { style : "ne:dot_style_emerald_green", shape : "dot", color : "#2ecc71" },
+        { style : "ne:dot_style_golden_yellow", shape : "dot", color : "#f39c12" },
+        { style : "ne:dot_style_lime_green", shape : "dot", color : "#66b032" },
+        { style : "ne:dot_style_medium_blue", shape : "dot", color : "#1f77b4" },
+        { style : "ne:dot_style_pumpkin_orange", shape : "dot", color : "#d35400" },
+        { style : "ne:dot_style_purple", shape : "dot", color : "#9b59b6" },
+        { style : "ne:dot_style_purple_dark", shape : "dot", color : "#8e44ad" },
+        { style : "ne:dot_style_red", shape : "dot", color : "#c43c39" },
+        { style : "ne:dot_style_sky_blue", shape : "dot", color : "#4f9db8" },
+        { style : "ne:dot_style_teal", shape : "dot", color : "#16a085" },
+        { style : "ne:dot_style_tomato", shape : "dot", color : "#ff6347" },
+        { style : "ne:dot_style_turquoise", shape : "dot", color : "#1abc9c" },
+        { style : "ne:dot_style_vivid_blue", shape : "dot", color : "#2d87d3" },
+        { style : "ne:dot_style_yellow", shape : "dot", color : "#f4b400" }
+    ];
 
-    var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
+    let map;  // map을 switch 밖에서 먼저 선언
+
+    // switch문에서 loc 값을 사용하여 조건에 맞는 처리 추가
+    switch (loc) {
+        case "cheonan":
+            map = L.map('map', { zoomControl: false }).setView([36.8154, 127.1523], 13); // 위도, 경도, 줌 레벨 설정
+            break;
+        case "gwangju":
+            map = L.map('map', { zoomControl: false }).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
+            break;
+        default:
+            map = L.map('map', { zoomControl: false }).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
+            break;
+    }
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
         "maxZoom": 19,
@@ -44,6 +85,58 @@
     // 줌 추가
     L.control.zoom({position: 'bottomright'}).addTo(map);
 
+    // 레이어 생성
+    function createWmsLayer(layerId, shape) {
+        const layerOptions = {
+            layers: `ne:${layerId}`,
+            format: 'image/png',
+            transparent: true,
+            attribution: '&copy; GeoServer Contributors',
+        };
+
+        // shape가 "none"이 아닌 경우 스타일을 적용
+        if (shape !== "none") {
+            // shape에 맞는 스타일 객체들을 필터링
+            const filteredStyles = layers_style.filter(styleObj => styleObj.shape === shape);
+
+            // 필터링된 스타일들 중에서 랜덤으로 하나 선택
+            if (filteredStyles.length > 0) {
+                const randomStyle = filteredStyles[Math.floor(Math.random() * filteredStyles.length)];
+                layerOptions.styles = randomStyle.style;  // 랜덤 스타일을 적용
+            }
+        }
+
+        // WMS 레이어 생성
+        const layer = L.tileLayer.wms('http://133.186.146.80:8080/geoserver/ne/wms', layerOptions);
+        layer.options.id = `ne:${layerId}`;
+        return layer;
+    }
+
+    // loc 와 type을 받아서 레이어를 추가한다.
+    if (loc === "cheonan" && type === "무인발급기") {
+        const layer = createWmsLayer('cheonan_civil_service_machines', "dot");
+        layer.addTo(map);
+    } else if (loc === "cheonan" && type === "도서관") {
+        const layer = createWmsLayer('cheonan_library_20240610', "dot");
+        layer.addTo(map);
+    } else if (loc === "cheonan" && type === "와이파이") {
+        const layer = createWmsLayer('cheonan_pub_wifi', "dot");
+        layer.addTo(map);
+    } else if (loc === "gwangju" && type === "무인발급기") {
+        const layer = createWmsLayer('gwangju_civil_service_machines', "dot");
+        layer.addTo(map);
+    } else if (loc === "gwangju" && type === "도서관") {
+        const layer = createWmsLayer('gwangju_library', "dot");
+        layer.addTo(map);
+    } else if (loc === "gwangju" && type === "와이파이") {
+        const layer = createWmsLayer('gwangju_pub_wifi', "dot");
+        layer.addTo(map);
+    } else if (loc === "gwangju" && type === "그늘막") {
+        const layer = createWmsLayer('gwangju_civil_service_machines', "dot");
+        layer.addTo(map);
+    } else {
+        console.log("문제가 발생?????")
+    }
 
     // JSON 데이터 파싱
     const data = JSON.parse(document.getElementById("json").value)
