@@ -160,7 +160,7 @@ public class AdminController {
         QnaList qnAList = qnAListRepository.findById(id).get();
         qnAList.setEndYn('Y');
         qnAListRepository.save(qnAList);
-        MessageDto message = new MessageDto("문의를 종료하였습니다.", "/admin_qna", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("문의를 종료하였습니다.", "/admin/admin_qna", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 
@@ -206,7 +206,7 @@ public class AdminController {
     @PostMapping("/admin/admin_faqDelete")
     public String faqDelete(@RequestParam Long id, Model model) {
         faqService.faqDelete(id);
-        MessageDto message = new MessageDto("삭제하였습니다", "/admin_faq", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("삭제하였습니다", "/admin/admin_faq", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 

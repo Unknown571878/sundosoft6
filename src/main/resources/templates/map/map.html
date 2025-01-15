@@ -1386,6 +1386,27 @@
                 console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
             });
     })
+    function updateTab3Weights() {
+        const librarySlider = document.getElementById('input-tab2-2');
+        const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
+        const busWeight = (1.0 - libraryWeight).toFixed(1);
+
+        // 업데이트된 값 표시
+        document.getElementById('library-weight').textContent = libraryWeight;
+        document.getElementById('bus-weight').textContent = busWeight;
+    }
+
+    function updateTab4Weights() {
+        const accessibilitySlider = document.getElementById('input-tab4-2');
+        const accessibilityWeight = parseFloat(accessibilitySlider.value).toFixed(1);
+        const demandWeight = (1.0 - accessibilityWeight).toFixed(1);
+
+        // 업데이트된 값 표시
+        document.getElementById('accessibility-weight').textContent = accessibilityWeight;
+        document.getElementById('demand-weight').textContent = demandWeight;
+    }
+
+
 </script>
 </body>
 </html>
