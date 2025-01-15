@@ -44,9 +44,9 @@
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="list : ${applies}">
+        <th:block th:each="list, stat : ${applies}">
           <tr th:class="tr-click" th:id="${list.id}">
-            <td th:text="${list.id}"></td>
+            <td th:text="${#lists.size(applies) - (applies.pageable.pageNumber * 10) - stat.index}"></td>
             <td th:text="${list.title}"></td>
             <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(list.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(list.createdAt, 'HH:mm')} : ${#temporals.format(list.createdAt, 'yyyy-MM-dd')}"></td>
             <td th:text="${list.author}"></td>
@@ -56,6 +56,48 @@
         </tbody>
       </table>
     </div>
+  </div>
+  <div th:if="${applies != null and !applies.isEmpty()}">
+    <!-- 전역 변수 선언 -->
+    <nav
+            th:with="pageNumber = ${applies.pageable.pageNumber}, pageSize = ${applies.pageable.pageSize},totalPages = ${applies.totalPages},startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},tempEndPage = ${startPage + pageSize - 1},endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+            aria-label="Page navigation"
+    >
+      <ul class="pagination">
+        <!-- 처음으로 이동 -->
+        <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="@{/admin/admin_apply(page=0)}">
+            <span>&laquo;</span>
+          </a>
+        </li>
+
+        <!-- 이전으로 이동 -->
+        <li th:classappend="${applies.first} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${applies.first} ? '#' : @{/admin/admin_apply(page=${pageNumber - 1})}" aria-label="Previous">
+            <span aria-hidden="true">&lt;</span>
+          </a>
+        </li>
+
+        <!-- 특정 페이지로 이동 -->
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="page-link" th:href="@{/admin/admin_apply(page=${page - 1})}"></a>
+        </li>
+
+        <!-- 다음으로 이동 -->
+        <li th:classappend="${applies.last} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="${applies.last} ? '#' : @{/admin/admin_apply(page=${pageNumber + 1})}" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+          </a>
+        </li>
+
+        <!-- 마지막으로 이동 -->
+        <li th:classappend=" ${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
+          <a class="page-link" th:href="@{/admin/admin_apply(page=${totalPages - 1})}">
+            <span>&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
 

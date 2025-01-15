@@ -119,10 +119,11 @@ public class AdminController {
     // -------------------------------------------
 
     @GetMapping("/admin/admin_qna")
-    public String qnaList(Model model) {
+    public String qnaList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         model.addAttribute("now", getCurrentTime());
         model.addAttribute("qna", qnARepository.findAll());
-        model.addAttribute("qnaList", qnAListRepository.findAll());
+        model.addAttribute("qnaList", qnaService.getInquiries(authInfo, pageable));
         model.addAttribute("member", memberRepository.findAll());
         return "admin/admin_qna";
     }
@@ -215,8 +216,8 @@ public class AdminController {
 
     // 신청내역 목록/신청내역 상세/신청한 입지분석 적용 후 완료된 내역을 메일로?? 어떻게 해야하지
     @GetMapping("/admin/admin_apply")
-    public String apply(Model model) {
-        model.addAttribute("applies", applyRepository.findAll());
+    public String apply(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        model.addAttribute("applies", applyService.applyPage(pageable));
         model.addAttribute("now", getCurrentTime());
         return "admin/admin_apply";
     }

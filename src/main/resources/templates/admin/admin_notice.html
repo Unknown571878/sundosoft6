@@ -40,10 +40,10 @@
       </thead>
       <tbody>
       <!-- 공지사항 데이터 반복 출력 -->
-      <th:block th:each="notice : ${list}">
+      <th:block th:each="notice, stat : ${list}">
         <tr class="tr-click" th:id="${notice.id}">
           <!-- 공지사항 번호 -->
-          <td th:text="${notice.id}"></td>
+          <td th:text="${notices - (list.pageable.pageNumber * 10) - stat.index}"></td>
           <!-- 공지사항 제목 -->
           <td>
             <a th:href="@{/admin/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
@@ -73,33 +73,33 @@
       <ul class="pagination justify-content-center">
         <!-- 처음으로 이동 버튼 -->
         <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
-          <a class="page-link" th:href="@{/admin_notice(page=0)}">
+          <a class="page-link" th:href="@{/admin/admin_notice(page=0)}">
             <span>&laquo;</span>
           </a>
         </li>
 
         <!-- 이전 페이지 이동 버튼 -->
         <li th:classappend="${list.first} ? 'disabled'" class="page-item">
-          <a class="page-link" th:href="${list.first} ? '#' : @{/admin_notice(page=${pageNumber - 1})}" aria-label="Previous">
+          <a class="page-link" th:href="${list.first} ? '#' : @{/admin/admin_notice(page=${pageNumber - 1})}" aria-label="Previous">
             <span aria-hidden="true">&lt;</span>
           </a>
         </li>
 
         <!-- 페이지 번호 표시 및 이동 -->
         <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-          <a th:text="${page}" class="page-link" th:href="@{/admin_notice(page=${page - 1})}"></a>
+          <a th:text="${page}" class="page-link" th:href="@{/admin/admin_notice(page=${page - 1})}"></a>
         </li>
 
         <!-- 다음 페이지 이동 버튼 -->
         <li th:classappend="${list.last} ? 'disabled'" class="page-item">
-          <a class="page-link" th:href="${list.last} ? '#' : @{/admin_notice(page=${pageNumber + 1})}" aria-label="Next">
+          <a class="page-link" th:href="${list.last} ? '#' : @{/admin/admin_notice(page=${pageNumber + 1})}" aria-label="Next">
             <span aria-hidden="true">&gt;</span>
           </a>
         </li>
 
         <!-- 마지막 페이지 이동 버튼 -->
         <li th:classappend="${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
-          <a class="page-link" th:href="@{/admin_notice(page=${totalPages - 1})}">
+          <a class="page-link" th:href="@{/admin/admin_notice(page=${totalPages - 1})}">
             <span>&raquo;</span>
           </a>
         </li>
