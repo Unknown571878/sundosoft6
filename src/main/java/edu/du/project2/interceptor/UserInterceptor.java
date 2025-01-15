@@ -9,26 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Component
 public class UserInterceptor implements HandlerInterceptor {
 
     private void handleUnauthorizedAccess(HttpServletResponse response, String message) throws Exception {
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN); // HTTP 403 상태 설정
+        // 특수문자 및 작은따옴표 이스케이프 처리
+        String escapedMessage = message.replace("'", "\\'").replace("\"", "\\\"");
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-
-        String html = "<!DOCTYPE html>" +
-                "<html>" +
-                "<head><title>Unauthorized</title></head>" +
-                "<body>" +
+        response.getWriter().write(
                 "<script>" +
-                "alert('" + message + "');" +
-                "window.location='/';" +
-                "</script>" +
-                "</body>" +
-                "</html>";
-
-        response.getWriter().write(html);
+                        "alert('" + escapedMessage + "');" +
+                        "location.href='/';" +
+                        "</script>"
+        );
         response.getWriter().flush();
     }
 

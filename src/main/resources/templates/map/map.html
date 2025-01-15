@@ -915,6 +915,11 @@
         draggableList.innerHTML = initialDraggableListHTML; // 초기 HTML로 복원
     }
 
+    // 광주 입지분석 탭
+    const gwangjuTab = document.getElementById("gwangju_tab");
+    // 천안 입지분석 탭
+    const cheonanTab = document.getElementById("cheonan_tab")
+
     // 광주 메뉴 보이기
     document.getElementById('submenu-list').style.display = 'block';
     // 천안 메뉴 숨기기
@@ -933,6 +938,14 @@
 
         // 천안 메뉴 숨기기
         document.getElementById('submenu-list2').style.display = 'none';
+
+        gwangjuTab.classList.remove("hidden");
+        cheonanTab.classList.add("hidden");
+
+        // 광주 탭 첫 번째 버튼 활성화
+        const gwangjuButtons = gwangjuTab.querySelectorAll(".tab-button");
+        gwangjuButtons.forEach(button => button.classList.remove("active"));
+        gwangjuButtons[0].classList.add("active");
     });
     // 천안 버튼 클릭 시
     document.getElementById('btn-cheonan').addEventListener('click', function() {
@@ -947,6 +960,13 @@
 
         // 광주 메뉴 숨기기
         document.getElementById('submenu-list').style.display = 'none';
+
+        gwangjuTab.classList.add("hidden");
+        cheonanTab.classList.remove("hidden");
+
+        const cheonanButtons = cheonanTab.querySelectorAll(".tab-button");
+        cheonanButtons.forEach(button => button.classList.remove("active"));
+        cheonanButtons[0].classList.add("active");
     });
     // 지도 생성
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
@@ -1458,8 +1478,6 @@
         document.getElementById('demand-weight').textContent = demandWeight;
         document.getElementById('accessibility-weight').textContent = accessibilityWeight;
     }
-
-
 </script>
 </body>
 </html>
