@@ -1025,11 +1025,65 @@
             map.touchZoom.enable();
             map.doubleClickZoom.enable();
             map.scrollWheelZoom.enable();
+            function getFeatureInfoUrl(map, layer, latlng) {
+                const point = map.latLngToContainerPoint(latlng, map.getZoom());
+                const size = map.getSize();
+
+                const params = {
+                    request: 'GetFeatureInfo',
+                    service: 'WMS',
+                    srs: 'EPSG:4326',
+                    styles: '',
+                    transparent: true,
+                    version: '1.1.1',
+                    format: 'image/png',
+                    bbox: map.getBounds().toBBoxString(),
+                    height: size.y,
+                    width: size.x,
+                    layers: layer.options.layers,
+                    query_layers: layer.options.layers,
+                    info_format: 'application/json',
+                    x: Math.round(point.x),
+                    y: Math.round(point.y),
+                };
+
+                return layer._url + L.Util.getParamString(params, layer._url, true);
+            }
             // 지도 클릭 이벤트
             map.on('click', function (e) {
-                const { lat, lng } = e.latlng; // Leaflet 기준 좌표 가져오기
-                modalContent.innerHTML = `<p>클릭한 위치의 좌표:</p><p>위도: ${lat.toFixed(5)}</p><p>경도: ${lng.toFixed(5)}</p>`;
-                modal.style.display = 'block';
+                const latlng = e.latlng;
+                // 활성화된 레이어에서 데이터를 가져옴
+                activeLayers.forEach(layer => {
+                    const url = getFeatureInfoUrl(map, layer, latlng);
+
+                    // GetFeatureInfo 요청
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            // 데이터 처리 및 모달 표시
+                            const modal = document.getElementById('modal');
+                            const modalContent = document.getElementById('modal-content');
+
+                            // GeoServer에서 반환된 데이터 처리
+                            if (data && data.features && data.features.length > 0) {
+                                const properties = data.features[0].properties;
+                                let contentHtml = `<h3>레이어 데이터</h3><ul>`;
+                                for (const [key, value] of Object.entries(properties)) {
+                                    contentHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                                }
+                                contentHtml += `</ul>`;
+                                modalContent.innerHTML = contentHtml;
+                            } else {
+                                modalContent.innerHTML = '<p>데이터가 없습니다.</p>';
+                            }
+
+                            // 모달창 열기
+                            modal.style.display = 'block';
+                        })
+                        .catch(error => {
+                            console.error('Error fetching feature info:', error);
+                        });
+                });
             });
         });
     });
