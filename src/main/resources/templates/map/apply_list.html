@@ -19,12 +19,18 @@
         <!-- 페이지 제목 -->
         <div class="main-tihome">
             <div class="main-title">
-                <h1 class="apply-title">상세 입지분석 신청</h1>
+                <h1 class="apply-title">분석결과 조회</h1>
                 <div class="split--div-post"></div> <!-- 구분선 -->
              </div>
         </div>
-
-
+        <div id="applyForm">
+            <label for="select_answer" class="mb-3">답변 상태 : </label>
+            <select id="select_answer">
+                <option value="0">전부</option>
+                <option value="1">분석 신청</option>
+                <option value="2">분석 종료</option>
+            </select>
+        </div>
         <!-- 공지사항 목록을 표시하는 테이블 -->
         <table class="post-table">
             <thead>
@@ -33,6 +39,7 @@
                 <th>번호</th>
                 <th>제목</th>
                 <th>작성일</th>
+                <th>상태</th>
             </tr>
             </thead>
             <tbody class="post-tbody-tr1">
@@ -40,12 +47,13 @@
             <th:block th:each="apply, stat : ${applies.content}">
                 <tr class="tr-click" th:id="${apply.id}">
                     <!-- 신청현황 번호 출력 -->
-                    <td th:text="${apply.id}"></td>
+                    <td th:text="${count - (applies.pageable.pageNumber * 10) - stat.index}"></td>
                     <td>
                         <a th:href="@{/analysis/detail(id=${apply.id})}" th:text="${apply.title}"></a>
                     </td>
                     <!-- 신청현황 작성일을 당일 작성이면 HH:mm을 아니면 yyyy-MM-dd 형식으로 출력 -->
                     <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(apply.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(apply.createdAt, 'HH:mm')} : ${#temporals.format(apply.createdAt, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${#strings.equals(apply.completedYn, 'Y') ? '분석 종료' : '분석 신청'}"></td>
                 </tr>
             </th:block>
             </tbody>
@@ -103,6 +111,34 @@
             window.location.href = '/analysis/detail?id=' + index;
         })
     })
+    document.getElementById('select_answer').addEventListener('change', function () {
+        var selectedValue = this.value;  // 선택된 답변 상태 값
+        var rows = document.querySelectorAll('.tr-click');  // 모든 tr 요소 선택
+
+        rows.forEach(function (row) {
+            var statusCell = row.cells[3];  // '상태' 열이 3번째 (index 3)
+            var statusText = statusCell.textContent.trim() || statusCell.innerText.trim();  // 상태 텍스트 추출 후 공백 제거
+
+            // 선택된 값에 맞는 행만 표시하고 나머지는 숨김
+            if (selectedValue === "0" || statusText === getStatusText(selectedValue)) {
+                row.style.display = "";  // 행 보이기
+            } else {
+                row.style.display = "none";  // 행 숨기기
+            }
+        });
+    });
+
+    // 선택된 답변 상태에 해당하는 텍스트 반환
+    function getStatusText(value) {
+        switch (value) {
+            case "1":
+                return "분석 신청";
+            case "2":
+                return "분석 종료";
+            default:
+                return "";
+        }
+    }
 </script>
 <!-- 푸터 레이아웃을 호출하는 Thymeleaf 템플릿 -->
 <div class="footers"></div> <!-- 이 부분은 지우지 말아야 합니다. -->
