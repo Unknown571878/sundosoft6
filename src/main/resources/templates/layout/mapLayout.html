@@ -1855,10 +1855,10 @@
       </div>
       <!-- 접근성 / 예측 수요량 가중치 -->
       <div style="margin-bottom: 10px;">
-        <label style="font-weight: bold;">접근성 / 예측 수요량 (가중치):</label>
+        <label style="font-weight: bold;">예측 수요량 / 접근성 (가중치):</label>
         <div style="display: flex; align-items: center;">
-          <span style="margin-right: 10px;">접근성</span>
-          <span id="accessibility-weight">0.5</span>
+          <span style="margin-right: 10px;">예측 수요량</span>
+          <span id="demand-weight">0.5</span>
           <input
                   type="range"
                   id="input-tab4-2"
@@ -1869,8 +1869,8 @@
                   style="flex: 1; margin: 10px; padding: 0"
                   oninput="updateTab4Weights()"
           />
-          <span style="margin-right: 10px;">예측 수요량</span>
-          <span id="demand-weight">0.5</span>
+          <span style="margin-right: 10px;">접근성</span>
+          <span id="accessibility-weight">0.5</span>
         </div>
       </div>
       <!-- 표출할 상위 개수 -->
