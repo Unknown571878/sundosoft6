@@ -128,14 +128,17 @@
     layer_cancel.addEventListener('click', ()=>{
         if (check_layer.style.display === 'block' || check_layer.style.display === '') {
             check_layer.style.display = 'none';
+            layer_invisible.classList.remove('active');
         }
     });
     layer_invisible.addEventListener('click', () => {
         if (check_layer.style.display === 'block' || check_layer.style.display === '') {
             check_layer.style.display = 'none'; // 안 보이게 설정
+            layer_invisible.classList.remove('active');
         }
         else if (check_layer.style.display === 'none') {
             check_layer.style.display = 'block'; // 보이게 설정
+            layer_invisible.classList.add('active');
 
         }
     });
@@ -1086,14 +1089,17 @@
     analysisCancel.addEventListener('click', ()=>{
         if (analysisLayer.style.display === 'flex' || analysisLayer.style.display === '') {
             analysisLayer.style.display = 'none';
+            analysisBtn.classList.remove('active');
         }
     });
     analysisBtn.addEventListener('click', () => {
         if (analysisLayer.style.display === 'flex' || analysisLayer.style.display === '') {
             analysisLayer.style.display = 'none'; // 안 보이게 설정
+            analysisBtn.classList.remove('active');
         }
         else if (analysisLayer.style.display === 'none') {
             analysisLayer.style.display = 'flex'; // 보이게 설정
+            analysisBtn.classList.add('active');
         }
     });
 
