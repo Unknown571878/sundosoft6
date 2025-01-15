@@ -321,6 +321,19 @@ html, body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
 }
+
+.overlay-button-containerBtn.active {
+    width: 40px; /* Small square button */
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(120, 120, 120, 0.6);
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
 .overlay-button-container button:hover {
     background-color: rgba(120, 120, 120, 0.6); /* Darker semi-transparent background on hover */
 }
