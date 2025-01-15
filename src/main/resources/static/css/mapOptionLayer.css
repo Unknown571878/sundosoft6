@@ -671,9 +671,10 @@ button[data-tooltip2]::after {
 }
 
 .tab-content {
+    position: relative;
     flex: 1; /* 남은 공간을 모두 차지 */
     padding: 20px;
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+    /*overflow-y: auto; !* 내용이 넘칠 경우 스크롤 가능 *!*/
 }
 
 .tab-content input {
@@ -768,4 +769,35 @@ button[data-tooltip2]::after {
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
+}
+
+/* 도움말 텍스트를 tab-content의 오른쪽 하단에 고정 */
+.help-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* 숨겨진 도움말 설명 */
+.tooltip-left {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: -300px; /* tab-content 왼쪽 외부에 표시 */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 도움말 텍스트에 마우스를 올릴 때 설명 표시 */
+.help-icon:hover .tooltip-left {
+    display: block;
 }
