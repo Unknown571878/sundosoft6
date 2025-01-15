@@ -1801,21 +1801,94 @@
       <input type="text" placeholder="공공 와이파이 2" id="input-tab1-2" />
       <input type="text" placeholder="공공 와이파이 3" id="input-tab1-3" />
     </div>
+
     <div class="tab-content" id="tab2" style="display: none;">
-      <input type="text" placeholder="도서관 1" id="input-tab2-1" />
-      <input type="text" placeholder="도서관 2" id="input-tab2-2" />
-      <input type="text" placeholder="도서관 3" id="input-tab2-3" />
+      <!-- 새로 만들 도서관 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for="input-tab2-1" style="font-weight: bold;">새로 만들 도서관 개수:</label>
+        <input type="number" placeholder="기본값 1" id="input-tab2-1" min="1" />
+      </div>
+      <!-- 도서관 / 버스 정류장 가중치 -->
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">도서관 / 버스 정류장 (가중치):</label>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <span style="margin-right: 10px;">도서관</span>
+          <span id="library-weight">0.7</span>
+          <input
+                  type="range"
+                  id="input-tab2-2"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="0.7"
+                  style="flex: 1; margin: 10px; padding: 0"
+                  oninput="updateTab3Weights()"
+          />
+          <span style="margin-right: 10px;">버스 정류장</span>
+          <span id="bus-weight">0.3</span>
+        </div>
+      </div>
+      <!-- 표출할 상위 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for="input-tab2-3" style="font-weight: bold;">표출할 상위 개수:</label>
+        <input type="number" placeholder="기본값 5" id="input-tab2-3" min="1" />
+      </div>
+      <!-- 도움말 -->
+      <div class="help-icon">
+        <img src="/images/help-mark.svg" style="width: 15px;" height="15px;"><span>도움말</span>
+        <div class="tooltip-left">
+          - 새로 만들 도서관 개수 &lt;&lt; 새로 만들 도서관 개수를 입력합니다.(기본값 1)<br />
+          - 도서관 / 버스정류장 &lt;&lt; 더 중요시하는 쪽으로 옮겨 주세요 결과에 반영됩니다.(기본값 0.7 : 0.3)<br />
+          - 표출할 상위 개수 &lt;&lt; 추천 점수가 높은 도서관부터 설정한 숫자의 개수만큼 화면에 보여줍니다. (기본값 5)
+        </div>
+      </div>
     </div>
-    <div class="tab-content" id="tab3" style="display: none;">
-      <input type="text" placeholder="무더위 그늘막 1" id="input-tab3-1" />
-      <input type="text" placeholder="무더위 그늘막 2" id="input-tab3-2" />
-      <input type="text" placeholder="무더위 그늘막 3" id="input-tab3-3" />
-    </div>
+
     <div class="tab-content" id="tab4" style="display: none;">
-      <input type="text" placeholder="무인 발급기 1" id="input-tab4-1" />
-      <input type="text" placeholder="무인 발급기 2" id="input-tab4-2" />
-      <input type="text" placeholder="무인 발급기 3" id="input-tab4-3" />
+      <!-- 처리방식 -->
+      <div style="margin-bottom: 10px;">
+        <label for="input-tab4-1" style="font-weight: bold;">처리방식:</label>
+        <select id="input-tab4-1">
+          <option value="parallel">병렬처리</option>
+          <option value="sequential">순차처리</option>
+        </select>
+      </div>
+      <!-- 접근성 / 예측 수요량 가중치 -->
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">예측 수요량 / 접근성 (가중치):</label>
+        <div style="display: flex; align-items: center;">
+          <span style="margin-right: 10px;">예측 수요량</span>
+          <span id="demand-weight">0.5</span>
+          <input
+                  type="range"
+                  id="input-tab4-2"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="0.5"
+                  style="flex: 1; margin: 10px; padding: 0"
+                  oninput="updateTab4Weights()"
+          />
+          <span style="margin-right: 10px;">접근성</span>
+          <span id="accessibility-weight">0.5</span>
+        </div>
+      </div>
+      <!-- 표출할 상위 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for="input-tab4-3" style="font-weight: bold;">표출할 상위 개수:</label>
+        <input type="number" placeholder="기본값 5" id="input-tab4-3" min="1" />
+      </div>
+      <!-- 도움말 -->
+      <div class="help-icon">
+        <img src="/images/help-mark.svg" style="width: 15px;" height="15px;"><span>도움말</span>
+        <div class="tooltip-left">
+          - 처리방식 &lt;&lt; 순차처리, 병렬처리중 한가지를 선택해주세요. (기본값 병렬)<br />
+          - 접근성 / 예측 수요량 &lt;&lt; 더 중요시하는 쪽으로 옮겨 주세요 결과에 반영됩니다.(기본값 0.5 : 0.5)<br />
+          - 표출할 상위 개수 &lt;&lt; 추천 점수가 높은 무인 발급기부터 설정한 숫자의 개수만큼 화면에 보여줍니다. (기본값 5)
+        </div>
+      </div>
     </div>
+
 
     <!-- 하단 버튼 -->
     <div class="action-buttons">

@@ -32,14 +32,11 @@ public class ApplyService {
     private final ApplyRepository applyRepository;
     private final FileService fileService;
 
-    // 모든 입지 분석 신청서를 생성일시 내림차순으로 정렬.
-    public List<Apply> findAll() {
-        return applyRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
-    }
 
-    // 입지 분석 신청서를 페이징 처리하여 반환.
-    public Page<Apply> applyPage(Pageable pageable) {
-        List<Apply> list = applyRepository.findAll();
+    public Page<Apply> getApplies(AuthInfo authInfo, Pageable pageable) {
+        List<Apply> list = authInfo.getRole().equals("ADMIN")
+                ? applyRepository.findAll(Sort.by(Sort.Order.desc("createdAt")))
+                : applyRepository.findAllByUidOrderByCreatedAtDesc(authInfo.getId());
         return createPage(list, pageable);
     }
 
@@ -57,13 +54,14 @@ public class ApplyService {
      * @param content 내용
      */
     @Transactional
-    public void createBoard(String author, String title, String content){
+    public void createBoard(String author, String title, String content,AuthInfo authInfo) {
         Apply apply = Apply.builder()
                 .author(author)
                 .title(title)
                 .content(content)
                 .completedYn('N')
                 .createdAt(LocalDateTime.now())
+                .uid(authInfo.getId())
                 .build();
 
         applyRepository.save(apply);
@@ -79,8 +77,8 @@ public class ApplyService {
      * @throws IOException 파일 저장 실패 시 발생
      */
     @Transactional
-    public void createBoard(String author, String title, String content, MultipartFile[] files) throws IOException {
-        Apply apply = buildApply(author, title, content);
+    public void createBoard(String author, String title, String content, MultipartFile[] files,AuthInfo authInfo) throws IOException {
+        Apply apply = buildApply(author, title, content, authInfo);
 
         if (files != null && files.length > 0) {
             List<FileDetail> fileDetails = fileService.uploadFiles(files);
@@ -110,13 +108,14 @@ public class ApplyService {
     public void deleteApply(Long id){applyRepository.deleteById(id);}
 
     // 공통 로직: 신청서 객체 생성
-    private Apply buildApply(String author, String title, String content) {
+    private Apply buildApply(String author, String title, String content, AuthInfo authInfo) {
         return Apply.builder()
                 .author(author)
                 .title(title)
                 .content(content)
                 .completedYn('N')
                 .createdAt(LocalDateTime.now())
+                .uid(authInfo.getId())
                 .build();
     }
 }

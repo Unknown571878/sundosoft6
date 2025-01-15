@@ -1025,8 +1025,65 @@
             map.touchZoom.enable();
             map.doubleClickZoom.enable();
             map.scrollWheelZoom.enable();
+            function getFeatureInfoUrl(map, layer, latlng) {
+                const point = map.latLngToContainerPoint(latlng, map.getZoom());
+                const size = map.getSize();
+
+                const params = {
+                    request: 'GetFeatureInfo',
+                    service: 'WMS',
+                    srs: 'EPSG:4326',
+                    styles: '',
+                    transparent: true,
+                    version: '1.1.1',
+                    format: 'image/png',
+                    bbox: map.getBounds().toBBoxString(),
+                    height: size.y,
+                    width: size.x,
+                    layers: layer.options.layers,
+                    query_layers: layer.options.layers,
+                    info_format: 'application/json',
+                    x: Math.round(point.x),
+                    y: Math.round(point.y),
+                };
+
+                return layer._url + L.Util.getParamString(params, layer._url, true);
+            }
             // 지도 클릭 이벤트
             map.on('click', function (e) {
+                const latlng = e.latlng;
+                // 활성화된 레이어에서 데이터를 가져옴
+                activeLayers.forEach(layer => {
+                    const url = getFeatureInfoUrl(map, layer, latlng);
+
+                    // GetFeatureInfo 요청
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            // 데이터 처리 및 모달 표시
+                            const modal = document.getElementById('modal');
+                            const modalContent = document.getElementById('modal-content');
+
+                            // GeoServer에서 반환된 데이터 처리
+                            if (data && data.features && data.features.length > 0) {
+                                const properties = data.features[0].properties;
+                                let contentHtml = `<h3>레이어 데이터</h3><ul>`;
+                                for (const [key, value] of Object.entries(properties)) {
+                                    contentHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                                }
+                                contentHtml += `</ul>`;
+                                modalContent.innerHTML = contentHtml;
+                            } else {
+                                modalContent.innerHTML = '<p>데이터가 없습니다.</p>';
+                            }
+
+                            // 모달창 열기
+                            modal.style.display = 'block';
+                        })
+                        .catch(error => {
+                            console.error('Error fetching feature info:', error);
+                        });
+                });
             });
         });
     });
@@ -1062,6 +1119,8 @@
         layer.options.id = `ne:${layerId}`;
         return layer;
     }
+
+
 
     // 전체화면 버튼 구현
     const fullscreenButton = document.getElementById('fullscreenButton');
@@ -1330,6 +1389,77 @@
             });
         });
     }
+
+    var category_kiosk = document.getElementById('category-issuingMachine');
+    category_kiosk.addEventListener('click',function (){
+        var data = {
+            name: 'kiosk_20_05',  // 필요에 맞게 수정
+        };
+
+        // 비동기 POST 요청
+        fetch('/json', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // 데이터 요청 본문에 포함
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();  // 응답을 JSON으로 파싱
+                } else {
+                    return Promise.reject('서버 응답 실패');
+                }
+            })
+            .then(responseData => {
+                console.log(responseData);  // 응답 데이터 확인
+
+                // 응답 데이터에서 'data' 배열을 가져옵니다.
+                const kiosks = responseData.data;
+
+                // 'total_score'로 내림차순 정렬하여 상위 5개 항목만 추출
+                const topKiosks = kiosks
+                    .sort((a, b) => b.total_score - a.total_score)  // total_score 기준 내림차순 정렬
+                    .slice(0, 5);  // 상위 5개 항목만 선택
+
+                // topKiosks 배열을 순회하면서 각 kiosk 객체에 대해 마커를 추가합니다.
+                topKiosks.forEach(kiosk => {
+                    var lat = kiosk.lat;  // 위도
+                    var lng = kiosk.lon;  // 경도
+                    var popupContent = `여기는 ${kiosk.name || '이름 없음'}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
+
+                    // 마커 추가
+                    L.marker([lat, lng])
+                        .addTo(map)
+                        .bindPopup(popupContent)  // 팝업 내용 추가
+                        .openPopup();  // 팝업 열기 (필요하면 이 줄을 삭제하여 팝업을 열지 않을 수 있음)
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
+            });
+    })
+    function updateTab3Weights() {
+        const librarySlider = document.getElementById('input-tab2-2');
+        const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
+        const busWeight = (1.0 - libraryWeight).toFixed(1);
+
+        // 업데이트된 값 표시
+        document.getElementById('library-weight').textContent = libraryWeight;
+        document.getElementById('bus-weight').textContent = busWeight;
+    }
+
+    function updateTab4Weights() {
+        const demandSlider = document.getElementById('input-tab4-2');
+        const demandWeight =  parseFloat(demandSlider.value).toFixed(1);
+        const accessibilityWeight = (1.0 - demandWeight).toFixed(1);
+
+        // 업데이트된 값 표시
+        document.getElementById('demand-weight').textContent = demandWeight;
+        document.getElementById('accessibility-weight').textContent = accessibilityWeight;
+    }
+
+
 </script>
 </body>
 </html>

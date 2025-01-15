@@ -41,6 +41,19 @@ public class Project2Application {
         memberRequest.setDetailAddress("123");
         memberService.registerMember(memberRequest);
     }
+    @PostConstruct
+    public void init7() {
+        MemberRequest memberRequest = new MemberRequest();
+        memberRequest.setTel("");
+        memberRequest.setLoginId("1234");
+        memberRequest.setEmail("123@1234");
+        memberRequest.setPassword("1234");
+        memberRequest.setName("test12");
+        memberRequest.setZipcode("123");
+        memberRequest.setAddress("123");
+        memberRequest.setDetailAddress("123");
+        memberService.registerMember(memberRequest);
+    }
 
     @PostConstruct
     public void init1(){

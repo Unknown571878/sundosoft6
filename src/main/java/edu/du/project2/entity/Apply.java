@@ -33,11 +33,13 @@ public class Apply {
     @Column(nullable = false)
     private LocalDateTime createdAt; // 생성일시
 
+    private Long uid;
     private char completedYn; // 분석 완료 여부 ('Y': 완료, 'N': 미완료)
-
     private String link;
     private String location;
     private String type;
+
+
 
     @ElementCollection
     @CollectionTable(name = "apply_files", joinColumns = @JoinColumn(name = "apply_id"))

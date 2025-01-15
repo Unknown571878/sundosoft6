@@ -160,7 +160,7 @@ public class AdminController {
         QnaList qnAList = qnAListRepository.findById(id).get();
         qnAList.setEndYn('Y');
         qnAListRepository.save(qnAList);
-        MessageDto message = new MessageDto("문의를 종료하였습니다.", "/admin_qna", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("문의를 종료하였습니다.", "/admin/admin_qna", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 
@@ -206,7 +206,7 @@ public class AdminController {
     @PostMapping("/admin/admin_faqDelete")
     public String faqDelete(@RequestParam Long id, Model model) {
         faqService.faqDelete(id);
-        MessageDto message = new MessageDto("삭제하였습니다", "/admin_faq", RequestMethod.GET, null);
+        MessageDto message = new MessageDto("삭제하였습니다", "/admin/admin_faq", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }
 
@@ -216,8 +216,11 @@ public class AdminController {
 
     // 신청내역 목록/신청내역 상세/신청한 입지분석 적용 후 완료된 내역을 메일로?? 어떻게 해야하지
     @GetMapping("/admin/admin_apply")
-    public String apply(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        model.addAttribute("applies", applyService.applyPage(pageable));
+    public String apply(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable,HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        Page<Apply> applies = applyService.getApplies(authInfo, pageable);
+        model.addAttribute("count", applies.stream().count());
+        model.addAttribute("applies", applies);
         model.addAttribute("now", getCurrentTime());
         return "admin/admin_apply";
     }

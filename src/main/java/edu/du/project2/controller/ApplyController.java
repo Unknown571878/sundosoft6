@@ -39,11 +39,13 @@ public class ApplyController {
 
     // 신청서 목록 페이지를 반환
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        List<Apply> applies = applyService.findAll();
-        Page<Apply> page = PagingUtils.createPage(applies, pageable);
+    public String list(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        // 로그인한 사용자에 따른 신청서 목록 가져오기
+        Page<Apply> applies = applyService.getApplies(authInfo, pageable);
+        model.addAttribute("count", applies.stream().count());
         model.addAttribute("now", LocalDateTime.now());
-        model.addAttribute("applies", page);
+        model.addAttribute("applies", applies);
         return "map/apply_list";
     }
 
@@ -83,11 +85,12 @@ public class ApplyController {
     public String save(@RequestParam String author,
                                 @RequestParam String title,
                                 @RequestParam String content,
-                                @RequestParam(value = "files", required = false) MultipartFile[] files) throws IOException {
+                                @RequestParam(value = "files", required = false) MultipartFile[] files,HttpSession session) throws IOException {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         if (files == null || files.length == 0 || files[0].isEmpty()) {
-            applyService.createBoard(author, title, content);
+            applyService.createBoard(author, title, content, authInfo);
         } else {
-            applyService.createBoard(author, title, content, files);
+            applyService.createBoard(author, title, content, files, authInfo);
         }
         return "redirect:/analysis/list";
     }
@@ -96,14 +99,14 @@ public class ApplyController {
     @PostMapping("/analysisUpdate")
     public String update(Apply apply){
         applyService.updateApply(apply);
-        return "redirect:/analysis";
+        return "redirect:/analysis/list";
     }
 
     // 신청서를 삭제
     @PostMapping("/analysisDelete")
     public String delete(@RequestParam Long id){
         applyService.deleteApply(id);
-        return "redirect:/analysis";
+        return "redirect:/analysis/list";
     }
 
     // 신청 결과 확인
