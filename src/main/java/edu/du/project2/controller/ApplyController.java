@@ -106,6 +106,10 @@ public class ApplyController {
     }
 
     // 신청 결과 확인
+    @GetMapping("/map/map_result")
+    public String index(){
+        return "map/map_result";
+    }
     @PostMapping("/analysisResult")
     public String result(Apply apply, Model model) throws IOException {
         System.out.println(apply);
@@ -113,6 +117,7 @@ public class ApplyController {
         System.out.println(filePath);
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
         System.out.println(content);
+        model.addAttribute("apply", apply);
         model.addAttribute("content", content);
         return "map/map_result";
     }

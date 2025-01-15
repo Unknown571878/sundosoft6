@@ -1035,18 +1035,6 @@
         modal.style.display = 'none';
     });
 
-    // function createWmsLayer(layerId, layerIndex, shape) {
-    //     const layer = L.tileLayer.wms('http://133.186.146.80:8080/geoserver/ne/wms', {
-    //         layers: `ne:${layerId}`,  // 'ne:' 접두사 추가
-    //         format: 'image/png',
-    //         transparent: true,
-    //         attribution: '&copy; GeoServer Contributors',
-    //         zIndex: layerIndex,  // 숫자로 zIndex 설정
-    //         styles: shape,  // 스타일 추가
-    //     });
-    //     layer.options.id = `ne:${layerId}`;
-    //     return layer;
-    // }
     function createWmsLayer(layerId, layerIndex, shape) {
         // 기본 WMS 레이어 생성
         const layerOptions = {
