@@ -44,9 +44,9 @@
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="list : ${qnaList}">
+        <th:block th:each="list, stat : ${qnaList}">
           <tr th:class="tr-click" th:id="${list.id}">
-            <td th:text="${list.id}"></td>
+            <td th:text="${#lists.size(qnaList) - (qnaList.pageable.pageNumber * 10) - stat.index}"></td>
             <td th:text="${list.title}"></td>
             <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(list.created_at, 'yyyy-MM-dd'))} ? ${#temporals.format(list.created_at, 'HH:mm')} : ${#temporals.format(list.created_at, 'yyyy-MM-dd')}"></td>
             <th:block th:each="member : ${member}">

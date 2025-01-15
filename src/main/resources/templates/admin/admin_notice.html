@@ -40,10 +40,10 @@
       </thead>
       <tbody>
       <!-- 공지사항 데이터 반복 출력 -->
-      <th:block th:each="notice : ${list}">
+      <th:block th:each="notice, stat : ${list}">
         <tr class="tr-click" th:id="${notice.id}">
           <!-- 공지사항 번호 -->
-          <td th:text="${notice.id}"></td>
+          <td th:text="${#lists.size(list) - (list.pageable.pageNumber * 10) - stat.index}"></td>
           <!-- 공지사항 제목 -->
           <td>
             <a th:href="@{/admin/noticeDetail(id=${notice.id})}" th:text="${notice.title}"></a>
