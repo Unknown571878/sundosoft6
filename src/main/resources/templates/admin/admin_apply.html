@@ -46,7 +46,11 @@
         <tbody>
         <th:block th:each="list, stat : ${applies}">
           <tr th:class="tr-click" th:id="${list.id}">
+<<<<<<< HEAD
+            <td th:text="${#lists.size(applies) - (applies.pageable.pageNumber * 10) - stat.index}"></td>
+=======
             <td th:text="${count - (applies.pageable.pageNumber * 10) - stat.index}"></td>
+>>>>>>> cda94b1ed5b448e9d7cf3d6cbe5a6dfcc46e5124
             <td th:text="${list.title}"></td>
             <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(list.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(list.createdAt, 'HH:mm')} : ${#temporals.format(list.createdAt, 'yyyy-MM-dd')}"></td>
             <td th:text="${list.author}"></td>
