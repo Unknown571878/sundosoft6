@@ -233,14 +233,9 @@ public class AdminController {
         Apply updateApply = applyRepository.selectApplyDetail(apply.getId());
         updateApply.setCompletedYn('Y');
         updateApply.setLink(apply.getLink());
-<<<<<<< HEAD
         updateApply.setLocation(apply.getLocation());
         updateApply.setType(apply.getType());
         applyService.updateApply(updateApply);
-        return "redirect:/admin_apply";
-=======
-        applyService.updateApply(apply);
         return "redirect:/admin/admin_apply";
->>>>>>> fb1feb2de6efaa891eb4f359a60ceaf1f544fc46
     }
 }
