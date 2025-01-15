@@ -21,18 +21,15 @@
 <body>
 
 <input type="hidden" id="json" th:value="${content}"/>
-<input type="hidden" id="location" th:value="${apply.location}"/>
-<input type="hidden" id="type" th:value="${apply.type}"/>
+<input type="hidden" id="apply" th:value="${apply}"/>
 <div id="map">
 </div>
 <script>
     // 브이월드 API 키
     // const vworldKey = '8A69FB7A-6E07-3B76-B2F2-1D1FEF0E5781';
 
-    var location = document.getElementById("location");
-    console.log(location);
-    var type = document.getElementById("type");
-    console.log(type);
+    var apply = document.getElementById("apply").value;
+    console.log(apply);
 
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
