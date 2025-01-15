@@ -70,10 +70,12 @@
           </td>
         </tr>
         </th:block>
+        <th:block th:if="${apply.completedYn.toString() == 'Y'}">
           <tr>
             <th>결과확인</th>
             <td colspan="3"><a href="#this" id="result">결과보기</a></td>
           </tr>
+        </th:block>
         </tbody>
       </table>
       </form>
