@@ -47,7 +47,11 @@
             <th:block th:each="apply, stat : ${applies.content}">
                 <tr class="tr-click" th:id="${apply.id}">
                     <!-- 신청현황 번호 출력 -->
+<<<<<<< HEAD
+                    <td th:text="${#lists.size(applies) - (applies.pageable.pageNumber * 10) - stat.index}"></td>
+=======
                     <td th:text="${count - (applies.pageable.pageNumber * 10) - stat.index}"></td>
+>>>>>>> cda94b1ed5b448e9d7cf3d6cbe5a6dfcc46e5124
                     <td>
                         <a th:href="@{/analysis/detail(id=${apply.id})}" th:text="${apply.title}"></a>
                     </td>
