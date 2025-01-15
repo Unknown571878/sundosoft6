@@ -1025,7 +1025,8 @@
             map.touchZoom.enable();
             map.doubleClickZoom.enable();
             map.scrollWheelZoom.enable();
-            function getFeatureInfoUrl(map, layer, latlng) {
+
+            function getFeatureInfoUrl(map, layer, latlng, bufferInPixels = 10) {
                 const point = map.latLngToContainerPoint(latlng, map.getZoom());
                 const size = map.getSize();
 
@@ -1045,45 +1046,71 @@
                     info_format: 'application/json',
                     x: Math.round(point.x),
                     y: Math.round(point.y),
+                    i: Math.round(point.x - bufferInPixels), // 좌측 버퍼
+                    j: Math.round(point.y - bufferInPixels), // 상단 버퍼
+                    i_max: Math.round(point.x + bufferInPixels), // 우측 버퍼
+                    j_max: Math.round(point.y + bufferInPixels), // 하단 버퍼
                 };
-
                 return layer._url + L.Util.getParamString(params, layer._url, true);
             }
             // 지도 클릭 이벤트
             map.on('click', function (e) {
                 const latlng = e.latlng;
-                // 활성화된 레이어에서 데이터를 가져옴
-                activeLayers.forEach(layer => {
+
+                // 모든 활성화된 레이어에서 데이터를 가져옴
+                const fetchPromises = activeLayers.map(layer => {
                     const url = getFeatureInfoUrl(map, layer, latlng);
-
-                    // GetFeatureInfo 요청
-                    fetch(url)
+                    return fetch(url)
                         .then(response => response.json())
-                        .then(data => {
-                            // 데이터 처리 및 모달 표시
-                            const modal = document.getElementById('modal');
-                            const modalContent = document.getElementById('modal-content');
-
-                            // GeoServer에서 반환된 데이터 처리
-                            if (data && data.features && data.features.length > 0) {
-                                const properties = data.features[0].properties;
-                                let contentHtml = `<h3>레이어 데이터</h3><ul>`;
-                                for (const [key, value] of Object.entries(properties)) {
-                                    contentHtml += `<li><strong>${key}:</strong> ${value}</li>`;
-                                }
-                                contentHtml += `</ul>`;
-                                modalContent.innerHTML = contentHtml;
-                                console.log(properties)
-                            } else {
-                                modalContent.innerHTML = '<p>데이터가 없습니다.</p>';
-                            }
-
-                            // 모달창 열기
-                            modal.style.display = 'block';
-                        })
+                        .then(data => ({
+                            layerName: layer.options.layers, // 레이어 이름 추가
+                            data: data,
+                        }))
                         .catch(error => {
-                            console.error('Error fetching feature info:', error);
+                            console.error(`Error fetching feature info for layer ${layer.options.layers}:`, error);
+                            return null; // 오류가 발생한 경우 null 반환
                         });
+                });
+
+                // 모든 레이어의 데이터 처리
+                Promise.all(fetchPromises).then(results => {
+                    // 데이터를 처리할 컨테이너
+                    const modal = document.getElementById('modal');
+                    const modalContent = document.getElementById('modal-content');
+                    let contentHtml = '';
+
+                    // 처음에 모든 레이어 이름을 모달에 표시
+                    results.forEach(result => {
+                        if (result && result.data && result.data.features && result.data.features.length > 0) {
+                            contentHtml += `<h3 id="${result.layerName}">레이어: ${result.layerName}</h3><ul>`;
+                        }
+                    });
+
+                    if (contentHtml) {
+                        modalContent.innerHTML = contentHtml;
+                        modal.style.display = 'block'; // 모달창 열기
+
+                        // 각 레이어 제목 클릭 시 해당 레이어의 데이터만 표시하도록 이벤트 리스너 추가
+                        results.forEach(result => {
+                            const layerElement = document.getElementById(result.layerName);
+                            if (layerElement) {
+                                layerElement.addEventListener('click', function () {
+                                    // 클릭된 레이어의 데이터만 모달에 표시
+                                    let layerDataHtml = `<h3>레이어: ${result.layerName}</h3><ul>`;
+                                    const properties = result.data.features[0].properties;
+                                    for (const [key, value] of Object.entries(properties)) {
+                                        layerDataHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                                    }
+                                    layerDataHtml += `</ul>`;
+
+                                    // 모달에 해당 레이어의 데이터만 업데이트
+                                    modalContent.innerHTML = layerDataHtml;
+                                });
+                            }
+                        });
+                    } else {
+                        console.log('겹치는 레이어에서 데이터가 없습니다.');
+                    }
                 });
             });
         });
