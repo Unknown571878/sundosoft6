@@ -47,7 +47,7 @@ public class AdminController {
     // 메시지 출력 및 리다이렉트를 처리하는 공통 메서드.
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
-        return "/common/messageRedirect";
+        return "common/messageRedirect";
     }
     // 현재 시간을 반환하는 공통 메서드.
     private LocalDateTime getCurrentTime() {
@@ -67,7 +67,7 @@ public class AdminController {
     // 공지사항 관리
     // -------------------------------------------
 
-    @GetMapping("/admin_notice")
+    @GetMapping("/admin/admin_notice")
     public String noticeList(Model model,
                              @PageableDefault(page = 0, size = 10) Pageable pageable) {
         List<Notice> notices = noticeService.getAllNotices();
@@ -88,7 +88,7 @@ public class AdminController {
                                @RequestParam String content,
                                @RequestParam("files") MultipartFile[] files) throws IOException {
         noticeService.createNotice(title, content,files); // 서비스 호출하여 공지사항 생성
-        return "redirect:/admin_notice";
+        return "redirect:/admin/admin_notice";
     }
 
     @GetMapping("/admin/noticeDetail")
@@ -105,20 +105,20 @@ public class AdminController {
     @PostMapping("/admin/updateNotice")
     public String updateNotice(Notice notice) {
         noticeService.updateNotice(notice);
-        return "redirect:/admin_notice";
+        return "redirect:/admin/admin_notice";
     }
 
     @PostMapping("/admin/deleteNotice")
     public String deleteNotice(@RequestParam Long id) {
         noticeService.deleteNotice(id);
-        return "redirect:/admin_notice";
+        return "redirect:/admin/admin_notice";
     }
 
     // -------------------------------------------
     // Q&A 관리
     // -------------------------------------------
 
-    @GetMapping("/admin_qna")
+    @GetMapping("/admin/admin_qna")
     public String qnaList(Model model) {
         model.addAttribute("now", getCurrentTime());
         model.addAttribute("qna", qnARepository.findAll());
@@ -135,7 +135,7 @@ public class AdminController {
         model.addAttribute("qna", qnAList);
         model.addAttribute("lists", qnaService.getInquiryReplies(id));
         model.addAttribute("now", getCurrentTime());
-        return "/admin/admin_qnaDetail";
+        return "admin/admin_qnaDetail";
     }
 
     @PostMapping("/admin/inquiryInsert")
@@ -167,17 +167,17 @@ public class AdminController {
     // FAQ 관리
     // -------------------------------------------
 
-    @GetMapping("/admin_faq")
+    @GetMapping("/admin/admin_faq")
     public String faq(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
         model.addAttribute("faqs", faqService.getAllFAQs(pageable));
-        return "/admin/admin_faq";
+        return "admin/admin_faq";
     }
 
     @GetMapping("/admin/admin_faqDetail")
     public String faqDetail(@RequestParam Long id, Model model) {
         model.addAttribute("now", getCurrentTime());
         model.addAttribute("faq", faqService.faqDetail(id));
-        return "/admin/admin_faqDetail";
+        return "admin/admin_faqDetail";
     }
 
     @GetMapping("/admin/admin_faqWrite")
@@ -190,7 +190,7 @@ public class AdminController {
                             @RequestParam String question,
                             @RequestParam String answer) {
         faqService.faqCreate(title, question, answer);
-        return "redirect:/admin_faq";
+        return "redirect:/admin/admin_faq";
     }
 
     @PostMapping("/admin/admin_faqUpdate")
@@ -199,7 +199,7 @@ public class AdminController {
                             @RequestParam String question,
                             @RequestParam String answer) {
         faqService.faqUpdate(id, title, question, answer);
-        return "redirect:/admin_faq";
+        return "redirect:/admin/admin_faq";
     }
 
     @PostMapping("/admin/admin_faqDelete")
@@ -214,28 +214,33 @@ public class AdminController {
     // -------------------------------------------
 
     // 신청내역 목록/신청내역 상세/신청한 입지분석 적용 후 완료된 내역을 메일로?? 어떻게 해야하지
-    @GetMapping("/admin_apply")
+    @GetMapping("/admin/admin_apply")
     public String apply(Model model) {
         model.addAttribute("applies", applyRepository.findAll());
         model.addAttribute("now", getCurrentTime());
-        return "/admin/admin_apply";
+        return "admin/admin_apply";
     }
 
-    @GetMapping("/admin_apply/detail")
+    @GetMapping("/admin/admin_apply/detail")
     public String applyDetail(@RequestParam Long id, Model model) {
         model.addAttribute("apply", applyService.selectApplyDetail(id));
         model.addAttribute("now", getCurrentTime());
-        return "/admin/admin_applyDetail";
+        return "admin/admin_applyDetail";
     }
 
-    @PostMapping("/admin_apply_result")
+    @PostMapping("/admin/admin_apply_result")
     public String applyResult(Apply apply){
         Apply updateApply = applyRepository.selectApplyDetail(apply.getId());
         updateApply.setCompletedYn('Y');
         updateApply.setLink(apply.getLink());
+<<<<<<< HEAD
         updateApply.setLocation(apply.getLocation());
         updateApply.setType(apply.getType());
         applyService.updateApply(updateApply);
         return "redirect:/admin_apply";
+=======
+        applyService.updateApply(apply);
+        return "redirect:/admin/admin_apply";
+>>>>>>> fb1feb2de6efaa891eb4f359a60ceaf1f544fc46
     }
 }

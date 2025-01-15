@@ -42,20 +42,18 @@ public class QnaController {
      */
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
-        return "/common/messageRedirect";
+        return "common/messageRedirect";
     }
 
     // Q&A 목록 페이지를 반환합니다.
     @GetMapping("/inquiry")
     public String qnaList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = getAuthInfo(session, model);
-        if (authInfo == null) return showMessageAndRedirect(new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null), model);
-
         model.addAttribute("now", LocalDateTime.now());
         Page<QnaList> inquiries = qnaService.getInquiries(authInfo, pageable);
         model.addAttribute("inquiries", inquiries);
         model.addAttribute("posts", qnaService.getInquiryList(authInfo));
-        return "/qna/inquiry";
+        return "qna/inquiry";
     }
 
 
@@ -69,13 +67,13 @@ public class QnaController {
         model.addAttribute("now", now);
         Member member = memberRepository.findById(qnAList.getUid()).get();
         model.addAttribute("member", member);
-        return "/qna/inquiryDetail";
+        return "qna/inquiryDetail";
     }
 
     // Q&A 작성 페이지를 반환합니다.
     @GetMapping("/inquiryInsertForm")
     public String qnaInsertForm() {
-        return "/qna/inquiryInsertForm";
+        return "qna/inquiryInsertForm";
     }
 
     // 새로운 Q&A를 생성합니다.

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/css/adminapply.css">
 </head>
 <body>
-<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+<th:block th:replace="admin/adminHeader :: headerLayout"></th:block>
 
 <!-- 본문 내용 시작 -->
 <div class="ft">
@@ -99,7 +99,7 @@
   document.querySelectorAll('.tr-click').forEach(function(tr){
     tr.addEventListener('click', function () {
       let index = tr.id.trim();
-      window.location.href = '/admin_apply/detail?id=' + index;
+      window.location.href = '/admin/admin_apply/detail?id=' + index;
     });
   });
 
@@ -130,6 +130,6 @@
 </script>
 
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
-<th:block th:replace="/layout/footer :: footerLayout"></th:block>
+<th:block th:replace="layout/footer :: footerLayout"></th:block>
 </body>
 </html>

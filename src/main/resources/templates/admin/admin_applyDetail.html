@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
-<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+<th:block th:replace="admin/adminHeader :: headerLayout"></th:block>
 <div class="ft">
   <div class="container">
     <div class="main-title">
@@ -110,7 +110,7 @@
     });
     $("#result").on("click", function(){
       var frm = $("#frm")[0];
-      frm.action = "/admin_apply_result";
+      frm.action = "/admin/admin_apply_result";
       frm.submit();
     });
   });
@@ -148,6 +148,5 @@
   // Initialize options based on default city
   updateOptions();
 </script>
-</div>
 </body>
 </html>

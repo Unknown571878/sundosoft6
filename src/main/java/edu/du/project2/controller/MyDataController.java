@@ -20,22 +20,17 @@ public class MyDataController {
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
-        return "/common/messageRedirect";
+        return "common/messageRedirect";
     }
 
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        if (session.getAttribute("authInfo") == null) {
-            MessageDto message = new MessageDto("로그인이 필요한 서비스입니다", "/", RequestMethod.GET, null);
-            return showMessageAndRedirect(message, model);
-        }
-
         model.addAttribute("my", authInfo);
         return "user/profile"; // 프로필 페이지 반환
     }
 
-    @PostMapping("/updateProfile")
+    @PostMapping("/profile/updateProfile")
     public String updateProfile(@ModelAttribute AuthInfo authInfo, HttpSession session, RedirectAttributes redirectAttributes) {
         profileService.updateProfile(authInfo);
         session.setAttribute("authInfo", authInfo);
@@ -44,7 +39,7 @@ public class MyDataController {
         return "redirect:/profile";
     }
 
-    @GetMapping("/checkLoginId")
+    @GetMapping("/profile/checkLoginId")
     @ResponseBody
     public String checkLoginId(String loginId) {
         boolean isAvailable = memberService.checkLoginId(loginId);

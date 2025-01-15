@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/header.css">
 </head>
 <body>
-<th:block th:replace="/admin/adminHeader :: headerLayout"></th:block>
+<th:block th:replace="admin/adminHeader :: headerLayout"></th:block>
 <div class="ft">
   <div class="container">
     <div class="main-title">
@@ -81,7 +81,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#list").on("click", function(){
-      location.href = "/admin_notice";
+      location.href = "/admin/admin_notice";
     });
 
     $("#edit").on("click", function(){
