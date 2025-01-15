@@ -1,9 +1,14 @@
 package edu.du.project2.service;
 
+import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.entity.Apply;
 import edu.du.project2.entity.FileDetail;
+import edu.du.project2.entity.QnaList;
 import edu.du.project2.repository.ApplyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +35,18 @@ public class ApplyService {
     // 모든 입지 분석 신청서를 생성일시 내림차순으로 정렬.
     public List<Apply> findAll() {
         return applyRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
+    }
+
+    // 입지 분석 신청서를 페이징 처리하여 반환.
+    public Page<Apply> applyPage(Pageable pageable) {
+        List<Apply> list = applyRepository.findAll();
+        return createPage(list, pageable);
+    }
+
+    private Page<Apply> createPage(List<Apply> list, Pageable pageable) {
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), list.size());
+        return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 
     /**
