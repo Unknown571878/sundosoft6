@@ -113,17 +113,14 @@ public class ApplyController {
     }
     @PostMapping("/analysisResult")
     public String result(Apply apply, Model model) throws IOException {
-        // Apply 객체를 JSON 문자열로 변환
-        Apply apply1 = applyService.selectApplyDetail(apply.getId());
-        String location = apply1.getLocation();
-        String type = apply1.getType();
+        String location = apply.getLocation();
+        String type = apply.getType();
         // 파일 내용 읽기
         String filePath = apply.getLink();
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
-        System.out.println(apply1);
+        System.out.println(apply);
         System.out.println(location);
         System.out.println(type);
-        model.addAttribute("apply", apply1);
         model.addAttribute("location", location);
         model.addAttribute("type", type);
         model.addAttribute("content", content);  // 파일 내용을 전달
