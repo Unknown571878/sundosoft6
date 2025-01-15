@@ -1025,6 +1025,7 @@
             map.touchZoom.enable();
             map.doubleClickZoom.enable();
             map.scrollWheelZoom.enable();
+
             // 지도 클릭 이벤트
             map.on('click', function (e) {
                 const { lat, lng } = e.latlng; // Leaflet 기준 좌표 가져오기
