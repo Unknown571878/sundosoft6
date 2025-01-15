@@ -1397,13 +1397,13 @@
     }
 
     function updateTab4Weights() {
-        const accessibilitySlider = document.getElementById('input-tab4-2');
-        const accessibilityWeight = parseFloat(accessibilitySlider.value).toFixed(1);
-        const demandWeight = (1.0 - accessibilityWeight).toFixed(1);
+        const demandSlider = document.getElementById('input-tab4-2');
+        const demandWeight =  parseFloat(demandSlider.value).toFixed(1);
+        const accessibilityWeight = (1.0 - demandWeight).toFixed(1);
 
         // 업데이트된 값 표시
-        document.getElementById('accessibility-weight').textContent = accessibilityWeight;
         document.getElementById('demand-weight').textContent = demandWeight;
+        document.getElementById('accessibility-weight').textContent = accessibilityWeight;
     }
 
 
