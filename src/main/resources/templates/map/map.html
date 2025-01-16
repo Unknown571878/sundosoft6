@@ -66,37 +66,142 @@
     let draggedItem = null; // 드래그 중인 항목
     let placeholder = null; // 플레이스홀더 요소
     let layer_list = [];
-    const categoryButton = document.querySelectorAll('#category-button button');
-    const submenuList = document.querySelectorAll('#submenu-list li');
-    const submenuList2 = document.querySelectorAll('#submenu-list2 li');
+    // 카테고리 버튼과 리스트 요소 가져오기
+    const categoryButtons = document.querySelectorAll('#category-button button');
+    const submenuList = document.querySelectorAll('#submenu-list li'); // list의 항목들
+    const submenuList2 = document.querySelectorAll('#submenu-list2 li'); // list2의 항목들
 
-    // 각 버튼에 클릭 이벤트 추가
-    categoryButton.forEach((button) => {
+    let activeTab = 'list'; // 기본값: list
+    let category = 'all';
+
+    // 카테고리 버튼 클릭 이벤트 추가
+    categoryButtons.forEach((button) => {
         button.addEventListener('click', () => {
-            const category = button.id.replace('category-', '');
-            if (category === 'all') {
-                // "전체" 버튼 클릭 시 모든 li 표시
-                submenuList.forEach((li) => li.classList.remove('hidden'));
-                submenuList2.forEach((li) => li.classList.remove('hidden'));
-            } else {
-                // 모든 li 숨기기
-                submenuList.forEach((li) => {
-                    if (li.id.includes(category)) {
-                        li.classList.remove('hidden'); // 선택된 카테고리는 표시
-                    } else {
-                        li.classList.add('hidden'); // 나머지는 숨기기
+            category = button.id.replace('category-', '');
+
+            switch (activeTab) {
+                case 'list':
+                    switch (category) {
+                        case 'all':
+                            submenuList.forEach((li) => li.classList.remove('hidden'));
+                            break;
+                        case 'library':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('library') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'wifi':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('wifi') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'issuingMachine':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('issuingMachine') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'shade':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('shade') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('traffic') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
                     }
-                });
-                submenuList2.forEach((li) => {
-                    if (li.id.includes(category)) {
-                        li.classList.remove('hidden'); // 선택된 카테고리는 표시
-                    } else {
-                        li.classList.add('hidden'); // 나머지는 숨기기
+                    break;
+
+                case 'list2':
+                    // list2가 활성화된 경우
+                    switch (category) {
+                        case 'all':
+                            submenuList2.forEach((li) => li.classList.remove('hidden'));
+                            break;
+                        case 'library':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('library2') ||
+                                    li.id.includes('population2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'wifi':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('wifi2') ||
+                                    li.id.includes('population2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'issuingMachine':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('issuingMachine2') ||
+                                    li.id.includes('population2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'shade':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('shade2') ||
+                                    li.id.includes('population2') ||
+                                    li.id.includes('traffic2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
                     }
-                });
+                    break;
             }
         });
     });
+
     // 드래그 앤 드롭 이벤트 처리
     draggableList.addEventListener('dragstart', (e) => {
         if (e.target.tagName === 'LI') { // 드래그가 LI 요소에서 시작될 때만 실행
@@ -474,7 +579,8 @@
         { id: 'cheonan_digital_a00_33327', name: '자전거도로' },
         { id: 'cheonan_digital_a00_93351', name: '(입체교차부)고가차도' },
         { id: 'cheonan_digital_a00_93352', name: '(입체교차부)지하차도' },
-        { id: 'cheonan_digital_a00_43325', name: '횡단보도' }
+        { id: 'cheonan_digital_a00_43325', name: '횡단보도' },
+        { id: 'gwangju_flow_pop', name: '유동인구'}
     ];
 
     // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
@@ -810,7 +916,8 @@
         { id: 'cheonan_digital_a00_33327', layerIndex: 330, shape: "line" },
         { id: 'cheonan_digital_a00_93351', layerIndex: 331, shape: "line" },
         { id: 'cheonan_digital_a00_93352', layerIndex: 332, shape: "line" },
-        { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" }
+        { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" },
+        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "line"}
     ];
     const layers_style = [
         { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
@@ -950,6 +1057,10 @@
         const gwangjuTabContent = document.querySelectorAll(".tab-content");
         gwangjuTabContent.forEach((input) => (input.style.display = "none"));
         gwangjuTabContent[0].style.display = "block";
+
+        activeTab = 'list';
+        category = 'all';
+        submenuList.forEach((li) => li.classList.remove('hidden'));
     });
     // 천안 버튼 클릭 시
     document.getElementById('btn-cheonan').addEventListener('click', function() {
@@ -975,6 +1086,10 @@
         const cheonanTabContent = document.querySelectorAll(".tab-content");
         cheonanTabContent.forEach((content) => (content.style.display = "none"));
         cheonanTabContent[4].style.display = "block";
+
+        activeTab = 'list2';
+        category = 'all';
+        submenuList2.forEach((li) => li.classList.remove('hidden'));
     });
     // 지도 생성
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
