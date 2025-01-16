@@ -79,58 +79,7 @@
           </li>
         </ul>
       </li>
-      <li>
-        <span class="submenu-item" onclick="toggleSubmenu(event, this)">교통현황</span>
-        <ul class="submenu">
-          <li class="check-item">
-            <span class="submenu-item">교통현황</span>
-            <input type="checkbox" id="gwangju_gtr">
-          </li>
-        </ul>
-      </li>
-      <li>
-        <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물현황</span>
-        <ul class="submenu">
-          <li>
-            <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
-            <ul class="submenu">
-              <li class="check-item">
-                <span class="submenu-item">통합</span>
-                <input type="checkbox" id="gwangju_gm">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">공공용</span>
-                <input type="checkbox" id="gwangju_gm_ggy">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">공업용</span>
-                <input type="checkbox" id="gwangju_gm_gyy">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">농수산용</span>
-                <input type="checkbox" id="gwangju_gm_nssy">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">문교사회용</span>
-                <input type="checkbox" id="gwangju_gm_mgshy">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">상업용</span>
-                <input type="checkbox" id="gwangju_gm_syy">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">주거용</span>
-                <input type="checkbox" id="gwangju_gm_jgy">
-              </li>
-              <li class="check-item">
-                <span class="submenu-item">기타</span>
-                <input type="checkbox" id="gwangju_gm_gt">
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
+      <li id="population">
         <span class="submenu-item" onclick="toggleSubmenu(event, this)">인구</span>
         <ul class="submenu">
           <li class="check-item">
@@ -180,6 +129,66 @@
           <li class="check-item">
             <span class="submenu-item">90대</span>
             <input type="checkbox" id="gwangju_population_90y_2024_10">
+          </li>
+        </ul>
+      </li>
+      <li id="floating-population">
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">유동인구</span>
+        <ul class="submenu">
+          <li class="check-item">
+            <span class="submenu-item">유동인구</span>
+            <input type="checkbox" id="gwangju_flow_pop">
+          </li>
+        </ul>
+      </li>
+      <li id="traffic">
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">교통현황</span>
+        <ul class="submenu">
+          <li class="check-item">
+            <span class="submenu-item">교통현황</span>
+            <input type="checkbox" id="gwangju_gtr">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물현황</span>
+        <ul class="submenu">
+          <li>
+            <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물</span>
+            <ul class="submenu">
+              <li class="check-item">
+                <span class="submenu-item">통합</span>
+                <input type="checkbox" id="gwangju_gm">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">공공용</span>
+                <input type="checkbox" id="gwangju_gm_ggy">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">공업용</span>
+                <input type="checkbox" id="gwangju_gm_gyy">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">농수산용</span>
+                <input type="checkbox" id="gwangju_gm_nssy">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">문교사회용</span>
+                <input type="checkbox" id="gwangju_gm_mgshy">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">상업용</span>
+                <input type="checkbox" id="gwangju_gm_syy">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">주거용</span>
+                <input type="checkbox" id="gwangju_gm_jgy">
+              </li>
+              <li class="check-item">
+                <span class="submenu-item">기타</span>
+                <input type="checkbox" id="gwangju_gm_gt">
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
@@ -936,7 +945,7 @@
           </li>
         </ul>
       </li>
-      <li>
+      <li id="population2">
         <span class="submenu-item" onclick="toggleSubmenu(event, this)">인구</span>
         <ul class="submenu">
           <li class="check-item">
@@ -984,6 +993,28 @@
             <input type="checkbox" id="cheonan_population_80y_2024_10">
           </li>
 
+        </ul>
+      </li>
+      <li id="traffic2">
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">교통현황</span>
+        <ul class="submenu">
+          <li class="check-item">
+            <span class="submenu-item">신호등</span>
+            <input type="checkbox" id="cheonan_shd_20240610">
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물현황</span>
+        <ul class="submenu">
+          <li class="check-item">
+            <span class="submenu-item">동남구</span>
+            <input type="checkbox" id="cheonan_dng_gm">
+          </li>
+          <li class="check-item">
+            <span class="submenu-item">서북구</span>
+            <input type="checkbox" id="cheonan_sbg_gm">
+          </li>
         </ul>
       </li>
       <li>
@@ -1203,28 +1234,6 @@
                 <input type="checkbox" id="cheonan_toji_use_4310">
               </li>
             </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <span class="submenu-item" onclick="toggleSubmenu(event, this)">교통</span>
-        <ul class="submenu">
-          <li class="check-item">
-            <span class="submenu-item">신호등</span>
-            <input type="checkbox" id="cheonan_shd_20240610">
-          </li>
-        </ul>
-      </li>
-      <li>
-        <span class="submenu-item" onclick="toggleSubmenu(event, this)">건물현황</span>
-        <ul class="submenu">
-          <li class="check-item">
-            <span class="submenu-item">동남구</span>
-            <input type="checkbox" id="cheonan_dng_gm">
-          </li>
-          <li class="check-item">
-            <span class="submenu-item">서북구</span>
-            <input type="checkbox" id="cheonan_sbg_gm">
           </li>
         </ul>
       </li>
