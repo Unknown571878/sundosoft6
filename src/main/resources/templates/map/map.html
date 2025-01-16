@@ -17,6 +17,47 @@
         #map {
             height: 950px; /* 지도 높이 */
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff; /* 배경색 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;  /* 헤더 배경색 */
+            color: white; /* 헤더 텍스트 색 */
+            font-weight: bold;
+        }
+
+        td {
+            font-size: 14px; /* 내용 텍스트 크기 */
+            color: #333;  /* 텍스트 색 */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* 짝수 행 배경색 */
+        }
+
+        tr:hover {
+            background-color: #ddd;  /* 마우스를 올렸을 때 배경색 변경 */
+            cursor: pointer;
+        }
+
+        table th, table td {
+            text-align: center; /* 기본적으로 텍스트 가운데 정렬 */
+        }
+
+        table td {
+            word-wrap: break-word; /* 긴 텍스트가 있을 경우 자동으로 줄바꿈 */
+        }
     </style>
 </head>
 <body>
@@ -1106,7 +1147,7 @@
                     const modal = document.getElementById('modal');
                     const modalContent = document.getElementById('modal-content');
                     let contentHtml = '';
-                    let modal_name = "";
+                    let modal_names = [];
 
                     // 변환할 단어와 대응되는 이름을 객체로 정의
                     const layerNameMap = {
@@ -1149,39 +1190,31 @@
                             let additionalInfo = '';
                             if (displayName === "행정동" && result.data.features[0].properties.adm_nm) {
                                 additionalInfo = `${result.data.features[0].properties.adm_nm}`
-                                modal_name = additionalInfo;
                             } else if (displayName === "행정구" && result.data.features[0].properties.sgg_nm) {
                                 let sggName = result.data.features[0].properties.sgg_nm;
                                 sggName = sggName.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
                                 additionalInfo = `${sggName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "행정시" && result.data.features[0].properties.sgg_nm) {
                                 let sggName = result.data.features[0].properties.sgg_nm;
                                 sggName = sggName.replace("충청남도", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
                                 additionalInfo = `${sggName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "도서관" && result.data.features[0].properties.library_na) {
                                 additionalInfo = `${result.data.features[0].properties.library_na}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "무인 발급기" && result.data.features[0].properties.name) {
                                 let name = result.data.features[0].properties.name;
                                 name = name.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
                                 additionalInfo = `${name}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "와이파이" && result.data.features[0].properties.name) {
                                 additionalInfo = `${result.data.features[0].properties.name}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "교통현황" && result.data.features[0].properties.c1) {
                                 let c1 = result.data.features[0].properties.c1;
                                 c1 = c1.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
                                 additionalInfo = `${c1}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "건물 현황" && result.data.features[0].properties.a29) {
                                 let a27 = result.data.features[0].properties.a27;
                                 let a29 = result.data.features[0].properties.a29;
                                 a29 = a29 + " " + a27;
                                 additionalInfo = `${a29}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "인구" && result.layerName.includes("ne:gwangju_population")) {
                                 let layerName = result.layerName;
                                 layerName = layerName.replace("ne:gwangju_population_", "").trim();
@@ -1212,7 +1245,6 @@
                                     layerName = "90대 이상";
                                 }
                                 additionalInfo = `${layerName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "인구" && result.layerName.includes("ne:cheonan_population")) {
                                 let layerName = result.layerName;
                                 layerName = layerName.replace("ne:cheonan_population_", "").trim();
@@ -1241,13 +1273,10 @@
                                     layerName = "80대 이상";
                                 }
                                 additionalInfo = `${layerName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "유동인구" && result.data.features[0].properties.name) { // 해야됨
                                 additionalInfo = `${result.data.features[0].properties.name}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "신호등" && result.data.features[0].properties.name) { // 해야됨
                                 additionalInfo = `${result.data.features[0].properties.name}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "토지 이용현황" && result.data.features[0].properties.ucb) {
                                 let ucb = result.data.features[0].properties.ucb;
                                 const ucbNames = {
@@ -1292,10 +1321,8 @@
                                 };
                                 let ucbName = ucbNames[ucb] || "알 수 없음";  // 해당 코드가 없으면 "알 수 없음" 표시
                                 additionalInfo = `${ucbName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "토지 소유 정보" && result.data.features[0].properties.a8) {
                                 additionalInfo = `${result.data.features[0].properties.a8}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "토지 특성 공간" && result.data.features[0].properties.a13) {
                                 let landUse = result.data.features[0].properties.a13;
                                 const landUseType = {
@@ -1328,7 +1355,6 @@
                                 };
                                 let landName = landUseType[landUse] || "기타";  // 해당 코드가 없으면 "기타" 표시
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "도로" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeA = {
@@ -1440,7 +1466,6 @@
                                 };
                                 let landName = landTypeA[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "건물" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeB = {
@@ -1592,7 +1617,6 @@
                                 };
                                 let landName = landTypeB[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "시설" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeC = {
@@ -1812,7 +1836,6 @@
                                 };
                                 let landName = landTypeC[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "식생" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeD = {
@@ -1849,7 +1872,6 @@
                                 };
                                 let landName = landTypeD[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "수계" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeE = {
@@ -1879,7 +1901,6 @@
                                 };
                                 let landName = landTypeE[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "지형" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeF = {
@@ -1914,7 +1935,6 @@
                                 };
                                 let landName = landTypeF[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "경계" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeG = {
@@ -1976,7 +1996,6 @@
                                 };
                                 let landName = landTypeG[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
                             } else if (displayName === "주기" && result.data.features[0].properties.layer) {
                                 let landType = result.data.features[0].properties.layer;
                                 const landTypeH = {
@@ -2064,7 +2083,13 @@
                                 };
                                 let landName = landTypeH[landType] || "알 수 없음";
                                 additionalInfo = `${landName}`;
-                                modal_name = additionalInfo;
+                            }
+                            if (additionalInfo) {
+                                modal_names.push({
+                                    layerName: result.layerName,
+                                    additionalInfo: additionalInfo,
+                                    displayName: displayName
+                                });
                             }
                             contentHtml += `<h3 id="${result.layerName}">${displayName} : ${additionalInfo} </h3>`;
                         }
@@ -2093,14 +2118,119 @@
                             const layerElement = document.getElementById(result.layerName);
                             if (layerElement) {
                                 layerElement.addEventListener('click', function () {
+                                    // 클릭된 레이어에 맞는 추가 정보를 찾아서 표시
+                                    const matchingInfo = modal_names.find(info => info.layerName === result.layerName);
+                                    let additionalInfo = matchingInfo ? matchingInfo.additionalInfo : '';
+                                    let table_type = matchingInfo ? matchingInfo.displayName : '';
                                     // 클릭된 레이어의 데이터만 테이블 형식으로 표시
-                                    let layerDataHtml = `<h3>${modal_name} : ${result.layerName}</h3><table border="1" style="width:100%; border-collapse: collapse;"><thead><tr><th>속성</th><th>값</th></tr></thead><tbody>`;
-                                    const properties = result.data.features[0].properties;
-                                    for (const [key, value] of Object.entries(properties)) {
-                                        layerDataHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
+                                    let layerDataHtml = `<h3>${additionalInfo}</h3>`;
+                                    if (table_type === "행정동") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>전체인구</th><th>남자</th><th>여자</th></tr>
+                                                                 <tr><td>${properties.total_pp}</td><td>${properties.male}</td><td>${properties.female}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("행정동");
+                                    } else if (table_type === "행정구") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>전체인구</th><th>남자</th><th>여자</th></tr>
+                                                                 <tr><td>${properties.total_pp}</td><td>${properties.male}</td><td>${properties.female}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("행정구");
+                                    } else if (table_type === "행정시") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>전체인구</th><th>남자</th><th>여자</th></tr>
+                                                                 <tr><td>${properties.total_pp}</td><td>${properties.male}</td><td>${properties.female}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("행정시");
+                                    } else if (table_type === "도서관") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>면적</th><td>${properties.building_area}m²</td><th>열람석</th><td>${properties.seats}석</td><th>장서</th><td>${properties.books}권</td></tr>
+                                                            <tr><th rowspan="4">운영 시간</th><td colspan="5">■ 주중 : 월~금 ${properties.saturday_s}~${properties.saturday_e}</td></tr>
+                                                            <tr><td colspan="5">■ 토요일 : ${properties.weekday_st}~${properties.weekday_en}</td></tr>
+                                                            <tr><td colspan="5">■ 일요일 : ${properties.holiday_st}~${properties.holiday_en}</td></tr>
+                                                            <tr><td colspan="5">휴관일 : ${properties.closed_day}</td></tr>
+                                                            <tr><th>주소</th><td colspan="5">${properties.address}</td></tr>
+                                                            <tr><th>연략처</th><td colspan="5">${properties.phone}</td></tr>
+                                                            <tr><th>사이트</th><td colspan="5">${properties.website}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("도서관");
+                                    } else if (table_type === "무인 발급기") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("무인 발급기");
+                                    } else if (table_type === "와이파이") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("와이파이");
+                                    } else if (table_type === "교통현황") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("교통현황");
+                                    } else if (table_type === "건물 현황") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("건물 현황");
+                                    } else if (table_type === "인구") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("인구");
+                                    } else if (table_type === "유동인구") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("유동인구");
+                                    } else if (table_type === "신호등") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("신호등");
+                                    } else if (table_type === "토지 이용현황") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("토지 이용현황");
+                                    } else if (table_type === "토지 소유 정보") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("토지 소유 정보");
+                                    } else if (table_type === "토지 특성 공간") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("토지 특성 공간");
+                                    } else if (table_type === "도로") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("도로");
+                                    } else if (table_type === "건물") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("건물");
+                                    } else if (table_type === "시설") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("시설");
+                                    } else if (table_type === "식생") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("식생");
+                                    } else if (table_type === "수계") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("수계");
+                                    } else if (table_type === "지형") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("지형");
+                                    } else if (table_type === "경계") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("경계");
+                                    } else if (table_type === "주기") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("주기");
+                                    } else {
+                                        console.log("알 수 없는 테이블 유형");
                                     }
-                                    layerDataHtml += `</tbody></table>`;
-
                                     // 모달에 해당 레이어의 데이터만 업데이트
                                     modalContent.innerHTML = layerDataHtml;
                                 });
