@@ -10,4 +10,5 @@ import java.util.List;
 public interface QnaListRepository extends JpaRepository<QnaList, Long> {
     public List<QnaList> findAllByUidOrderByIdDesc(Long uid);
     public List<QnaList> findAllByOrderByIdDesc();
+    public List<QnaList> findAllByStateOrderByIdAsc(char state);
 }

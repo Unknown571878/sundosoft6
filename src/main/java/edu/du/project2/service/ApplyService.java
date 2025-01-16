@@ -32,6 +32,9 @@ public class ApplyService {
     private final ApplyRepository applyRepository;
     private final FileService fileService;
 
+    public List<Apply> needAnswer() {
+        return applyRepository.findAllByCompletedYnOrderByIdAsc('N');
+    }
 
     public Page<Apply> getApplies(AuthInfo authInfo, Pageable pageable) {
         List<Apply> list = authInfo.getRole().equals("ADMIN")

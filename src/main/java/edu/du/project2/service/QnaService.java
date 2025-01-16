@@ -25,6 +25,10 @@ public class QnaService {
     private final QnaListRepository qnaListRepository;
     private final QnaRepository qnaRepository;
 
+    public List<QnaList> needAnswer() {
+        return qnaListRepository.findAllByStateOrderByIdAsc('Q');
+    }
+
     // Q&A 목록을 페이징 처리하여 반환.
     public Page<QnaList> getInquiries(AuthInfo authInfo, Pageable pageable) {
         List<QnaList> list = authInfo.getRole().equals("ADMIN")

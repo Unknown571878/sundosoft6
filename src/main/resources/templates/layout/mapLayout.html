@@ -1788,15 +1788,21 @@
     </div>
 
     <!-- 탭 메뉴 -->
-    <div class="tabs">
+    <div class="tabs" id="gwangju_tab">
       <button class="tab-button active" data-tab="tab1">공공 와이파이</button>
       <button class="tab-button" data-tab="tab2">도서관</button>
       <button class="tab-button" data-tab="tab3">무더위 그늘막</button>
       <button class="tab-button" data-tab="tab4">무인 발급기</button>
     </div>
 
+    <div class="tabs hidden" id="cheonan_tab">
+      <button class="tab-button" data-tab="tab5">새 탭 5</button>
+      <button class="tab-button" data-tab="tab6">새 탭 6</button>
+      <button class="tab-button" data-tab="tab7">새 탭 7</button>
+    </div>
+
     <!-- 탭 내용 -->
-    <div class="tab-content" id="tab1">
+    <div class="tab-content" id="tab1" style="display: block;">
       <input type="text" placeholder="공공 와이파이 1" id="input-tab1-1" />
       <input type="text" placeholder="공공 와이파이 2" id="input-tab1-2" />
       <input type="text" placeholder="공공 와이파이 3" id="input-tab1-3" />
@@ -1844,6 +1850,12 @@
       </div>
     </div>
 
+    <div class="tab-content" id="tab3" style="display: none;">
+      <input type="text" placeholder="--" id="input-tab3-1" />
+      <input type="text" placeholder="--" id="input-tab3-2" />
+      <input type="text" placeholder="--" id="input-tab3-3" />
+    </div>
+
     <div class="tab-content" id="tab4" style="display: none;">
       <!-- 처리방식 -->
       <div style="margin-bottom: 10px;">
@@ -1889,10 +1901,32 @@
       </div>
     </div>
 
+    <div class="tab-content" id="tab5" style="display: none;">
+      <input type="text" placeholder="--" id="input-tab5-1" />
+      <input type="text" placeholder="--" id="input-tab5-2" />
+      <input type="text" placeholder="--" id="input-tab5-3" />
+    </div>
+
+    <div class="tab-content" id="tab6" style="display: none;">
+      <input type="text" placeholder="--" id="input-tab6-1" />
+      <input type="text" placeholder="--" id="input-tab6-2" />
+      <input type="text" placeholder="--" id="input-tab6-3" />
+    </div>
+
+    <div class="tab-content" id="tab7" style="display: none;">
+      <input type="text" placeholder="--" id="input-tab7-1" />
+      <input type="text" placeholder="--" id="input-tab7-2" />
+      <input type="text" placeholder="--" id="input-tab7-3" />
+    </div>
 
     <!-- 하단 버튼 -->
     <div class="action-buttons">
-      <button id="submit-button">제출</button>
+      <th:block th:unless="${session.authInfo}">
+        <button type="button" style="background-color: lightgray;" disabled>로그인이 필요합니다.</button>
+      </th:block>
+      <th:block th:if="${session.authInfo}">
+        <button type="button" id="submit-button">분석 신청</button>
+      </th:block>
     </div>
   </div>
 
