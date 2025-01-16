@@ -946,6 +946,10 @@
         const gwangjuButtons = gwangjuTab.querySelectorAll(".tab-button");
         gwangjuButtons.forEach(button => button.classList.remove("active"));
         gwangjuButtons[0].classList.add("active");
+
+        const gwangjuTabContent = document.querySelectorAll(".tab-content");
+        gwangjuTabContent.forEach((input) => (input.style.display = "none"));
+        gwangjuTabContent[0].style.display = "block";
     });
     // 천안 버튼 클릭 시
     document.getElementById('btn-cheonan').addEventListener('click', function() {
@@ -967,6 +971,10 @@
         const cheonanButtons = cheonanTab.querySelectorAll(".tab-button");
         cheonanButtons.forEach(button => button.classList.remove("active"));
         cheonanButtons[0].classList.add("active");
+
+        const cheonanTabContent = document.querySelectorAll(".tab-content");
+        cheonanTabContent.forEach((content) => (content.style.display = "none"));
+        cheonanTabContent[4].style.display = "block";
     });
     // 지도 생성
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
