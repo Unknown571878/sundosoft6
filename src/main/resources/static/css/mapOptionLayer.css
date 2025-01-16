@@ -650,6 +650,10 @@ button[data-tooltip2]::after {
     padding: 5px;
 }
 
+.tabs.hidden{
+    display: none;
+}
+
 .tab-button {
     flex: 1;
     background: none;

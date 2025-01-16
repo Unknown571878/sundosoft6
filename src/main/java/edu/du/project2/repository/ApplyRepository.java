@@ -1,6 +1,7 @@
 package edu.du.project2.repository;
 
 import edu.du.project2.entity.Apply;
+import edu.du.project2.entity.QnaList;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,5 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
     // 특정 사용자 신청서 목록
     List<Apply> findAllByUidOrderByCreatedAtDesc(Long uid);
 
+    public List<Apply> findAllByCompletedYnOrderByIdAsc(char completedYn);
 }

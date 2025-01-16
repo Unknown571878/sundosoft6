@@ -59,7 +59,13 @@ public class AdminController {
     // -------------------------------------------
 
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(Model model) {
+        List<QnaList> qnAList = qnaService.needAnswer();
+        List<Apply> applyList = applyService.needAnswer();
+        model.addAttribute("qnALists", qnAList);
+        model.addAttribute("now", getCurrentTime());
+        model.addAttribute("member", memberRepository.findAll());
+        model.addAttribute("applyLists", applyList);
         return "admin/adminPage";
     }
 
