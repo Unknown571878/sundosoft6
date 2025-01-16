@@ -27,11 +27,7 @@
         <div class="message-box">
           <label for="answer">A: </label><textarea th:text="${faq.answer}" id="answer" name="answer"></textarea>
         </div>
-      <!-- 게시글 수정, 삭제, 목록으로 돌아가기 버튼 -->
-          <div class="form-actions" th:if="${faq.deletedYn.equals('Y')}">
-            <button type="button" id="list">목록으로 돌아가기</button>
-          </div>
-          <div class="form-actions" th:if="${!faq.deletedYn.equals('Y')}">
+          <div class="form-actions">
             <button type="button" id="list">목록으로 돌아가기</button>
             <button type="button" id="edit">수정하기</button>
             <button type="button" id="delete">삭제하기</button>

@@ -32,9 +32,6 @@ public class Faq {
     private String answer; // 답변
 
     @Column(nullable = false)
-    private char deletedYn; // 삭제 여부 ('Y': 삭제, 'N': 미삭제)
-
-    @Column(nullable = false)
     private LocalDateTime createdAt; // 생성일시
 
     @PrePersist
