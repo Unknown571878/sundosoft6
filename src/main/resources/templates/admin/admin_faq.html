@@ -24,7 +24,7 @@
       </thead>
       <tbody class="post-tbody-tr1">
         <th:block  th:if="${#lists.size(faqs)} > 0" th:each="faq, stat : ${faqs}">
-          <tr class="post-tbody-tr2" th:id="${faq.id}" th:classappend="${#strings.equals(faq.deletedYn, 'Y')} ? 'completed' : ''">
+          <tr class="post-tbody-tr2" th:id="${faq.id}">
             <td class="title"><a href="/admin/admin_faqDetail?id=" th:attrappend="href=${faq.id}" th:text="${faq.title}"></a></td>
           </tr>
         </th:block>

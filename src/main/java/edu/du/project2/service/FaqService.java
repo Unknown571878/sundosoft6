@@ -28,13 +28,13 @@ public class FaqService {
 
     // 삭제되지 않은 FAQ를 페이징 처리하여 반환합니다.
     public Page<Faq> getActiveFAQs(Pageable pageable) {
-        List<Faq> list = faqRepository.findAllByDeletedYn('N');
+        List<Faq> list = faqRepository.findAll();
         return PagingUtils.createPage(list, pageable);
     }
 
     // 삭제되지 않은 FAQ 리스트를 반환합니다.
     public List<Faq> getUserFAQs() {
-        return faqRepository.findAllByDeletedYn('N');
+        return faqRepository.findAll();
     }
 
     // 특정 FAQ의 상세 정보를 반환합니다.
@@ -44,14 +44,12 @@ public class FaqService {
 
     // 특정 FAQ를 삭제 처리합니다.
     public void faqDelete(Long id){
-        Faq faq = faqRepository.findById(id).orElse(null);
-        faq.setDeletedYn('Y');
-        faqRepository.save(faq);
+        faqRepository.deleteById(id);
     }
 
     // 새로운 FAQ를 생성합니다.
     public void faqCreate(String title, String question, String answer) {
-        Faq faq = buildFaq(title, question, answer, 'N');
+        Faq faq = buildFaq(title, question, answer);
         faqRepository.save(faq);
     }
 
@@ -65,12 +63,11 @@ public class FaqService {
     }
 
     // FAQ 객체를 생성합니다.
-    private Faq buildFaq(String title, String question, String answer, char deletedYn) {
+    private Faq buildFaq(String title, String question, String answer) {
         return Faq.builder()
                 .title(title)
                 .question(question)
                 .answer(answer)
-                .deletedYn(deletedYn)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
