@@ -958,7 +958,7 @@
         { id: 'cheonan_digital_a00_93351', layerIndex: 331, shape: "line" },
         { id: 'cheonan_digital_a00_93352', layerIndex: 332, shape: "line" },
         { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" },
-        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "line"}
+        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "none"}
     ];
     const layers_style = [
         { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
@@ -1026,8 +1026,8 @@
     ];
 
     const regions = {
-        gwangju: { center: [35.1595, 126.8526], zoom: 11 },  // 광주의 중심 좌표 및 줌 레벨
-        cheonan: { center: [36.8154, 127.1523], zoom: 12 }   // 천안의 중심 좌표 및 줌 레벨
+        gwangju: { center: [35.1595, 126.8526], zoom: 10 },  // 광주의 중심 좌표 및 줌 레벨
+        cheonan: { center: [36.8154, 127.1523], zoom: 10 }   // 천안의 중심 좌표 및 줌 레벨
     };
     // 현재 지역 상태 저장
     let currentRegion = 'gwangju'; // 초기값: 광주
@@ -1137,19 +1137,19 @@
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
-        "maxZoom": 19,
-        "maxNativeZoom": 19,
+        "maxZoom": 18,
+        "maxNativeZoom": 18,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 6,
         zIndex: 10  // zIndex 설정
     });
     var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 6,
         zIndex: 5  // zIndex 설정
     });
@@ -2725,55 +2725,6 @@
         });
     }
 
-    var category_kiosk = document.getElementById('category-issuingMachine');
-    category_kiosk.addEventListener('click',function (){
-        var data = {
-            name: 'kiosk_20_05',  // 필요에 맞게 수정
-        };
-
-        // 비동기 POST 요청
-        fetch('/json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // 데이터 요청 본문에 포함
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();  // 응답을 JSON으로 파싱
-                } else {
-                    return Promise.reject('서버 응답 실패');
-                }
-            })
-            .then(responseData => {
-                console.log(responseData);  // 응답 데이터 확인
-
-                // 응답 데이터에서 'data' 배열을 가져옵니다.
-                const kiosks = responseData.data;
-
-                // 'total_score'로 내림차순 정렬하여 상위 5개 항목만 추출
-                const topKiosks = kiosks
-                    .sort((a, b) => b.total_score - a.total_score)  // total_score 기준 내림차순 정렬
-                    .slice(0, 5);  // 상위 5개 항목만 선택
-
-                // topKiosks 배열을 순회하면서 각 kiosk 객체에 대해 마커를 추가합니다.
-                topKiosks.forEach(kiosk => {
-                    var lat = kiosk.lat;  // 위도
-                    var lng = kiosk.lon;  // 경도
-                    var popupContent = `여기는 ${kiosk.name || '이름 없음'}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
-
-                    // 마커 추가
-                    L.marker([lat, lng])
-                        .addTo(map)
-                        .bindPopup(popupContent)  // 팝업 내용 추가
-                        .openPopup();  // 팝업 열기 (필요하면 이 줄을 삭제하여 팝업을 열지 않을 수 있음)
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
-            });
-    })
     function updateTab3Weights() {
         const librarySlider = document.getElementById('input-tab2-2');
         const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
