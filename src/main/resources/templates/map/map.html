@@ -958,7 +958,7 @@
         { id: 'cheonan_digital_a00_93351', layerIndex: 331, shape: "line" },
         { id: 'cheonan_digital_a00_93352', layerIndex: 332, shape: "line" },
         { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" },
-        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "line"}
+        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "none"}
     ];
     const layers_style = [
         { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
@@ -1026,8 +1026,8 @@
     ];
 
     const regions = {
-        gwangju: { center: [35.1595, 126.8526], zoom: 11 },  // 광주의 중심 좌표 및 줌 레벨
-        cheonan: { center: [36.8154, 127.1523], zoom: 12 }   // 천안의 중심 좌표 및 줌 레벨
+        gwangju: { center: [35.1595, 126.8526], zoom: 10 },  // 광주의 중심 좌표 및 줌 레벨
+        cheonan: { center: [36.8154, 127.1523], zoom: 10 }   // 천안의 중심 좌표 및 줌 레벨
     };
     // 현재 지역 상태 저장
     let currentRegion = 'gwangju'; // 초기값: 광주
@@ -1137,19 +1137,19 @@
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
-        "maxZoom": 19,
-        "maxNativeZoom": 19,
+        "maxZoom": 18,
+        "maxNativeZoom": 18,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 6,
         zIndex: 10  // zIndex 설정
     });
     var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 6,
         zIndex: 5  // zIndex 설정
     });
@@ -1263,6 +1263,47 @@
                     const modalContent = document.getElementById('modal-content');
                     let contentHtml = '';
                     let modal_names = [];
+                    const ucb_data = {
+                        "1110": "물을 이용하여 벼를 재배하기 위한 토지로 수로가 용수를 공급하는 경지 정리",
+                        "1120": "물을 이용하여 벼를 재배하기 위한 토지로서 주로 계단 형태이며, 경사가 심한 산간지에서 보여지며, 관개시설이 없어지거나 미진한 경지",
+                        "1210": "물을 대지 아니하고 식물을 재배하는 토지로 보통작물인 무, 배추, 시금치 등의 채소와 특수작물인 약초, 인삼, 담배, 대밭, 뽕밭을 포함하며 휴농지 및 간작지를 포함함",
+                        "1220": "과실수를 재배하는 토지로 사과, 배, 복숭아, 포도, 감, 밀감, 밤, 호두나무 등 과실수와 묘목밭(유실수, 관상수)을 포함",
+                        "2110": "자연적으로 조성된 초지로서 벌목지는 도화상에서는 자연초지로 구분을 하고 현지조사 당시의 상태로 재 구분함",
+                        "2120": "축산과 낙농을 위해 사용되는 초지 및 이를 목적으로 인위적으로 조성한 초지와 도로의 절토부분의 공지 및 공사지역의 사면을 포함하고 목장의 경우 목초지가 있는 경우에 인공초지로 구분",
+                        "2210": "전체의 2/3 이상이 침엽수 위주로 이루어진 산림",
+                        "2220": "전체의 2/3 이상이 활엽수 위주로 이루어진 산림",
+                        "2230": "침엽수 또는 활엽수가 혼재하는 산림",
+                        "2310": "골프를 위하여 조성된 녹지와 해당 부대 시설",
+                        "2330": "위락, 휴양 등을 위한 놀이시설이 포함된 대규모 공원(도심지내 소규모 공원은 제외하고 면적이 100x100 이하의 면적을 포함함)",
+                        "2320": "사설 또는 공공 공원묘지",
+                        "2340": "산악지 및 해안가의 바위, 암벽 등을 포함",
+                        "3110": "5층 미만의 연립, 다세대 및 단독 주택지(단독 주택에 일부가 점포로 사용되는 경우에는 일반주택지에 포함)",
+                        "3120": "5층 이상의 공동주택으로 아파트 및 해당 부대시설(100x100 이하의 면적)을 포함함",
+                        "3130": "상가, 시장, 서비스업 등 매매를 위한 건물이나 은행, 사무실 등 업무용 건물이 자리하고 있는 지역 및 부속 주차공간(주택과 상업.업무용 건물이 혼재되어 판별이 어려운 경우 2/3 이상의 용도를 차지하는 토지이용으로 일반주택지와 고층 주택지, 상업.업무지를 구분)",
+                        "3140": "주거 밀집지내 공토로 존재하는 나대지 및 도심지내 소규모 공원 및 녹지, 주거밀집지 및 도심지 내 소규모 공원 및 녹지, 인위적으로 조성된 초지",
+                        "3210": "6m 이상의 고속화도로 및 국도, 지방도, 시.군도와 갓길, 인도포함한 용지를 말하며, 고속도로상의 휴게소는 도로 부대시설로 간주하고 그 외의 휴게소는 상업시설로 분류함",
+                        "3220": "복선 이상의 철로 및 부속용지",
+                        "3230": "항공기 이착륙을 위한 활주로를 포함한 격납고, 승강장, 관제시설 등이 존재하는 지역",
+                        "3240": "선박의 정박과 물품을 하역하는 시설이 존재하는 지역으로 창고시설 등을 포함",
+                        "3310": "제조업에 이용되는 토지 및 대규모 공업단지(상업시설과 공업시설이 혼재되어 있는 경우 2/3 이상의 시설이 차지하는 토지이용으로 구분)",
+                        "3320": "공업지대 내에 아직 시설이 들어서지 않은 대지, 공장지대 또는 공업단지로 조성된 부지 중 아직 개발되지 않은 최소단위면적 이상의 나대지",
+                        "3410": "발전소, 변전소, 정류소, 저유조, LNG저장고 등의 발전시설 및 부속시설",
+                        "3420": "하수종말처리장, 취.정수장, 우수배제시설, 상수가압펌프장, 분뇨처리장, 폐수처리장 등과 해당 부속시설",
+                        "3430": "학교와 학교부속시설, 교도소, 수용소, 군사교육시설, 교회수련원, 폐교인 경우에는 다른 용도로 사용하는 경우에는 해당 용도시설로 구분",
+                        "3440": "도청, 시청, 군청, 구청, 기타 관청, 연구소(정부, 공공, 민간 등), 병원, 용양소, 교회, 절, 경기장 등의 공공시설",
+                        "3510": "어류 및 어패류, 해조류 등을 양식하기 위해 사용하는 시설 및 용지",
+                        "3520": "석재를 채취하는 지역 및 부대시설을 말함, 골재채취장의 경우에는 레미콘 공장이 있는 경우에는 채석장으로 구분하고 없는 경우에는 공업용지로 구분함",
+                        "3530": "폐기물 및 쓰레기 매립지와 집적장, 대규모 소각장",
+                        "3540": "지하에서 온수, 약수, 석유류 등 이 용출되는 용출구와 용출구의 유지를 위한 용지(온천, 광천수 등의 채굴과 유지관리를 위한 시설(온천공, 온수 탱크 등)만으로 판정하고, 위락시설, 복합시설(목욕탕, 놀이 동산)의 경우에는 사용목적에 따라 판정)",
+                        "3550": "대단위 양계장, 축사, 폐축사 등이 밀집된 지역",
+                        "4110": "조수에 따라 그 범위가 달라질 수 있는 지역으로서 수시로 바닷물이 찰 수 있으며, 염분에 강한 식물들이 존재할 수 있는 지역으로 바닷가의 뻘",
+                        "4120": "바닷가에서 소금 생산에 이용되는 지역",
+                        "4210": "실폭하천 및 부속토지(일반적으로 하천에서 제방까지를 포함)",
+                        "4310": "물이 고여있는 저수지, 늪",
+                        "4320": "발전과 홍수 예방 등을 목적으로 건설된 대단위 저수관제 시설로서 제방 상단의 폭이 6m 이상인 조정지 댐과 부대 시설을 포함",
+                        "4410": "바닷가의 모래(해변 또는 사빈) 등"
+                    };
+
 
                     // 변환할 단어와 대응되는 이름을 객체로 정의
                     const layerNameMap = {
@@ -2277,6 +2318,7 @@
                                         console.log("도서관");
                                     } else if (table_type === "무인 발급기") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>연간 이용량</th><td>${properties.use}</td></tr></table>`
                                         console.log(properties)
                                         console.log("무인 발급기");
                                     } else if (table_type === "와이파이") {
@@ -2285,14 +2327,27 @@
                                         console.log("와이파이");
                                     } else if (table_type === "교통현황") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>일시</th><th>시간</th><th>평균 이용량</th></tr>
+                                                            <tr><td>${properties.a1}~${properties.b1}</td><td>${properties.e1}</td><td>${properties.d1}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("교통현황");
                                     } else if (table_type === "건물 현황") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>주소</th><td colspan="2">${properties.a4} ${properties.a7}</td></tr>
+                                                            <tr><th>건물용도분류명</th><th>세부용도명</th><th>주요용도명</th></tr>
+                                                            <tr><td>${properties.a29}</td><td>${properties.a27}</td><td>${properties.a25}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("건물 현황");
                                     } else if (table_type === "인구") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>거주 인원</th><th>위도</th><th>경도</th></tr>
+                                                            <tr><td>${properties.val}</td><td>${properties.lat}</td><td>${properties.lon}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("인구");
                                     } else if (table_type === "유동인구") {
@@ -2304,7 +2359,12 @@
                                         console.log(properties)
                                         console.log("신호등");
                                     } else if (table_type === "토지 이용현황") {
-                                        const properties = result.data.features[0].properties;
+                                        const properties = result.data.features[0].properties.ucb;
+                                        const description = ucb_data[properties];
+                                        layerDataHtml += `<table>
+                                                            <tr><th>설명</th></tr>
+                                                            <tr><td>${description}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("토지 이용현황");
                                     } else if (table_type === "토지 소유 정보") {
@@ -2665,55 +2725,6 @@
         });
     }
 
-    var category_kiosk = document.getElementById('category-issuingMachine');
-    category_kiosk.addEventListener('click',function (){
-        var data = {
-            name: 'kiosk_20_05',  // 필요에 맞게 수정
-        };
-
-        // 비동기 POST 요청
-        fetch('/json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // 데이터 요청 본문에 포함
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();  // 응답을 JSON으로 파싱
-                } else {
-                    return Promise.reject('서버 응답 실패');
-                }
-            })
-            .then(responseData => {
-                console.log(responseData);  // 응답 데이터 확인
-
-                // 응답 데이터에서 'data' 배열을 가져옵니다.
-                const kiosks = responseData.data;
-
-                // 'total_score'로 내림차순 정렬하여 상위 5개 항목만 추출
-                const topKiosks = kiosks
-                    .sort((a, b) => b.total_score - a.total_score)  // total_score 기준 내림차순 정렬
-                    .slice(0, 5);  // 상위 5개 항목만 선택
-
-                // topKiosks 배열을 순회하면서 각 kiosk 객체에 대해 마커를 추가합니다.
-                topKiosks.forEach(kiosk => {
-                    var lat = kiosk.lat;  // 위도
-                    var lng = kiosk.lon;  // 경도
-                    var popupContent = `여기는 ${kiosk.name || '이름 없음'}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
-
-                    // 마커 추가
-                    L.marker([lat, lng])
-                        .addTo(map)
-                        .bindPopup(popupContent)  // 팝업 내용 추가
-                        .openPopup();  // 팝업 열기 (필요하면 이 줄을 삭제하여 팝업을 열지 않을 수 있음)
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
-            });
-    })
     function updateTab3Weights() {
         const librarySlider = document.getElementById('input-tab2-2');
         const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
