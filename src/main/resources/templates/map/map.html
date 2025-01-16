@@ -2260,15 +2260,19 @@
                                     } else if (table_type === "도서관") {
                                         const properties = result.data.features[0].properties;
                                         layerDataHtml += `<table>
-                                                            <tr><th>면적</th><td>${properties.building_area}m²</td><th>열람석</th><td>${properties.seats}석</td><th>장서</th><td>${properties.books}권</td></tr>
+                                                            <tr><th>면적</th><td>${properties.building_a}m²</td><th>열람석</th><td>${properties.seats}석</td><th>장서</th><td>${properties.books}권</td></tr>
                                                             <tr><th rowspan="4">운영 시간</th><td colspan="5">■ 주중 : 월~금 ${properties.saturday_s}~${properties.saturday_e}</td></tr>
                                                             <tr><td colspan="5">■ 토요일 : ${properties.weekday_st}~${properties.weekday_en}</td></tr>
                                                             <tr><td colspan="5">■ 일요일 : ${properties.holiday_st}~${properties.holiday_en}</td></tr>
                                                             <tr><td colspan="5">휴관일 : ${properties.closed_day}</td></tr>
-                                                            <tr><th>주소</th><td colspan="5">${properties.address}</td></tr>
-                                                            <tr><th>연략처</th><td colspan="5">${properties.phone}</td></tr>
-                                                            <tr><th>사이트</th><td colspan="5">${properties.website}</td></tr>
-                                                          </table>`
+                                                            <tr><th>주소</th><td colspan="5">${properties.address}</td></tr>`
+                                        if (properties.phone) {
+                                            layerDataHtml += `<tr><th>연략처</th><td colspan="5">${properties.phone}</td></tr>`;
+                                        }
+                                        if (properties.website && properties.website !== "0") {
+                                            layerDataHtml += `<tr><th>사이트</th><td colspan="5"><a href="${properties.website}" target="_blank">${properties.website}</a></td></tr>`;
+                                        }
+                                        layerDataHtml += `</table>`
                                         console.log(properties)
                                         console.log("도서관");
                                     } else if (table_type === "무인 발급기") {
