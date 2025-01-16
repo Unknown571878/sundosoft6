@@ -1082,9 +1082,28 @@
                     // 처음에 모든 레이어 이름을 모달에 표시
                     results.forEach(result => {
                         if (result && result.data && result.data.features && result.data.features.length > 0) {
-                            contentHtml += `<h3 id="${result.layerName}">레이어: ${result.layerName}</h3><ul>`;
+                            contentHtml += `<h3 id="${result.layerName}">레이어: ${result.layerName}</h3>`;
+
                         }
                     });
+
+                    var data_list = [];
+                    for (let i = 0; i < results.length; i++) {  // let을 사용하여 i를 정의
+                        const result = results[i];
+                        if (result && result.data && result.data.features && result.data.features.length > 0) {
+                            const properties = result.data.features[0].properties;
+                            const layerName = result.layerName;  // layerName을 저장
+                            // layerName과 properties를 객체로 묶어서 data_list에 저장
+                            data_list[i] = {
+                                layerName: layerName,
+                                properties: properties
+                            };
+                        }
+                    }
+
+                    console.log(data_list);
+
+
 
                     if (contentHtml) {
                         modalContent.innerHTML = contentHtml;
@@ -1095,13 +1114,13 @@
                             const layerElement = document.getElementById(result.layerName);
                             if (layerElement) {
                                 layerElement.addEventListener('click', function () {
-                                    // 클릭된 레이어의 데이터만 모달에 표시
-                                    let layerDataHtml = `<h3>레이어: ${result.layerName}</h3><ul>`;
+                                    // 클릭된 레이어의 데이터만 테이블 형식으로 표시
+                                    let layerDataHtml = `<h3>레이어: ${result.layerName}</h3><table border="1" style="width:100%; border-collapse: collapse;"><thead><tr><th>속성</th><th>값</th></tr></thead><tbody>`;
                                     const properties = result.data.features[0].properties;
                                     for (const [key, value] of Object.entries(properties)) {
-                                        layerDataHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                                        layerDataHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
                                     }
-                                    layerDataHtml += `</ul>`;
+                                    layerDataHtml += `</tbody></table>`;
 
                                     // 모달에 해당 레이어의 데이터만 업데이트
                                     modalContent.innerHTML = layerDataHtml;
