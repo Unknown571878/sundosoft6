@@ -17,47 +17,31 @@
         #map {
             height: 950px; /* 지도 높이 */
         }
+        /* 테이블 스타일 */
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            background-color: #fff; /* 배경색 */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+            border-collapse: collapse; /* 테두리 겹침 제거 */
+            border: 1px solid #ddd; /* 테이블 전체 테두리 */
+            border-radius: 1px; /* 테이블 둥근 테두리 */
+            overflow: hidden; /* 테두리 넘치지 않도록 설정 */
         }
 
+        /* 테이블의 셀 스타일 */
         th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border: 1px solid #ddd;
+            border: 1px solid #ddd; /* 각 셀에 테두리 추가 */
+            padding: 10px; /* 셀 내부 여백 */
+            text-align: left; /* 텍스트 왼쪽 정렬 */
+            vertical-align: middle; /* 수직 중앙 정렬 */
+            background-color: #fff; /* 셀 배경색 */
         }
 
+        /* 헤더 스타일 */
         th {
-            background-color: #4CAF50;  /* 헤더 배경색 */
-            color: white; /* 헤더 텍스트 색 */
-            font-weight: bold;
+            background-color: #f7f7f7; /* 헤더 셀 배경색 */
+            font-weight: bold; /* 헤더 텍스트 굵게 */
+            text-align: center; /* 헤더 가운데 정렬 */
         }
 
-        td {
-            font-size: 14px; /* 내용 텍스트 크기 */
-            color: #333;  /* 텍스트 색 */
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2; /* 짝수 행 배경색 */
-        }
-
-        tr:hover {
-            background-color: #ddd;  /* 마우스를 올렸을 때 배경색 변경 */
-            cursor: pointer;
-        }
-
-        table th, table td {
-            text-align: center; /* 기본적으로 텍스트 가운데 정렬 */
-        }
-
-        table td {
-            word-wrap: break-word; /* 긴 텍스트가 있을 경우 자동으로 줄바꿈 */
-        }
     </style>
 </head>
 <body>
@@ -171,7 +155,8 @@
                                     li.id.includes('shade') ||
                                     li.id.includes('population') ||
                                     li.id.includes('traffic') ||
-                                    li.id.includes('floating-population')
+                                    li.id.includes('floating-population') ||
+                                    li.id.includes('heat_map')
                                 ) {
                                     li.classList.remove('hidden');
                                 } else {
@@ -621,7 +606,8 @@
         { id: 'cheonan_digital_a00_93351', name: '(입체교차부)고가차도' },
         { id: 'cheonan_digital_a00_93352', name: '(입체교차부)지하차도' },
         { id: 'cheonan_digital_a00_43325', name: '횡단보도' },
-        { id: 'gwangju_flow_pop', name: '유동인구'}
+        { id: 'gwangju_flow_pop', name: '유동인구'},
+        { id: 'gwangju_heat_map', name: '열지도'}
     ];
 
     // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
@@ -958,7 +944,8 @@
         { id: 'cheonan_digital_a00_93351', layerIndex: 331, shape: "line" },
         { id: 'cheonan_digital_a00_93352', layerIndex: 332, shape: "line" },
         { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" },
-        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "none"}
+        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "none"},
+        { id: 'gwangju_heat_map', layerIndex: 335, shape: "none"}
     ];
     const layers_style = [
         { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
@@ -1316,7 +1303,7 @@
                         "gtr": "교통현황",
                         "_gm" : "건물 현황",
                         "population" : "인구",
-                        "flow_pop" : "유동인구",
+                        "flow" : "유동인구",
                         "shd" : "신호등",
                         "toji_use": "토지 이용현황",
                         "toji_owner" : "토지 소유 정보",
@@ -1329,6 +1316,7 @@
                         "f00" : "지형",
                         "g00" : "경계",
                         "h00" : "주기",
+                        "heat_map" : "열지도"
                     };
                     // 처음에 모든 레이어 이름을 모달에 표시
                     results.forEach(result => {
@@ -1362,7 +1350,9 @@
                                 additionalInfo = `${name}`;
                             } else if (displayName === "와이파이" && result.data.features[0].properties.name) {
                                 additionalInfo = `${result.data.features[0].properties.name}`;
-                            } else if (displayName === "교통현황" && result.data.features[0].properties.c1) {
+                            } else if (displayName === "열지도") {
+                                additionalInfo = `${result.data.features[0].properties.dd}`;
+                            } else if (displayName === "교통현황" && result.data.features[0].properties.dd) {
                                 let c1 = result.data.features[0].properties.c1;
                                 c1 = c1.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
                                 additionalInfo = `${c1}`;
@@ -1429,10 +1419,10 @@
                                     layerName = "80대 이상";
                                 }
                                 additionalInfo = `${layerName}`;
-                            } else if (displayName === "유동인구" && result.data.features[0].properties.name) { // 해야됨
-                                additionalInfo = `${result.data.features[0].properties.name}`;
-                            } else if (displayName === "신호등" && result.data.features[0].properties.name) { // 해야됨
-                                additionalInfo = `${result.data.features[0].properties.name}`;
+                            } else if (displayName === "유동인구") { // 해야됨
+                                additionalInfo = `광주광역시 유동인구`;
+                            } else if (displayName === "신호등") { // 해야됨
+                                additionalInfo = `${result.data.features[0].properties.location_1}`;
                             } else if (displayName === "토지 이용현황" && result.data.features[0].properties.ucb) {
                                 let ucb = result.data.features[0].properties.ucb;
                                 const ucbNames = {
@@ -2323,8 +2313,20 @@
                                         console.log("무인 발급기");
                                     } else if (table_type === "와이파이") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>위치</th><td colspan="3">${properties.name}</td></tr>
+                                                            <tr><th>위도</th><td>${properties.lat}</td><th>경도</th><td>${properties.lon}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("와이파이");
+                                    } else if (table_type === "열지도") {
+                                        const properties = result.data.features[0].properties;
+                                        const roundedTmMean = properties.tm_mean.toFixed(1); // 소수 첫째 자리까지 반올림
+                                        layerDataHtml += `<table>
+                                                            <tr><th>평균 온도</th><td>${roundedTmMean}</td></tr>
+                                                          </table>`;
+                                        console.log(properties);
+                                        console.log("열지도");
                                     } else if (table_type === "교통현황") {
                                         const properties = result.data.features[0].properties;
                                         layerDataHtml += `<table>
@@ -2352,10 +2354,17 @@
                                         console.log("인구");
                                     } else if (table_type === "유동인구") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>유동인구</th><td>${properties.freq}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("유동인구");
                                     } else if (table_type === "신호등") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>지번 주소</th><td colspan="3">${properties.location_1}</td></tr>
+                                                            <tr><th>관리기관명</th><td>${properties.manageme_1}</td><th>관리기관 번호</th><td>${properties.manageme_2}</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("신호등");
                                     } else if (table_type === "토지 이용현황") {
@@ -2369,10 +2378,22 @@
                                         console.log("토지 이용현황");
                                     } else if (table_type === "토지 소유 정보") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>주소</th><td>${properties.a2} ${properties.a5}</td></tr>
+                                                            <tr><th>소유자</th><td>${properties.a8}</td></tr>
+                                                            <tr><th>지목</th><td>${properties.a20}</td></tr>
+                                                            <tr><th>토지 면적</th><td>${properties.a22}m²</td></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("토지 소유 정보");
                                     } else if (table_type === "토지 특성 공간") {
                                         const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>주소</th><td>${properties.a3} ${properties.a6}</td></tr>
+                                                            <tr><th>지목명</th><td>${properties.a11}</td><th>토지 면적</th><td>${properties.a12}m²</td></tr>
+                                                            <tr><th>용도</th><td>${properties.a16}</td><th>토지이용상황</th><td>${properties.a18}</td></tr>
+                                                            <tr></tr>
+                                                          </table>`
                                         console.log(properties)
                                         console.log("토지 특성 공간");
                                     } else if (table_type === "도로") {
