@@ -77,17 +77,17 @@ html, body {
 }
 .hero-section h1 {
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: black;
     margin-bottom: 20px;
 }
 .hero-section p {
     font-size: 1.2rem;
-    color: #34495e;
+    color: black;
 }
 .section-title {
     margin: 40px 0 20px;
     text-align: center;
-    color: #2c3e50;
+    color: black;
 }
 
 /* 중앙 정렬된 텍스트 스타일 */
