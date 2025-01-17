@@ -2,11 +2,11 @@ package edu.du.project2;
 
 import edu.du.project2.dto.MemberRequest;
 import edu.du.project2.entity.*;
+import edu.du.project2.repository.DataBoardRepository;
 import edu.du.project2.repository.FaqRepository;
 import edu.du.project2.repository.NoticeRepository;
+import edu.du.project2.service.DataBoardService;
 import edu.du.project2.service.MemberService;
-import edu.du.project2.service.NoticeService;
-import edu.du.project2.service.QnaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,10 +20,11 @@ import java.util.List;
 public class Project2Application {
 
     private final MemberService memberService;
-    private final NoticeService noticeService;
-    private final QnaService qnaService;
     private final NoticeRepository noticeRepository;
     private final FaqRepository faqRepository;
+    private final DataBoardRepository dataBoardRepository;
+    private final DataBoardService dataBoardService;
+
     public static void main(String[] args) {
         SpringApplication.run(Project2Application.class, args);
     }
@@ -36,19 +37,6 @@ public class Project2Application {
         memberRequest.setEmail("123@123");
         memberRequest.setPassword("123");
         memberRequest.setName("test1");
-        memberRequest.setZipcode("123");
-        memberRequest.setAddress("123");
-        memberRequest.setDetailAddress("123");
-        memberService.registerMember(memberRequest);
-    }
-    @PostConstruct
-    public void init7() {
-        MemberRequest memberRequest = new MemberRequest();
-        memberRequest.setTel("");
-        memberRequest.setLoginId("1234");
-        memberRequest.setEmail("123@1234");
-        memberRequest.setPassword("1234");
-        memberRequest.setName("test12");
         memberRequest.setZipcode("123");
         memberRequest.setAddress("123");
         memberRequest.setDetailAddress("123");
@@ -100,8 +88,6 @@ public class Project2Application {
 
     }
 
-
-
     @PostConstruct
     public void init2() {
         List<Faq> faqList = new ArrayList<>();
@@ -148,4 +134,129 @@ public class Project2Application {
 
         faqRepository.saveAll(faqList);
     }
+    @PostConstruct
+    public void init3() {
+        String tableName = "gwangju_dong";
+        int limit = 10; // 한 번에 가져올 데이터 개수
+        int offset = 0; // 시작 위치
+        String htmlTable = dataBoardService.fetchTableDataAsHtml(tableName, limit, offset);
+
+        // 데이터 게시판 객체 생성
+        DataBoard board = DataBoard.builder()
+                .title("광주 행정경계 데이터")
+                .content("광주 행정경계(동계) 데이터입니다.")
+                .hits(0)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .files(List.of(new FileDetail("/uploads/광주_동계.csv","광주_동계")))
+                .tableName(tableName)
+                .a1("")
+                .a2("")
+                .a3("")
+                .a4("")
+                .a5("")
+                .a6("")
+                .a7("")
+                .a8("")
+                .a9("")
+                .a10("")
+                .a11("")
+                .a12("")
+                .a13("")
+                .a14("")
+                .a15("")
+                .a16("")
+                .a17("")
+                .a18("")
+                .a19("")
+                .a20("")
+                .preview(htmlTable)
+                .build();
+
+        dataBoardRepository.save(board);
+    }
+    
+    @PostConstruct
+    public void init5() {
+        String tableName = "gwangju_pub_wifi";
+        int limit = 10; // 한 번에 가져올 데이터 개수
+        int offset = 0; // 시작 위치
+        String htmlTable = dataBoardService.fetchTableDataAsHtml(tableName, limit, offset);
+
+        // 데이터 게시판 객체 생성
+        DataBoard board = DataBoard.builder()
+                .title("광주 공공와이파이 데이터")
+                .content("광주 공공와이파이 데이터입니다.")
+                .hits(0)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .files(List.of(new FileDetail("/uploads/광주_공공와이파이.csv","광주_공공와이파이.csv")))
+                .tableName(tableName)
+                .a1("")
+                .a2("")
+                .a3("")
+                .a4("")
+                .a5("")
+                .a6("")
+                .a7("")
+                .a8("")
+                .a9("")
+                .a10("")
+                .a11("")
+                .a12("")
+                .a13("")
+                .a14("")
+                .a15("")
+                .a16("")
+                .a17("")
+                .a18("")
+                .a19("")
+                .a20("")
+                .preview(htmlTable)
+                .build();
+
+        dataBoardRepository.save(board);
+    }
+    @PostConstruct
+    public void init6() {
+        String tableName = "gwangju_gm";
+        int limit = 10; // 한 번에 가져올 데이터 개수
+        int offset = 0; // 시작 위치
+        String htmlTable = dataBoardService.fetchTableDataAsHtml(tableName, limit, offset);
+
+        // 데이터 게시판 객체 생성
+        DataBoard board = DataBoard.builder()
+                .title("광주 건물현황 데이터")
+                .content("광주 건물현황 데이터입니다.")
+                .hits(0)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .files(List.of(new FileDetail("/uploads/gwangju_gm.csv","gwangju_gm")))
+                .tableName(tableName)
+                .a1("")
+                .a2("")
+                .a3("")
+                .a4("")
+                .a5("")
+                .a6("")
+                .a7("")
+                .a8("")
+                .a9("")
+                .a10("")
+                .a11("")
+                .a12("")
+                .a13("")
+                .a14("")
+                .a15("")
+                .a16("")
+                .a17("")
+                .a18("")
+                .a19("")
+                .a20("")
+                .preview(htmlTable)
+                .build();
+        dataBoardRepository.save(board);
+    }
+
+
 }
