@@ -1,14 +1,17 @@
 package edu.du.project2.service;
 
 import edu.du.project2.entity.DataBoard;
+import edu.du.project2.entity.FileDetail;
 import edu.du.project2.repository.DataBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +21,40 @@ import java.util.Map;
 public class DataBoardService {
     private final DataBoardRepository dataBoardRepository;
     private final JdbcTemplate jdbcTemplate;
+    private final FileService fileService;
 
     public List<DataBoard> getAllDataList() {
         return dataBoardRepository.findAll(Sort.by(Sort.Order.desc("createdAt")));
+    }
+
+    @Transactional
+    public void createDataBoard(String title, String content,String tableName,
+                                MultipartFile[] files,String a1,String a2,
+                                String a3,String a4,String a5,String a6,
+                                String a7,String a8,String a9,String a10,
+                                String a11,String a12,String a13,String a14,
+                                String a15,String a16,String a17,String a18,
+                                String a19,String a20) throws IOException {
+        // DataBoard 객체 생성 및 초기화
+        DataBoard dataBoard = DataBoard.builder()
+                .title(title)
+                .content(content)
+                .hits(0) // 조회수 초기값 설정
+                .createdAt(LocalDateTime.now()) // 생성일시 설정
+                .updatedAt(LocalDateTime.now()) // 수정일시 설정
+                .tableName(tableName)
+                .a1(a1).a2(a2).a3(a3).a4(a4).a5(a5)
+                .a6(a6).a7(a7).a8(a8).a9(a9).a10(a10)
+                .a11(a11).a12(a12).a13(a13).a14(a14).a15(a15)
+                .a16(a16).a17(a17).a18(a18).a19(a19).a20(a20)
+                .build();
+
+        // 파일 업로드 처리
+        List<FileDetail> fileDetails = fileService.uploadFiles(files); // 파일 업로드 서비스 호출
+        dataBoard.setFiles(fileDetails); // 파일 정보 설정
+
+        // 데이터 저장
+        dataBoardRepository.save(dataBoard);
     }
 
     @Transactional
@@ -32,7 +66,7 @@ public class DataBoardService {
             dataBoard.setHits(dataBoard.getHits() + 1);
             dataBoardRepository.save(dataBoard);
         }
-        // PostgreSQL 데이터를 가져와 HTML 테이블로 변환 후 content 필드에 추가
+        // PostgreSQL 데이터를 가져와 HTML 테이블로 변환 후 preview 필드에 추가
         String htmlTable = fetchTableDataAsHtml(tableName, limit, offset);
         dataBoard.setPreview(htmlTable);
         return dataBoard;
