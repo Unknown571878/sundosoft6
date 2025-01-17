@@ -86,7 +86,7 @@
               <select id="type" name="type">
                 <!-- Default options, to be updated dynamically -->
                 <option value="library">도서관</option>
-                <option value="atm">무인발급기</option>
+                <option value="kiosk">무인발급기</option>
                 <option value="wifi">와이파이</option>
               </select>
             </td>
@@ -129,24 +129,34 @@
 
     if (selectedCity === 'cheonan') {
       // 천안 선택 시 옵션
-      const cheonanOptions = ['도서관', '무인발급기', '와이파이'];
+      const cheonanOptions = [
+        { value: 'library', text: '도서관' },
+        { value: 'kiosk', text: '무인발급기' },
+        { value: 'wifi', text: '와이파이' }
+      ];
       cheonanOptions.forEach(function(option) {
         const opt = document.createElement('option');
-        opt.value = option.toLowerCase();
-        opt.textContent = option;
+        opt.value = option.value;
+        opt.textContent = option.text;
         optionSelect.appendChild(opt);
       });
     } else if (selectedCity === 'gwangju') {
       // 광주 선택 시 옵션
-      const gwangjuOptions = ['도서관', '무인발급기', '와이파이', '그늘막'];
+      const gwangjuOptions = [
+        { value: 'library', text: '도서관' },
+        { value: 'kiosk', text: '무인발급기' },
+        { value: 'wifi', text: '와이파이' },
+        { value: 'shade', text: '그늘막' }
+      ];
       gwangjuOptions.forEach(function(option) {
         const opt = document.createElement('option');
-        opt.value = option.toLowerCase();
-        opt.textContent = option;
+        opt.value = option.value;
+        opt.textContent = option.text;
         optionSelect.appendChild(opt);
       });
     }
   }
+
 
   // Initialize options based on default city
   updateOptions();
