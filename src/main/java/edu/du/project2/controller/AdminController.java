@@ -14,10 +14,8 @@ import edu.du.project2.service.QnaService;
 import edu.du.project2.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 관리자 페이지 요청을 처리하는 컨트롤러.
@@ -248,4 +245,5 @@ public class AdminController {
         applyService.updateApply(updateApply);
         return "redirect:/admin/admin_apply";
     }
+
 }

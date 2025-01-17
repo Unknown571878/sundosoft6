@@ -29,13 +29,11 @@ public class DataBoard {
     @Column(nullable = false)
     private Integer hits;
 
-    @Column(nullable = false)
     private LocalDateTime createdAt;  // 생성일시
 
-    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Transient
     private String preview;
 
     private String a1; //파일 데이터명
@@ -59,7 +57,6 @@ public class DataBoard {
     private String a19; //비용부과기준 및 단위
     private String a20; //이용허락범위
 
-    @Column(nullable = true)
     private String tableName;
 
     @ElementCollection
