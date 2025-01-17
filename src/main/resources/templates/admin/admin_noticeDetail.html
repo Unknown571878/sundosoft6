@@ -52,7 +52,9 @@
                          #strings.endsWith(file.fileName, '.gif')}">
                   <img th:src="${file.filePath}" alt="Uploaded Image" style="max-width: 300px;" />
                   <br />
-                  <a th:href="${file.filePath}" download>사진 다운로드</a>
+                  <a th:href="@{/download(filename=${file.fileName})}" download>
+                    <img th:src="@{/images/file40.png}" alt="파일 다운로드 이미지" style="width: 30px; height: 30px;" />
+                  </a>
                 </div>
 
                 <div th:if="${file.fileName != null and file.fileName != '' and !(#strings.endsWith(file.fileName, '.jpg') or
@@ -60,7 +62,9 @@
                                                                   #strings.endsWith(file.fileName, '.png') or
                                                                   #strings.endsWith(file.fileName, '.gif'))}">
                   <p th:text="${file.fileName}"></p>
-                  <a th:href="${file.filePath}" download>파일 다운로드</a>
+                  <a th:href="@{/download(filename=${file.fileName})}" download>
+                    <img th:src="@{/images/file40.png}" alt="파일 다운로드 이미지" style="width: 30px; height: 30px;" />
+                  </a>
                 </div>
               </div>
             </td>

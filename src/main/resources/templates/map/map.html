@@ -17,6 +17,31 @@
         #map {
             height: 950px; /* 지도 높이 */
         }
+        /* 테이블 스타일 */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* 테두리 겹침 제거 */
+            border: 1px solid #ddd; /* 테이블 전체 테두리 */
+            border-radius: 1px; /* 테이블 둥근 테두리 */
+            overflow: hidden; /* 테두리 넘치지 않도록 설정 */
+        }
+
+        /* 테이블의 셀 스타일 */
+        th, td {
+            border: 1px solid #ddd; /* 각 셀에 테두리 추가 */
+            padding: 10px; /* 셀 내부 여백 */
+            text-align: left; /* 텍스트 왼쪽 정렬 */
+            vertical-align: middle; /* 수직 중앙 정렬 */
+            background-color: #fff; /* 셀 배경색 */
+        }
+
+        /* 헤더 스타일 */
+        th {
+            background-color: #f7f7f7; /* 헤더 셀 배경색 */
+            font-weight: bold; /* 헤더 텍스트 굵게 */
+            text-align: center; /* 헤더 가운데 정렬 */
+        }
+
     </style>
 </head>
 <body>
@@ -66,37 +91,143 @@
     let draggedItem = null; // 드래그 중인 항목
     let placeholder = null; // 플레이스홀더 요소
     let layer_list = [];
-    const categoryButton = document.querySelectorAll('#category-button button');
-    const submenuList = document.querySelectorAll('#submenu-list li');
-    const submenuList2 = document.querySelectorAll('#submenu-list2 li');
+    // 카테고리 버튼과 리스트 요소 가져오기
+    const categoryButtons = document.querySelectorAll('#category-button button');
+    const submenuList = document.querySelectorAll('#submenu-list li'); // list의 항목들
+    const submenuList2 = document.querySelectorAll('#submenu-list2 li'); // list2의 항목들
 
-    // 각 버튼에 클릭 이벤트 추가
-    categoryButton.forEach((button) => {
+    let activeTab = 'list'; // 기본값: list
+    let category = 'all';
+
+    // 카테고리 버튼 클릭 이벤트 추가
+    categoryButtons.forEach((button) => {
         button.addEventListener('click', () => {
-            const category = button.id.replace('category-', '');
-            if (category === 'all') {
-                // "전체" 버튼 클릭 시 모든 li 표시
-                submenuList.forEach((li) => li.classList.remove('hidden'));
-                submenuList2.forEach((li) => li.classList.remove('hidden'));
-            } else {
-                // 모든 li 숨기기
-                submenuList.forEach((li) => {
-                    if (li.id.includes(category)) {
-                        li.classList.remove('hidden'); // 선택된 카테고리는 표시
-                    } else {
-                        li.classList.add('hidden'); // 나머지는 숨기기
+            category = button.id.replace('category-', '');
+
+            switch (activeTab) {
+                case 'list':
+                    switch (category) {
+                        case 'all':
+                            submenuList.forEach((li) => li.classList.remove('hidden'));
+                            break;
+                        case 'library':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('library') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'wifi':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('wifi') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'issuingMachine':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('issuingMachine') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('floating-population')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'shade':
+                            submenuList.forEach((li) => {
+                                if (
+                                    li.id.includes('shade') ||
+                                    li.id.includes('population') ||
+                                    li.id.includes('traffic') ||
+                                    li.id.includes('floating-population') ||
+                                    li.id.includes('heat_map')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
                     }
-                });
-                submenuList2.forEach((li) => {
-                    if (li.id.includes(category)) {
-                        li.classList.remove('hidden'); // 선택된 카테고리는 표시
-                    } else {
-                        li.classList.add('hidden'); // 나머지는 숨기기
+                    break;
+
+                case 'list2':
+                    // list2가 활성화된 경우
+                    switch (category) {
+                        case 'all':
+                            submenuList2.forEach((li) => li.classList.remove('hidden'));
+                            break;
+                        case 'library':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('library2') ||
+                                    li.id.includes('population2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'wifi':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('wifi2') ||
+                                    li.id.includes('population2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'issuingMachine':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('issuingMachine2') ||
+                                    li.id.includes('population2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
+                        case 'shade':
+                            submenuList2.forEach((li) => {
+                                if (
+                                    li.id.includes('shade2') ||
+                                    li.id.includes('population2') ||
+                                    li.id.includes('traffic2')
+                                ) {
+                                    li.classList.remove('hidden');
+                                } else {
+                                    li.classList.add('hidden');
+                                }
+                            });
+                            break;
                     }
-                });
+                    break;
             }
         });
     });
+
     // 드래그 앤 드롭 이벤트 처리
     draggableList.addEventListener('dragstart', (e) => {
         if (e.target.tagName === 'LI') { // 드래그가 LI 요소에서 시작될 때만 실행
@@ -474,7 +605,9 @@
         { id: 'cheonan_digital_a00_33327', name: '자전거도로' },
         { id: 'cheonan_digital_a00_93351', name: '(입체교차부)고가차도' },
         { id: 'cheonan_digital_a00_93352', name: '(입체교차부)지하차도' },
-        { id: 'cheonan_digital_a00_43325', name: '횡단보도' }
+        { id: 'cheonan_digital_a00_43325', name: '횡단보도' },
+        { id: 'gwangju_flow_pop', name: '유동인구'},
+        { id: 'gwangju_heat_map', name: '열지도'}
     ];
 
     // 레이어의 인덱스와 체크박스의 ID를 배열로 정의
@@ -810,7 +943,9 @@
         { id: 'cheonan_digital_a00_33327', layerIndex: 330, shape: "line" },
         { id: 'cheonan_digital_a00_93351', layerIndex: 331, shape: "line" },
         { id: 'cheonan_digital_a00_93352', layerIndex: 332, shape: "line" },
-        { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" }
+        { id: 'cheonan_digital_a00_43325', layerIndex: 333, shape: "line" },
+        { id: 'gwangju_flow_pop', layerIndex: 334, shape: "none"},
+        { id: 'gwangju_heat_map', layerIndex: 335, shape: "none"}
     ];
     const layers_style = [
         { style : "ne:dot_style_amethyst_purple", shape : "dot", color : "#9b59b6" },
@@ -878,8 +1013,8 @@
     ];
 
     const regions = {
-        gwangju: { center: [35.1595, 126.8526], zoom: 11 },  // 광주의 중심 좌표 및 줌 레벨
-        cheonan: { center: [36.8154, 127.1523], zoom: 12 }   // 천안의 중심 좌표 및 줌 레벨
+        gwangju: { center: [35.1595, 126.8526], zoom: 10 },  // 광주의 중심 좌표 및 줌 레벨
+        cheonan: { center: [36.8154, 127.1523], zoom: 10 }   // 천안의 중심 좌표 및 줌 레벨
     };
     // 현재 지역 상태 저장
     let currentRegion = 'gwangju'; // 초기값: 광주
@@ -950,6 +1085,10 @@
         const gwangjuTabContent = document.querySelectorAll(".tab-content");
         gwangjuTabContent.forEach((input) => (input.style.display = "none"));
         gwangjuTabContent[0].style.display = "block";
+
+        activeTab = 'list';
+        category = 'all';
+        submenuList.forEach((li) => li.classList.remove('hidden'));
     });
     // 천안 버튼 클릭 시
     document.getElementById('btn-cheonan').addEventListener('click', function() {
@@ -975,25 +1114,29 @@
         const cheonanTabContent = document.querySelectorAll(".tab-content");
         cheonanTabContent.forEach((content) => (content.style.display = "none"));
         cheonanTabContent[4].style.display = "block";
+
+        activeTab = 'list2';
+        category = 'all';
+        submenuList2.forEach((li) => li.classList.remove('hidden'));
     });
     // 지도 생성
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
 
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
         "minZoom": 6,
-        "maxZoom": 19,
-        "maxNativeZoom": 19,
+        "maxZoom": 18,
+        "maxNativeZoom": 18,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 6,
         zIndex: 10  // zIndex 설정
     });
     var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 6,
         zIndex: 5  // zIndex 설정
     });
@@ -1106,13 +1249,1011 @@
                     const modal = document.getElementById('modal');
                     const modalContent = document.getElementById('modal-content');
                     let contentHtml = '';
+                    let modal_names = [];
+                    const ucb_data = {
+                        "1110": "물을 이용하여 벼를 재배하기 위한 토지로 수로가 용수를 공급하는 경지 정리",
+                        "1120": "물을 이용하여 벼를 재배하기 위한 토지로서 주로 계단 형태이며, 경사가 심한 산간지에서 보여지며, 관개시설이 없어지거나 미진한 경지",
+                        "1210": "물을 대지 아니하고 식물을 재배하는 토지로 보통작물인 무, 배추, 시금치 등의 채소와 특수작물인 약초, 인삼, 담배, 대밭, 뽕밭을 포함하며 휴농지 및 간작지를 포함함",
+                        "1220": "과실수를 재배하는 토지로 사과, 배, 복숭아, 포도, 감, 밀감, 밤, 호두나무 등 과실수와 묘목밭(유실수, 관상수)을 포함",
+                        "2110": "자연적으로 조성된 초지로서 벌목지는 도화상에서는 자연초지로 구분을 하고 현지조사 당시의 상태로 재 구분함",
+                        "2120": "축산과 낙농을 위해 사용되는 초지 및 이를 목적으로 인위적으로 조성한 초지와 도로의 절토부분의 공지 및 공사지역의 사면을 포함하고 목장의 경우 목초지가 있는 경우에 인공초지로 구분",
+                        "2210": "전체의 2/3 이상이 침엽수 위주로 이루어진 산림",
+                        "2220": "전체의 2/3 이상이 활엽수 위주로 이루어진 산림",
+                        "2230": "침엽수 또는 활엽수가 혼재하는 산림",
+                        "2310": "골프를 위하여 조성된 녹지와 해당 부대 시설",
+                        "2330": "위락, 휴양 등을 위한 놀이시설이 포함된 대규모 공원(도심지내 소규모 공원은 제외하고 면적이 100x100 이하의 면적을 포함함)",
+                        "2320": "사설 또는 공공 공원묘지",
+                        "2340": "산악지 및 해안가의 바위, 암벽 등을 포함",
+                        "3110": "5층 미만의 연립, 다세대 및 단독 주택지(단독 주택에 일부가 점포로 사용되는 경우에는 일반주택지에 포함)",
+                        "3120": "5층 이상의 공동주택으로 아파트 및 해당 부대시설(100x100 이하의 면적)을 포함함",
+                        "3130": "상가, 시장, 서비스업 등 매매를 위한 건물이나 은행, 사무실 등 업무용 건물이 자리하고 있는 지역 및 부속 주차공간(주택과 상업.업무용 건물이 혼재되어 판별이 어려운 경우 2/3 이상의 용도를 차지하는 토지이용으로 일반주택지와 고층 주택지, 상업.업무지를 구분)",
+                        "3140": "주거 밀집지내 공토로 존재하는 나대지 및 도심지내 소규모 공원 및 녹지, 주거밀집지 및 도심지 내 소규모 공원 및 녹지, 인위적으로 조성된 초지",
+                        "3210": "6m 이상의 고속화도로 및 국도, 지방도, 시.군도와 갓길, 인도포함한 용지를 말하며, 고속도로상의 휴게소는 도로 부대시설로 간주하고 그 외의 휴게소는 상업시설로 분류함",
+                        "3220": "복선 이상의 철로 및 부속용지",
+                        "3230": "항공기 이착륙을 위한 활주로를 포함한 격납고, 승강장, 관제시설 등이 존재하는 지역",
+                        "3240": "선박의 정박과 물품을 하역하는 시설이 존재하는 지역으로 창고시설 등을 포함",
+                        "3310": "제조업에 이용되는 토지 및 대규모 공업단지(상업시설과 공업시설이 혼재되어 있는 경우 2/3 이상의 시설이 차지하는 토지이용으로 구분)",
+                        "3320": "공업지대 내에 아직 시설이 들어서지 않은 대지, 공장지대 또는 공업단지로 조성된 부지 중 아직 개발되지 않은 최소단위면적 이상의 나대지",
+                        "3410": "발전소, 변전소, 정류소, 저유조, LNG저장고 등의 발전시설 및 부속시설",
+                        "3420": "하수종말처리장, 취.정수장, 우수배제시설, 상수가압펌프장, 분뇨처리장, 폐수처리장 등과 해당 부속시설",
+                        "3430": "학교와 학교부속시설, 교도소, 수용소, 군사교육시설, 교회수련원, 폐교인 경우에는 다른 용도로 사용하는 경우에는 해당 용도시설로 구분",
+                        "3440": "도청, 시청, 군청, 구청, 기타 관청, 연구소(정부, 공공, 민간 등), 병원, 용양소, 교회, 절, 경기장 등의 공공시설",
+                        "3510": "어류 및 어패류, 해조류 등을 양식하기 위해 사용하는 시설 및 용지",
+                        "3520": "석재를 채취하는 지역 및 부대시설을 말함, 골재채취장의 경우에는 레미콘 공장이 있는 경우에는 채석장으로 구분하고 없는 경우에는 공업용지로 구분함",
+                        "3530": "폐기물 및 쓰레기 매립지와 집적장, 대규모 소각장",
+                        "3540": "지하에서 온수, 약수, 석유류 등 이 용출되는 용출구와 용출구의 유지를 위한 용지(온천, 광천수 등의 채굴과 유지관리를 위한 시설(온천공, 온수 탱크 등)만으로 판정하고, 위락시설, 복합시설(목욕탕, 놀이 동산)의 경우에는 사용목적에 따라 판정)",
+                        "3550": "대단위 양계장, 축사, 폐축사 등이 밀집된 지역",
+                        "4110": "조수에 따라 그 범위가 달라질 수 있는 지역으로서 수시로 바닷물이 찰 수 있으며, 염분에 강한 식물들이 존재할 수 있는 지역으로 바닷가의 뻘",
+                        "4120": "바닷가에서 소금 생산에 이용되는 지역",
+                        "4210": "실폭하천 및 부속토지(일반적으로 하천에서 제방까지를 포함)",
+                        "4310": "물이 고여있는 저수지, 늪",
+                        "4320": "발전과 홍수 예방 등을 목적으로 건설된 대단위 저수관제 시설로서 제방 상단의 폭이 6m 이상인 조정지 댐과 부대 시설을 포함",
+                        "4410": "바닷가의 모래(해변 또는 사빈) 등"
+                    };
 
+
+                    // 변환할 단어와 대응되는 이름을 객체로 정의
+                    const layerNameMap = {
+                        "dong" : "행정동",
+                        "gu" : "행정구",
+                        "si" : "행정시",
+                        "library": "도서관",
+                        "machines" : "무인 발급기",
+                        "wifi": "와이파이",
+                        "gtr": "교통현황",
+                        "_gm" : "건물 현황",
+                        "population" : "인구",
+                        "flow" : "유동인구",
+                        "shd" : "신호등",
+                        "toji_use": "토지 이용현황",
+                        "toji_owner" : "토지 소유 정보",
+                        "toji_character" : "토지 특성 공간",
+                        "a00" : "도로",
+                        "b00" : "건물",
+                        "c00" : "시설",
+                        "d00" : "식생",
+                        "e00" : "수계",
+                        "f00" : "지형",
+                        "g00" : "경계",
+                        "h00" : "주기",
+                        "heat_map" : "열지도"
+                    };
                     // 처음에 모든 레이어 이름을 모달에 표시
                     results.forEach(result => {
                         if (result && result.data && result.data.features && result.data.features.length > 0) {
-                            contentHtml += `<h3 id="${result.layerName}">레이어: ${result.layerName}</h3><ul>`;
+                            // layerName을 소문자로 변환하고, 매핑된 이름을 가져옵니다
+                            let displayName = result.layerName;
+
+                            // 매핑된 이름을 찾으면 해당 이름으로 변환
+                            for (const key in layerNameMap) {
+                                if (result.layerName.toLowerCase().includes(key)) {
+                                    displayName = layerNameMap[key];
+                                    break;
+                                }
+                            }
+                            let additionalInfo = '';
+                            if (displayName === "행정동" && result.data.features[0].properties.adm_nm) {
+                                additionalInfo = `${result.data.features[0].properties.adm_nm}`
+                            } else if (displayName === "행정구" && result.data.features[0].properties.sgg_nm) {
+                                let sggName = result.data.features[0].properties.sgg_nm;
+                                sggName = sggName.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
+                                additionalInfo = `${sggName}`;
+                            } else if (displayName === "행정시" && result.data.features[0].properties.sgg_nm) {
+                                let sggName = result.data.features[0].properties.sgg_nm;
+                                sggName = sggName.replace("충청남도", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
+                                additionalInfo = `${sggName}`;
+                            } else if (displayName === "도서관" && result.data.features[0].properties.library_na) {
+                                additionalInfo = `${result.data.features[0].properties.library_na}`;
+                            } else if (displayName === "무인 발급기" && result.data.features[0].properties.name) {
+                                let name = result.data.features[0].properties.name;
+                                name = name.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
+                                additionalInfo = `${name}`;
+                            } else if (displayName === "와이파이" && result.data.features[0].properties.name) {
+                                additionalInfo = `${result.data.features[0].properties.name}`;
+                            } else if (displayName === "열지도") {
+                                additionalInfo = `${result.data.features[0].properties.dd}`;
+                            } else if (displayName === "교통현황" && result.data.features[0].properties.dd) {
+                                let c1 = result.data.features[0].properties.c1;
+                                c1 = c1.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
+                                additionalInfo = `${c1}`;
+                            } else if (displayName === "건물 현황" && result.data.features[0].properties.a29) {
+                                let a27 = result.data.features[0].properties.a27;
+                                let a29 = result.data.features[0].properties.a29;
+                                a29 = a29 + " " + a27;
+                                additionalInfo = `${a29}`;
+                            } else if (displayName === "인구" && result.layerName.includes("ne:gwangju_population")) {
+                                let layerName = result.layerName;
+                                layerName = layerName.replace("ne:gwangju_population_", "").trim();
+                                layerName = layerName.replace("_2024_10", "").trim();
+                                if(layerName ==="all"){
+                                    layerName = "모든 연령대";
+                                } else if(layerName ==="10c"){
+                                    layerName = "초등학생";
+                                } else if ( layerName ==="10j"){
+                                    layerName = "중학생";
+                                } else if ( layerName ==="10g"){
+                                    layerName = "고등학생";
+                                } else if ( layerName ==="20y"){
+                                    layerName = "20대";
+                                } else if ( layerName ==="30y"){
+                                    layerName = "30대";
+                                } else if ( layerName ==="40y"){
+                                    layerName = "40대";
+                                } else if ( layerName ==="50y"){
+                                    layerName = "50대";
+                                } else if ( layerName ==="60y"){
+                                    layerName = "60대";
+                                } else if ( layerName ==="70y"){
+                                    layerName = "70대";
+                                } else if ( layerName ==="80y"){
+                                    layerName = "80대";
+                                } else if ( layerName ==="90y"){
+                                    layerName = "90대 이상";
+                                }
+                                additionalInfo = `${layerName}`;
+                            } else if (displayName === "인구" && result.layerName.includes("ne:cheonan_population")) {
+                                let layerName = result.layerName;
+                                layerName = layerName.replace("ne:cheonan_population_", "").trim();
+                                layerName = layerName.replace("_2024_10", "").trim();
+                                if(layerName ==="all"){
+                                    layerName = "모든 연령대";
+                                } else if(layerName ==="10c"){
+                                    layerName = "초등학생";
+                                } else if ( layerName ==="10j"){
+                                    layerName = "중학생";
+                                } else if ( layerName ==="10g"){
+                                    layerName = "고등학생";
+                                } else if ( layerName ==="20y"){
+                                    layerName = "20대";
+                                } else if ( layerName ==="30y"){
+                                    layerName = "30대";
+                                } else if ( layerName ==="40y"){
+                                    layerName = "40대";
+                                } else if ( layerName ==="50y"){
+                                    layerName = "50대";
+                                } else if ( layerName ==="60y"){
+                                    layerName = "60대";
+                                } else if ( layerName ==="70y"){
+                                    layerName = "70대";
+                                } else if ( layerName ==="80y"){
+                                    layerName = "80대 이상";
+                                }
+                                additionalInfo = `${layerName}`;
+                            } else if (displayName === "유동인구") { // 해야됨
+                                additionalInfo = `광주광역시 유동인구`;
+                            } else if (displayName === "신호등") { // 해야됨
+                                additionalInfo = `${result.data.features[0].properties.location_1}`;
+                            } else if (displayName === "토지 이용현황" && result.data.features[0].properties.ucb) {
+                                let ucb = result.data.features[0].properties.ucb;
+                                const ucbNames = {
+                                    "1110": "경지정리답",
+                                    "1120": "미경지정리답",
+                                    "1210": "보통,특수작물",
+                                    "1220": "과수원, 기타",
+                                    "2110": "자연초지",
+                                    "2120": "인공초지",
+                                    "2210": "침엽수림",
+                                    "2220": "활엽수림",
+                                    "2230": "혼합수림",
+                                    "2310": "골프장",
+                                    "2330": "유원지",
+                                    "2320": "공원묘지",
+                                    "2340": "암벽 및 석산",
+                                    "3110": "일반주택지",
+                                    "3120": "고층주택지",
+                                    "3130": "상업,업무지",
+                                    "3140": "나대지 및 인공녹지",
+                                    "3210": "도로",
+                                    "3220": "철로 및 주변지역",
+                                    "3230": "공항",
+                                    "3240": "항만",
+                                    "3310": "공업시설",
+                                    "3320": "공업나지,기타",
+                                    "3410": "발전시설",
+                                    "3420": "처리장",
+                                    "3430": "교육,군사시설",
+                                    "3440": "공공용지",
+                                    "3510": "양어장,양식장",
+                                    "3520": "채광지역",
+                                    "3530": "매립지",
+                                    "3540": "광천지",
+                                    "3550": "가축사육시설",
+                                    "4110": "갯벌",
+                                    "4120": "염전",
+                                    "4210": "하천",
+                                    "4310": "호,소",
+                                    "4320": "댐",
+                                    "4410": "백사장"
+                                };
+                                let ucbName = ucbNames[ucb] || "알 수 없음";  // 해당 코드가 없으면 "알 수 없음" 표시
+                                additionalInfo = `${ucbName}`;
+                            } else if (displayName === "토지 소유 정보" && result.data.features[0].properties.a8) {
+                                additionalInfo = `${result.data.features[0].properties.a8}`;
+                            } else if (displayName === "토지 특성 공간" && result.data.features[0].properties.a13) {
+                                let landUse = result.data.features[0].properties.a13;
+                                const landUseType = {
+                                    "0": "지정되지않음",
+                                    "11": "제1종전용주거지역",
+                                    "12": "제2종전용주거지역",
+                                    "13": "제1종일반주거지역",
+                                    "14": "제2종일반주거지역",
+                                    "15": "제3종일반주거지역",
+                                    "16": "준주거지역",
+                                    "17": "일반주거지역",
+                                    "21": "중심상업지역",
+                                    "22": "일반상업지역",
+                                    "23": "근린상업지역",
+                                    "24": "유통상업지역",
+                                    "31": "전용공업지역",
+                                    "32": "일반공업지역",
+                                    "33": "준공업지역",
+                                    "41": "보전녹지지역",
+                                    "42": "생산녹지지역",
+                                    "43": "자연녹지지역",
+                                    "44": "개발제한구역",
+                                    "51": "용도미지정지역",
+                                    "61": "관리지역",
+                                    "62": "보전관리지역",
+                                    "63": "생산관리지역",
+                                    "64": "계획관리지역",
+                                    "71": "농림지역",
+                                    "81": "자연환경보전지역"
+                                };
+                                let landName = landUseType[landUse] || "기타";  // 해당 코드가 없으면 "기타" 표시
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "도로" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeA = {
+                                    "A0010000": "도로경계(미분류)",
+                                    "A0013110": "(기존도로)미분류",
+                                    "A0013111": "(기존도로)고속국도",
+                                    "A0013112": "(기존도로)일반국도",
+                                    "A0013113": "(기존도로)지방도",
+                                    "A0013114": "(기존도로)특별시도ㆍ광역시도",
+                                    "A0013115": "(기존도로)시도",
+                                    "A0013116": "(기존도로)군도",
+                                    "A0013117": "(기존도로)면리간도로",
+                                    "A0013118": "부지안도로",
+                                    "A0013122": "터널안도로",
+                                    "A0013130": "(건설예정도로)미분류",
+                                    "A0013131": "(건설예정도로)고속국도",
+                                    "A0013132": "(건설예정도로)일반국도",
+                                    "A0013133": "(건설예정도로)지방도",
+                                    "A0013134": "(건설예정도로)특별시도ㆍ광역시도",
+                                    "A0013135": "(건설예정도로)시도",
+                                    "A0013136": "(건설예정도로)군도",
+                                    "A0013137": "(건설예정도로)면리간도로",
+                                    "A0013140": "(건설중도로)미분류",
+                                    "A0013141": "(건설중도로)고속국도",
+                                    "A0013142": "(건설중도로)일반국도",
+                                    "A0013143": "(건설중도로)지방도",
+                                    "A0013144": "(건설중도로)특별시도ㆍ광역시도",
+                                    "A0013145": "(건설중도로)시도",
+                                    "A0013146": "(건설중도로)군도",
+                                    "A0013147": "(건설중도로)면리간도로",
+                                    "A0013360": "(편의시설)미분류",
+                                    "A0013370": "(기타)미분류",
+                                    "A0013430": "(도로번호-기호)미분류",
+                                    "A0013431": "(도로번호-기호)고속국도",
+                                    "A0013432": "(도로번호-기호)일반국도",
+                                    "A0013433": "(도로번호-기호)지방도",
+                                    "A0013434": "(도로번호-기호)특별시도",
+                                    "A0013435": "(도로번호-기호)시도",
+                                    "A0013436": "(도로번호-기호)군도",
+                                    "A0013440": "(도로번호)미분류",
+                                    "A0013441": "(도로번호)고속국도",
+                                    "A0013442": "(도로번호)일반국도",
+                                    "A0013443": "(도로번호)지방도",
+                                    "A0013444": "(도로번호)특별시도",
+                                    "A0013445": "(도로번호)시도",
+                                    "A0013446": "(도로번호)군도",
+                                    "A0020000": "도로중심선(미분류)",
+                                    "A0023119": "소로",
+                                    "A0023210": "(도로중심선)미분류",
+                                    "A0023211": "(도로중심선)고속국도",
+                                    "A0023212": "(도로중심선)일반국도",
+                                    "A0023213": "(도로중심선)지방도",
+                                    "A0023214": "(도로중심선)특별시도ㆍ광역시도",
+                                    "A0023215": "(도로중심선)시도",
+                                    "A0023216": "(도로중심선)군도",
+                                    "A0023217": "(도로중심선)면리간도로",
+                                    "A0033320": "인도(미분류)",
+                                    "A0033324": "인도",
+                                    "A0033327": "자전거도로",
+                                    "A0043325": "횡단보도",
+                                    "A0053326": "안전지대",
+                                    "A0063321": "육교",
+                                    "A0070000": "교량(미분류)",
+                                    "A0073340": "(다리)미분류",
+                                    "A0073341": "(다리)콘크리트교",
+                                    "A0073342": "(다리)강교",
+                                    "A0073343": "(다리)목교",
+                                    "A0071210": "철교(미분류)",
+                                    "A0071211": "철교",
+                                    "A0071212": "(철교)고가부",
+                                    "A0071213": "철도터널",
+                                    "A0080000": "교차로",
+                                    "A0090000": "입체교차부(미분류)",
+                                    "A0093350": "(입체교차부)미분류",
+                                    "A0093351": "(입체교차부)고가차도",
+                                    "A0093352": "(입체교차부)지하차도",
+                                    "A0100000": "인터체인지",
+                                    "A0110020": "터널",
+                                    "A0123373": "터널입구",
+                                    "A0131122": "정거장",
+                                    "A0140000": "정류장(미분류)",
+                                    "A0143410": "(정류장)미분류",
+                                    "A0143411": "(정류장)버스정류장",
+                                    "A0143412": "(정류장)택시정류장",
+                                    "A0150000": "철도(미분류)",
+                                    "A0151110": "(실폭선로)미분류",
+                                    "A0151111": "(실폭선로)보통 철도",
+                                    "A0151112": "(실폭선로)특수 철도",
+                                    "A0151113": "(실폭선로)터널안 철도",
+                                    "A0151114": "(실폭선로)건설중 철도",
+                                    "A0151115": "지하철(지하부)",
+                                    "A0151116": "지하철(지상부)",
+                                    "A0151117": "삭도",
+                                    "A0151118": "고가부(도로시설)",
+                                    "A0151120": "(도면제작용선로)미분류",
+                                    "A0151121": "복선철도",
+                                    "A0151123": "궤도(모노레일)",
+                                    "A0151224": "지하철역 출입구",
+                                    "A0151220": "(편의시설,기타)미분류",
+                                    "A0160024": "철도부지선",
+                                    "A0171119": "철도중심선",
+                                    "A0180000": "철도전차대",
+                                    "A0191221": "플랫폼",
+                                    "A0201222": "플랫폼의 지붕",
+                                    "A0210000": "나루(미분류)",
+                                    "A0212255": "나루(사람)",
+                                    "A0212256": "나루(차량)",
+                                    "A0222257": "나루노선"
+                                };
+                                let landName = landTypeA[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "건물" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeB = {
+                                    "B0010000": "건물경계(미분류)",
+                                    "B0014110": "(건물경계)미분류",
+                                    "B0014111": "주택외건물",
+                                    "B0014112": "주택",
+                                    "B0014113": "연립주택",
+                                    "B0014114": "공사중건물",
+                                    "B0014115": "아파트",
+                                    "B0014116": "무벽건물",
+                                    "B0014117": "온실",
+                                    "B0014118": "가건물",
+                                    "B0014119": "집단가옥경계",
+                                    "B0014210": "(지방행정)미분류",
+                                    "B0014211": "특별시청",
+                                    "B0014212": "광역시청",
+                                    "B0014213": "도청",
+                                    "B0014214": "시청",
+                                    "B0014215": "군청",
+                                    "B0014216": "구청",
+                                    "B0014217": "읍사무소",
+                                    "B0014218": "주민센터",
+                                    "B0014219": "면사무소",
+                                    "B0014220": "(치안행정)미분류",
+                                    "B0014221": "법원",
+                                    "B0014222": "경찰청",
+                                    "B0014223": "경찰서",
+                                    "B0014224": "파출소,지서",
+                                    "B0014225": "교도소,구치소",
+                                    "B0014226": "소년원",
+                                    "B0014230": "(기타행정1)미분류",
+                                    "B0014231": "소방서",
+                                    "B0014232": "보건소",
+                                    "B0014233": "세무서",
+                                    "B0014234": "세관",
+                                    "B0014235": "우체국",
+                                    "B0014236": "기상대, 측후소",
+                                    "B0014237": "전화국",
+                                    "B0014238": "병무청",
+                                    "B0014240": "(기타행정2)미분류",
+                                    "B0014241": "기타관공서",
+                                    "B0014242": "농업기술센터",
+                                    "B0014243": "지방산림청",
+                                    "B0014250": "(정부투자기관)미분류",
+                                    "B0014251": "한국전력공사",
+                                    "B0014253": "한국수자원공사",
+                                    "B0014254": "한국도로공사",
+                                    "B0014255": "한국토지주택공사",
+                                    "B0014257": "한국가스공사",
+                                    "B0014258": "한국농어촌공사",
+                                    "B0014310": "(공업)미분류",
+                                    "B0014311": "공 장",
+                                    "B0014312": "발전소",
+                                    "B0014313": "변전소",
+                                    "B0014320": "(상업)미분류",
+                                    "B0014321": "시장",
+                                    "B0014322": "백화점",
+                                    "B0014323": "관광음식점",
+                                    "B0014324": "시장경계",
+                                    "B0014330": "(농업기타)미분류",
+                                    "B0014331": "양수장",
+                                    "B0014332": "배수장",
+                                    "B0014333": "양배수장",
+                                    "B0014334": "취수장",
+                                    "B0014335": "축사",
+                                    "B0014336": "종축장",
+                                    "B0014337": "도축장",
+                                    "B0014338": "정미소",
+                                    "B0014339": "정수장",
+                                    "B0014340": "(하수처리)미분류",
+                                    "B0014341": "하수종말처리장기호",
+                                    "B0014342": "공단폐수처리장기호",
+                                    "B0014343": "축산폐수처리장기호",
+                                    "B0014344": "농공단지오폐수기호",
+                                    "B0014345": "간이오수처리장기호",
+                                    "B0014346": "분뇨처리장기호",
+                                    "B0014410": "(교육,체육)미분류",
+                                    "B0014411": "학교",
+                                    "B0014412": "유치원, 유아원",
+                                    "B0014413": "도서관",
+                                    "B0014414": "실내체육관",
+                                    "B0014415": "실내수영장",
+                                    "B0014416": "학원",
+                                    "B0014417": "기숙사",
+                                    "B0014420": "(문화종교)미분류",
+                                    "B0014421": "교회",
+                                    "B0014422": "성당",
+                                    "B0014423": "절",
+                                    "B0014424": "기타종교시설",
+                                    "B0014425": "박물관",
+                                    "B0014426": "미술관",
+                                    "B0014427": "공회당",
+                                    "B0014430": "(언론기관)미분류",
+                                    "B0014431": "TV방송국",
+                                    "B0014432": "라디오 방송국",
+                                    "B0014433": "신문사",
+                                    "B0014434": "잡지사",
+                                    "B0014435": "CATV방송국",
+                                    "B0014510": "(숙박)미분류",
+                                    "B0014511": "호텔",
+                                    "B0014512": "여관",
+                                    "B0014513": "콘도미니엄",
+                                    "B0014514": "목욕탕",
+                                    "B0014520": "(운수,창고)미분류",
+                                    "B0014521": "역",
+                                    "B0014522": "고속버스터미널",
+                                    "B0014523": "시외버스터미널",
+                                    "B0014524": "창고",
+                                    "B0014525": "공항",
+                                    "B0014526": "자동차정비수리소",
+                                    "B0014527": "세차장",
+                                    "B0014530": "(금융,조합)미분류",
+                                    "B0014531": "은행",
+                                    "B0014532": "협동조합",
+                                    "B0014533": "기타금융기관",
+                                    "B0014534": "보험회사",
+                                    "B0014610": "(병원)미분류",
+                                    "B0014611": "일반병원",
+                                    "B0014612": "결핵병원",
+                                    "B0014613": "나병원",
+                                    "B0014614": "정신병원",
+                                    "B0014615": "약국",
+                                    "B0014620": "(아동복지시설)미분류",
+                                    "B0014621": "유아시설",
+                                    "B0014622": "아동상담소",
+                                    "B0014623": "자립지원시설",
+                                    "B0014624": "탁아시설",
+                                    "B0014625": "영아시설",
+                                    "B0014626": "아동일시보호시설",
+                                    "B0014627": "아동직업보도시설",
+                                    "B0014630": "(사회복지시설)미분류",
+                                    "B0014631": "양로시설",
+                                    "B0014632": "장애인재활시설",
+                                    "B0014633": "모자보호시설",
+                                    "B0014634": "미혼모시설",
+                                    "B0014635": "노인복지회관",
+                                    "B0014636": "부녀복지관",
+                                    "B0014637": "사회복지관",
+                                    "B0020000": "담장(미분류)",
+                                    "B0024120": "(담장)미분류",
+                                    "B0024121": "콘크리트돌담",
+                                    "B0024122": "판자담",
+                                    "B0024123": "생울타리",
+                                    "B0024124": "흙담",
+                                    "B0024125": "철조망",
+                                    "B0024126": "철책",
+                                    "B0024127": "문주"
+                                };
+                                let landName = landTypeB[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "시설" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeC = {
+                                    "C0010000": "댐(미분류)",
+                                    "C0012216": "댐 (상단)",
+                                    "C0012217": "댐 (하단)",
+                                    "C0025336": "기중기",
+                                    "C0032254": "선착장",
+                                    "C0040000": "선거",
+                                    "C0050000": "제방(미분류)",
+                                    "C0052210": "(제방)미분류",
+                                    "C0052211": "콘크리트제방(상단)",
+                                    "C0052212": "콘크리트제방(하단)",
+                                    "C0052213": "흙제방(상단)",
+                                    "C0052214": "흙제방(하단)",
+                                    "C0052215": "기호제방",
+                                    "C0052220": "(방조제)미분류",
+                                    "C0052221": "콘크리트방조제(상단)",
+                                    "C0052222": "콘크리트방조제(하단)",
+                                    "C0052223": "흙방조제(상단)",
+                                    "C0052224": "흙방조제(하단)",
+                                    "C0052225": "기호방조제",
+                                    "C0052230": "(방파제)미분류",
+                                    "C0052231": "방파제 (상단)",
+                                    "C0052232": "방파제 (하단)",
+                                    "C0052233": "소파블럭",
+                                    "C0052234": "기호방파제",
+                                    "C0060000": "수문(미분류)",
+                                    "C0062240": "(수문)미분류",
+                                    "C0062241": "수문",
+                                    "C0062242": "배수갑문",
+                                    "C0062243": "보",
+                                    "C0070000": "암거(미분류)",
+                                    "C0076110": "(배수시설)미분류",
+                                    "C0076116": "암거",
+                                    "C0076117": "측구",
+                                    "C0080000": "잔교(미분류)",
+                                    "C0082250": "잔교(미분류)",
+                                    "C0082251": "잔교(콘크리트)",
+                                    "C0082252": "잔교(목재)",
+                                    "C0082253": "잔교(떠있는것)",
+                                    "C0090000": "우물/약수터(미분류)",
+                                    "C0096310": "지하수(미분류)",
+                                    "C0096311": "우물",
+                                    "C0106312": "관정",
+                                    "C0116313": "분수",
+                                    "C0125335": "온천",
+                                    "C0130000": "양식장(미분류)",
+                                    "C0132327": "양어장",
+                                    "C0136357": "양식장기호",
+                                    "C0136358": "양식장경계",
+                                    "C0142263": "낚시터",
+                                    "C0152261": "해수욕장기호",
+                                    "C0160000": "등대(미분류)",
+                                    "C0166233": "등대(유간수)",
+                                    "C0166234": "등대(무간수)",
+                                    "C0166235": "항공등대",
+                                    "C0170000": "저장조(미분류)",
+                                    "C0176320": "(저장시설)미분류",
+                                    "C0176321": "저수조",
+                                    "C0176322": "저유조",
+                                    "C0176323": "기타저장조",
+                                    "C0186115": "탱크",
+                                    "C0190000": "광산(미분류)",
+                                    "C0195330": "(광산)미분류",
+                                    "C0195334": "광산",
+                                    "C0200000": "적치장(미분류)",
+                                    "C0200120": "적치장",
+                                    "C0205340": "(매립 기타)미분류",
+                                    "C0205341": "공지",
+                                    "C0205342": "적치장",
+                                    "C0205343": "토사매립지",
+                                    "C0205344": "폐기물매립지",
+                                    "C0205345": "쓰레기매립지",
+                                    "C0210000": "채취장(미분류)",
+                                    "C0210140": "채취장",
+                                    "C0215331": "채석장",
+                                    "C0215332": "토취장",
+                                    "C0215333": "골재채취장",
+                                    "C0220000": "조명(미분류)",
+                                    "C0220205": "보조지지주",
+                                    "C0223367": "가로등",
+                                    "C0226230": "(조명)미분류",
+                                    "C0226231": "조명등",
+                                    "C0226232": "방범등",
+                                    "C0230000": "전력주/통신주(미분류)",
+                                    "C0236240": "(전주)미분류",
+                                    "C0236241": "전화주",
+                                    "C0236242": "전력주",
+                                    "C0236243": "유선주",
+                                    "C0236244": "공동주",
+                                    "C0240000": "맨홀(미분류)",
+                                    "C0240016": "지역난방맨홀",
+                                    "C0240017": "송유맨홀",
+                                    "C0246120": "(수송관-지상)미분류",
+                                    "C0246121": "(수송관-지상)상수도",
+                                    "C0246122": "(수송관-지상)하수도",
+                                    "C0246123": "(수송관-지상)송유관",
+                                    "C0246124": "(수송관-지상)가스관",
+                                    "C0246125": "(수송관-지상)송전선",
+                                    "C0246126": "(수송관-지상)통신선",
+                                    "C0246130": "(수송관-지하)미분류",
+                                    "C0246131": "(수송관-지하)상수도",
+                                    "C0246132": "(수송관-지하)하수도",
+                                    "C0246133": "(수송관-지하)송유관",
+                                    "C0246134": "(수송관-지하)가스관",
+                                    "C0246135": "(수송관-지하)송전선",
+                                    "C0246136": "(수송관-지하)통신선",
+                                    "C0246340": "(맨홀)미분류",
+                                    "C0246341": "(맨홀)공동구",
+                                    "C0246342": "(맨홀)가스관",
+                                    "C0246343": "(맨홀)전화",
+                                    "C0246344": "(맨홀)전기",
+                                    "C0246345": "(맨홀)하수",
+                                    "C0246346": "(맨홀)상수",
+                                    "C0246347": "(맨홀)통신선",
+                                    "C0250000": "소화전(미분류)",
+                                    "C0256324": "소화전",
+                                    "C0256325": "소화전(입상)",
+                                    "C0260000": "관측소(미분류)",
+                                    "C0266330": "(관측소)미분류",
+                                    "C0266331": "수위관측소",
+                                    "C0266332": "유량관측소",
+                                    "C0266333": "우량관측소",
+                                    "C0266334": "수질관측소",
+                                    "C0266335": "파랑관측소",
+                                    "C0266336": "풍향,풍속관측소",
+                                    "C0266337": "대기오염관측소",
+                                    "C0270000": "야영지",
+                                    "C0285311": "묘지",
+                                    "C0290000": "묘지계(미분류)",
+                                    "C0295113": "묘지계",
+                                    "C0295312": "공동묘지",
+                                    "C0295313": "능묘",
+                                    "C0305316": "유적지",
+                                    "C0310000": "문화재(미분류)",
+                                    "C0315310": "(문화)미분류",
+                                    "C0315314": "명승고적",
+                                    "C0325315": "성",
+                                    "C0330000": "비석/기념비(미분류)",
+                                    "C0336210": "(목표물기호1)미분류",
+                                    "C0336211": "기념비",
+                                    "C0336212": "묘비",
+                                    "C0340000": "탑(미분류)",
+                                    "C0340032": "조명탑",
+                                    "C0340325": "시계탑",
+                                    "C0346220": "(탑)미분류",
+                                    "C0346221": "소방탑",
+                                    "C0346222": "저수탑",
+                                    "C0346223": "취수탑",
+                                    "C0346224": "전파탑",
+                                    "C0346225": "송전탑",
+                                    "C0346226": "급수탑",
+                                    "C0350000": "동상(미분류)",
+                                    "C0356213": "동상",
+                                    "C0356214": "석등",
+                                    "C0363361": "공중전화",
+                                    "C0373362": "우체통",
+                                    "C0380000": "놀이시설(미분류)",
+                                    "C0380100": "놀이시설",
+                                    "C0380110": "수영장",
+                                    "C0382260": "(레저,스포츠)미분류",
+                                    "C0382262": "수영장기호",
+                                    "C0385320": "(체육시설)미분류",
+                                    "C0385321": "골프장",
+                                    "C0385322": "테니스장",
+                                    "C0385323": "운동장",
+                                    "C0385324": "어린이놀이터",
+                                    "C0385325": "스키장",
+                                    "C0386356": "야외수영장",
+                                    "C0390000": "계단(미분류)",
+                                    "C0390130": "스텐드",
+                                    "C0393323": "계단",
+                                    "C0403360": "게시판(미분류)",
+                                    "C0403366": "게시판",
+                                    "C0403426": "광고판",
+                                    "C0410000": "표지(미분류)",
+                                    "C0412258": "이정표",
+                                    "C0413420": "(표지)미분류",
+                                    "C0413421": "도로정보판",
+                                    "C0413422": "안내표지",
+                                    "C0413423": "지시표지",
+                                    "C0413424": "규제표지",
+                                    "C0413425": "주의표지",
+                                    "C0423365": "주유소",
+                                    "C0430000": "주차장(미분류)",
+                                    "C0430230": "주차장경계",
+                                    "C0433364": "주차장",
+                                    "C0443363": "휴게소",
+                                    "C0453322": "지하도",
+                                    "C0463374": "지하도입구",
+                                    "C0471220": "지하환기구(미분류)",
+                                    "C0471223": "지하철 환기통",
+                                    "C0476355": "지하환기구",
+                                    "C0486353": "굴뚝",
+                                    "C0493376": "신호등",
+                                    "C0500000": "차단기(미분류)",
+                                    "C0503375": "건널목차단기",
+                                    "C0503377": "가로등제어기",
+                                    "C0503378": "신호등제어기",
+                                    "C0503379": "전기제어기",
+                                    "C0513369": "도로반사경",
+                                    "C0520000": "도로분리대(미분류)",
+                                    "C0523120": "(도로분리대)미분류",
+                                    "C0523121": "도로분리대",
+                                    "C0530000": "방지책(미분류)",
+                                    "C0536110": "(구조물)미분류",
+                                    "C0536111": "낙서방지책",
+                                    "C0536112": "방호벽",
+                                    "C0536113": "차광책",
+                                    "C0536114": "소음방지책",
+                                    "C0536117": "기타콘크리트구조물",
+                                    "C0536118": "가드레일",
+                                    "C0536119": "가드펜스",
+                                    "C0540000": "요금징수소",
+                                    "C0556354": "헬기장"
+                                };
+                                let landName = landTypeC[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "식생" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeD = {
+                                    "D0010000": "경지계(미분류)",
+                                    "D0015112": "경지계",
+                                    "D0015210": "(경작지)미분류",
+                                    "D0015211": "논",
+                                    "D0015212": "밭",
+                                    "D0015213": "과수원",
+                                    "D0015220": "(조경)미분류",
+                                    "D0015221": "잔디",
+                                    "D0015222": "화단",
+                                    "D0015223": "정원수",
+                                    "D0020000": "지류계(미분류)",
+                                    "D0023371": "화단,가로수 보호대",
+                                    "D0023372": "가로수",
+                                    "D0025110": "(지류경계)미분류",
+                                    "D0025111": "지류계",
+                                    "D0025114": "산림계",
+                                    "D0025115": "기타경계",
+                                    "D0025215": "황무지",
+                                    "D0025216": "조림지",
+                                    "D0025230": "(산림)미분류",
+                                    "D0025231": "활엽수",
+                                    "D0025232": "침엽수",
+                                    "D0025233": "혼합림",
+                                    "D0025234": "대나무숲",
+                                    "D0030000": "독립수(미분류)",
+                                    "D0036351": "독립수(활엽수)",
+                                    "D0036352": "독립수(침엽수)",
+                                    "D0040000": "목장(미분류)",
+                                    "D0040001": "목장및방목경계",
+                                    "D0045214": "목초지"
+                                };
+                                let landName = landTypeD[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "수계" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeE = {
+                                    "E0010001": "하천경계",
+                                    "E0020000": "하천중심선(미분류)",
+                                    "E0022110": "(하천)미분류",
+                                    "E0022115": "하천중심선",
+                                    "E0022112": "세류",
+                                    "E0022113": "건천",
+                                    "E0032111": "실폭하천",
+                                    "E0042326": "유수방향",
+                                    "E0052114": "호수, 저수지",
+                                    "E0060000": "용수로(미분류)",
+                                    "E0062270": "(용수로)미분류",
+                                    "E0062271": "공업용수로(지상)",
+                                    "E0062272": "공업용수로(지하)",
+                                    "E0062273": "농업용수로(지상)",
+                                    "E0062274": "농업용수로(지하)",
+                                    "E0062275": "도수터널",
+                                    "E0072325": "폭포",
+                                    "E0080000": "해안선(미분류)",
+                                    "E0082120": "(바다)미분류",
+                                    "E0082121": "해안선(육지)",
+                                    "E0082122": "해안선(섬)",
+                                    "E0082123": "등심선",
+                                    "E0082124": "등심선 수치"
+                                };
+                                let landName = landTypeE[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "지형" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeF = {
+                                    "F0010000": "등고선(미분류)",
+                                    "F0017110": "(볼록지)미분류",
+                                    "F0017111": "(볼록지)주곡선",
+                                    "F0017112": "(볼록지)간곡선",
+                                    "F0017113": "(볼록지)조곡선",
+                                    "F0017114": "(볼록지)계곡선",
+                                    "F0017120": "(오목지)미분류",
+                                    "F0017121": "(오목지)주곡선",
+                                    "F0017122": "(오목지)간곡선",
+                                    "F0017123": "(오목지)조곡선",
+                                    "F0017124": "(오목지)계곡선",
+                                    "F0017130": "(수치)미분류",
+                                    "F0017131": "등고수치",
+                                    "F0020000": "표고점(미분류)",
+                                    "F0027132": "표고점수치",
+                                    "F0027217": "표고점",
+                                    "F0030000": "성/절토(미분류)",
+                                    "F0037220": "(인공)미분류",
+                                    "F0037221": "성토(상단)",
+                                    "F0037222": "절토(상단)",
+                                    "F0037223": "성토(하단)",
+                                    "F0040000": "옹벽(미분류)",
+                                    "F0047224": "콘크리트옹벽(상단)",
+                                    "F0047225": "콘크리트옹벽(하단)",
+                                    "F0047226": "석축(상단)",
+                                    "F0047227": "석축(하단)",
+                                    "F0047228": "경사보호망",
+                                    "F0057215": "동굴입구"
+                                };
+                                let landName = landTypeF[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "경계" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeG = {
+                                    "G0010000": "행정경계(미분류)",
+                                    "G0010012": "광역시계",
+                                    "G0010013": "도계",
+                                    "G0010118": "행정동계",
+                                    "G0018110": "(행정경계선)미분류",
+                                    "G0018111": "국경",
+                                    "G0018112": "특별시,광역시,도",
+                                    "G0018113": "시계",
+                                    "G0018114": "군계",
+                                    "G0018115": "구계",
+                                    "G0018116": "읍계",
+                                    "G0018117": "동계",
+                                    "G0018118": "면계",
+                                    "G0018119": "리계",
+                                    "G0020000": "수부지형경계(미분류)",
+                                    "G0022310": "(경계)미분류",
+                                    "G0022311": "갯벌(진흙)",
+                                    "G0022312": "모래",
+                                    "G0022313": "습지",
+                                    "G0022314": "염전",
+                                    "G0022315": "용수구역",
+                                    "G0022316": "집수경계(하수)",
+                                    "G0022317": "수역경계(하천)",
+                                    "G0022318": "댐 유역계",
+                                    "G0022320": "(기호)미분류",
+                                    "G0022321": "갯벌기호",
+                                    "G0022322": "모래기호",
+                                    "G0022323": "습지기호",
+                                    "G0022324": "염전기호",
+                                    "G0030000": "기타경계(미분류)",
+                                    "G0037210": "(자연)미분류",
+                                    "G0037211": "붕토지",
+                                    "G0037212": "시태지",
+                                    "G0037213": "벼랑바위",
+                                    "G0037214": "너덜바위",
+                                    "G0037216": "능선",
+                                    "G0036350": "기타(미분류)",
+                                    "G0038210": "(산업지역경계)미분류",
+                                    "G0038211": "국가공업단지",
+                                    "G0038212": "지방공업단지",
+                                    "G0038213": "농공단지",
+                                    "G0038214": "축산단지",
+                                    "G0038215": "국토계획관련지역",
+                                    "G0038220": "(환경지역경계)미분류",
+                                    "G0038221": "자연환경보존지역",
+                                    "G0038222": "자연생태계보존구역",
+                                    "G0038223": "상수원보호지역",
+                                    "G0038224": "개발제한구역",
+                                    "G0038225": "환경보존특별 대책지역",
+                                    "G0038230": "(관광문화지역)미분류",
+                                    "G0038231": "문화재보호구역",
+                                    "G0038232": "관광단지",
+                                    "G0038233": "위락단지",
+                                    "G0038240": "(주거지역경계)미분류",
+                                    "G0038241": "외국인주거지역"
+                                };
+                                let landName = landTypeG[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            } else if (displayName === "주기" && result.data.features[0].properties.layer) {
+                                let landType = result.data.features[0].properties.layer;
+                                const landTypeH = {
+                                    "H0010000": "도곽(미분류)",
+                                    "H0010500": "미분류",
+                                    "H0010601": "난외주기",
+                                    "H0017334": "도곽",
+                                    "H0020000": "기준점(미분류)",
+                                    "H0027133": "삼각점수치",
+                                    "H0027134": "수준점수치",
+                                    "H0027135": "통합기준점수치",
+                                    "H0027310": "(국가기준점)미분류",
+                                    "H0027311": "삼각점",
+                                    "H0027312": "수준점",
+                                    "H0027313": "통합기준점",
+                                    "H0027320": "(항측기준점)미분류",
+                                    "H0027321": "평면기준점",
+                                    "H0027322": "표고기준점",
+                                    "H0027323": "사진기준점",
+                                    "H0027330": "(기타기준점)미분류",
+                                    "H0027331": "지적",
+                                    "H0027332": "수로",
+                                    "H0027333": "기타",
+                                    "H0037335": "격자",
+                                    "H0040000": "지명(미분류)",
+                                    "H0040010": "주거시설",
+                                    "H0040011": "농경시설",
+                                    "H0040104": "해양",
+                                    "H0040154": "지형",
+                                    "H0040203": "목장 및 방목",
+                                    "H0040205": "경관",
+                                    "H0049110": "(도로)미분류",
+                                    "H0049111": "도로",
+                                    "H0049112": "유료도로",
+                                    "H0049113": "도로시설",
+                                    "H0049114": "다리",
+                                    "H0049115": "터널",
+                                    "H0049116": "행선지명",
+                                    "H0049120": "(철도)미분류",
+                                    "H0049121": "철도",
+                                    "H0049122": "철도시설",
+                                    "H0049123": "철교",
+                                    "H0049124": "터널",
+                                    "H0049125": "행선지명",
+                                    "H0049130": "(하천)미분류",
+                                    "H0049131": "하천",
+                                    "H0049132": "세류",
+                                    "H0049133": "하천시설",
+                                    "H0049134": "지하수로",
+                                    "H0049140": "(건물)미분류",
+                                    "H0049141": "지방행정기관",
+                                    "H0049142": "치안행정기관",
+                                    "H0049143": "기타행정기관",
+                                    "H0049144": "산업시설",
+                                    "H0049145": "문화,교육시설",
+                                    "H0049146": "서비스시설",
+                                    "H0049147": "의료,후생시설",
+                                    "H0049150": "(지류)미분류",
+                                    "H0049151": "식생",
+                                    "H0049152": "평야,들",
+                                    "H0049154": "변형지물,바위",
+                                    "H0049160": "(시설물)미분류",
+                                    "H0049161": "보조물",
+                                    "H0049162": "목표물",
+                                    "H0049210": "(도시지역)미분류",
+                                    "H0049211": "특별시",
+                                    "H0049212": "광역시",
+                                    "H0049213": "도",
+                                    "H0049214": "시",
+                                    "H0049215": "구",
+                                    "H0049216": "법정동",
+                                    "H0049217": "행정동",
+                                    "H0049220": "(농어촌지역)미분류",
+                                    "H0049221": "도",
+                                    "H0049222": "군",
+                                    "H0049223": "읍",
+                                    "H0049224": "면",
+                                    "H0049225": "리",
+                                    "H0049226": "자연부락",
+                                    "H0049230": "(지역,구역명)미분류",
+                                    "H0049231": "산업관련지역명",
+                                    "H0049232": "환경관련지역명",
+                                    "H0049233": "관광,문화관련 지역명",
+                                    "H0059153": "산,산맥"
+                                };
+                                let landName = landTypeH[landType] || "알 수 없음";
+                                additionalInfo = `${landName}`;
+                            }
+                            if (additionalInfo) {
+                                modal_names.push({
+                                    layerName: result.layerName,
+                                    additionalInfo: additionalInfo,
+                                    displayName: displayName
+                                });
+                            }
+                            contentHtml += `<h3 id="${result.layerName}">${displayName} : ${additionalInfo} </h3>`;
                         }
                     });
+
+                    var data_list = [];
+                    for (let i = 0; i < results.length; i++) {  // let을 사용하여 i를 정의
+                        const result = results[i];
+                        if (result && result.data && result.data.features && result.data.features.length > 0) {
+                            const properties = result.data.features[0].properties;
+                            const layerName = result.layerName;  // layerName을 저장
+                            // layerName과 properties를 객체로 묶어서 data_list에 저장
+                            data_list[i] = {
+                                layerName: layerName,
+                                properties: properties
+                            };
+                        }
+                    }
 
                     if (contentHtml) {
                         modalContent.innerHTML = contentHtml;
@@ -1123,14 +2264,173 @@
                             const layerElement = document.getElementById(result.layerName);
                             if (layerElement) {
                                 layerElement.addEventListener('click', function () {
-                                    // 클릭된 레이어의 데이터만 모달에 표시
-                                    let layerDataHtml = `<h3>레이어: ${result.layerName}</h3><ul>`;
-                                    const properties = result.data.features[0].properties;
-                                    for (const [key, value] of Object.entries(properties)) {
-                                        layerDataHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                                    // 클릭된 레이어에 맞는 추가 정보를 찾아서 표시
+                                    const matchingInfo = modal_names.find(info => info.layerName === result.layerName);
+                                    let additionalInfo = matchingInfo ? matchingInfo.additionalInfo : '';
+                                    let table_type = matchingInfo ? matchingInfo.displayName : '';
+                                    // 클릭된 레이어의 데이터만 테이블 형식으로 표시
+                                    let layerDataHtml = `<h3>${additionalInfo}</h3>`;
+                                    if (table_type === "행정동") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>전체인구</th><th>남자</th><th>여자</th></tr>
+                                                                 <tr><td>${properties.total_pp}</td><td>${properties.male}</td><td>${properties.female}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("행정동");
+                                    } else if (table_type === "행정구") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>전체인구</th><th>남자</th><th>여자</th></tr>
+                                                                 <tr><td>${properties.total_pp}</td><td>${properties.male}</td><td>${properties.female}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("행정구");
+                                    } else if (table_type === "행정시") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>전체인구</th><th>남자</th><th>여자</th></tr>
+                                                                 <tr><td>${properties.total_pp}</td><td>${properties.male}</td><td>${properties.female}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("행정시");
+                                    } else if (table_type === "도서관") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>면적</th><td>${properties.building_a}m²</td><th>열람석</th><td>${properties.seats}석</td><th>장서</th><td>${properties.books}권</td></tr>
+                                                            <tr><th rowspan="4">운영 시간</th><td colspan="5">■ 주중 : 월~금 ${properties.saturday_s}~${properties.saturday_e}</td></tr>
+                                                            <tr><td colspan="5">■ 토요일 : ${properties.weekday_st}~${properties.weekday_en}</td></tr>
+                                                            <tr><td colspan="5">■ 일요일 : ${properties.holiday_st}~${properties.holiday_en}</td></tr>
+                                                            <tr><td colspan="5">휴관일 : ${properties.closed_day}</td></tr>
+                                                            <tr><th>주소</th><td colspan="5">${properties.address}</td></tr>`
+                                        if (properties.phone) {
+                                            layerDataHtml += `<tr><th>연략처</th><td colspan="5">${properties.phone}</td></tr>`;
+                                        }
+                                        if (properties.website && properties.website !== "0") {
+                                            layerDataHtml += `<tr><th>사이트</th><td colspan="5"><a href="${properties.website}" target="_blank">${properties.website}</a></td></tr>`;
+                                        }
+                                        layerDataHtml += `</table>`
+                                        console.log(properties)
+                                        console.log("도서관");
+                                    } else if (table_type === "무인 발급기") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table><tr><th>연간 이용량</th><td>${properties.use}</td></tr></table>`
+                                        console.log(properties)
+                                        console.log("무인 발급기");
+                                    } else if (table_type === "와이파이") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>위치</th><td colspan="3">${properties.name}</td></tr>
+                                                            <tr><th>위도</th><td>${properties.lat}</td><th>경도</th><td>${properties.lon}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("와이파이");
+                                    } else if (table_type === "열지도") {
+                                        const properties = result.data.features[0].properties;
+                                        const roundedTmMean = properties.tm_mean.toFixed(1); // 소수 첫째 자리까지 반올림
+                                        layerDataHtml += `<table>
+                                                            <tr><th>평균 온도</th><td>${roundedTmMean}</td></tr>
+                                                          </table>`;
+                                        console.log(properties);
+                                        console.log("열지도");
+                                    } else if (table_type === "교통현황") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>일시</th><th>시간</th><th>평균 이용량</th></tr>
+                                                            <tr><td>${properties.a1}~${properties.b1}</td><td>${properties.e1}</td><td>${properties.d1}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("교통현황");
+                                    } else if (table_type === "건물 현황") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>주소</th><td colspan="2">${properties.a4} ${properties.a7}</td></tr>
+                                                            <tr><th>건물용도분류명</th><th>세부용도명</th><th>주요용도명</th></tr>
+                                                            <tr><td>${properties.a29}</td><td>${properties.a27}</td><td>${properties.a25}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("건물 현황");
+                                    } else if (table_type === "인구") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>거주 인원</th><th>위도</th><th>경도</th></tr>
+                                                            <tr><td>${properties.val}</td><td>${properties.lat}</td><td>${properties.lon}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("인구");
+                                    } else if (table_type === "유동인구") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>유동인구</th><td>${properties.freq}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("유동인구");
+                                    } else if (table_type === "신호등") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>지번 주소</th><td colspan="3">${properties.location_1}</td></tr>
+                                                            <tr><th>관리기관명</th><td>${properties.manageme_1}</td><th>관리기관 번호</th><td>${properties.manageme_2}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("신호등");
+                                    } else if (table_type === "토지 이용현황") {
+                                        const properties = result.data.features[0].properties.ucb;
+                                        const description = ucb_data[properties];
+                                        layerDataHtml += `<table>
+                                                            <tr><th>설명</th></tr>
+                                                            <tr><td>${description}</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("토지 이용현황");
+                                    } else if (table_type === "토지 소유 정보") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>주소</th><td>${properties.a2} ${properties.a5}</td></tr>
+                                                            <tr><th>소유자</th><td>${properties.a8}</td></tr>
+                                                            <tr><th>지목</th><td>${properties.a20}</td></tr>
+                                                            <tr><th>토지 면적</th><td>${properties.a22}m²</td></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("토지 소유 정보");
+                                    } else if (table_type === "토지 특성 공간") {
+                                        const properties = result.data.features[0].properties;
+                                        layerDataHtml += `<table>
+                                                            <tr><th>주소</th><td>${properties.a3} ${properties.a6}</td></tr>
+                                                            <tr><th>지목명</th><td>${properties.a11}</td><th>토지 면적</th><td>${properties.a12}m²</td></tr>
+                                                            <tr><th>용도</th><td>${properties.a16}</td><th>토지이용상황</th><td>${properties.a18}</td></tr>
+                                                            <tr></tr>
+                                                          </table>`
+                                        console.log(properties)
+                                        console.log("토지 특성 공간");
+                                    } else if (table_type === "도로") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("도로");
+                                    } else if (table_type === "건물") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("건물");
+                                    } else if (table_type === "시설") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("시설");
+                                    } else if (table_type === "식생") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("식생");
+                                    } else if (table_type === "수계") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("수계");
+                                    } else if (table_type === "지형") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("지형");
+                                    } else if (table_type === "경계") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("경계");
+                                    } else if (table_type === "주기") {
+                                        const properties = result.data.features[0].properties;
+                                        console.log(properties)
+                                        console.log("주기");
+                                    } else {
+                                        console.log("알 수 없는 테이블 유형");
                                     }
-                                    layerDataHtml += `</ul>`;
-
                                     // 모달에 해당 레이어의 데이터만 업데이트
                                     modalContent.innerHTML = layerDataHtml;
                                 });
@@ -1446,55 +2746,6 @@
         });
     }
 
-    var category_kiosk = document.getElementById('category-issuingMachine');
-    category_kiosk.addEventListener('click',function (){
-        var data = {
-            name: 'kiosk_20_05',  // 필요에 맞게 수정
-        };
-
-        // 비동기 POST 요청
-        fetch('/json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // 데이터 요청 본문에 포함
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();  // 응답을 JSON으로 파싱
-                } else {
-                    return Promise.reject('서버 응답 실패');
-                }
-            })
-            .then(responseData => {
-                console.log(responseData);  // 응답 데이터 확인
-
-                // 응답 데이터에서 'data' 배열을 가져옵니다.
-                const kiosks = responseData.data;
-
-                // 'total_score'로 내림차순 정렬하여 상위 5개 항목만 추출
-                const topKiosks = kiosks
-                    .sort((a, b) => b.total_score - a.total_score)  // total_score 기준 내림차순 정렬
-                    .slice(0, 5);  // 상위 5개 항목만 선택
-
-                // topKiosks 배열을 순회하면서 각 kiosk 객체에 대해 마커를 추가합니다.
-                topKiosks.forEach(kiosk => {
-                    var lat = kiosk.lat;  // 위도
-                    var lng = kiosk.lon;  // 경도
-                    var popupContent = `여기는 ${kiosk.name || '이름 없음'}입니다!`;  // 팝업 내용은 kiosk의 name을 사용
-
-                    // 마커 추가
-                    L.marker([lat, lng])
-                        .addTo(map)
-                        .bindPopup(popupContent)  // 팝업 내용 추가
-                        .openPopup();  // 팝업 열기 (필요하면 이 줄을 삭제하여 팝업을 열지 않을 수 있음)
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);  // 오류 발생 시 콘솔에 출력
-            });
-    })
     function updateTab3Weights() {
         const librarySlider = document.getElementById('input-tab2-2');
         const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
