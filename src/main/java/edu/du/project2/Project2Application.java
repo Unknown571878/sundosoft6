@@ -134,9 +134,50 @@ public class Project2Application {
 
         faqRepository.saveAll(faqList);
     }
-
     @PostConstruct
     public void init3() {
+        String tableName = "gwangju_dong";
+        int limit = 10; // 한 번에 가져올 데이터 개수
+        int offset = 0; // 시작 위치
+        String htmlTable = dataBoardService.fetchTableDataAsHtml(tableName, limit, offset);
+
+        // 데이터 게시판 객체 생성
+        DataBoard board = DataBoard.builder()
+                .title("광주 행정경계 데이터")
+                .content("광주 행정경계(동계) 데이터입니다.")
+                .hits(0)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .files(List.of(new FileDetail("/uploads/광주_동계.csv","광주_동계")))
+                .tableName(tableName)
+                .a1("")
+                .a2("")
+                .a3("")
+                .a4("")
+                .a5("")
+                .a6("")
+                .a7("")
+                .a8("")
+                .a9("")
+                .a10("")
+                .a11("")
+                .a12("")
+                .a13("")
+                .a14("")
+                .a15("")
+                .a16("")
+                .a17("")
+                .a18("")
+                .a19("")
+                .a20("")
+                .preview(htmlTable)
+                .build();
+
+        dataBoardRepository.save(board);
+    }
+    
+    @PostConstruct
+    public void init5() {
         String tableName = "gwangju_pub_wifi";
         int limit = 10; // 한 번에 가져올 데이터 개수
         int offset = 0; // 시작 위치
@@ -149,7 +190,7 @@ public class Project2Application {
                 .hits(0)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .files(List.of(new FileDetail("/uploads/gwangju_pub_wifi.csv","gwangju_pub_wifi")))
+                .files(List.of(new FileDetail("/uploads/광주_공공와이파이.csv","광주_공공와이파이.csv")))
                 .tableName(tableName)
                 .a1("")
                 .a2("")
@@ -177,7 +218,7 @@ public class Project2Application {
         dataBoardRepository.save(board);
     }
     @PostConstruct
-    public void init4() {
+    public void init6() {
         String tableName = "gwangju_gm";
         int limit = 10; // 한 번에 가져올 데이터 개수
         int offset = 0; // 시작 위치
