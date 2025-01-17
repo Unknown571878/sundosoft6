@@ -113,25 +113,25 @@
     }
 
     // loc 와 type을 받아서 레이어를 추가한다.
-    if (loc === "cheonan" && type === "무인발급기") {
+    if (loc === "cheonan" && type === "kiosk") {
         const layer = createWmsLayer('cheonan_civil_service_machines', "dot");
         layer.addTo(map);
-    } else if (loc === "cheonan" && type === "도서관") {
+    } else if (loc === "cheonan" && type === "library") {
         const layer = createWmsLayer('cheonan_library_20240610', "dot");
         layer.addTo(map);
-    } else if (loc === "cheonan" && type === "와이파이") {
+    } else if (loc === "cheonan" && type === "wifi") {
         const layer = createWmsLayer('cheonan_pub_wifi', "dot");
         layer.addTo(map);
-    } else if (loc === "gwangju" && type === "무인발급기") {
+    } else if (loc === "gwangju" && type === "kiosk") {
         const layer = createWmsLayer('gwangju_civil_service_machines', "dot");
         layer.addTo(map);
-    } else if (loc === "gwangju" && type === "도서관") {
+    } else if (loc === "gwangju" && type === "library") {
         const layer = createWmsLayer('gwangju_library', "dot");
         layer.addTo(map);
-    } else if (loc === "gwangju" && type === "와이파이") {
+    } else if (loc === "gwangju" && type === "wifi") {
         const layer = createWmsLayer('gwangju_pub_wifi', "dot");
         layer.addTo(map);
-    } else if (loc === "gwangju" && type === "그늘막") {
+    } else if (loc === "gwangju" && type === "shade") {
         const layer = createWmsLayer('gwangju_civil_service_machines', "dot");
         layer.addTo(map);
     } else {
