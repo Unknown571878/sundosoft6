@@ -244,3 +244,48 @@ a:hover {
     align-items: center; /* 세로 중앙 정렬 */
     width: 100%; /* 전체 너비 */
 }
+
+/* 메인 헤더 스타일 */
+.main-tihome {
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    width: 100%; /* 전체 너비 설정 */
+    margin: 0 auto 15px; /* 상단과 하단 여백 설정 */
+}
+
+/* 메인 타이틀 스타일 */
+.main-title {
+    font-size: 24px; /* 제목 폰트 크기 */
+    font-weight: lighter; /* 가벼운 폰트 두께 */
+    margin-top: 50px;
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    display: block; /* 블록 요소로 설정 */
+}
+
+/* 링크 스타일 */
+.main-home a {
+    font-size: 20px; /* 링크 텍스트 크기 */
+    color: black; /* 기본 색상 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+    cursor: pointer; /* 커서 모양을 포인터로 설정 */
+}
+
+.main-home a:hover {
+    color: black; /* 호버 시 색상 유지 */
+    transition: color 0.3s ease; /* 부드러운 색상 전환 */
+}
+
+/* FAQ 링크 스타일 */
+.qna-link {
+    color: gray; /* 링크 기본 색상 */
+    font-size: 16px; /* 텍스트 크기 */
+    font-weight: lighter; /* 가벼운 폰트 두께 */
+    text-decoration: none; /* 밑줄 제거 */
+    margin: 0 10px 30px; /* 좌우 여백 10px, 하단 여백 15px */
+}
+
+.qna-link:hover {
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+    color: gray; /* 호버 시 색상 유지 */
+}

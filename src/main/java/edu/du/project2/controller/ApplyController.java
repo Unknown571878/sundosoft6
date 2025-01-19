@@ -1,14 +1,11 @@
 package edu.du.project2.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.Apply;
 import edu.du.project2.service.ApplyService;
-import edu.du.project2.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 분석 신청서 관련 컨트롤러.
@@ -37,16 +33,28 @@ public class ApplyController {
         return "common/messageRedirect";
     }
 
-    // 신청서 목록 페이지를 반환
-    @GetMapping("/list")
-    public String list(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
+    // 기본 신청서 목록 페이지를 반환
+    @GetMapping("/normalList")
+    public String normalList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         // 로그인한 사용자에 따른 신청서 목록 가져오기
         Page<Apply> applies = applyService.getApplies(authInfo, pageable);
         model.addAttribute("count", applies.stream().count());
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", applies);
-        return "map/apply_list";
+        return "map/normalApply_list";
+    }
+
+    // 상세 신청서 목록 페이지를 반환
+    @GetMapping("/detailList")
+    public String detailList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
+        AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
+        // 로그인한 사용자에 따른 신청서 목록 가져오기
+        Page<Apply> applies = applyService.getApplies(authInfo, pageable);
+        model.addAttribute("count", applies.stream().count());
+        model.addAttribute("now", LocalDateTime.now());
+        model.addAttribute("applies", applies);
+        return "map/detailApply_list";
     }
 
     // 신청서 상세 페이지를 반환
@@ -92,21 +100,21 @@ public class ApplyController {
         } else {
             applyService.createBoard(author, title, content, files, authInfo);
         }
-        return "redirect:/analysis/list";
+        return "redirect:/analysis/normalList";
     }
 
     // 신청서를 수정
     @PostMapping("/analysisUpdate")
     public String update(Apply apply){
         applyService.updateApply(apply);
-        return "redirect:/analysis/list";
+        return "redirect:/analysis/normalList";
     }
 
     // 신청서를 삭제
     @PostMapping("/analysisDelete")
     public String delete(@RequestParam Long id){
         applyService.deleteApply(id);
-        return "redirect:/analysis/list";
+        return "redirect:/analysis/normalList";
     }
 
     // 신청 결과 확인
