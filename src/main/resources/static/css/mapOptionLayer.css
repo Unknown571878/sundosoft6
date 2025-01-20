@@ -110,6 +110,7 @@ html, body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
     transition: left 0.3s ease; /* 슬라이드 애니메이션 */
+    overflow-x: hidden; /* 가로 스크롤 숨김 */
 }
 
 /* 메뉴 숨김 상태 */
