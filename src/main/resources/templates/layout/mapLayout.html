@@ -1814,12 +1814,48 @@
       <button class="tab-button" data-tab="tab6">새 탭 6</button>
       <button class="tab-button" data-tab="tab7">새 탭 7</button>
     </div>
-
     <!-- 탭 내용 -->
     <div class="tab-content" id="tab1" style="display: block;">
-      <input type="text" placeholder="공공 와이파이 1" id="input-tab1-1" />
-      <input type="text" placeholder="공공 와이파이 2" id="input-tab1-2" />
-      <input type="text" placeholder="공공 와이파이 3" id="input-tab1-3" />
+      <!-- 인구수 / 사용량 가중치 -->
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">트래픽 / 인구 (가중치):</label>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <span style="margin-right: 10px;">트래픽</span>
+          <span id="traffic-weight">0.5</span>
+          <input
+                  type="range"
+                  data-name="wifi--alpha"
+                  id="input-tab1-1"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="0.5"
+                  style="flex: 1; margin: 10px; padding: 0"
+                  oninput="updateTab1Weights()"
+          />
+          <span style="margin-right: 10px;">인구</span>
+          <span id="population-weight">0.5</span>
+        </div>
+      </div>
+      <!-- 표출할 상위 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for="repeat-num" style="font-weight: bold;">반복수:</label>
+        <input type="number" placeholder="기본값 10000" id="repeat-num" min="1" />
+      </div>
+      <!-- 표출할 상위 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for="new-wifi" style="font-weight: bold;">새로 만들 와이파이 개수:</label>
+        <input type="number" placeholder="기본값 5" id="new-wifi" min="1" />
+      </div>
+      <!-- 도움말 -->
+      <div class="help-icon">
+        <img src="/images/help-mark.svg" style="width: 15px;" height="15px;"><span>도움말</span>
+        <div class="tooltip-left">
+          - 트래픽 / 인구 &lt;&lt; 사람들이 많이 다니는 곳(트래픽) 사람들이 많이 사는 곳(인구)중 중요한 곳으로 옮겨주세요.(기본값 0.5 : 0.5)<br />
+          - 반복수 &lt;&lt; 계산을 몇번 반복할지 정해주세요 높을수록 정확하지만 오래걸리고 낮을수록 빠르지만 정확도가 떨어집니다.(기본값 10000)<br />
+          - 새로 만들 와이파이 개수 &lt;&lt; 새로 설치할 와이파이 개수를 정합니다. 정해진 개수만큼 화면에 표출합니다.(기본값 5)
+        </div>
+      </div>
     </div>
 
     <div class="tab-content" id="tab2" style="display: none;">
