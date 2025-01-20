@@ -1,5 +1,8 @@
 package edu.du.project2.service;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import edu.du.project2.dto.DataBoardDto;
 import edu.du.project2.entity.DataBoard;
 import edu.du.project2.entity.FileDetail;
 import edu.du.project2.repository.DataBoardRepository;
@@ -11,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -28,29 +33,36 @@ public class DataBoardService {
     }
 
     @Transactional
-    public void createDataBoard(String title, String content,String tableName,
-                                MultipartFile[] files,String a1,String a2,
-                                String a3,String a4,String a5,String a6,
-                                String a7,String a8,String a9,String a10,
-                                String a11,String a12,String a13,String a14,
-                                String a15,String a16,String a17,String a18,
-                                String a19,String a20) throws IOException {
+    public void createDataBoard(DataBoardDto dto) throws IOException {
         // DataBoard 객체 생성 및 초기화
         DataBoard dataBoard = DataBoard.builder()
-                .title(title)
-                .content(content)
-                .hits(0) // 조회수 초기값 설정
-                .createdAt(LocalDateTime.now()) // 생성일시 설정
-                .updatedAt(LocalDateTime.now()) // 수정일시 설정
-                .tableName(tableName)
-                .a1(a1).a2(a2).a3(a3).a4(a4).a5(a5)
-                .a6(a6).a7(a7).a8(a8).a9(a9).a10(a10)
-                .a11(a11).a12(a12).a13(a13).a14(a14).a15(a15)
-                .a16(a16).a17(a17).a18(a18).a19(a19).a20(a20)
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .hits(0)
+                .a1(dto.getA1())
+                .a2(dto.getA2())
+                .a3(dto.getA3())
+                .a4(dto.getA4())
+                .a5(dto.getA5())
+                .a6(dto.getA6())
+                .a7(dto.getA7())
+                .a8(dto.getA8())
+                .a9(dto.getA9())
+                .a10(dto.getA10())
+                .a11(dto.getA11())
+                .a12(dto.getA12())
+                .a13(dto.getA13())
+                .a14(dto.getA14())
+                .a15(dto.getA15())
+                .a16(dto.getA16())
+                .a17(dto.getA17())
+                .a18(dto.getA18())
+                .a19(dto.getA19())
+                .a20(dto.getA20())
                 .build();
 
         // 파일 업로드 처리
-        List<FileDetail> fileDetails = fileService.uploadFiles(files); // 파일 업로드 서비스 호출
+        List<FileDetail> fileDetails = fileService.uploadFiles(dto.getFiles()); // 파일 업로드 서비스 호출
         dataBoard.setFiles(fileDetails); // 파일 정보 설정
 
         // 데이터 저장
@@ -58,63 +70,124 @@ public class DataBoardService {
     }
 
     @Transactional
-    public DataBoard getDataListDetail(Long id, boolean increaseHitCount, String tableName, int limit, int offset) {
+    public DataBoard getDataListDetail(Long id, boolean increaseHitCount, int limit, int offset) throws IOException {
         DataBoard dataBoard = dataBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("공지사항을 찾을 수 없습니다. ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("데이터 리스트를 찾을 수 없습니다. ID: " + id));
 
         if (increaseHitCount) {
             dataBoard.setHits(dataBoard.getHits() + 1);
             dataBoardRepository.save(dataBoard);
         }
-        // PostgreSQL 데이터를 가져와 HTML 테이블로 변환 후 preview 필드에 추가
-        String htmlTable = fetchTableDataAsHtml(tableName, limit, offset);
-        dataBoard.setPreview(htmlTable);
+        // 파일 경로 가져오기 (첨부된 첫 번째 파일 사용)
+        String filePath = null;
+        if (!dataBoard.getFiles().isEmpty()) {
+            filePath = dataBoard.getFiles().get(0).getFilePath(); // 첫 번째 파일 경로 사용
+
+            // 상대 경로를 절대 경로로 변환
+            Path absoluteFilePath = fileService.getFilePathFromRelative(filePath);
+
+            // 파일 확장자 확인 (CSV 파일만 처리)
+            if (isCsvFile(filePath)) {
+                // CSV 파일이면 HTML 테이블 생성
+                String htmlTable = fetchCsvDataAsHtml(absoluteFilePath.toString(), limit, offset);
+                dataBoard.setPreview(htmlTable);
+            } else {
+                // CSV 파일이 아니면 미리보기 비우기
+                dataBoard.setPreview("지원하지 않는 파일 형식입니다.");
+            }
+        } else {
+            dataBoard.setPreview("첨부 파일이 없습니다.");
+        }
+
         return dataBoard;
     }
 
-    public String fetchTableDataAsHtml(String tableName, int limit, int offset) {
-        // SQL 쿼리 생성
-        String sql = String.format("SELECT * FROM %s LIMIT %d OFFSET %d", tableName, limit, offset);
+    // 파일이 CSV인지 확인하는 메서드
+    private boolean isCsvFile(String filePath) {
+        return filePath != null && filePath.toLowerCase().endsWith(".csv");
+    }
 
-        // 데이터 조회
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+    // CSV 파일을 읽어 HTML 테이블로 변환
+    public String fetchCsvDataAsHtml(String filePath, int limit, int offset) throws IOException {
+        try (CSVReader csvReader = new CSVReader(new FileReader(filePath))) {
+            List<String[]> rows = csvReader.readAll();
 
-        // HTML 테이블 생성
-        StringBuilder htmlTable = new StringBuilder();
-        htmlTable.append("<div style='overflow-x: auto; max-width: 100%;'>"); // 가로 스크롤 추가
-        htmlTable.append("<table style='border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; white-space: nowrap;'>");
+            // HTML 테이블 생성
+            StringBuilder htmlTable = new StringBuilder();
+            htmlTable.append("<div style='overflow-x: auto; max-width: 100%;'>"); // 가로 스크롤 추가
+            htmlTable.append("<table style='border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; white-space: nowrap;'>");
 
-        // 테이블 헤더 생성
-        if (!rows.isEmpty()) {
-            htmlTable.append("<thead><tr style='background-color: #f2f2f2;'>");
-            for (String column : rows.get(0).keySet()) {
-                if (!"geom".equalsIgnoreCase(column) && !"id".equalsIgnoreCase(column) && !"path".equalsIgnoreCase(column)) {
+            // 테이블 헤더 생성
+            if (!rows.isEmpty()) {
+                htmlTable.append("<thead><tr style='background-color: #f2f2f2;'>");
+                String[] header = rows.get(0); // 첫 번째 행은 헤더
+                for (String column : header) {
                     htmlTable.append("<th style='border: 1px solid #ddd; padding: 8px; text-align: left;'>")
                             .append(column)
                             .append("</th>");
                 }
+                htmlTable.append("</tr></thead>");
             }
-            htmlTable.append("</tr></thead>");
-        }
 
-        // 데이터 행 생성
-        htmlTable.append("<tbody>");
-        for (Map<String, Object> row : rows) {
-            htmlTable.append("<tr>");
-            for (Map.Entry<String, Object> entry : row.entrySet()) {
-                if (!"geom".equalsIgnoreCase(entry.getKey()) && !"id".equalsIgnoreCase(entry.getKey()) && !"path".equalsIgnoreCase(entry.getKey())) {
+            // 데이터 행 생성 (offset, limit 적용)
+            htmlTable.append("<tbody>");
+            for (int i = offset+1; i < Math.min(offset + limit, rows.size()); i++) {
+                String[] row = rows.get(i);
+                htmlTable.append("<tr>");
+                for (String cell : row) {
                     htmlTable.append("<td style='border: 1px solid #ddd; padding: 8px;'>")
-                            .append(entry.getValue() != null ? entry.getValue().toString() : "")
+                            .append(cell != null ? cell : "")
                             .append("</td>");
                 }
+                htmlTable.append("</tr>");
             }
-            htmlTable.append("</tr>");
+            htmlTable.append("</tbody></table>");
+            htmlTable.append("</div>"); // 닫는 div 태그 추가
+
+            return htmlTable.toString();
+        } catch (CsvException e) {
+            throw new RuntimeException(e);
         }
-        htmlTable.append("</tbody></table>");
-        htmlTable.append("</div>"); // 닫는 div 태그 추가
-
-        return htmlTable.toString();
     }
+    @Transactional
+    public void updateDataBoard(DataBoardDto dto) throws IOException {
+        DataBoard dataBoard = dataBoardRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다. ID: " + dto.getId()));
 
+        // 수정할 필드 업데이트
+        dataBoard.setTitle(dto.getTitle());
+        dataBoard.setContent(dto.getContent());
+        dataBoard.setA1(dto.getA1());
+        dataBoard.setA2(dto.getA2());
+        dataBoard.setA3(dto.getA3());
+        dataBoard.setA4(dto.getA4());
+        dataBoard.setA5(dto.getA5());
+        dataBoard.setA6(dto.getA6());
+        dataBoard.setA7(dto.getA7());
+        dataBoard.setA8(dto.getA8());
+        dataBoard.setA9(dto.getA9());
+        dataBoard.setA10(dto.getA10());
+        dataBoard.setA11(dto.getA11());
+        dataBoard.setA12(dto.getA12());
+        dataBoard.setA13(dto.getA13());
+        dataBoard.setA14(dto.getA14());
+        dataBoard.setA15(dto.getA15());
+        dataBoard.setA16(dto.getA16());
+        dataBoard.setA17(dto.getA17());
+        dataBoard.setA18(dto.getA18());
+        dataBoard.setA19(dto.getA19());
+        dataBoard.setA20(dto.getA20());
 
+        // 파일 업데이트
+        if (dto.getFiles() != null && dto.getFiles().length > 0) {
+            List<FileDetail> fileDetails = fileService.uploadFiles(dto.getFiles());
+            dataBoard.setFiles(fileDetails);  // 새 파일 정보 설정
+        }
+
+        dataBoardRepository.save(dataBoard);  // 수정된 데이터 저장
+    }
+    @Transactional
+    public void deleteDataBoard(Long id) {
+        dataBoardRepository.deleteById(id);
+    }
 }

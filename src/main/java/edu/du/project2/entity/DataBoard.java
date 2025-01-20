@@ -57,7 +57,6 @@ public class DataBoard {
     private String a19; //비용부과기준 및 단위
     private String a20; //이용허락범위
 
-    private String tableName;
 
     @ElementCollection
     @CollectionTable(name = "dataBoard_files", joinColumns = @JoinColumn(name = "dataBoard_id"))
