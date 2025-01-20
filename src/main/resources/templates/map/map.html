@@ -2308,7 +2308,8 @@
                                         console.log("도서관");
                                     } else if (table_type === "무인 발급기") {
                                         const properties = result.data.features[0].properties;
-                                        layerDataHtml += `<table><tr><th>연간 이용량</th><td>알 수 없음</td></tr></table>`;
+                                        let useValue = (properties.use === null || properties.use === undefined || properties.use === 0) ? "알 수 없음" : properties.use;
+                                        layerDataHtml += `<table><tr><th>연간 이용량</th><td>${useValue}</td></tr></table>`;
                                         console.log(properties);
                                         console.log("무인 발급기");
                                     } else if (table_type === "와이파이") {
