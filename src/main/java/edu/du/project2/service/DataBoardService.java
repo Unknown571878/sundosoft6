@@ -197,6 +197,16 @@ public class DataBoardService {
     }
     @Transactional
     public void deleteDataBoard(Long id) {
+        DataBoard dataBoard = dataBoardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다. ID: " + id));
+
+        // 업로드된 파일 삭제
+        if (dataBoard.getFiles() != null && !dataBoard.getFiles().isEmpty()) {
+            for (FileDetail file : dataBoard.getFiles()) {
+                fileService.deleteFile(file);  // 파일 삭제 메서드 호출
+            }
+        }
         dataBoardRepository.deleteById(id);
     }
+
 }
