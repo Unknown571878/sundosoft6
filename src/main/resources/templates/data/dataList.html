@@ -102,7 +102,14 @@
     </div>
   </div><!-- /container -->
 </div>
-<script th:src="@{/js/faq.js}"></script>
+<script>
+  document.querySelectorAll('.tr-click').forEach(function(tr){
+    tr.addEventListener('click', function () {
+      let index = tr.id.trim();
+      window.location.href = '/dataListDetail?id=' + index;
+    })
+  })
+</script>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="layout/footer :: footerLayout"></th:block>
 </body>
