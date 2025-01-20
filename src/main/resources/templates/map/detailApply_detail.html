@@ -94,18 +94,18 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("#list").on("click", function(){
-      location.href = "/analysis/normalList";
+      location.href = "/analysis/detailList";
     });
 
     $("#edit").on("click", function(){
       var frm = $("#frm")[0];
-      frm.action = "/analysis/analysisUpdate";
+      frm.action = "/analysis/analysisDetailUpdate";
       frm.submit();
     });
 
     $("#delete").on("click", function(){
       var frm = $("#frm")[0];
-      frm.action = "/analysis/analysisDelete";
+      frm.action = "/analysis/analysisDetailDelete";
       frm.submit();
     });
 

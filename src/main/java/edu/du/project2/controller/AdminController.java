@@ -220,7 +220,7 @@ public class AdminController {
     @GetMapping("/admin/admin_apply")
     public String apply(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable,HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        Page<Apply> applies = applyService.getApplies(authInfo, pageable);
+        Page<Apply> applies = applyService.getApplies(authInfo, pageable, "none"); // 관리자는 request 상관없음
         model.addAttribute("count", applies.stream().count());
         model.addAttribute("applies", applies);
         model.addAttribute("now", getCurrentTime());

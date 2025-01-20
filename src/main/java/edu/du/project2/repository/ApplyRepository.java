@@ -18,9 +18,8 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
     List<Apply> findAll(Sort sort);
 
     // 특정 사용자 신청서 목록
-    List<Apply> findAllByUidOrderByCreatedAtDesc(Long uid);
+    List<Apply> findAllByUidAndRequestOrderByCreatedAtDesc(Long uid, String request);
 
     public List<Apply> findAllByCompletedYnOrderByIdAsc(char completedYn);
 
-    public List<Apply> findAllByRequestOrderByIdAsc(String request);
 }

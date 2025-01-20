@@ -38,7 +38,7 @@ public class ApplyController {
     public String normalList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         // 로그인한 사용자에 따른 신청서 목록 가져오기
-        Page<Apply> applies = applyService.getApplies(authInfo, pageable);
+        Page<Apply> applies = applyService.getApplies(authInfo, pageable, "normal");
         model.addAttribute("count", applies.stream().count());
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", applies);
@@ -50,7 +50,7 @@ public class ApplyController {
     public String detailList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         // 로그인한 사용자에 따른 신청서 목록 가져오기
-        Page<Apply> applies = applyService.getApplies(authInfo, pageable);
+        Page<Apply> applies = applyService.getApplies(authInfo, pageable, "detail");
         model.addAttribute("count", applies.stream().count());
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", applies);
@@ -58,14 +58,25 @@ public class ApplyController {
     }
 
     // 신청서 상세 페이지를 반환
-    @GetMapping("/detail")
-    public String detail(@RequestParam Long id, Model model) {
+    @GetMapping("/normalDetail")
+    public String normalDetail(@RequestParam Long id, Model model) {
         Apply apply = applyService.selectApplyDetail(id);
         LocalDateTime now = LocalDateTime.now();
         System.out.println(apply);
         model.addAttribute("apply", apply);
         model.addAttribute("now", now);
-        return "map/apply_detail";
+        return "map/normalApply_detail";
+    }
+
+    // 신청서 상세 페이지를 반환
+    @GetMapping("/detailDetail")
+    public String detailDetail(@RequestParam Long id, Model model) {
+        Apply apply = applyService.selectApplyDetail(id);
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(apply);
+        model.addAttribute("apply", apply);
+        model.addAttribute("now", now);
+        return "map/detailApply_detail";
     }
 
     // 신청서 작성 페이지를 반환
@@ -104,17 +115,31 @@ public class ApplyController {
     }
 
     // 신청서를 수정
-    @PostMapping("/analysisUpdate")
-    public String update(Apply apply){
+    @PostMapping("/analysisNormalUpdate")
+    public String normalUpdate(Apply apply){
         applyService.updateApply(apply);
         return "redirect:/analysis/normalList";
     }
 
+    // 신청서를 수정
+    @PostMapping("/analysisDetailUpdate")
+    public String detailUpdate(Apply apply){
+        applyService.updateApply(apply);
+        return "redirect:/analysis/detailList";
+    }
+
     // 신청서를 삭제
-    @PostMapping("/analysisDelete")
-    public String delete(@RequestParam Long id){
+    @PostMapping("/analysisNormalDelete")
+    public String normalDelete(@RequestParam Long id){
         applyService.deleteApply(id);
         return "redirect:/analysis/normalList";
+    }
+
+    // 신청서를 삭제
+    @PostMapping("/analysisDetailDelete")
+    public String detailDelete(@RequestParam Long id){
+        applyService.deleteApply(id);
+        return "redirect:/analysis/detailList";
     }
 
     // 신청 결과 확인
