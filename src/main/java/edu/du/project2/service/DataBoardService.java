@@ -178,16 +178,35 @@ public class DataBoardService {
         dataBoard.setA19(dto.getA19());
         dataBoard.setA20(dto.getA20());
 
-        // 파일 업데이트
-        if (dto.getFiles() != null && dto.getFiles().length > 0) {
-            List<FileDetail> fileDetails = fileService.uploadFiles(dto.getFiles());
-            dataBoard.setFiles(fileDetails);  // 새 파일 정보 설정
+        // 기존 파일 삭제
+        if (dataBoard.getFiles() != null && !dataBoard.getFiles().isEmpty()) {
+            for (FileDetail file : dataBoard.getFiles()) {
+                fileService.deleteFile(file);  // 파일 삭제 메서드 호출
+            }
+            dataBoard.getFiles().clear();  // 파일 리스트 초기화
         }
+
+        // 새 파일 추가
+        if (dto.getFiles() != null && dto.getFiles().length > 0) {
+            List<FileDetail> newFiles = fileService.uploadFiles(dto.getFiles());
+            dataBoard.setFiles(newFiles);
+        }
+
 
         dataBoardRepository.save(dataBoard);  // 수정된 데이터 저장
     }
     @Transactional
     public void deleteDataBoard(Long id) {
+        DataBoard dataBoard = dataBoardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시물을 찾을 수 없습니다. ID: " + id));
+
+        // 업로드된 파일 삭제
+        if (dataBoard.getFiles() != null && !dataBoard.getFiles().isEmpty()) {
+            for (FileDetail file : dataBoard.getFiles()) {
+                fileService.deleteFile(file);  // 파일 삭제 메서드 호출
+            }
+        }
         dataBoardRepository.deleteById(id);
     }
+
 }

@@ -58,4 +58,13 @@ public class FileService {
         String filePath = relativePath.replace("/uploads/", UPLOAD_DIR + "/");
         return Paths.get(filePath);  // 절대 경로로 반환
     }
+
+    public void deleteFile(FileDetail fileDetail) {
+        Path filePath = getFilePathFromRelative(fileDetail.getFilePath());
+        try {
+            Files.deleteIfExists(filePath);  // 파일 삭제
+        } catch (IOException e) {
+            throw new RuntimeException("파일 삭제 실패: " + filePath.toString(), e);
+        }
+    }
 }
