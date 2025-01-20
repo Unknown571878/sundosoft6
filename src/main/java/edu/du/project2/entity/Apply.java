@@ -38,6 +38,7 @@ public class Apply {
     private String link;
     private String location;
     private String type;
+    private String request; // 요청 타입 ("normal" : 기본 입지 분석, "detail" : 상세 입지 분석)
 
 
 

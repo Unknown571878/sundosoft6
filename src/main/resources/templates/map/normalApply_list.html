@@ -51,7 +51,7 @@
                     <!-- 신청현황 번호 출력 -->
                     <td th:text="${count - (applies.pageable.pageNumber * 10) - stat.index}"></td>
                     <td>
-                        <a th:href="@{/analysis/detail(id=${apply.id})}" th:text="${apply.title}"></a>
+                        <a th:href="@{/analysis/normalDetail(id=${apply.id})}" th:text="${apply.title}"></a>
                     </td>
                     <!-- 신청현황 작성일을 당일 작성이면 HH:mm을 아니면 yyyy-MM-dd 형식으로 출력 -->
                     <td th:text="${#temporals.format(now, 'yyyy-MM-dd').equals(#temporals.format(apply.createdAt, 'yyyy-MM-dd'))} ? ${#temporals.format(apply.createdAt, 'HH:mm')} : ${#temporals.format(apply.createdAt, 'yyyy-MM-dd')}"></td>
@@ -72,33 +72,33 @@
             <ul class="pagination justify-content-center">
                 <!-- 처음으로 이동 버튼 -->
                 <li th:classappend="${pageNumber == 0} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="@{/applyList(page=0)}">
+                    <a class="page-link" th:href="@{/analysis/normalList(page=0)}">
                         <span>&laquo;</span>
                     </a>
                 </li>
 
                 <!-- 이전 페이지로 이동 버튼 -->
                 <li th:classappend="${applies.first} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="${applies.first} ? '#' : @{/applyList(page=${pageNumber - 1})}" aria-label="Previous">
+                    <a class="page-link" th:href="${applies.first} ? '#' : @{/analysis/normalList(page=${pageNumber - 1})}" aria-label="Previous">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
 
                 <!-- 페이지 번호 표시 및 클릭 시 해당 페이지로 이동 -->
                 <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
-                    <a th:text="${page}" class="page-link" th:href="@{/applyList(page=${page - 1})}"></a>
+                    <a th:text="${page}" class="page-link" th:href="@{/analysis/normalList(page=${page - 1})}"></a>
                 </li>
 
                 <!-- 다음 페이지로 이동 버튼 -->
                 <li th:classappend="${applies.last} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="${applies.last} ? '#' : @{/applyList(page=${pageNumber + 1})}" aria-label="Next">
+                    <a class="page-link" th:href="${applies.last} ? '#' : @{/analysis/normalList(page=${pageNumber + 1})}" aria-label="Next">
                         <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
 
                 <!-- 마지막 페이지로 이동 버튼 -->
                 <li th:classappend="${pageNumber >= totalPages - 1} ? 'disabled'" class="page-item">
-                    <a class="page-link" th:href="@{/applyList(page=${totalPages - 1})}">
+                    <a class="page-link" th:href="@{/analysis/normalList(page=${totalPages - 1})}">
                         <span>&raquo;</span>
                     </a>
                 </li>
@@ -110,7 +110,7 @@
     document.querySelectorAll('.tr-click').forEach(function(tr){
         tr.addEventListener('click', function () {
             let index = tr.id.trim();
-            window.location.href = '/analysis/detail?id=' + index;
+            window.location.href = '/analysis/normalDetail?id=' + index;
         })
     })
     document.getElementById('select_answer').addEventListener('change', function () {

@@ -36,10 +36,10 @@ public class ApplyService {
         return applyRepository.findAllByCompletedYnOrderByIdAsc('N');
     }
 
-    public Page<Apply> getApplies(AuthInfo authInfo, Pageable pageable) {
+    public Page<Apply> getApplies(AuthInfo authInfo, Pageable pageable, String request) {
         List<Apply> list = authInfo.getRole().equals("ADMIN")
                 ? applyRepository.findAll(Sort.by(Sort.Order.desc("createdAt")))
-                : applyRepository.findAllByUidOrderByCreatedAtDesc(authInfo.getId());
+                : applyRepository.findAllByUidAndRequestOrderByCreatedAtDesc(authInfo.getId(), request);
         return createPage(list, pageable);
     }
 
@@ -63,6 +63,7 @@ public class ApplyService {
                 .title(title)
                 .content(content)
                 .completedYn('N')
+                .request("detail")
                 .createdAt(LocalDateTime.now())
                 .uid(authInfo.getId())
                 .build();
@@ -81,7 +82,7 @@ public class ApplyService {
      */
     @Transactional
     public void createBoard(String author, String title, String content, MultipartFile[] files,AuthInfo authInfo) throws IOException {
-        Apply apply = buildApply(author, title, content, authInfo);
+        Apply apply = buildApply(author, title, content, authInfo, "detail");
 
         if (files != null && files.length > 0) {
             List<FileDetail> fileDetails = fileService.uploadFiles(files);
@@ -111,12 +112,13 @@ public class ApplyService {
     public void deleteApply(Long id){applyRepository.deleteById(id);}
 
     // 공통 로직: 신청서 객체 생성
-    private Apply buildApply(String author, String title, String content, AuthInfo authInfo) {
+    private Apply buildApply(String author, String title, String content, AuthInfo authInfo, String request) {
         return Apply.builder()
                 .author(author)
                 .title(title)
                 .content(content)
                 .completedYn('N')
+                .request(request)
                 .createdAt(LocalDateTime.now())
                 .uid(authInfo.getId())
                 .build();
