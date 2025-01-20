@@ -21,4 +21,6 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
     List<Apply> findAllByUidOrderByCreatedAtDesc(Long uid);
 
     public List<Apply> findAllByCompletedYnOrderByIdAsc(char completedYn);
+
+    public List<Apply> findAllByRequestOrderByIdAsc(String request);
 }
