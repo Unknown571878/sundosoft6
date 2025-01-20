@@ -45,6 +45,12 @@ function validateTel(input) {
     }
     // 자동 포맷팅된 값을 입력 필드에 설정
     input.value = formatted;
+    // 전화번호가 11자리인지 확인
+    if (cleaned.length !== 11) {
+        input.setCustomValidity('전화번호는 11자리로 입력해야 합니다.');
+    } else {
+        input.setCustomValidity('');
+    }
 }
 
 // 제목 설정
