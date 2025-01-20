@@ -159,15 +159,22 @@
 
   // QnA 카운트 업데이트
   function updateCounts() {
-    // qnaList가 빈 배열이 아니라면 카운트 업데이트
-    if (qnaList.length === 0) {
+    // qnaList가 객체일 경우 content 배열로 처리
+    if (!qnaList || !Array.isArray(qnaList.content)) {
+      qnaList = { content: [] };  // 빈 배열로 초기화
+    }
+
+    const data = qnaList.content;  // 실제 데이터는 content 안에 있음
+
+    if (data.length === 0) {
       document.getElementById('count').textContent = "총 0건";
     } else {
       let completed = 0;
       let pending = 0;
       let answered = 0;
 
-      qnaList.forEach(function(item) {
+      // content 배열을 순회하면서 카운트
+      data.forEach(function(item) {
         if (item.endYn === 'Y') {
           completed++;
         }
@@ -178,8 +185,9 @@
           answered++;
         }
       });
-      answered = answered - completed;
-      document.getElementById('count').textContent = `총 ${qnaList.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
+
+      answered = answered - completed;  // 완료된 답변은 제외
+      document.getElementById('count').textContent = `총 ${data.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
     }
   }
 
