@@ -25,7 +25,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DataBoardService {
     private final DataBoardRepository dataBoardRepository;
-    private final JdbcTemplate jdbcTemplate;
     private final FileService fileService;
 
     public List<DataBoard> getAllDataList() {

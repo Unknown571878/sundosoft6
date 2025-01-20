@@ -253,7 +253,7 @@ public class AdminController {
         model.addAttribute("dataList", dataBoardPage);
         model.addAttribute("totalDataList", dataBoard.size());
         model.addAttribute("now", getCurrentTime());
-        return "admin/admin_datalist";
+        return "admin/admin_dataList";
     }
     @GetMapping("/admin/admin_dataListDetail")
     public String getDataListDetail(@RequestParam Long id,
