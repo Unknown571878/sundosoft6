@@ -1,16 +1,14 @@
 package edu.du.project2.controller;
 
 import edu.du.project2.dto.AuthInfo;
+import edu.du.project2.dto.DataBoardDto;
 import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.*;
 import edu.du.project2.repository.ApplyRepository;
 import edu.du.project2.repository.MemberRepository;
 import edu.du.project2.repository.QnaListRepository;
 import edu.du.project2.repository.QnaRepository;
-import edu.du.project2.service.ApplyService;
-import edu.du.project2.service.FaqService;
-import edu.du.project2.service.NoticeService;
-import edu.du.project2.service.QnaService;
+import edu.du.project2.service.*;
 import edu.du.project2.utils.PagingUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,6 +38,7 @@ public class AdminController {
     private final FaqService faqService;
     private final ApplyRepository applyRepository;
     private final ApplyService applyService;
+    private final DataBoardService dataBoardService;
 
     // 메시지 출력 및 리다이렉트를 처리하는 공통 메서드.
     private String showMessageAndRedirect(final MessageDto params, Model model) {
@@ -246,4 +245,51 @@ public class AdminController {
         return "redirect:/admin/admin_apply";
     }
 
+    @GetMapping("/admin/admin_dataList")
+    public String getDataList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+        List<DataBoard> dataBoard = dataBoardService.getAllDataList();
+        Page<DataBoard> dataBoardPage = PagingUtils.createPage(dataBoard, pageable);
+
+        model.addAttribute("dataList", dataBoardPage);
+        model.addAttribute("totalDataList", dataBoard.size());
+        model.addAttribute("now", getCurrentTime());
+        return "admin/admin_datalist";
+    }
+    @GetMapping("/admin/admin_dataListDetail")
+    public String getDataListDetail(@RequestParam Long id,
+                                    @RequestParam(defaultValue = "10") int limit,
+                                    @RequestParam(defaultValue = "0") int offset,Model model) throws Exception {
+
+        DataBoard dataBoard = dataBoardService.getDataListDetail(id, true, limit, offset);
+        model.addAttribute("offset", offset);
+        model.addAttribute("limit", limit);
+        model.addAttribute("dataList", dataBoard);
+        model.addAttribute("now", getCurrentTime()); // 현재 시간
+        return "admin/admin_dataListDetail";
+    }
+    @GetMapping("/admin/admin_dataListWrite")
+    public String getDataListWrite(){
+        return "admin/admin_dataListWrite";
+    }
+
+    @PostMapping("/admin/admin_dataListWrite")
+    public String createData(@ModelAttribute DataBoardDto dataBoardDto) throws IOException {
+
+        // 데이터 저장 처리
+        dataBoardService.createDataBoard(dataBoardDto);
+
+        return "redirect:/admin/admin_dataList"; // 데이터 목록 페이지로 리다이렉트
+    }
+
+    @PostMapping("/admin/updateDataList")
+    public String updateDataBoard(DataBoardDto dto) throws IOException {
+        dataBoardService.updateDataBoard(dto);
+        return "redirect:/admin/admin_dataList";  // 수정 후 목록으로 리디렉션
+    }
+
+    @PostMapping("/admin/deleteDataList")
+    public String deleteDataList(@RequestParam Long id)throws IOException{
+        dataBoardService.deleteDataBoard(id);
+        return "redirect:/admin/admin_dataList";
+    }
 }

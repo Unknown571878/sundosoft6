@@ -53,5 +53,9 @@ public class FileService {
         }
         return fileDetails;
     }
-
+    // 상대 경로를 절대 경로로 변환하는 메소드
+    public Path getFilePathFromRelative(String relativePath) {
+        String filePath = relativePath.replace("/uploads/", UPLOAD_DIR + "/");
+        return Paths.get(filePath);  // 절대 경로로 반환
+    }
 }
