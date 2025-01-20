@@ -33,7 +33,7 @@
                 <tr>
                     <th>첨부 파일</th>
                     <td colspan="3">
-                        <input type="file" id="file" name="files" multiple><br><br>
+                        <input type="file" id="file" name="files" accept=".csv,.xls,.xlsx" multiple><br><br>
                 </tr>
             </table>
             <div class="main-title">
@@ -165,6 +165,19 @@
         </form>
     </div>
 </div>
+<script>
+    document.getElementById('file').addEventListener('change', function(event) {
+        let files = event.target.files;
+        for (let i = 0; i < files.length; i++) {
+            let fileName = files[i].name.toLowerCase();
+            if (!(fileName.endsWith('.csv') || fileName.endsWith('.xls') || fileName.endsWith('.xlsx'))) {
+                alert('CSV 또는 엑셀 파일만 업로드 가능합니다.');
+                event.target.value = '';  // 입력 필드를 초기화
+                return;
+            }
+        }
+    });
+</script>
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
 <th:block th:replace="layout/footer :: footerLayout"></th:block>
 </body>

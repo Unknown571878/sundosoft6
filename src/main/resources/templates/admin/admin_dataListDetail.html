@@ -35,22 +35,14 @@
             <th>첨부 파일</th>
             <td colspan="3">
               <div th:each="file : ${dataList.files}">
-                <div th:if="${#strings.endsWith(file.fileName, '.jpg') or
-                                 #strings.endsWith(file.fileName, '.jpeg') or
-                                 #strings.endsWith(file.fileName, '.png') or
-                                 #strings.endsWith(file.fileName, '.gif')}">
-                  <a th:href="${file.filePath}" download style="margin-right: 30px;">
-                    <img th:src="@{/images/file40.png}" alt="파일 다운로드 이미지" style="width: 30px; height: 30px;"/>
-                  </a>
-                  <img th:src="${file.filePath}" alt="Uploaded Image" style="max-width: 300px;" />
-                </div>
-                <!--사진과 파일 코드 구분 선-->
-                <div th:if="${file.fileName != null and file.fileName != '' and !(#strings.endsWith(file.fileName, '.jpg') or
-                                                                        #strings.endsWith(file.fileName, '.jpeg') or
-                                                                        #strings.endsWith(file.fileName, '.png') or
-                                                                        #strings.endsWith(file.fileName, '.gif'))}"
+                <!-- 엑셀 및 CSV 파일 다운로드 -->
+                <div th:if="${#strings.endsWith(file.fileName, '.csv') or
+                              #strings.endsWith(file.fileName, '.xls') or
+                              #strings.endsWith(file.fileName, '.xlsx')}"
                      style="display: flex; align-items: center; gap: 10px;">
-                  <a th:href="${file.filePath}" download><img th:src="@{/images/file40.png}" alt="파일 다운로드 이미지" style="width: 30px; height: 30px;" /></a>
+                  <a th:href="${file.filePath}" download>
+                    <img th:src="@{/images/file40.png}" alt="파일 다운로드 이미지" style="width: 30px; height: 30px;" />
+                  </a>
                   <p th:text="${file.fileName}" style="margin: 0;"></p>
                 </div>
               </div>
@@ -60,7 +52,7 @@
         <tr>
           <th>새로운 첨부 파일</th>
           <td colspan="3">
-            <input type="file" name="files" multiple />
+            <input type="file" id="file" name="files" accept=".csv,.xls,.xlsx" multiple />
           </td>
         </tr>
         </tbody>
@@ -221,6 +213,17 @@
       frm.action = "/admin/deleteDataList";
       frm.submit();
     });
+  });
+  document.getElementById('file').addEventListener('change', function(event) {
+    let files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      let fileName = files[i].name.toLowerCase();
+      if (!(fileName.endsWith('.csv') || fileName.endsWith('.xls') || fileName.endsWith('.xlsx'))) {
+        alert('CSV 또는 엑셀 파일만 업로드 가능합니다.');
+        event.target.value = '';  // 입력 필드를 초기화
+        return;
+      }
+    }
   });
 </script>
 </div>
