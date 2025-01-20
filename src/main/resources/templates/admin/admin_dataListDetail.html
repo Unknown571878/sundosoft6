@@ -31,7 +31,7 @@
             <input type="text" id="content" name="content" th:value="${dataList.content }" /></td>
         </tr>
         <th:block th:if="${dataList.files != null and !dataList.files.isEmpty()}">
-          <tr>
+          <tr id="existingFiles">
             <th>첨부 파일</th>
             <td colspan="3">
               <div th:each="file : ${dataList.files}">
@@ -57,7 +57,7 @@
         </tr>
         </tbody>
       </table>
-      <div class="main-title">
+      <div class="main-title" id="preview">
         <h3>미리보기</h3>
         <div style="max-height: 150px; max-width: 100%; overflow-y: auto; border: 1px solid #ddd; padding: 10px; background-color: #fff; white-space: normal; font-size: 14px; line-height: 1.6;">
           <p th:utext="${dataList.preview}" style="margin: 0;"></p>
@@ -216,6 +216,12 @@
   });
   document.getElementById('file').addEventListener('change', function(event) {
     let files = event.target.files;
+    let existingFilesContainer = document.getElementById('existingFiles');
+    let previewContainer = document.getElementById('preview');
+    if (existingFilesContainer) {
+      existingFilesContainer.style.display = 'none';
+      previewContainer.style.display = 'none';
+    }
     for (let i = 0; i < files.length; i++) {
       let fileName = files[i].name.toLowerCase();
       if (!(fileName.endsWith('.csv') || fileName.endsWith('.xls') || fileName.endsWith('.xlsx'))) {

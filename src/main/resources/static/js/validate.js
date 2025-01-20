@@ -52,7 +52,36 @@ function validateTel(input) {
         input.setCustomValidity('');
     }
 }
+function  validateZipcode(input){
+// 우편번호 유효성 검사 (5자리 숫자)
+    function validateZipcode(input) {
+        if (!/^[0-9]{5}$/.test(input.value.trim())) {
+            input.setCustomValidity('우편번호는 5자리 숫자로 입력해야 합니다.');
+        } else {
+            input.setCustomValidity('');
+        }
+        input.reportValidity(); // 브라우저 기본 유효성 검사 메시지 표시
+    }
+}
+// 주소 유효성 검사 (공백 확인)
+function validateAddress(input) {
+    if (input.value.trim().length < 5) {
+        input.setCustomValidity('주소는 최소 5자 이상 입력해야 합니다.');
+    } else {
+        input.setCustomValidity('');
+    }
+    input.reportValidity();
+}
 
+// 상세주소 유효성 검사 (공백 확인)
+function validateDetailAddress(input) {
+    if (input.value.trim() === '') {
+        input.setCustomValidity('상세주소를 입력해주세요.');
+    } else {
+        input.setCustomValidity('');
+    }
+    input.reportValidity();
+}
 // 제목 설정
 function validateTitle(input) {
     if (input.value.length < 0) {
