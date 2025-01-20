@@ -2746,6 +2746,16 @@
         });
     }
 
+    function updateTab1Weights() {
+        const wifiSlider = document.getElementById('input-tab1-1');
+        const trafficWeight = parseFloat(wifiSlider.value).toFixed(1);
+        const populationWeight = (1.0 - trafficWeight).toFixed(1);
+
+        // 업데이트된 값 표시
+        document.getElementById('traffic-weight').textContent = trafficWeight;
+        document.getElementById('population-weight').textContent = populationWeight;
+    }
+
     function updateTab3Weights() {
         const librarySlider = document.getElementById('input-tab2-2');
         const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
