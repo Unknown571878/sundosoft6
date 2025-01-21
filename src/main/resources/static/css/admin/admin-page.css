@@ -202,7 +202,7 @@ a:hover {
     border-radius: 15%; /* 둥근 모양 */
     text-decoration: none; /* 밑줄 제거 */
     font-size: 20px; /* 텍스트 크기 */
-    transition: all 0.3s ease; /* 부드러운 효과 */
+    outline: none; /* 호버 시 포커스 아웃라인 제거 */
 }
 
 .page-item a:hover {
@@ -210,6 +210,7 @@ a:hover {
     color: black; /* 텍스트 색상 */
     background-color: lightgray; /* 호버 시 배경색 */
     border: none; /* 호버 시 테두리 제거 */
+    outline: none; /* 호버 시 포커스 아웃라인 제거 */
 }
 
 .page-item.disabled a {
@@ -257,4 +258,10 @@ a:hover {
     flex-direction: column; /* 세로 방향 정렬 */
     align-items: center; /* 세로 중앙 정렬 */
     width: 100%; /* 전체 너비 */
+}
+
+h2 a {
+    color: black; /* 링크 기본 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: lighter; /* 얇은 글꼴 */
 }
