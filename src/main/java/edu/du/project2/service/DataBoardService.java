@@ -58,6 +58,7 @@ public class DataBoardService {
                 .a18(dto.getA18())
                 .a19(dto.getA19())
                 .a20(dto.getA20())
+                .a21(dto.getA21())
                 .build();
 
         // 파일 업로드 처리
@@ -176,6 +177,7 @@ public class DataBoardService {
         dataBoard.setA18(dto.getA18());
         dataBoard.setA19(dto.getA19());
         dataBoard.setA20(dto.getA20());
+        dataBoard.setA21(dto.getA21());
 
         // 기존 파일 삭제
         if (dataBoard.getFiles() != null && !dataBoard.getFiles().isEmpty()) {
