@@ -79,7 +79,7 @@ public class DataBoardService {
             dataBoardRepository.save(dataBoard);
         }
         // 파일 경로 가져오기 (첨부된 첫 번째 파일 사용)
-        String filePath = null;
+        String filePath;
         if (!dataBoard.getFiles().isEmpty()) {
             filePath = dataBoard.getFiles().get(0).getFilePath(); // 첫 번째 파일 경로 사용
 
