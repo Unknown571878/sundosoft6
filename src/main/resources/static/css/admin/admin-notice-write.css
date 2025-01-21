@@ -15,7 +15,7 @@ html, body {
 /* -------------------------------------------
    메인 컨테이너 스타일
 ------------------------------------------- */
-.qna-main-container {
+.admin1-main-container {
     max-width: 700px; /* 폼의 최대 넓이 */
     margin: 50px auto; /* 화면 중앙 정렬 */
     padding: 20px;
@@ -27,7 +27,7 @@ html, body {
 /* -------------------------------------------
    제목 스타일
 ------------------------------------------- */
-.qna--main-title h1 {
+.admin1-main-title h1 {
     text-align: left;
     font-size: 2em;
     color: #333;
@@ -37,11 +37,12 @@ html, body {
 /* -------------------------------------------
    구분선 스타일
 ------------------------------------------- */
-.qna-split--div-post {
+.admin1-split-div-pos {
     height: 2px;
     background-color: gray;
     margin: 20px 0;
 }
+
 
 /* -------------------------------------------
    입력 필드 스타일
@@ -74,7 +75,7 @@ textarea::-webkit-resizer {
    버튼 스타일 (기본 설정)
 ------------------------------------------- */
 /* 작성 완료 버튼 */
-.qna--submit-button {
+.admin-submit-button {
     height: 40px;
     box-sizing: border-box;
     line-height: 30px;
@@ -87,13 +88,13 @@ textarea::-webkit-resizer {
     color: black;
 }
 
-.qna--submit-button:hover {
+.admin-submit-button:hover {
     background-color: black;
     color: white;
 }
 
 /* 취소 버튼 */
-.qna--cancel-button {
+.admin-cancel-button {
     height: 40px;
     box-sizing: border-box;
     line-height: 30px;
@@ -106,13 +107,13 @@ textarea::-webkit-resizer {
     color: black;
 }
 
-.qna--cancel-button:hover {
+.admin-cancel-button:hover {
     background-color: #999;
     color: white;
 }
 
 /* 버튼 그룹 */
-.qna--form-actions {
+.admin-form-actions {
     text-align: right;
 }
 
