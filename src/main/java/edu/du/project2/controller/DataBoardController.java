@@ -32,7 +32,7 @@ public class DataBoardController {
         model.addAttribute("dataList", dataBoardPage);
         model.addAttribute("totalDataList", dataBoard.size());
         model.addAttribute("now", getCurrentTime());
-        return "data/datalist";
+        return "data/dataList";
     }
     @GetMapping("/dataListDetail")
     public String getDataListDetail(@RequestParam Long id,
