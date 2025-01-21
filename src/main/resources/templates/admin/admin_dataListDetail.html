@@ -25,7 +25,7 @@
           <th>제목</th>
           <td colspan="2"><input type="text" id="title" name="title" th:value="${dataList.title }" /></td>
           <th:block th:if="${not #strings.isEmpty(dataList.a21)}">
-            <td><a th:href="${dataList.a21}">바로가기</a></td>
+            <td><a th:href="${dataList.a21}" target="_blank">바로가기</a></td>
           </th:block>
         </tr>
         <tr>
