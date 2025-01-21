@@ -147,6 +147,7 @@ public class ApplyController {
     public String index(){
         return "map/map_result";
     }
+
     @PostMapping("/analysisResult")
     public String result(Apply apply, Model model) throws IOException {
         String location = apply.getLocation();
