@@ -240,10 +240,8 @@ a:hover {
 
 /* 콘텐츠 중앙 정렬 */
 .admin3-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     margin: 0 auto;
     width: 100%;
     max-width: 1200px;
 }
+
