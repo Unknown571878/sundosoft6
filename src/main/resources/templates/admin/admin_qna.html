@@ -159,15 +159,16 @@
 
   // QnA 카운트 업데이트
   function updateCounts() {
-    // qnaList가 빈 배열이 아니라면 카운트 업데이트
-    if (qnaList.length === 0) {
+    // qnaList.content가 빈 배열이 아니라면 카운트 업데이트
+    if (qnaList.content.length === 0) {
       document.getElementById('count').textContent = "총 0건";
     } else {
       let completed = 0;
       let pending = 0;
       let answered = 0;
 
-      qnaList.forEach(function(item) {
+      // qnaList.content 배열을 순회하면서 각 상태에 맞는 카운트 증가
+      qnaList.content.forEach(function(item) {
         if (item.endYn === 'Y') {
           completed++;
         }
@@ -178,13 +179,21 @@
           answered++;
         }
       });
+
+      // 문의 종료는 완료된 답변을 제외한 '답변 완료' 상태로 처리
       answered = answered - completed;
-      document.getElementById('count').textContent = `총 ${qnaList.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
+
+      // 총 카운트를 업데이트
+      document.getElementById('count').textContent = `총 ${qnaList.content.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
     }
   }
 
   // 페이지 로드 시 카운트 업데이트
-  updateCounts();
+  window.onload = function() {
+    console.log('QNA List:', qnaList); // qnaList 확인
+    updateCounts();  // 카운트 업데이트 함수 호출
+  };
+
 </script>
 
 <div class="footers"></div> <!-- 이거 지우면 안됨 -->
