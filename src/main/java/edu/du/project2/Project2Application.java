@@ -84,10 +84,8 @@ public class Project2Application {
                         "4. 개인정보 제3자 제공\n" +
                         "- 원칙적으로 제3자에게 제공하지 않으며, 법령에 따라 필요한 경우에 한하여 제공\n\n" +
                         "5. 개인정보 보호를 위한 기술적 및 관리적 대책\n" +
-                        "- 데이터 암호화, 접근 제어, 주기적인 보안 점검 등\n\n" +
-                        "자세한 내용은 첨부된 개인정보처리방침 전문을 확인해 주시기 바랍니다.")
+                        "- 데이터 암호화, 접근 제어, 주기적인 보안 점검 등\n\n")
                 .hits(0)
-                .files(List.of(new FileDetail("/privacy_policy.pdf", "privacy_policy.pdf")))
                 .build());
 
         notices.add(Notice.builder()
@@ -102,11 +100,9 @@ public class Project2Application {
                         "3. 동의 여부\n" +
                         "- 본 약관에 동의하지 않는 경우, 회원 탈퇴를 요청하실 수 있으며, 계속 이용하실 경우 변경된 약관에 동의하신 것으로 간주됩니다.\n\n" +
                         "4. 문의처\n" +
-                        "- 이메일: support@example.com\n" +
-                        "- 고객센터 전화번호: 123-456-7890\n\n" +
-                        "변경된 약관 전문은 첨부된 파일을 통해 확인하실 수 있습니다. 서비스 이용에 참고 부탁드립니다.")
+                        "- 이메일: dongsundo@gmail.com\n"
+                        )
                 .hits(0)
-                .files(List.of(new FileDetail("/terms_of_service.pdf", "terms_of_service.pdf")))
                 .build());
 
         noticeRepository.saveAll(notices);
