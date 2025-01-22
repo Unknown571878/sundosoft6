@@ -27,6 +27,18 @@ function validatePassword(input) {
         input.setCustomValidity('');  // 모든 조건을 만족하면 오류 메시지 초기화
     }
 }
+function validateNewPassword(input) {
+    // 비밀번호가 6자리 이상이고, 특수문자를 포함하는지 확인
+    const regex = /[!@#$%^&*(),.?":{}|<>_\-+=]/;  // 특수문자 정규식
+
+    if (input.value.length < 6) {
+        input.setCustomValidity('비밀번호는 6자리 이상이어야 합니다.');
+    } else if (!regex.test(input.value)) {
+        input.setCustomValidity('비밀번호는 특수 문자를 포함해야 합니다. 예: !, @, #, $, %, ^, &, *');
+    } else {
+        input.setCustomValidity('');  // 모든 조건을 만족하면 오류 메시지 초기화
+    }
+}
 
 // 이름 검증 함수
 function validateName(input) {
@@ -40,7 +52,6 @@ function validateName(input) {
         input.setCustomValidity('');
     }
 
-    input.reportValidity(); // 유효성 검사 메시지 표시
 }
 
 
