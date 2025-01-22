@@ -448,7 +448,6 @@ html, body {
     padding: 5px;
     background-color: #f8f9fa; /* 배경색 */
     border-radius: 8px; /* 모서리 둥글게 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
 }
 
 .menu-category h1 {
@@ -805,4 +804,11 @@ button[data-tooltip2]::after {
 /* 도움말 텍스트에 마우스를 올릴 때 설명 표시 */
 .help-icon:hover .tooltip-left {
     display: block;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1010;
 }
