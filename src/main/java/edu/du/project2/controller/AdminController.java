@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -123,7 +124,9 @@ public class AdminController {
     @GetMapping("/admin/admin_qna")
     public String qnaList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        model.addAttribute("now", getCurrentTime());
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;  // ISO 8601 표준 포맷 적용
+        model.addAttribute("now", now.format(formatter));
         model.addAttribute("qna", qnAListRepository.findAll());
         model.addAttribute("qnaList", qnaService.getInquiries(authInfo, pageable));
         model.addAttribute("member", memberRepository.findAll());
