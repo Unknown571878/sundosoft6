@@ -136,23 +136,31 @@
 
 
   // 페이지 네비게이션 업데이트 함수
+  // 페이지 네비게이션 업데이트 함수
   function updatePagination() {
-    const totalPages = getTotalPages();
+    const totalPages = getTotalPages(); // 전체 페이지 수를 계산
     const pagination = document.querySelector('.pagination');
     pagination.innerHTML = ''; // 기존 페이지 번호 제거
+
+    // 처음으로 버튼
+    const firstButton = document.createElement('li');
+    firstButton.classList.add('page-item');
+    firstButton.classList.toggle('disabled', currentPage === 0); // 첫 페이지에서는 비활성화
+    firstButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(0)">&laquo;</a>`;
+    pagination.appendChild(firstButton);
 
     // 이전 버튼
     const prevButton = document.createElement('li');
     prevButton.classList.add('page-item');
-    prevButton.classList.toggle('disabled', currentPage === 0);
-    prevButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(0)">&laquo;</a>`;
+    prevButton.classList.toggle('disabled', currentPage === 0); // 첫 페이지에서는 비활성화
+    prevButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage - 1})">&lt;</a>`;
     pagination.appendChild(prevButton);
 
     // 페이지 번호들
     for (let i = 0; i < totalPages; i++) {
       const pageButton = document.createElement('li');
       pageButton.classList.add('page-item');
-      pageButton.classList.toggle('active', i === currentPage);
+      pageButton.classList.toggle('active', i === currentPage); // 현재 페이지는 활성화 상태
       pageButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i + 1}</a>`;
       pagination.appendChild(pageButton);
     }
@@ -160,10 +168,18 @@
     // 다음 버튼
     const nextButton = document.createElement('li');
     nextButton.classList.add('page-item');
-    nextButton.classList.toggle('disabled', currentPage === totalPages - 1);
-    nextButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(${totalPages - 1})">&raquo;</a>`;
+    nextButton.classList.toggle('disabled', currentPage === totalPages - 1); // 마지막 페이지에서는 비활성화
+    nextButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage + 1})">&gt;</a>`;
     pagination.appendChild(nextButton);
+
+    // 마지막으로 버튼
+    const lastButton = document.createElement('li');
+    lastButton.classList.add('page-item');
+    lastButton.classList.toggle('disabled', currentPage === totalPages - 1); // 마지막 페이지에서는 비활성화
+    lastButton.innerHTML = `<a class="page-link" href="#" onclick="changePage(${totalPages - 1})">&raquo;</a>`;
+    pagination.appendChild(lastButton);
   }
+
 
   // 페이지 변경 함수
   function changePage(page) {
