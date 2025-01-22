@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ApplyRepository extends JpaRepository<Apply, Long> {
@@ -22,4 +23,5 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     public List<Apply> findAllByCompletedYnOrderByIdAsc(char completedYn);
 
+    List<Apply> findAllByUidAndRequest(Long uid, String request);
 }

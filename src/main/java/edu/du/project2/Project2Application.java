@@ -55,6 +55,27 @@ public class Project2Application {
     }
 
     @PostConstruct
+    public void init244() {
+        List<Apply> applyList = new ArrayList<>();
+
+        // 20개의 Apply 객체 생성
+        for (int i = 1; i <= 20; i++) {
+            Apply apply = Apply.builder()
+                    .title("제목 " + i)
+                    .author("test1")
+                    .content("내용 " + i + "번 분석 신청서입니다. 상세 분석을 요청합니다.")
+                    .uid(3L)
+                    .completedYn(i % 2 == 0 ? 'Y' : 'N') // 짝수는 완료, 홀수는 미완료
+                    .request("normal")
+                    .build();
+
+            applyList.add(apply);
+        }
+
+        applyRepository.saveAll(applyList);
+    }
+
+    @PostConstruct
     public void init() {
         MemberRequest memberRequest = new MemberRequest();
         memberRequest.setTel("");
