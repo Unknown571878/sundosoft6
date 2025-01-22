@@ -51,7 +51,7 @@ public class ApplyController {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         // 로그인한 사용자에 따른 신청서 목록 가져오기
         Page<Apply> applies = applyService.getApplies(authInfo, pageable, "detail");
-        model.addAttribute("count", applies.stream().count());
+        model.addAttribute("total", applyService.totalApplies(authInfo, "detail"));
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", applies);
         return "map/detailApply_list";
