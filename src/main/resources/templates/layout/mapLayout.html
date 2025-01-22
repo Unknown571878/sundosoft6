@@ -1881,7 +1881,7 @@
                   step="0.1"
                   value="0.7"
                   style="flex: 1; margin: 10px; padding: 0"
-                  oninput="updateTab3Weights()"
+                  oninput="updateTab2Weights()"
           />
           <span style="margin-right: 10px;">버스 정류장</span>
           <span id="bus-weight">0.3</span>
@@ -1904,9 +1904,45 @@
     </div>
 
     <div class="tab-content" id="tab3" style="display: none;">
-      <input type="text" placeholder="--" id="input-tab3-1" />
-      <input type="text" placeholder="--" id="input-tab3-2" />
-      <input type="text" placeholder="--" id="input-tab3-3" />
+      <!-- 새로 만들 그늘막 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for=" --num_new_canopies" style="font-weight: bold;">새로 만들 그늘막 개수:</label>
+        <input type="number" placeholder="기본값 1" id=" --num_new_canopies" min="1" />
+      </div>
+      <!-- 표출할 상위 개수 -->
+      <div style="margin-bottom: 10px;">
+        <label for=" --coverage_radius " style="font-weight: bold;">커버 가능한 크기:</label>
+        <input type="number" placeholder="기본값 1.0km" id=" --coverage_radius " min="1" />
+      </div>
+      <!-- 도서관 / 버스 정류장 가중치 -->
+      <div style="margin-bottom: 10px;">
+        <label style="font-weight: bold;">온도 / 접근성 (가중치):</label>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <span style="margin-right: 10px;">온도</span>
+          <span id="temperature-weight">0.5</span>
+          <input
+                  type="range"
+                  id="shade--alpha"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="0.5"
+                  style="flex: 1; margin: 10px; padding: 0"
+                  oninput="updateTab3Weights()"
+          />
+          <span style="margin-right: 10px;">접근성</span>
+          <span id="shade-accessibility-weight">0.5</span>
+        </div>
+      </div>
+      <!-- 도움말 -->
+      <div class="help-icon">
+        <img src="/images/help-mark.svg" style="width: 15px;" height="15px;"><span>도움말</span>
+        <div class="tooltip-left">
+          - 새로 만들 그늘막 개수 &lt;&lt; 새로 만들 그늘막 개수를 입력합니다.(기본값 1)<br />
+          - 커버 가능한 크기 &lt;&lt; 그늘막이 시원함을 제공하는 거리를 의미합니다. 값을 키우면 넓은 지역을 커버하지만, 효과가 약해질 수 있습니다. 값을 줄이면 좁은 지역에 집중해서 설치가능합니다. (기본값 1.0km)<br />
+          - 온도 / 접근성 &lt;&lt; 더 중요시하는 쪽으로 옮겨 주세요 결과에 반영됩니다. 온도가 높을수록 더운곳에 집중하고 접근성이 높을수록 사람들의 쉽게 올 수 있는 곳을 중요시합니다.(기본값 0.5 : 0.5)
+        </div>
+      </div>
     </div>
 
     <div class="tab-content" id="tab4" style="display: none;">
