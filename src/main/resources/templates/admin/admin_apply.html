@@ -115,9 +115,22 @@
 
   // 날짜 포맷팅 함수 (예: '2025-01-22')
   function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const date = new Date(dateString);  // item.createdAt을 Date 객체로 변환
+    const today = new Date();  // 오늘 날짜를 가져옴
+
+    // 오늘 날짜와 비교
+    const isToday = date.toLocaleDateString('ko-KR') === today.toLocaleDateString('ko-KR');
+
+    // 오늘 날짜와 같으면 'HH:mm' 포맷, 다르면 'yyyy-MM-dd' 포맷
+    if (isToday) {
+      // 'HH:mm' 형식으로 시간만 표시 (오전/오후 없음)
+      return date.toLocaleTimeString('ko-KR', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    } else {
+      // 'yyyy-MM-dd' 형식으로 날짜만 표시
+      return date.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
   }
+
 
   // 페이지 네비게이션 업데이트 함수
   function updatePagination() {
