@@ -73,17 +73,40 @@
             const submenu = menuItem.nextElementSibling;
 
             if (submenu && submenu.tagName === "UL") {
-                // 하위 메뉴의 <li> 개수 카운트
-                const itemCount = submenu.querySelectorAll("li").length;
+                // 하위 메뉴의 체크박스 개수 카운트
+                const checkboxCount = submenu.querySelectorAll("input[type='checkbox']").length;
 
                 // 카운트 뱃지 생성
                 const badge = document.createElement("span");
                 badge.className = "menu-badge";
-                badge.textContent = itemCount;
+                badge.textContent = checkboxCount;
 
                 // 메뉴 항목에 뱃지를 추가
                 menuItem.appendChild(badge);
             }
+        });
+
+        const listItems = document.querySelectorAll("li");
+
+        listItems.forEach((li) => {
+            // 클릭 이벤트 추가
+            li.addEventListener("click", function (event) {
+                // li의 바로 하위에 있는 체크박스를 찾음
+                const checkbox = li.querySelector(":scope > input[type='checkbox']");
+
+                // 체크박스가 존재하고, 클릭한 요소가 체크박스가 아닐 경우에만 실행
+                if (checkbox && event.target !== checkbox) {
+                    // 체크박스 상태 토글
+                    checkbox.checked = !checkbox.checked;
+
+                    // 체크박스 클릭 이벤트 강제 실행 (기존 이벤트 호출)
+                    const changeEvent = new Event("change", { bubbles: true });
+                    checkbox.dispatchEvent(changeEvent);
+                }
+
+                // 이벤트 버블링 방지 (하위 <li> 클릭 시 상위 <li> 영향을 방지)
+                event.stopPropagation();
+            });
         });
     });
 
@@ -1366,7 +1389,7 @@
                                 layerName = layerName.replace("ne:gwangju_population_", "").trim();
                                 layerName = layerName.replace("_2024_10", "").trim();
                                 if(layerName ==="all"){
-                                    layerName = "모든 연령대";
+                                    layerName = "전체 연령대";
                                 } else if(layerName ==="10c"){
                                     layerName = "초등학생";
                                 } else if ( layerName ==="10j"){
@@ -1396,7 +1419,7 @@
                                 layerName = layerName.replace("ne:cheonan_population_", "").trim();
                                 layerName = layerName.replace("_2024_10", "").trim();
                                 if(layerName ==="all"){
-                                    layerName = "모든 연령대";
+                                    layerName = "전체 연령대";
                                 } else if(layerName ==="10c"){
                                     layerName = "초등학생";
                                 } else if ( layerName ==="10j"){
@@ -2484,12 +2507,34 @@
     fullscreenButton.addEventListener('click', () => {
         if (mapContainer.requestFullscreen) {
             mapContainer.requestFullscreen(); // 표준 API
+            fullscreenButton.classList.add('active');
         } else if (mapContainer.webkitRequestFullscreen) {
             mapContainer.webkitRequestFullscreen(); // Safari
+            fullscreenButton.classList.add('active');
         } else if (mapContainer.msRequestFullscreen) {
             mapContainer.msRequestFullscreen(); // IE/Edge
+            fullscreenButton.classList.add('active');
         } else {
             alert('전체화면 API가 지원되지 않는 브라우저입니다.');
+        }
+    });
+
+    // 전체화면 변경 감지 이벤트 (ESC로 나왔을 때도 감지)
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            fullscreenButton.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('webkitfullscreenchange', () => {
+        if (!document.webkitFullscreenElement) {
+            fullscreenButton.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('msfullscreenchange', () => {
+        if (!document.msFullscreenElement) {
+            fullscreenButton.classList.remove('active');
         }
     });
 
