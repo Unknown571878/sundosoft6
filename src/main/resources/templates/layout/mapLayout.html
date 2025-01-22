@@ -15,7 +15,7 @@
           <a href="/" style="padding-left: 5px; text-decoration: none; color: black" class="text-decoration-none">공공복합시설 입지분석 플랫폼</a> <!-- 메인 페이지 링크 -->
         </h1>
         <!--          <span>레이어 선택</span>-->
-        <button onclick="toggleMenu()"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
+        <button onclick="toggleMenu()" data-tooltip="메뉴 닫기"><img src="/images/left.svg" style="width: 20px; height: 20px"></button> <!-- 닫기 버튼 -->
       </div>
       <div class="swap-button">
         <button id="btn-gwangju">광주</button>
@@ -23,6 +23,7 @@
       </div>
       <div class="menu-search">
         <input class="layer-search" id="layer-search" type="text" placeholder="레이어 검색..."> <!-- 검색창 -->
+        <button id="btn-reset" class="reset-button">초기화</button>
         <ul class="search-list" id="search-list"></ul>
       </div>
       <div class="menu-category">
@@ -1997,7 +1998,7 @@
       </div>
     </div>
   </div>
-  <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()"><img src="/images/right.svg" style="width: 20px; height: 20px"></button>
+  <button class="menu-button hidden" id="menu-button" onclick="toggleMenu()" data-tooltip="메뉴 열기"><img src="/images/right.svg" style="width: 20px; height: 20px"></button>
   <div id="modal" class="modal">
     <button class="modal-close" id="modal-close">
       <img class="cancel-image" src="/images/icons8-취소.svg">
