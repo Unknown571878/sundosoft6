@@ -71,6 +71,7 @@ function validateTel(input) {
     } else {
         input.setCustomValidity('');
     }
+
 }
 
 
@@ -131,23 +132,33 @@ function validateDate(input) {
         input.setCustomValidity('');
     }
 }
+function validateNewPasswordCheck(input) {
+    const newPw = document.getElementById('newPw').value;  // 새 비밀번호 입력값 가져오기
+    const confirmPw = input.value;  // 비밀번호 확인 입력값 가져오기
+
+    if (confirmPw === '') {
+        input.setCustomValidity('비밀번호를 입력해주세요.');
+    } else if (newPw !== confirmPw) {
+        input.setCustomValidity('비밀번호가 일치하지 않습니다.');
+    } else {
+        input.setCustomValidity('');
+    }
+}
 
 function validatePasswordCheck(input) {
     const password = document.getElementById('password').value; // 비밀번호 필드 값
-    const errorDiv = document.getElementById('passwordError'); // 에러 메시지 표시 영역
 
     if (input.value === '') {
         // 입력 필드가 비어 있으면 에러 메시지 제거
         input.setCustomValidity('');
-        errorDiv.textContent = '';
+
     } else if (input.value !== password) {
         // 비밀번호가 일치하지 않으면 에러 메시지 표시
         input.setCustomValidity('비밀번호가 일치하지 않습니다.');
-        errorDiv.textContent = '비밀번호가 일치하지 않습니다.';
+
     } else {
         // 비밀번호가 일치하면 에러 메시지 제거
         input.setCustomValidity('');
-        errorDiv.textContent = '';
+
     }
 }
-
