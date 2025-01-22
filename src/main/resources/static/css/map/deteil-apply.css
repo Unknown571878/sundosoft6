@@ -93,9 +93,7 @@ html, body {
     border-collapse: collapse;
 }
 
-/* 테이블 셀 스타일 */
-.deteil-apply-post-table th,
-.deteil-apply-post-table td {
+.deteil-apply-post-table th {
     border: 1px solid #ddd;
     border-top: 2px solid #4B4B4B;
     text-align: center;
@@ -103,10 +101,11 @@ html, body {
     color: #555;
 }
 
-/* 테이블 헤더 스타일 */
-.deteil-apply-post-table th {
-    background-color: #f7f7f7;
-    font-weight: bold;
+.deteil-apply-post-table td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+    color: #555;
 }
 
 /* 행 호버 효과 */
