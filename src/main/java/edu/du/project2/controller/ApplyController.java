@@ -3,6 +3,7 @@ package edu.du.project2.controller;
 import edu.du.project2.dto.AuthInfo;
 import edu.du.project2.dto.MessageDto;
 import edu.du.project2.entity.Apply;
+import edu.du.project2.repository.ApplyRepository;
 import edu.du.project2.service.ApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 분석 신청서 관련 컨트롤러.
@@ -27,6 +30,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/analysis")
 public class ApplyController {
     private final ApplyService applyService;
+    private final ApplyRepository applyRepository;
 
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
@@ -35,11 +39,11 @@ public class ApplyController {
 
     // 기본 신청서 목록 페이지를 반환
     @GetMapping("/normalList")
-    public String normalList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
+    public String normalList(Model model, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         // 로그인한 사용자에 따른 신청서 목록 가져오기
-        Page<Apply> applies = applyService.getApplies(authInfo, pageable, "normal");
-        model.addAttribute("count", applies.stream().count());
+        List<Apply> applies = applyRepository.findAllByUidAndRequest(authInfo.getId(),"normal");
+
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", applies);
         return "map/normalApply_list";
@@ -47,10 +51,11 @@ public class ApplyController {
 
     // 상세 신청서 목록 페이지를 반환
     @GetMapping("/detailList")
-    public String detailList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
+    public String detailList(Model model, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         // 로그인한 사용자에 따른 신청서 목록 가져오기
-        Page<Apply> applies = applyService.getApplies(authInfo, pageable, "detail");
+        List<Apply> applies = applyRepository.findAllByUidAndRequest(authInfo.getId(),"detail");
+        System.out.println(applies);
         model.addAttribute("total", applyService.totalApplies(authInfo, "detail"));
         model.addAttribute("now", LocalDateTime.now());
         model.addAttribute("applies", applies);
