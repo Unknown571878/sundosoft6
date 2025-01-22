@@ -102,8 +102,8 @@
     <div style="display: flex; justify-content: flex-end;">
       <a href="#this" id="edit" class="button btn-sm">변경하기</a>
     </div>
-
   </div>
+
 </form>
 
       <div class="modal fade" id="changePwModal" tabindex="-1" aria-labelledby="changePwModalLabel" aria-hidden="true">
@@ -124,7 +124,7 @@
 
                 <div class="form-group mb-3">
                   <label for="newPw" class="form-label">새 비밀번호</label>
-                  <input class="form-control input-width" type="password" id="newPw" name="newPw" placeholder="새 비밀번호를 입력하세요" required oninput="validatePassword(this)">
+                  <input class="form-control input-width" type="password" id="newPw" name="newPw" placeholder="새 비밀번호를 입력하세요" required oninput="validateNewPassword(this)">
                 </div>
 
                 <div class="form-group mb-3">
@@ -133,7 +133,7 @@
                 </div>
 
                 <div class="text-end">
-                  <button type="submit" class="button btn-sm mt-3">비밀번호 변경</button>
+                  <button type="submit" id="changePwBtn" class="button btn-sm mt-3">비밀번호 변경</button>
                 </div>
 
               </form>
@@ -156,33 +156,54 @@
 
       var telInput = document.querySelector("input[name='tel']");
       var nameInput = document.querySelector("input[name='name']");
-      var confirmPwInput = document.querySelector("#confirmPw");
 
       // 유효성 검증 함수 실행
       validateTel(telInput);
       validateName(nameInput);
-      validatePasswordCheck(confirmPwInput);
 
       // 유효성 확인 후 처리
       if (!telInput.checkValidity()) {
         telInput.reportValidity();
-        return;
+        return false;
       }
       if (!nameInput.checkValidity()) {
         nameInput.reportValidity();
-        return;
+        return false;
       }
-      if (!confirmPwInput.checkValidity()) {
-        confirmPwInput.reportValidity();
-        return;
-      }
+
 
       // 폼 제출 처리
       var frm = $("#frm")[0];
       frm.action = "/profile/updateProfile";
       frm.submit();
     });
-  });
+  })
+    $(document).ready(function () {
+      $("#changePwBtn").on("click", function (event) {
+        event.preventDefault(); // 폼 제출 방지
+
+        var newPwInput = document.querySelector("#newPw");
+        var confirmPwInput = document.querySelector("#confirmPw");
+
+        // 비밀번호 및 비밀번호 확인 유효성 검사
+        validateNewPassword(newPwInput);
+        validateNewPasswordCheck(confirmPwInput);
+
+        // 유효성 확인 후 제출 방지
+        if (!newPwInput.checkValidity()) {
+          newPwInput.reportValidity();
+          return false;  // 새 비밀번호가 유효하지 않으면 제출 차단
+        }
+
+        if (!confirmPwInput.checkValidity()) {
+          confirmPwInput.reportValidity();
+          return false;  // 비밀번호 확인이 유효하지 않으면 제출 차단
+        }
+
+        // 모든 검증을 통과하면 폼 제출
+        $("#ch-pw").submit();
+      });
+    });
 </script>
 <div class="footers"></div> <!-- 이 부분은 지우지 말아야 합니다. -->
 <th:block th:replace="layout/footer :: footerLayout"></th:block>
