@@ -2484,12 +2484,34 @@
     fullscreenButton.addEventListener('click', () => {
         if (mapContainer.requestFullscreen) {
             mapContainer.requestFullscreen(); // 표준 API
+            fullscreenButton.classList.add('active');
         } else if (mapContainer.webkitRequestFullscreen) {
             mapContainer.webkitRequestFullscreen(); // Safari
+            fullscreenButton.classList.add('active');
         } else if (mapContainer.msRequestFullscreen) {
             mapContainer.msRequestFullscreen(); // IE/Edge
+            fullscreenButton.classList.add('active');
         } else {
             alert('전체화면 API가 지원되지 않는 브라우저입니다.');
+        }
+    });
+
+    // 전체화면 변경 감지 이벤트 (ESC로 나왔을 때도 감지)
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            fullscreenButton.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('webkitfullscreenchange', () => {
+        if (!document.webkitFullscreenElement) {
+            fullscreenButton.classList.remove('active');
+        }
+    });
+
+    document.addEventListener('msfullscreenchange', () => {
+        if (!document.msFullscreenElement) {
+            fullscreenButton.classList.remove('active');
         }
     });
 
