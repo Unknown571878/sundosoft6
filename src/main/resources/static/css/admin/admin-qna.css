@@ -231,3 +231,23 @@ a:hover {
     padding-bottom: 60px;
     margin-bottom: 100px;
 }
+
+/* -------------------------------------------
+   답변 선택, 카운트
+------------------------------------------- */
+/* 답변 상태와 총 0건을 같은 라인에 배치 */
+#qnaForm {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* 항목 간 간격 설정 */
+}
+
+/* '총 0건'을 오른쪽으로 정렬하고 폰트 크기 16px로 설정 */
+.answer-status-container {
+    margin-left: auto; /* 오른쪽 정렬 */
+}
+
+.admin5-count {
+    font-size: 16px; /* 폰트 크기 16px */
+    margin: 0; /* 기본 여백 제거 */
+}
