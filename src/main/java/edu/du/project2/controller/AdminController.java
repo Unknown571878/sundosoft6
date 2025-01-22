@@ -124,7 +124,7 @@ public class AdminController {
     public String qnaList(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable, HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
         model.addAttribute("now", getCurrentTime());
-        model.addAttribute("qna", qnARepository.findAll());
+        model.addAttribute("qna", qnAListRepository.findAll());
         model.addAttribute("qnaList", qnaService.getInquiries(authInfo, pageable));
         model.addAttribute("member", memberRepository.findAll());
         return "admin/admin_qna";
