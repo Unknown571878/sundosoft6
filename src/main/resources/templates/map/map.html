@@ -2829,7 +2829,7 @@
         document.getElementById('population-weight').textContent = populationWeight;
     }
 
-    function updateTab3Weights() {
+    function updateTab2Weights() {
         const librarySlider = document.getElementById('input-tab2-2');
         const libraryWeight = parseFloat(librarySlider.value).toFixed(1);
         const busWeight = (1.0 - libraryWeight).toFixed(1);
@@ -2837,6 +2837,16 @@
         // 업데이트된 값 표시
         document.getElementById('library-weight').textContent = libraryWeight;
         document.getElementById('bus-weight').textContent = busWeight;
+    }
+
+    function updateTab3Weights() {
+        const temperatureSlider = document.getElementById('shade--alpha');
+        const temperatureWeight = parseFloat(temperatureSlider.value).toFixed(1);
+        const shadeAccessibilityWeight = (1.0 - temperatureWeight).toFixed(1);
+
+        // 업데이트된 값 표시
+        document.getElementById('temperature-weight').textContent = temperatureWeight;
+        document.getElementById('shade-accessibility-weight').textContent = shadeAccessibilityWeight;
     }
 
     function updateTab4Weights() {
