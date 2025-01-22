@@ -218,10 +218,10 @@ public class AdminController {
 
     // 신청내역 목록/신청내역 상세/신청한 입지분석 적용 후 완료된 내역을 메일로?? 어떻게 해야하지
     @GetMapping("/admin/admin_apply")
-    public String apply(Model model, @PageableDefault(page = 0, size = 10) Pageable pageable,HttpSession session) {
+    public String apply(Model model,HttpSession session) {
         AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
-        Page<Apply> applies = applyService.getApplies(authInfo, pageable, "none"); // 관리자는 request 상관없음
-        model.addAttribute("count", applies.stream().count());
+        List<Apply> applies = applyRepository.findAll();
+        model.addAttribute("count", applies.size());
         model.addAttribute("applies", applies);
         model.addAttribute("now", getCurrentTime());
         return "admin/admin_apply";
