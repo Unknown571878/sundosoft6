@@ -1158,22 +1158,20 @@
     // 지도 이동 범위 제한
     map.setMaxBounds(bounds);
     var vworldLayer = L.tileLayer('https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png', {
-        "minZoom": 6,
+        "minZoom": 7,
         "maxZoom": 18,
-        "maxNativeZoom": 18,
-        "minNativeZoom": 6,
         "attribution": '&copy; <a href="http://www.vworld.kr/">vworld</a> contributors'
     });
     var hybrid = L.tileLayer(`http://api.vworld.kr/req/wmts/1.0.0/${vworldKey}/Hybrid/{z}/{y}/{x}.png`, {
         attribution: '&copy; VWorld',
         maxZoom: 18,
-        minZoom: 6,
+        minZoom: 7,
         zIndex: 10  // zIndex 설정
     });
     var satellite = L.tileLayer(`http://api.vworld.kr/req/wmts/1.1.1/${vworldKey}/Satellite/{z}/{y}/{x}.jpeg`, {
         attribution: '&copy; VWorld',
         maxZoom: 18,
-        minZoom: 6,
+        minZoom: 7,
         zIndex: 5  // zIndex 설정
     });
     vworldLayer.addTo(map);
@@ -2507,6 +2505,8 @@
             transparent: true,
             attribution: '&copy; GeoServer Contributors',
             zIndex: layerIndex,  // 숫자로 zIndex 설정
+            minZoom: 7,  // 최소 줌 레벨 설정
+            maxZoom: 18  // 최대 줌 레벨 설정
         };
 
         // shape가 "none"이 아닌 경우 스타일을 적용
