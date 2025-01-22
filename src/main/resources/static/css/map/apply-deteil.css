@@ -115,7 +115,7 @@ h1 {
 }
 
 /* 버튼 기본 스타일 */
-a.mbtn {
+a.mbtn, dbtn {
     display: inline-block;
     color: black;
     text-decoration: none;
@@ -145,6 +145,18 @@ a.mbtn:hover {
     border: 1px solid black;
 }
 
+/* 삭제하기 버튼 스타일 */
+a.dbtn {
+    border: 1px solid black;
+    color: black;
+}
+
+a.dbtn:hover {
+    background-color: #d32f2f;
+    font-weight: bold;
+    color: white;
+    border: 1px solid #d32f2f;
+}
 
 /* -------------------------------------------
    푸터 및 페이징 고정
