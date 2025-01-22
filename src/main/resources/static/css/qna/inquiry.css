@@ -138,17 +138,6 @@ html, body {
     background-color: #f1f1f1;
 }
 
-/* 첫 번째 열과 마지막 열의 테두리 제거 */
-.qna-post-table td:first-child,
-.qna-post-table th:first-child {
-    border-left: none;
-}
-
-.qna-post-table td:last-child,
-.qna-post-table th:last-child {
-    border-right: none;
-}
-
 /* 테이블 열 너비 */
 .qna-post-table th:nth-child(1),
 .qna-post-table td:nth-child(1) {

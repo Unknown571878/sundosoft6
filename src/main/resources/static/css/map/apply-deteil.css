@@ -63,17 +63,6 @@ h1 {
     text-align: center;
 }
 
-/* 초록색 표시 부분의 테두리 제거 */
-.board_detail th:first-child,
-.board_detail td:first-child {
-    border-left: none;
-}
-
-.board_detail th:last-child,
-.board_detail td:last-child {
-    border-right: none;
-}
-
 .board_detail tr:first-child th {
     border-top: none;
 }
