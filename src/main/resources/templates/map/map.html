@@ -73,13 +73,13 @@
             const submenu = menuItem.nextElementSibling;
 
             if (submenu && submenu.tagName === "UL") {
-                // 하위 메뉴의 <li> 개수 카운트
-                const itemCount = submenu.querySelectorAll("li").length;
+                // 하위 메뉴의 체크박스 개수 카운트
+                const checkboxCount = submenu.querySelectorAll("input[type='checkbox']").length;
 
                 // 카운트 뱃지 생성
                 const badge = document.createElement("span");
                 badge.className = "menu-badge";
-                badge.textContent = itemCount;
+                badge.textContent = checkboxCount;
 
                 // 메뉴 항목에 뱃지를 추가
                 menuItem.appendChild(badge);
