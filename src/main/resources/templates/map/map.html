@@ -1142,6 +1142,12 @@
         category = 'all';
         submenuList2.forEach((li) => li.classList.remove('hidden'));
     });
+    // 레이어 초기화버튼 클릭시
+    document.getElementById('btn-reset').addEventListener('click', function(){
+        document.getElementById('layer-search').value = ''; // 검색창 초기화
+        resetToInitialState();
+        filterList(); // 검색 결과 갱신
+    });
     // 지도 생성
     var map = L.map('map',{zoomControl: false}).setView([35.1595, 126.8526], 13); // 위도, 경도, 줌 레벨 설정
 
