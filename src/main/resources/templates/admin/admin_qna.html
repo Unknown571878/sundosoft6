@@ -142,6 +142,15 @@
     paginationContainer.innerHTML = '';
 
     let totalPages = Math.ceil(filteredQnaList.length / rowsPerPage);
+
+    // 게시글이 없는 경우 페이징 숨기기
+    if (filteredQnaList.length === 0) {
+      paginationContainer.style.display = 'none';
+      return;
+    } else {
+      paginationContainer.style.display = 'flex';
+    }
+
     if (totalPages === 0) totalPages = 1;
 
     paginationContainer.innerHTML += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
