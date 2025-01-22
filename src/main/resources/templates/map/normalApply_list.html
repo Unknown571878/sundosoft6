@@ -109,7 +109,9 @@
         });
 
         // 페이지 네비게이션 업데이트
-        updatePagination();
+        if (applyList && applyList.length > 0){
+            updatePagination();
+        }
 
         // 행 클릭 이벤트 추가
         addClickEvent(); // 행이 추가된 후 클릭 이벤트를 추가
