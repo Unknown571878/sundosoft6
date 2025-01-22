@@ -22,7 +22,6 @@ h1 {
 .split--div-post {
     height: 2px;
     background-color: gray;
-    /*margin: 10px 0;*/
 }
 
 .main-title {
@@ -68,7 +67,6 @@ h1 {
 .board_detail input[type="text"],
 .board_detail textarea {
     width: 100%;
-    padding: 12px;
     border: none; /* 테두리 제거 */
     font-size: 16px;
 }
