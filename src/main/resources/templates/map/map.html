@@ -1248,7 +1248,7 @@
                     // 데이터를 처리할 컨테이너
                     const modal = document.getElementById('modal');
                     const modalContent = document.getElementById('modal-content');
-                    let contentHtml = '';
+                    let contentHtml = '<table>';
                     let modal_names = [];
                     const ucb_data = {
                         "1110": "물을 이용하여 벼를 재배하기 위한 토지로 수로가 용수를 공급하는 경지 정리",
@@ -1290,7 +1290,6 @@
                         "4320": "발전과 홍수 예방 등을 목적으로 건설된 대단위 저수관제 시설로서 제방 상단의 폭이 6m 이상인 조정지 댐과 부대 시설을 포함",
                         "4410": "바닷가의 모래(해변 또는 사빈) 등"
                     };
-
 
                     // 변환할 단어와 대응되는 이름을 객체로 정의
                     const layerNameMap = {
@@ -1467,8 +1466,9 @@
                                 };
                                 let ucbName = ucbNames[ucb] || "알 수 없음";  // 해당 코드가 없으면 "알 수 없음" 표시
                                 additionalInfo = `${ucbName}`;
-                            } else if (displayName === "토지 소유 정보" && result.data.features[0].properties.a8) {
-                                additionalInfo = `${result.data.features[0].properties.a8}`;
+                            } else if (displayName === "토지 소유 정보") {
+                                const a8Value = result.data.features[0].properties.a8;
+                                additionalInfo = a8Value ? `${a8Value}` : "기타";
                             } else if (displayName === "토지 특성 공간" && result.data.features[0].properties.a13) {
                                 let landUse = result.data.features[0].properties.a13;
                                 const landUseType = {
@@ -2237,9 +2237,14 @@
                                     displayName: displayName
                                 });
                             }
-                            contentHtml += `<h3 id="${result.layerName}">${displayName} : ${additionalInfo} </h3>`;
+                            contentHtml += `<tr id="${result.layerName}">
+                                                <th>${displayName}</th>
+                                                <td>${additionalInfo}</td>
+                                             </tr>`
+
                         }
                     });
+                    contentHtml += `</table>`;
 
                     var data_list = [];
                     for (let i = 0; i < results.length; i++) {  // let을 사용하여 i를 정의
@@ -2347,9 +2352,10 @@
                                         console.log("건물 현황");
                                     } else if (table_type === "인구") {
                                         const properties = result.data.features[0].properties;
+                                        const val = parseInt(properties.val, 10);
                                         layerDataHtml += `<table>
                                                             <tr><th>거주 인원</th><th>위도</th><th>경도</th></tr>
-                                                            <tr><td>${properties.val}</td><td>${properties.lat}</td><td>${properties.lon}</td></tr>
+                                                            <tr><td>${val}</td><td>${properties.lat}</td><td>${properties.lon}</td></tr>
                                                           </table>`
                                         console.log(properties)
                                         console.log("인구");
@@ -2379,12 +2385,16 @@
                                         console.log("토지 이용현황");
                                     } else if (table_type === "토지 소유 정보") {
                                         const properties = result.data.features[0].properties;
+                                        let ownerRow = '';
+                                        if (properties.a8 !== null && properties.a8 !== undefined) {
+                                            ownerRow = `<tr><th>소유자</th><td>${properties.a8}</td></tr>`;
+                                        }
                                         layerDataHtml += `<table>
                                                             <tr><th>주소</th><td>${properties.a2} ${properties.a5}</td></tr>
-                                                            <tr><th>소유자</th><td>${properties.a8}</td></tr>
+                                                            ${ownerRow} <!-- 소유자 정보가 있을 경우에만 해당 행이 포함됩니다. -->
                                                             <tr><th>지목</th><td>${properties.a20}</td></tr>
                                                             <tr><th>토지 면적</th><td>${properties.a22}m²</td></tr>
-                                                          </table>`
+                                                          </table>`;
                                         console.log(properties)
                                         console.log("토지 소유 정보");
                                     } else if (table_type === "토지 특성 공간") {
