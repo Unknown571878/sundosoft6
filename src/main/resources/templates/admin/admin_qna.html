@@ -115,7 +115,7 @@
 <!-- QnA 리스트를 JSON 형태로 변환하여 JavaScript에서 사용할 수 있도록 하기 -->
 <script th:inline="javascript">
   /*<![CDATA[*/
-  var qnaList = /*[[${qnaList}]]*/ [];
+  var qnaList = /*[[${qna}]]*/ [];
   console.log(qnaList);  // 콘솔에서 qnaList 확인
   /*]]>*/
 </script>
@@ -160,7 +160,7 @@
   // QnA 카운트 업데이트
   function updateCounts() {
     // qnaList.content가 빈 배열이 아니라면 카운트 업데이트
-    if (qnaList.content.length === 0) {
+    if (qnaList.length === 0) {
       document.getElementById('count').textContent = "총 0건";
     } else {
       let completed = 0;
@@ -168,7 +168,7 @@
       let answered = 0;
 
       // qnaList.content 배열을 순회하면서 각 상태에 맞는 카운트 증가
-      qnaList.content.forEach(function(item) {
+      qnaList.forEach(function(item) {
         if (item.endYn === 'Y') {
           completed++;
         }
@@ -184,7 +184,7 @@
       answered = answered - completed;
 
       // 총 카운트를 업데이트
-      document.getElementById('count').textContent = `총 ${qnaList.content.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
+      document.getElementById('count').textContent = `총 ${qnaList.length}건 (문의 종료: ${completed} / 대기중: ${pending} / 답변 완료: ${answered})`;
     }
   }
 

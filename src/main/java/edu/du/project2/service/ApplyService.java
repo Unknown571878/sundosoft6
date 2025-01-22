@@ -36,6 +36,10 @@ public class ApplyService {
         return applyRepository.findAllByCompletedYnOrderByIdAsc('N');
     }
 
+    public List<Apply> totalApplies(AuthInfo authInfo, String request) {
+        return applyRepository.findAllByUidAndRequestOrderByCreatedAtDesc(authInfo.getId(), request);
+    }
+
     public Page<Apply> getApplies(AuthInfo authInfo, Pageable pageable, String request) {
         List<Apply> list = authInfo.getRole().equals("ADMIN")
                 ? applyRepository.findAll(Sort.by(Sort.Order.desc("createdAt")))
