@@ -1271,6 +1271,8 @@
                     // 데이터를 처리할 컨테이너
                     const modal = document.getElementById('modal');
                     const modalContent = document.getElementById('modal-content');
+                    let previousValue = null;  // 이전 값 추적
+                    let rowspanCount = 1;  // rowspan 카운트
                     let contentHtml = '<table>';
                     let modal_names = [];
                     const ucb_data = {
@@ -1374,9 +1376,9 @@
                                 additionalInfo = `${result.data.features[0].properties.name}`;
                             } else if (displayName === "열지도") {
                                 additionalInfo = `${result.data.features[0].properties.dd}`;
-                            } else if (displayName === "교통현황" && result.data.features[0].properties.dd) {
+                            } else if (displayName === "교통현황" && result.data.features[0].properties.c1) {
                                 let c1 = result.data.features[0].properties.c1;
-                                c1 = c1.replace("광주광역시", "").trim();  // "광주광역시" 제거하고 앞뒤 공백 제거
+                                c1 = c1.replace("광주광역시", "").trim();
                                 additionalInfo = `${c1}`;
                             } else if (displayName === "건물 현황" && result.data.features[0].properties.a29) {
                                 let a27 = result.data.features[0].properties.a27;
@@ -2260,14 +2262,18 @@
                                     displayName: displayName
                                 });
                             }
-                            contentHtml += `<tr id="${result.layerName}">
+                            contentHtml += `<tr >
                                                 <th>${displayName}</th>
-                                                <td>${additionalInfo}</td>
+                                                <td id="${result.layerName}">${additionalInfo}</td>
                                              </tr>`
 
                         }
                     });
                     contentHtml += `</table>`;
+                    console.log(contentHtml)
+                    if(contentHtml === '<table></table>'){
+                        contentHtml = null;
+                    }
 
                     var data_list = [];
                     for (let i = 0; i < results.length; i++) {  // let을 사용하여 i를 정의
